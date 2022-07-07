@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// 다이아몬드
 void Diamond();
 
 int main()
