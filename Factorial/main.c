@@ -1,10 +1,11 @@
 #include <stdio.h>
 
+// ÆÑÅä¸®¾ó
 int Factorial(int n);
 
 int main()
 {
-	printf("%d", Factorial(5));
+	printf("5! = %d\n", Factorial(5));
 
 	return 0;
 }
