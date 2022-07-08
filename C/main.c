@@ -1,25 +1,43 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+void InputArray(double* pA, int size);
+double FindMax(double* pA, int size);
 
 int main()
 {
-	char str[100] = { 0 };
-	int count = 0;
+	double arr[5];
+	double max;
+	int size = _countof(arr);
 
-	printf("문장 입력 : ");
-	gets(str);
+	InputArray(arr, size);
+	
+	max = FindMax(arr, size);
 
-	for (int i = 0; str[i] != '\0'; i++)
+	printf("%lf", max);
+
+	return 0;
+}
+
+void InputArray(double* pA, int size)
+{
+	for (size_t i = 0; i < size; i++)
 	{
-		if (isupper(str[i]))
+		pA[i] = i;
+	}
+}
+
+double FindMax(double* pA, int size)
+{
+	double max = pA[0];
+	
+	for (size_t i = 0; i < size; i++)
+	{
+		if (pA[i] > max)
 		{
-			str[i] = tolower(str[i]);
-			count++;
+			max = pA[i];
 		}
 	}
 
-	printf("바뀐 문장 : ");
-	puts(str);
-	printf("바뀐 문자 수 : %d\n", count);
-
-	return 0;
+	return max;
 }
