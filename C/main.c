@@ -1,43 +1,55 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-void InputArray(double* pA, int size);
-double FindMax(double* pA, int size);
+void InputNums(int* nums);
+void PrintNums(int* nums);
 
 int main()
 {
-	double arr[5];
-	double max;
-	int size = _countof(arr);
+	int nums[6];
 
-	InputArray(arr, size);
-	
-	max = FindMax(arr, size);
-
-	printf("%lf", max);
+	InputNums(nums);
+	PrintNums(nums);
 
 	return 0;
 }
 
-void InputArray(double* pA, int size)
+void InputNums(int* nums)
 {
-	for (size_t i = 0; i < size; i++)
+	int num = 0;
+	int dup = 0;
+
+	for (size_t i = 0; i < 6; i++)
 	{
-		pA[i] = i;
+		printf("번호 입력 : ");
+		scanf_s("%d", &num);
+
+		for (size_t j = 0; j < i; j++)
+		{
+			if (num == nums[j])
+			{
+				dup = 1;
+				break;
+			}
+		}
+
+		if (!dup)
+		{
+			nums[i] = num;
+		}
+		else
+		{
+			printf("같은 번호가 있습니다!\n");
+			i--;
+		}
 	}
 }
 
-double FindMax(double* pA, int size)
+void PrintNums(int* nums)
 {
-	double max = pA[0];
-	
-	for (size_t i = 0; i < size; i++)
-	{
-		if (pA[i] > max)
-		{
-			max = pA[i];
-		}
-	}
+	printf("로또 번호 : ");
 
-	return max;
+	for (size_t i = 0; i < 6; i++)
+	{
+		printf("%d ", *(nums + i));
+	}
 }
