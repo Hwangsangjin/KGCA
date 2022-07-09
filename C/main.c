@@ -1,55 +1,14 @@
 #include <stdio.h>
-
-void InputNums(int* nums);
-void PrintNums(int* nums);
+#include <stdlib.h>
 
 int main()
 {
-	int nums[6];
+	char str[80];
 
-	InputNums(nums);
-	PrintNums(nums);
+	printf("공백이 포함된 문자열 입력 : ");
+	fgets(str, _countof(str), stdin);
+
+	printf("입력된 문자열은 %s입니다.\n", str);
 
 	return 0;
-}
-
-void InputNums(int* nums)
-{
-	int num = 0;
-	int dup = 0;
-
-	for (size_t i = 0; i < 6; i++)
-	{
-		printf("번호 입력 : ");
-		scanf_s("%d", &num);
-
-		for (size_t j = 0; j < i; j++)
-		{
-			if (num == nums[j])
-			{
-				dup = 1;
-				break;
-			}
-		}
-
-		if (!dup)
-		{
-			nums[i] = num;
-		}
-		else
-		{
-			printf("같은 번호가 있습니다!\n");
-			i--;
-		}
-	}
-}
-
-void PrintNums(int* nums)
-{
-	printf("로또 번호 : ");
-
-	for (size_t i = 0; i < 6; i++)
-	{
-		printf("%d ", *(nums + i));
-	}
 }
