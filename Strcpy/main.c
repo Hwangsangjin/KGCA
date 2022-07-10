@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-char* Strcpy(char* pD, char* pS);	// 함수 선언
+// strcpy 함수와 같은 기능을 수행하는 함수
+char* Strcpy(char* pD, char* pS);
 
 int main()
 {
