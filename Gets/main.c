@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// gets 함수와 같은 기능을 수행하는 함수
 void Gets(char* pStr);
 
 int main()
