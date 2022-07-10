@@ -3,20 +3,25 @@
 
 int main()
 {
-	char str1[80] = "strawberry";
-	char str2[80] = "apple";
-	char* ps1 = "banana";
-	char* ps2 = str2;
+	char mark[5][5] = { 0 };
 
-	printf("최초 문자열 : %s\n", str1);
-	strcpy(str1, str2);
-	printf("바뀐 문자열 : %s\n", str1);
-
-	strcpy(str1, ps1);
-	printf("바뀐 문자열 : %s\n", str1);
-
-	strcpy(str1, "banana");
-	printf("바뀐 문자열 : %s\n", str1);
+	for (size_t i = 0; i < _countof(mark); i++)
+	{
+		for (size_t j = 0; j < _countof(mark); j++)
+		{
+			if ((i == j) || (i + j == 4))
+			{
+				mark[i][j] = 'X';
+				printf("%c", mark[i][j]);
+			}
+			else
+			{
+				mark[i][j] = 'O';
+				printf("%c", mark[i][j]);
+			}
+		}
+		printf("\n");
+	}
 
 	return 0;
 }
