@@ -1,5 +1,3 @@
-// 직접 구현해보는 gets 함수
-
 #include <stdio.h>
 
 void Gets(char* pStr);
@@ -22,8 +20,9 @@ void Gets(char* pStr)					// pStr은 첫 번째 배열 요소를 가리킨다.
 	while ((ch = getchar()) != '\n')	// 입력한 문자가 개행 문자가 아닌 동안 반복
 	{
 		*pStr = ch;						// 배열에 저장하고
+
 		pStr++;							// 다음 배열 요소로 이동
 	}
 
-	*pStr = '\0';						// 마지막에 널 문자로 마무리한다.
+	*pStr = '\0';						// 마지막 요소에 널 문자를 저장한다.
 }
