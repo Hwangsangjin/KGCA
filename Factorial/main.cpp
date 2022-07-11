@@ -1,6 +1,6 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 
-// ÆÑÅä¸®¾ó
+// íŒ©í† ë¦¬ì–¼
 int Factorial(int n);
 
 int main()
