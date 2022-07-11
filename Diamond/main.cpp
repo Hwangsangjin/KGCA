@@ -1,6 +1,6 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 
-// ´ÙÀÌ¾Æ¸óµå
+// ë‹¤ì´ì•„ëª¬ë“œ
 void Diamond();
 
 int main()
@@ -12,7 +12,7 @@ int main()
 
 void Diamond()
 {
-	// 0~2Çà
+	// 0~2í–‰
 	for (size_t i = 0; i < 3; i++)
 	{
 		for (size_t j = 0; j < 2 - i; j++)
@@ -28,7 +28,7 @@ void Diamond()
 		printf("\n");
 	}
 
-	// 3~4Çà
+	// 3~4í–‰
 	for (size_t i = 0; i < 2; i++)
 	{
 		for (size_t j = 0; j < 1 + i; j++)
