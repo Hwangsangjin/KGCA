@@ -1,30 +1,21 @@
 #include <stdio.h>
 
-struct list
-{
-	int num;
-	struct list* next;
-};
-
 int main()
 {
-	struct list a = { 10, 0 }, b = { 20, 0 }, c = { 30, 0 };
-	struct list* head = &a, * current;
+	FILE* fp;
+	char str[20] = "empty";
+	int ch;
 
-	a.next = &b;
-	b.next = &c;
+	fp = fopen("a.txt", "r");
+	ch = fgetc(fp);
+	
+	while (fgetc(fp) != EOF);
 
-	printf("head -> num : %d\n", head->num);
-	printf("head -> next -> num : %d\n", head->next->num);
-	
-	printf("list all : ");
-	current = head;
-	while (current != NULL)
-	{
-		printf("%d ", current->num);
-		current = current->next;
-	}
-	printf("\n");
-	
+	fgets(str, sizeof(str), fp);
+
+	printf("%s", str);
+
+	fclose(fp);
+
 	return 0;
 }
