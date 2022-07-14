@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearSearch", "LinearSearc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinarySearch", "BinarySearch\BinarySearch.vcxproj", "{E5C122B8-347E-4D39-A4DC-F165AE262AB5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fibonacci", "Fibonacci\Fibonacci.vcxproj", "{F3426781-4EA7-4C69-99DA-30886FCD3AAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -133,6 +135,14 @@ Global
 		{E5C122B8-347E-4D39-A4DC-F165AE262AB5}.Release|x64.Build.0 = Release|x64
 		{E5C122B8-347E-4D39-A4DC-F165AE262AB5}.Release|x86.ActiveCfg = Release|Win32
 		{E5C122B8-347E-4D39-A4DC-F165AE262AB5}.Release|x86.Build.0 = Release|Win32
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Debug|x64.ActiveCfg = Debug|x64
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Debug|x64.Build.0 = Debug|x64
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Debug|x86.ActiveCfg = Debug|Win32
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Debug|x86.Build.0 = Debug|Win32
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Release|x64.ActiveCfg = Release|x64
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Release|x64.Build.0 = Release|x64
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Release|x86.ActiveCfg = Release|Win32
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +160,7 @@ Global
 		{46C57451-DBC7-40BD-B1A5-29B872CC549C} = {F22FD92F-49F7-436E-BCA6-CBEB61CF2DCD}
 		{34C44B2B-55B0-4933-9FE4-53B79353C1AE} = {F22FD92F-49F7-436E-BCA6-CBEB61CF2DCD}
 		{E5C122B8-347E-4D39-A4DC-F165AE262AB5} = {F22FD92F-49F7-436E-BCA6-CBEB61CF2DCD}
+		{F3426781-4EA7-4C69-99DA-30886FCD3AAA} = {F22FD92F-49F7-436E-BCA6-CBEB61CF2DCD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8687645-F4EE-4A93-BE97-7DD2357B4FDA}
