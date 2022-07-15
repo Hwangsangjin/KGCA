@@ -1,32 +1,37 @@
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
 int main()
 {
-	char str[80];
-	char ch;
-	int i = 0;
+	vector<int> v1;
+	vector<int> v2(10);
+	vector<int> v3(10, 1);
+	vector<int> v4{ 10, 20, 30, 40, 50 };
 
-	// get() 함수를 사용한 한 줄 출력
-	cout << "문장 입력 : ";
+	vector<int> v5(v4);
+	vector<int> v6(v4.begin(), v4.begin() + 3);
 
-	ch = cin.get();		// 공백 문자를 포함한 모든 문자의 입력
+	for (int i = 0; i < v6.size(); i++)
+		cout << v6[i] << endl;
 
-	while (ch != '\n')	// 새줄 문자가 아닌 동안 반복
+	vector<vector<int>> mat1(2, vector<int>(3, 1));
+
+	vector<vector<int>> mat2
 	{
-		str[i] = ch;	// 입력한 문자를 str 배열에 저장
-		i++;			// 다음 문자 입력
+		{1,2,3},
+		{4,5,6}
+	};
+
+	for (int r = 0; r < mat2.size(); r++)
+	{
+		for (int c = 0; c < mat2[r].size(); c++)
+		{
+			cout << mat2[r][c] << ", ";
+		}
+		cout << endl;
 	}
-	
-	str[i] = '\0';		// 문자열을 완성하기 위해 마지막에 널문자 저장
-
-	cout << "입력된 문장은 : " << str << endl;
-
-	// getline() 함수를 사용한 한 줄 입력
-
-	cout << "새로운 문장 입력 : ";
-	cin.getline(str, _countof(str));	// 한 줄의 데이터 입력
-	cout << "새로 입력된 문장 : " << str << endl;
 
 	return 0;
 }
