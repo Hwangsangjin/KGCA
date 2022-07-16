@@ -5,33 +5,24 @@ using namespace std;
 
 int main()
 {
-	vector<int> v1;
-	vector<int> v2(10);
-	vector<int> v3(10, 1);
-	vector<int> v4{ 10, 20, 30, 40, 50 };
+	vector<int> vec1{ 1, 2, 3, 4 };
+	cout << vec1.capacity() << ":" << vec1.size() << endl;
 
-	vector<int> v5(v4);
-	vector<int> v6(v4.begin(), v4.begin() + 3);
+	vec1.push_back(5);
+	cout << vec1.capacity() << ":" << vec1.size() << endl;
 
-	for (int i = 0; i < v6.size(); i++)
-		cout << v6[i] << endl;
+	vec1.push_back(6);
+	cout << vec1.capacity() << ":" << vec1.size() << endl;
 
-	vector<vector<int>> mat1(2, vector<int>(3, 1));
+	vec1.insert(vec1.begin(), 0);
+	cout << vec1.capacity() << ":" << vec1.size() << endl;
 
-	vector<vector<int>> mat2
+	vec1.erase(vec1.begin() + 1, vec1.begin() + 3);
+	cout << vec1.capacity() << ":" << vec1.size() << endl;
+
+	for (size_t i = 0; i < vec1.size(); i++)
 	{
-		{1,2,3},
-		{4,5,6}
-	};
-
-	for (int r = 0; r < mat2.size(); r++)
-	{
-		for (int c = 0; c < mat2[r].size(); c++)
-		{
-			cout << mat2[r][c] << ", ";
-		}
-		cout << endl;
+		cout << vec1[i] << ", ";
 	}
-
-	return 0;
+	cout << endl;
 }
