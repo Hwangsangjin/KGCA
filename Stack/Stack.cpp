@@ -36,6 +36,7 @@ Stack::~Stack()
 	}
 }
 
+// 노드 추가
 void Stack::push(int value)
 {
 	// 새로운 노드를 생성하고 탑 노드와 연결
@@ -48,9 +49,10 @@ void Stack::push(int value)
 	count++;
 }
 
+// 노드 삭제
 void Stack::pop()
 {
-	// 탑 노드가 nullptr 이면 종료
+	// 탑 노드가 없으면 종료
 	if (head->next == nullptr)
 	{
 		return;
@@ -68,17 +70,20 @@ void Stack::pop()
 	count--;
 }
 
+// 탑 노드
 int Stack::top()
 {
 
 	return head->data;
 }
 
+// 노드의 갯수
 int Stack::size()
 {
 	return count;
 }
 
+// 노드가 비었는지 확인
 bool Stack::empty()
 {
 	return count == 0;
