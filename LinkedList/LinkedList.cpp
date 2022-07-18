@@ -10,6 +10,8 @@ int main()
 	ll.push_back(20);
 	ll.push_back(30);
 
+	ll.begin();
+
 	auto it = ll.find(20);
 	if (it != ll.end())
 	{
@@ -128,13 +130,13 @@ void LinkedList::pop_back()
 }
 
 // 노드가 비었는지 확인
-bool LinkedList::empty()
+bool LinkedList::empty() const
 {
 	return count == 0;
 }
 
 // 노드의 갯수
-int LinkedList::size()
+int LinkedList::size() const
 {
 	return count;
 }
