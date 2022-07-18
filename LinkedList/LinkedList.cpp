@@ -1,3 +1,5 @@
+#include <string>
+#include <fstream>
 #include <iostream>
 #include "LinkedList.h"
 
@@ -5,26 +7,41 @@ using namespace std;
 
 int main()
 {
-	LinkedList ll;
+	ifstream fin;
+	fin.open("Test.txt");
 
+	string str;
+	while (::getline(fin, str))
+	{
+		cout << str << endl;
+	}
+
+	ofstream fout;
+	fout.open("Test.txt");
+
+	LinkedList ll;
 	ll.push_back(10);
+	ll.push_back(20);
+	ll.push_back(30);
 
 	for (auto i = ll.begin(); i != ll.end(); i++)
 	{
-		cout << *i << " ";
+		fout << *i << " ";
 	}
-	cout << endl;
+	fout << endl;
 
-	ll.clear();
-	cout << ll.size() << endl;
-
-	ll.push_back(10);
+	ll.push_back(40);
+	ll.push_back(50);
 
 	for (auto& i : ll)
 	{
-		cout << i << " ";
+		fout << i << " ";
 	}
-	cout << endl;
+	fout << endl;
+
+	ll.clear();
+	fout.close();
+	fin.close();
 
 	return 0;
 }

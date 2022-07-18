@@ -66,6 +66,12 @@ private:
 			return os;
 		}
 
+		friend std::ofstream& operator<<(std::ofstream& fs, const Iterator& iterator)
+		{
+			fs << iterator.ptr;
+			return fs;
+		}
+
 		friend class LinkedList;
 	};
 
