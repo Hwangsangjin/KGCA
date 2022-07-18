@@ -6,17 +6,19 @@ using namespace std;
 int main()
 {
 	LinkedList ll;
+
 	ll.push_back(10);
-	ll.push_back(20);
-	ll.push_back(30);
 
-	ll.begin();
-
-	auto it = ll.find(20);
-	if (it != ll.end())
+	for (auto i = ll.begin(); i != ll.end(); i++)
 	{
-		ll.insert(it, 50);
+		cout << *i << " ";
 	}
+	cout << endl;
+
+	ll.clear();
+	cout << ll.size() << endl;
+
+	ll.push_back(10);
 
 	for (auto& i : ll)
 	{
@@ -46,13 +48,6 @@ LinkedList::LinkedList()
 // 소멸자
 LinkedList::~LinkedList()
 {
-	// 노드가 비어있지 않다면
-	while (!empty())
-	{
-		// 가장 앞의 노드 삭제
-		pop_front();
-	}
-
 	// 머리와 꼬리 삭제
 	delete head;
 	delete tail;
@@ -127,6 +122,34 @@ void LinkedList::pop_back()
 		// 꼬리의 이전 노드를 삭제
 		erase(--end());
 	}
+}
+
+// 모든 노드 삭제
+void LinkedList::clear()
+{
+	// 삭제할 임시 노드 생성
+	Node* temp = nullptr;
+	// 머리의 다음 노드부터 이동할 노드 생성
+	Node* current = head->next;
+
+	// 현재 노드가 꼬리가 아닌 동안
+	while (current != tail)
+	{
+		// 임시 노드에 현재 노드로 설정
+		temp = current;
+		// 현재 노드를 다음 노드로 변경
+		current = current->next;
+		// 임시 노드 삭제
+		delete temp;
+
+		// 노드 갯수 감소
+		count--;
+	}
+
+	// 머리의 다음 노드를 꼬리에 연결
+	// 꼬리의 이전 노드를 머리에 연결
+	head->next = tail;
+	tail->prev = head;
 }
 
 // 노드가 비었는지 확인

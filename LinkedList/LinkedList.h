@@ -60,6 +60,12 @@ private:
 			return ptr != iterator.ptr;
 		}
 
+		friend std::ostream& operator<<(std::ostream& os, const Iterator& iterator)
+		{
+			os << iterator.ptr;
+			return os;
+		}
+
 		friend class LinkedList;
 	};
 
@@ -93,6 +99,7 @@ public:
 	void erase(const Iterator& iterator);
 	void pop_front();
 	void pop_back();
+	void clear();
 
 	bool empty() const;
 
