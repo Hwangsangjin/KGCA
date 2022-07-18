@@ -16,12 +16,10 @@ public:
 	Stack();
 	~Stack();
 
-	void push(int value);
+	void push(const int value);
 	void pop();
-
-	int top() const;
-
-	int size() const;
+	const int top() const;
 
 	bool empty() const;
+	int size() const;
 };
