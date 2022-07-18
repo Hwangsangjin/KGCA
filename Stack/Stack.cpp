@@ -34,6 +34,9 @@ Stack::~Stack()
 		// 탑 노드 삭제
 		pop();
 	}
+
+	// 탑 노드 삭제
+	delete head;
 }
 
 // 노드 추가
@@ -71,20 +74,19 @@ void Stack::pop()
 }
 
 // 탑 노드
-int Stack::top()
+int Stack::top() const
 {
-
 	return head->data;
 }
 
 // 노드의 갯수
-int Stack::size()
+int Stack::size() const
 {
 	return count;
 }
 
 // 노드가 비었는지 확인
-bool Stack::empty()
+bool Stack::empty() const
 {
 	return count == 0;
 }

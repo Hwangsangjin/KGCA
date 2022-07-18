@@ -1,14 +1,14 @@
 #pragma once
 
-struct Node
-{
-	int data;
-	Node* next;
-};
-
 class Stack
 {
 private:
+	struct Node
+	{
+		int data;
+		Node* next;
+	};
+
 	int count;
 	Node* head;
 
@@ -19,8 +19,9 @@ public:
 	void push(int value);
 	void pop();
 
-	int top();
+	int top() const;
 
-	int size();
-	bool empty();
+	int size() const;
+
+	bool empty() const;
 };
