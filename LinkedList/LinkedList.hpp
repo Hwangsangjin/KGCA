@@ -1,83 +1,48 @@
-#include <string>
-#include <fstream>
-#include <iostream>
 #include "LinkedList.h"
 
-using namespace std;
-
-int main()
-{
-	ifstream fin;
-	fin.open("Test.txt");
-
-	string str;
-	while (::getline(fin, str))
-	{
-		cout << str << endl;
-	}
-
-	ofstream fout;
-	fout.open("Test.txt");
-
-	LinkedList ll;
-	ll.push_back(10);
-	ll.push_back(20);
-	ll.push_back(30);
-
-	for (auto i = ll.begin(); i != ll.end(); i++)
-	{
-		fout << *i << " ";
-	}
-	fout << endl;
-
-	ll.push_back(40);
-	ll.push_back(50);
-
-	for (auto& i : ll)
-	{
-		fout << i << " ";
-	}
-	fout << endl;
-
-	ll.clear();
-	fout.close();
-	fin.close();
-
-	return 0;
-}
-
 // 생성자
-LinkedList::LinkedList()
+template<typename T>
+LinkedList<T>::LinkedList()
 {
 	// 초기 노드의 갯수
 	count = 0;
 
-	// 머리와 꼬리 생성
-	head = new Node{ 0, nullptr, nullptr };
-	tail = new Node{ 0, nullptr, nullptr };
+	//// 머리와 꼬리 생성
+	head = new Node<T>{ T(), nullptr, nullptr };
+	tail = new Node<T>{ T(), nullptr, nullptr };
 
-	// 머리의 다음 노드를 꼬리에 연결
-	// 꼬리의 이전 노드를 머리에 연결
+	//// 머리의 다음 노드를 꼬리에 연결
+	//// 꼬리의 이전 노드를 머리에 연결
 	head->next = tail;
+	
 	tail->prev = head;
 }
 
 // 소멸자
-LinkedList::~LinkedList()
+template<typename T>
+LinkedList<T>::~LinkedList()
 {
+	// 노드가 비어있지 않다면
+	while (!empty())
+	{
+		// 가장 앞의 노드 삭제
+		pop_front();
+	}
+
 	// 머리와 꼬리 삭제
 	delete head;
 	delete tail;
 }
 
 // 노드 삽입
-void LinkedList::insert(const Iterator& iterator, const int value)
+template<typename T>
+void LinkedList<T>::insert(const Iterator& iterator, const T& value)
 {
 	// 반복자의 위치를 노드에 전달
-	Node* node = iterator.ptr;
+	Node<T>* node = iterator.ptr;
 
 	// 새로운 노드를 생성하고 기존 노드와 연결
-	Node* newNode = new Node{ value, node->prev, node };
+	Node<T>* newNode = new Node<T>{ value, node->prev, node };
 
 	// 기존 노드의 다음 노드를 새로 생성한 노드로 변경
 	newNode->prev->next = newNode;
@@ -89,29 +54,32 @@ void LinkedList::insert(const Iterator& iterator, const int value)
 }
 
 // 노드를 앞에 추가
-void LinkedList::push_front(int value)
+template<typename T>
+void LinkedList<T>::push_front(const T& value)
 {
 	// 머리의 다음 위치를 전달
 	insert(begin(), value);
 }
 
 // 노드를 뒤에 추가
-void LinkedList::push_back(int value)
+template<typename T>
+void LinkedList<T>::push_back(const T& value)
 {
 	// 꼬리의 위치를 전달
 	insert(end(), value);
 }
 
 // 노드 삭제
-void LinkedList::erase(const Iterator& iterator)
+template<typename T>
+void LinkedList<T>::erase(const Iterator& iterator)
 {
 	// 반복자의 위치를 노드에 전달
-	Node* node = iterator.ptr;
+	Node<T>* node = iterator.ptr;
 
 	// 삭제할 노드의 이전 노드와 다음 노드를 연결
 	node->prev->next = node->next;
 	node->next->prev = node->prev;
-	
+
 	// 삭제할 노드 메모리 해제
 	delete node;
 
@@ -120,7 +88,8 @@ void LinkedList::erase(const Iterator& iterator)
 }
 
 // 가장 앞의 노드를 삭제
-void LinkedList::pop_front()
+template<typename T>
+void LinkedList<T>::pop_front()
 {
 	// 노드가 비어있지 않다면
 	if (!empty())
@@ -131,7 +100,8 @@ void LinkedList::pop_front()
 }
 
 // 가장 뒤의 노드를 삭제
-void LinkedList::pop_back()
+template<typename T>
+void LinkedList<T>::pop_back()
 {
 	// 노드가 비어있지 않다면
 	if (!empty())
@@ -142,12 +112,13 @@ void LinkedList::pop_back()
 }
 
 // 모든 노드 삭제
-void LinkedList::clear()
+template<typename T>
+void LinkedList<T>::clear()
 {
 	// 삭제할 임시 노드 생성
-	Node* temp = nullptr;
+	Node<T>* temp = nullptr;
 	// 머리의 다음 노드부터 이동할 노드 생성
-	Node* current = head->next;
+	Node<T>* current = head->next;
 
 	// 현재 노드가 꼬리가 아닌 동안
 	while (current != tail)
@@ -170,13 +141,15 @@ void LinkedList::clear()
 }
 
 // 노드가 비었는지 확인
-bool LinkedList::empty() const
+template<typename T>
+bool LinkedList<T>::empty() const
 {
 	return count == 0;
 }
 
 // 노드의 갯수
-int LinkedList::size() const
+template<typename T>
+int LinkedList<T>::size() const
 {
 	return count;
 }

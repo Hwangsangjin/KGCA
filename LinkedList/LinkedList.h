@@ -1,26 +1,30 @@
 #pragma once
 
+#include <iostream>
+
+template<typename T>
+struct Node
+{
+	T data;
+	Node* prev;
+	Node* next;
+};
+
+template<typename T>
 class LinkedList
 {
-private:
-	struct Node
-	{
-		int data;
-		Node* prev;
-		Node* next;
-	};
-
+public:
 	class Iterator
 	{
-	private:
-		Node* ptr;
+	public:
+		Node<T>* ptr;
 
 	public:
 		Iterator() : ptr(nullptr) {}
-		Iterator(Node* node) : ptr(node) {}
+		Iterator(Node<T>* node) : ptr(node) {}
 
-		int& operator*()
-		{ 
+		T& operator*()
+		{
 			return ptr->data;
 		}
 
@@ -60,25 +64,13 @@ private:
 			return ptr != iterator.ptr;
 		}
 
-		friend std::ostream& operator<<(std::ostream& os, const Iterator& iterator)
-		{
-			os << iterator.ptr;
-			return os;
-		}
-
-		friend std::ofstream& operator<<(std::ofstream& fs, const Iterator& iterator)
-		{
-			fs << iterator.ptr;
-			return fs;
-		}
-
 		friend class LinkedList;
 	};
 
-	int count;
-	Node* head;
-	Node* tail;
-
+	size_t count;
+	Node<T>* head = nullptr;
+	Node<T>* tail = nullptr;
+	
 public:
 	LinkedList();
 	~LinkedList();
@@ -86,15 +78,15 @@ public:
 	Iterator begin() const { return Iterator(head->next); }
 	Iterator end() const { return Iterator(tail); }
 
-	void insert(const Iterator& iterator, const int value);
-	void push_front(int value);
-	void push_back(int value);
+	void insert(const Iterator& iterator, const T& value);
+	void push_front(const T& value);
+	void push_back(const T& value);
 
-	Iterator find(const int now) const
+	Iterator find(const T& value) const
 	{
-		Node* current = head->next;
+		Node<T>* current = head->next;
 
-		while (current->data != now && current != tail)
+		while (current->data != value && current != tail)
 		{
 			current = current->next;
 		}
