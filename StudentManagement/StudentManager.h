@@ -3,7 +3,6 @@
 #include "Student.h"
 #include "LinkedList.h"
 #include <iostream>
-using namespace std;
 
 enum MENU
 {
@@ -12,7 +11,9 @@ enum MENU
 	REMOVE,
 	SEARCH,
 	PRINT,
-	EXIT
+	SAVE,
+	LOAD,
+	EXIT = 0
 };
 
 class StudentManager
@@ -29,6 +30,7 @@ public:
 	void remove();
 	void search();
 	void print();
-
+	void save();
+	void load();
 };
 

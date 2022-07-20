@@ -1,17 +1,25 @@
 #include "StudentManager.h"
+#include <string>
+#include <fstream>
+#include <windows.h>
 
-// 학생 관리 매니저 실행
+using namespace std;
+
+// 실행
 void StudentManager::run()
 {
+	cout << "< 학생 관리 프로그램 >" << endl << endl;
+
 	while (true)
 	{
-		cout << "[1] 학생 정보 등록" << endl;
-		cout << "[2] 학생 정보 삭제" << endl;
-		cout << "[3] 학생 정보 검색" << endl;
-		cout << "[4] 학생 정보 출력" << endl;
-		cout << "[5] 프로그램 종료" << endl;
-		cout << endl;
-		cout << "옵션 선택 >> ";
+		cout << "[1] 등록" << endl;
+		cout << "[2] 삭제" << endl;
+		cout << "[3] 검색" << endl;
+		cout << "[4] 출력" << endl;
+		cout << "[5] 저장" << endl;
+		cout << "[6] 로드" << endl;
+		cout << "[0] 종료" << endl << endl;
+		cout << "메뉴 선택 >> ";
 
 		int select;
 		cin >> select;
@@ -21,11 +29,6 @@ void StudentManager::run()
 			cin.clear();
 
 			continue;
-		}
-
-		if (select == EXIT)
-		{
-			break;
 		}
 
 		switch (select)
@@ -42,21 +45,32 @@ void StudentManager::run()
 		case PRINT:
 			print();
 			break;
+		case SAVE:
+			save();
+			break;
+		case LOAD:
+			load();
+			break;
+		case EXIT:
+			break;
+		default:
+			cout << endl << "메뉴 선택 오류 " << endl << endl;
+			break;
 		}
 	}
 }
 
-// 학생 정보 추가
+// 추가
 void StudentManager::add()
 {
 	{
-		int number;
+		unsigned int number;
 		char name[10];
-		int kor;
-		int eng;
-		int math;
+		unsigned int kor;
+		unsigned int eng;
+		unsigned int math;
 
-		cout << "학생 번호 : ";
+		cout << endl << "학생 번호 : ";
 		cin >> number;
 		cout << "학생 이름 : ";
 		cin >> name;
@@ -66,29 +80,92 @@ void StudentManager::add()
 		cin >> eng;
 		cout << "수학 점수 : ";
 		cin >> math;
-
+		cout << endl;
 		students.push_back(new Student(number, name, kor, eng, math));
 	}
 }
 
-// 학생 정보 제거
+// 삭제
 void StudentManager::remove()
 {
 	students.pop_back();
 }
 
-// 학생 정보 검색
+// 검색
 void StudentManager::search()
 {
 }
 
-// 학생 정보 출력
+// 출력
 void StudentManager::print()
 {
-	cout << "번호" << " " << "이름" << " " << "국어" << " " << "영어" << " " << "수학" << " " << "총점" << " " << "평균" << endl;
+	if (students.empty())
+	{
+		cout << endl << "= 데이터 없음 =" << endl << endl;
+	}
+	else
+	{
+		cout << "번호" << '\t' << "이름" << '\t' << "국어" << '\t' << "영어" << '\t' << "수학" << '\t' << "총점" << '\t' << "평균" << endl;
+
+		for (auto& i : students)
+		{
+			cout << i->get_number() << '\t';
+			cout << i->get_name() << '\t';
+			cout << i->get_kor() << '\t';
+			cout << i->get_eng() << '\t';
+			cout << i->get_math() << '\t';
+			cout << i->get_total() << '\t';
+			cout << i->get_avg();
+		}
+		cout << endl;
+	}
+}
+
+// 저장
+void StudentManager::save()
+{
+	ofstream fout;
+	fout.open("Student.txt", ios::app);
+
+	fout << "번호" << '\t';
+	fout << "이름" << '\t';
+	fout << "국어" << '\t';
+	fout << "영어" << '\t';
+	fout << "수학" << '\t';
+	fout << "총점" << '\t';
+	fout << "평균" << endl;
 
 	for (auto& i : students)
 	{
-		cout << i->get_number() << " " << i->get_name() << " " << i->get_kor() << " " << i->get_eng() << " " << i->get_math() << " " << i->get_total() << " " << i->get_avg() << endl;
+		fout << i->get_number() << '\t';
+		fout << i->get_name() << '\t';
+		fout << i->get_kor() << '\t';
+		fout << i->get_eng() << '\t';
+		fout << i->get_math() << '\t';
+		fout << i->get_total() << '\t';
+		fout << i->get_avg() << endl;
 	}
+	cout << endl;
+
+	fout.close();
+}
+
+// 로드
+void StudentManager::load()
+{
+	ifstream fin;
+	fin.open("Student.txt");
+
+	if (fin.fail())
+	{
+		cout << endl << "= 데이터 없음 =" << endl << endl;
+	}
+
+	string str;
+	while (::getline(fin, str))
+	{
+		cout << str << endl;
+	}
+
+	fin.close();
 }
