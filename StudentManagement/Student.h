@@ -8,7 +8,7 @@ class Student
 {
 private:
     char name[NAME_SIZE];
-    unsigned int id;
+    unsigned int index;
     unsigned int kor;
     unsigned int eng;
     unsigned int math;
@@ -16,10 +16,10 @@ private:
     float avg;
 
 public:
-    Student(unsigned int in_id, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math);
+    Student(unsigned int in_index, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math);
 	~Student();
 
-    const int& get_id() const;
+    const int& get_index() const;
     const char* get_name() const;
     const int& get_kor() const;
     const int& get_eng() const;

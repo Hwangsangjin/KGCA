@@ -6,18 +6,18 @@
 enum MENU
 {
 	EXIT,
+	SAMPLE,
+	SORT,
+	SEARCH,
 	ADD,
 	REMOVE,
-	SEARCH,
-	SORT,
 	SAVE,
-	LOAD
 };
 
 class StudentManager
 {
 private:
-	static unsigned int id;
+	static unsigned int index;
 	static StudentManager* instance;
 	LinkedList<Student*> students;
 
@@ -29,12 +29,16 @@ public:
 	static void destory();
 
 	void run();
+	void print_data();
+	void print_all_data();
+	void print_no_data();
+	void print_title();
+	void print_menu();
+	void sample();
+	void sort();
+	void search();
 	void add();
 	void remove();
-	void search();
-	void sort();
-	void print();
 	void save();
-	void load();
 };
 

@@ -1,13 +1,10 @@
 #include "Student.h"
-#include <time.h>
-#include <stdlib.h>
 
-
-Student::Student(unsigned int in_id, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math)
+Student::Student(unsigned int in_index, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math)
     : kor(in_kor), eng(in_eng), math(in_math)
 {
     strcpy_s(name, in_name);
-    id = in_id;
+    index = in_index;
     total = kor + eng + math;
     avg = total / 3.0f;
 }
@@ -16,9 +13,9 @@ Student::~Student()
 {
 }
 
-const int& Student::get_id() const
+const int& Student::get_index() const
 {
-    return id;
+    return index;
 }
 
 const char* Student::get_name() const
