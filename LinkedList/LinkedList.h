@@ -1,5 +1,6 @@
 #pragma once
 
+// 노드
 template<typename T>
 struct Node
 {
@@ -8,10 +9,12 @@ struct Node
 	Node* next;
 };
 
+// 연결 리스트
 template<typename T>
 class LinkedList
 {
 private:
+	// 반복자
 	class Iterator
 	{
 	private:
@@ -32,24 +35,10 @@ private:
 			return *this;
 		}
 
-		Iterator& operator++(int)
-		{
-			Iterator temp = *this;
-			ptr = ptr->next;
-			return temp;
-		}
-
 		Iterator& operator--()
 		{
 			ptr = ptr->prev;
 			return *this;
-		}
-
-		Iterator& operator--(int)
-		{
-			Iterator temp = *this;
-			ptr = ptr->prev;
-			return temp;
 		}
 
 		bool operator==(const Iterator& iterator) const
