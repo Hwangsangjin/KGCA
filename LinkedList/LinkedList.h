@@ -1,7 +1,7 @@
 #pragma once
 
 // 노드
-template<typename T>
+template <typename T>
 struct Node
 {
 	T data;
@@ -10,7 +10,7 @@ struct Node
 };
 
 // 연결 리스트
-template<typename T>
+template <typename T>
 class LinkedList
 {
 private:
@@ -69,7 +69,7 @@ public:
 	void push_front(const T& value);
 	void push_back(const T& value);
 
-	Iterator find(const T& value) const
+	Iterator find(const T& value)
 	{
 		Node<T>* current = head->next;
 
@@ -79,6 +79,39 @@ public:
 		}
 
 		return current;
+	}
+
+	void sort()
+	{
+		/*Node<T>* temp = nullptr;
+		Node<T>* current = head->next;
+
+		while (current != tail)
+		{
+			if (current->data > current->next->data)
+			{
+				temp = current;
+
+				temp->prev->next = temp->next;
+				
+				temp->next->prev = temp;
+			}
+
+			current = current->next;
+		}*/
+
+		Node<T>* temp = head->next;
+
+		while (temp != tail)
+		{
+			if (temp->data > temp->next->data)
+			{
+				temp->prev->next = temp->next;
+				temp->next->prev = temp->prev->next;
+			}
+
+			temp = temp->next;
+		}
 	}
 
 	void erase(const Iterator& iterator);
@@ -92,7 +125,7 @@ public:
 };
 
 // 생성자
-template<typename T>
+template <typename T>
 LinkedList<T>::LinkedList()
 {
 	// 초기 노드의 갯수
@@ -109,7 +142,7 @@ LinkedList<T>::LinkedList()
 }
 
 // 소멸자
-template<typename T>
+template <typename T>
 LinkedList<T>::~LinkedList()
 {
 	// 노드가 비어있지 않다면
@@ -125,7 +158,7 @@ LinkedList<T>::~LinkedList()
 }
 
 // 노드 삽입
-template<typename T>
+template <typename T>
 void LinkedList<T>::insert(const Iterator& iterator, const T& value)
 {
 	// 반복자의 위치를 노드에 전달
@@ -144,7 +177,7 @@ void LinkedList<T>::insert(const Iterator& iterator, const T& value)
 }
 
 // 노드를 앞에 추가
-template<typename T>
+template <typename T>
 void LinkedList<T>::push_front(const T& value)
 {
 	// 머리의 다음 위치를 전달
@@ -152,7 +185,7 @@ void LinkedList<T>::push_front(const T& value)
 }
 
 // 노드를 뒤에 추가
-template<typename T>
+template <typename T>
 void LinkedList<T>::push_back(const T& value)
 {
 	// 꼬리의 위치를 전달
