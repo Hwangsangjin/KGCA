@@ -96,6 +96,7 @@ void StudentManager::run()
 			sample();
 			break;
 		case SORT:
+			sort();
 			system("cls");
 			break;
 		case SEARCH:
@@ -151,7 +152,7 @@ void StudentManager::print_all_data()
 		cout << i->get_math() << '\t';
 		cout << i->get_total() << '\t';
 		cout.setf(ios::showpoint);
-		cout.precision(3);
+		cout.precision(4);
 		cout << i->get_avg();
 		cout << endl;
 	}
@@ -250,7 +251,7 @@ void StudentManager::sample()
 // 정렬
 void StudentManager::sort()
 {
-
+	students.sort();
 }
 
 // 검색
@@ -288,22 +289,44 @@ void StudentManager::search()
 // 추가
 void StudentManager::add()
 {
-	char name[32];
-	unsigned int kor;
-	unsigned int eng;
-	unsigned int math;
+	string name;
+	int kor;
+	int eng;
+	int math;
 
 	cout << "학생 이름 >> ";
 	cin >> name;
+	name = name.substr(0, 6);
 
 	cout << "국어 점수 >> ";
 	cin >> kor;
 
+	if (kor < 0 || kor > 100)
+	{
+		kor = 100;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+	}
+
 	cout << "영어 점수 >> ";
 	cin >> eng;
+
+	if (eng < 0 || eng > 100)
+	{
+		eng = 100;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+	}
 	
 	cout << "수학 점수 >> ";
 	cin >> math;
+
+	if (math < 0 || math > 100)
+	{
+		math = 100;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+	}
 
 	students.push_back(new Student(index, name, kor, eng, math));
 	index++;
@@ -334,35 +357,23 @@ void StudentManager::save()
 	}
 	else
 	{
+		FILE* stream;
 		string filename;
 
 		cout << "파일명 입력 >> ";
 		cin >> filename;
+	
+		fopen_s(&stream, filename.c_str(), "w");
 
-		ofstream fout;
-		fout.open(filename, ios::out);
-
-		if (fout.is_open())
+		for (auto& i : students)
 		{
-			for (auto& i : students)
-			{
-				fout << i->get_index() << '\t';
-				fout << i->get_name() << '\t';
-				fout << i->get_kor() << '\t';
-				fout << i->get_eng() << '\t';
-				fout << i->get_math() << '\t';
-				fout << i->get_total() << '\t';
-				fout.setf(ios::showpoint);
-				fout.precision(3);
-				fout << i->get_avg() << endl;
-			}
-			cout << endl;
-
-			print_save();
-			system("pause");
+			fprintf(stream, "%d\t%s\t%d\t%d\t%d\t%d\t%.1lf\n", i->get_index(), i->get_name().c_str(), i->get_kor(), i->get_eng(), i->get_math(), i->get_total(), i->get_avg());
 		}
+		
+		print_save();
+		system("pause");
 
-		fout.close();
+		fclose(stream);
 		system("cls");
 	}
 }
@@ -370,23 +381,18 @@ void StudentManager::save()
 // 로드
 void StudentManager::load()
 {
+	FILE* stream;
 	string filename;
 
 	cout << "파일명 입력 >> ";
 	cin >> filename;
 
-	ifstream fin;
-	fin.open(filename);
+	fopen_s(&stream, filename.c_str(), "w");
 
-	if (fin.is_open())
+	for (auto& i : students)
 	{
-		string str;
-		
-		while (::getline(fin, str))
-		{
-			cout << str << endl;
-		}
-
-		system("pause");
+		fscanf(stream, "%d\t%s\t%d\t%d\t%d\t%d\t%.1lf\n", i->get_index(), i->get_name().c_str(), i->get_kor(), i->get_eng(), i->get_math(), i->get_total(), i->get_avg());
 	}
+
+	fclose(stream);
 }

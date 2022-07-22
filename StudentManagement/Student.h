@@ -1,26 +1,26 @@
 #pragma once
 
-#include <string.h>
+#include <string>
 
 #define NAME_SIZE 32
 
 class Student
 {
 private:
-    char name[NAME_SIZE];
+    std::string name;
     unsigned int index;
-    unsigned int kor;
-    unsigned int eng;
-    unsigned int math;
-    unsigned int total;
+    int kor;
+    int eng;
+    int math;
+    int total;
     float avg;
 
 public:
-    Student(unsigned int in_index, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math);
+    Student(unsigned int in_index, std::string in_name, int in_kor, int in_eng, int in_math);
 	~Student();
 
     const int& get_index() const;
-    const char* get_name() const;
+    const std::string& get_name() const;
     const int& get_kor() const;
     const int& get_eng() const;
     const int& get_math() const;

@@ -1,9 +1,8 @@
 #include "Student.h"
 
-Student::Student(unsigned int in_index, const char* in_name, unsigned int in_kor, unsigned int in_eng, unsigned int in_math)
-    : kor(in_kor), eng(in_eng), math(in_math)
+Student::Student(unsigned int in_index, std::string in_name, int in_kor, int in_eng, int in_math)
+    : name(in_name), kor(in_kor), eng(in_eng), math(in_math)
 {
-    strcpy_s(name, in_name);
     index = in_index;
     total = kor + eng + math;
     avg = total / 3.0f;
@@ -18,7 +17,7 @@ const int& Student::get_index() const
     return index;
 }
 
-const char* Student::get_name() const
+const std::string& Student::get_name() const
 {
     return name;
 }

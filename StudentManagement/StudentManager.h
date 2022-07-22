@@ -30,6 +30,7 @@ public:
 	static void release();
 
 	void run();
+
 	void print_data();
 	void print_all_data();
 	void print_no_data();
@@ -39,6 +40,7 @@ public:
 	void print_search();
 	void print_save();
 	void print_exit();
+
 	void sample();
 	void sort();
 	void search();
