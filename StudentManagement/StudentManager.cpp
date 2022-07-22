@@ -32,7 +32,7 @@ StudentManager* StudentManager::create()
 }
 
 // 해제
-void StudentManager::destory()
+void StudentManager::release()
 {
 	if (instance == nullptr)
 	{
@@ -78,11 +78,13 @@ void StudentManager::run()
 			continue;
 		}
 
-		// 종료 선택시 인스턴스 삭제
+		// 종료 선택시 인스턴스 해제
 		if (select == EXIT)
 		{
-			destory();
-			cout << "= 프로그램 종료 = " << endl;
+			cout << endl;
+			print_exit();
+			cout << endl;
+			release();
 			system("pause");
 			break;
 		}
@@ -94,9 +96,11 @@ void StudentManager::run()
 			sample();
 			break;
 		case SORT:
+			system("cls");
 			break;
 		case SEARCH:
 			search();
+			system("cls");
 			break;
 		case ADD:
 			add();
@@ -107,6 +111,9 @@ void StudentManager::run()
 			break;
 		case SAVE:
 			save();
+			break;
+		case LOAD:
+			load();
 			break;
 		default:
 			system("cls");
@@ -133,14 +140,7 @@ void StudentManager::print_data()
 // 데이터 전체
 void StudentManager::print_all_data()
 {
-	cout << "번호" << '\t';
-	cout << "이름" << '\t';
-	cout << "국어" << '\t';
-	cout << "영어" << '\t';
-	cout << "수학" << '\t';
-	cout << "총점" << '\t';
-	cout << "평균" << '\t';
-	cout << endl;
+	print_list();
 
 	for (auto& i : students)
 	{
@@ -150,6 +150,8 @@ void StudentManager::print_all_data()
 		cout << i->get_eng() << '\t';
 		cout << i->get_math() << '\t';
 		cout << i->get_total() << '\t';
+		cout.setf(ios::showpoint);
+		cout.precision(3);
 		cout << i->get_avg();
 		cout << endl;
 	}
@@ -168,6 +170,19 @@ void StudentManager::print_title()
 	cout << "< 학생 관리 프로그램 >" << endl << endl;
 }
 
+// 리스트 출력
+void StudentManager::print_list()
+{
+	cout << "번호" << '\t';
+	cout << "이름" << '\t';
+	cout << "국어" << '\t';
+	cout << "영어" << '\t';
+	cout << "수학" << '\t';
+	cout << "총점" << '\t';
+	cout << "평균" << '\t';
+	cout << endl;
+}
+
 // 메뉴 출력
 void StudentManager::print_menu()
 {
@@ -177,10 +192,29 @@ void StudentManager::print_menu()
 	cout << "[4]추가" << " ";
 	cout << "[5]삭제" << " ";
 	cout << "[6]저장" << " ";
+	cout << "[7]읽기" << " ";
 	cout << "[0]종료" << " ";
-	cout << endl;
+	cout << endl << endl;
 
 	cout << "메뉴 선택 >> ";
+}
+
+// 검색 출력
+void StudentManager::print_search()
+{
+	cout << "= 검색 완료 =" << endl << endl;
+}
+
+// 저장 완료
+void StudentManager::print_save()
+{
+	cout << "= 저장 완료 =" << endl << endl;
+}
+
+// 종료 출력
+void StudentManager::print_exit()
+{
+	cout << "= 프로그램 종료 = " << endl;
 }
 
 // 샘플
@@ -200,12 +234,12 @@ void StudentManager::sample()
 
 		if (random == 0)
 		{
-			students.push_back(new Student(index, "TEST", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
+			students.push_back(new Student(index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
 			index++;
 		}
 		else
 		{
-			students.push_front(new Student(index, "TEST", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
+			students.push_front(new Student(index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
 			index++;
 		}
 	}
@@ -216,11 +250,39 @@ void StudentManager::sample()
 // 정렬
 void StudentManager::sort()
 {
+
 }
 
 // 검색
 void StudentManager::search()
 {
+	int index;
+
+	cout << "번호 선택 >> ";
+	cin >> index;
+	cout << endl;
+
+	for (auto& i : students)
+	{
+		if (index == i->get_index())
+		{
+			print_search();
+			print_list();
+
+			cout << i->get_index() << '\t';
+			cout << i->get_name() << '\t';
+			cout << i->get_kor() << '\t';
+			cout << i->get_eng() << '\t';
+			cout << i->get_math() << '\t';
+			cout << i->get_total() << '\t';
+			cout.setf(ios::showpoint);
+			cout.precision(3);
+			cout << i->get_avg() << endl;
+			cout << endl;
+
+			system("pause");
+		}
+	}
 }
 
 // 추가
@@ -290,11 +352,41 @@ void StudentManager::save()
 				fout << i->get_eng() << '\t';
 				fout << i->get_math() << '\t';
 				fout << i->get_total() << '\t';
+				fout.setf(ios::showpoint);
+				fout.precision(3);
 				fout << i->get_avg() << endl;
 			}
+			cout << endl;
+
+			print_save();
+			system("pause");
 		}
 
 		fout.close();
 		system("cls");
+	}
+}
+
+// 로드
+void StudentManager::load()
+{
+	string filename;
+
+	cout << "파일명 입력 >> ";
+	cin >> filename;
+
+	ifstream fin;
+	fin.open(filename);
+
+	if (fin.is_open())
+	{
+		string str;
+		
+		while (::getline(fin, str))
+		{
+			cout << str << endl;
+		}
+
+		system("pause");
 	}
 }
