@@ -83,7 +83,7 @@ public:
 
 	void sort()
 	{
-		/*Node<T>* temp = nullptr;
+		Node<T>* temp = nullptr;
 		Node<T>* current = head->next;
 
 		while (current != tail)
@@ -91,27 +91,12 @@ public:
 			if (current->data > current->next->data)
 			{
 				temp = current;
-
 				temp->prev->next = temp->next;
-				
-				temp->next->prev = temp;
 			}
 
 			current = current->next;
-		}*/
-
-		Node<T>* temp = head->next;
-
-		while (temp != tail)
-		{
-			if (temp->data > temp->next->data)
-			{
-				temp->prev->next = temp->next;
-				temp->next->prev = temp->prev->next;
-			}
-
-			temp = temp->next;
 		}
+		
 	}
 
 	void erase(const Iterator& iterator);
