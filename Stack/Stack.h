@@ -1,48 +1,55 @@
 #pragma once
 
+// 노드
+template <typename T>
+struct Node
+{
+	T data;
+	Node* next;
+};
+
+// 스택
+template <typename T>
 class Stack
 {
 private:
-	struct Node
-	{
-		int data;
-		Node* next;
-	};
-
 	int count;
-	Node* head;
+	Node* top;
 
 public:
 	Stack();
 	~Stack();
 
-	void push(const int value);
+	void push(const T& value);
 	void pop();
-	const int top() const;
+	const T& top() const;
 
 	bool empty() const;
 	int size() const;
 };
 
 // 생성자
-Stack::Stack()
+template <typename T>
+Stack<T>::Stack()
 {
 	// 초기 노드의 갯수
 	count = 0;
 
 	// 탑 노드 생성
-	head = new Node{ 0, nullptr };
+	top = new Node<T>{ T(), nullptr };
 }
 
 // 소멸자
-Stack::~Stack()
+template <typename T>
+Stack<T>::~Stack()
 {
 	// 탑 노드 삭제
-	delete head;
+	delete top;
 }
 
 // 노드 추가
-void Stack::push(const int value)
+template <typename T>
+void Stack<T>::push(const T& value)
 {
 	// 새로운 노드를 생성하고 탑 노드와 연결
 	Node* newNode = new Node{ value, head };
@@ -55,7 +62,8 @@ void Stack::push(const int value)
 }
 
 // 노드 삭제
-void Stack::pop()
+template <typename T>
+void Stack<T>::pop()
 {
 	// 탑 노드가 없으면 종료
 	if (head->next == nullptr)
@@ -76,19 +84,22 @@ void Stack::pop()
 }
 
 // 탑 노드
-const int Stack::top() const
+template <typename T>
+const T& Stack<T>::top() const
 {
 	return head->data;
 }
 
 // 노드가 비었는지 확인
-bool Stack::empty() const
+template <typename T>
+bool Stack<T>::empty() const
 {
 	return count == 0;
 }
 
 // 노드의 갯수
-int Stack::size() const
+template <typename T>
+int Stack<T>::size() const
 {
 	return count;
 }
