@@ -357,23 +357,30 @@ void StudentManager::save()
 	}
 	else
 	{
-		FILE* stream;
+		ofstream fout;
 		string filename;
 
 		cout << "파일명 입력 >> ";
 		cin >> filename;
 	
-		fopen_s(&stream, filename.c_str(), "w");
+
+		fout.open(filename, ios::out);
 
 		for (auto& i : students)
 		{
-			fprintf(stream, "%d\t%s\t%d\t%d\t%d\t%d\t%.1lf\n", i->get_index(), i->get_name().c_str(), i->get_kor(), i->get_eng(), i->get_math(), i->get_total(), i->get_avg());
+			fout << i->get_index() << '\t';
+			fout << i->get_name() << '\t';
+			fout << i->get_kor() << '\t';
+			fout << i->get_eng() << '\t';
+			fout << i->get_math() << '\t';
+			fout << i->get_total() << '\t';
+			fout << i->get_avg() << endl;
 		}
 		
 		print_save();
 		system("pause");
 
-		fclose(stream);
+		fout.close();
 		system("cls");
 	}
 }
@@ -381,18 +388,28 @@ void StudentManager::save()
 // 로드
 void StudentManager::load()
 {
-	FILE* stream;
+	ifstream fin;
 	string filename;
 
 	cout << "파일명 입력 >> ";
 	cin >> filename;
 
-	fopen_s(&stream, filename.c_str(), "w");
+	fin.open(filename);
 
-	for (auto& i : students)
+	if (fin.is_open())
 	{
-		fscanf(stream, "%d\t%s\t%d\t%d\t%d\t%d\t%.1lf\n", i->get_index(), i->get_name().c_str(), i->get_kor(), i->get_eng(), i->get_math(), i->get_total(), i->get_avg());
+		print_list();
+
+		string str;
+
+		while (::getline(fin, str))
+		{
+			cout << str << endl;
+		}
+		cout << endl;
+
+		system("pause");
 	}
 
-	fclose(stream);
+	fin.close();
 }
