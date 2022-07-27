@@ -5,7 +5,7 @@ template <typename T>
 struct Node
 {
 	T data;
-	Node* next;
+	Node<T>* next;
 };
 
 // 스택
@@ -14,7 +14,7 @@ class Stack
 {
 private:
 	int count;
-	Node* top;
+	Node<T>* topNode;
 
 public:
 	Stack();
@@ -36,7 +36,7 @@ Stack<T>::Stack()
 	count = 0;
 
 	// 탑 노드 생성
-	top = new Node<T>{ T(), nullptr };
+	topNode = new Node<T>{ T(), nullptr };
 }
 
 // 소멸자
@@ -44,7 +44,7 @@ template <typename T>
 Stack<T>::~Stack()
 {
 	// 탑 노드 삭제
-	delete top;
+	delete topNode;
 }
 
 // 노드 추가
@@ -52,10 +52,10 @@ template <typename T>
 void Stack<T>::push(const T& value)
 {
 	// 새로운 노드를 생성하고 탑 노드와 연결
-	Node* newNode = new Node{ value, head };
+	Node<T>* newNode = new Node<T>{ value, topNode };
 
 	// 탑 노드를 새로 생성한 노드로 변경
-	head = newNode;
+	topNode = newNode;
 
 	// 노드 갯수 증가
 	count++;
@@ -66,15 +66,15 @@ template <typename T>
 void Stack<T>::pop()
 {
 	// 탑 노드가 없으면 종료
-	if (head->next == nullptr)
+	if (topNode->next == nullptr)
 	{
 		return;
 	}
 
 	// 임시 노드를 생성하고 탑 노드로 설정
-	Node* temp = head;
+	Node<T>* temp = topNode;
 	// 탑 노드를 이전 노드로 변경
-	head = head->next;
+	topNode = topNode->next;
 
 	// 탑 노드 메모리 해제
 	delete temp;
@@ -87,7 +87,7 @@ void Stack<T>::pop()
 template <typename T>
 const T& Stack<T>::top() const
 {
-	return head->data;
+	return topNode->data;
 }
 
 // 노드가 비었는지 확인
