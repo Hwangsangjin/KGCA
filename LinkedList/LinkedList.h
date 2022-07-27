@@ -75,6 +75,9 @@ public:
 	Iterator begin() const { return Iterator(head->next); }
 	Iterator end() const { return Iterator(tail); }
 
+	T front() const { return head->next->data; }
+	T back() const { return tail->prev->data; }
+
 	void insert(const Iterator& iterator, const T& value);
 	void push_front(const T& value);
 	void push_back(const T& value);
