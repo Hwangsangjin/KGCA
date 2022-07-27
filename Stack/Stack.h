@@ -1,19 +1,19 @@
 #pragma once
 
-// 노드
-template <typename T>
-struct Node
-{
-	T data;
-	Node<T>* next;
-};
-
 // 스택
 template <typename T>
 class Stack
 {
 private:
-	int count;
+	// 노드
+	template <typename T>
+	struct Node
+	{
+		T data;
+		Node<T>* next;
+	};
+
+	size_t count;
 	Node<T>* topNode;
 
 public:
