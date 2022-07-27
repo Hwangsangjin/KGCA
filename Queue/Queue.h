@@ -22,35 +22,35 @@ public:
 
 // 노드 추가
 template<typename T>
-void Queue<T>::enqueue(const T& e)
+inline void Queue<T>::enqueue(const T& e)
 {
 	list.push_back(e);
 }
 
 // 노드 삭제
 template<typename T>
-void Queue<T>::denqueue()
+inline void Queue<T>::denqueue()
 {
 	list.pop_front();
 }
 
 // 첫 번째 노드의 데이터
 template<typename T>
-const T& Queue<T>::front() const
+inline const T& Queue<T>::front() const
 {
 	return list.front();
 }
 
 // 노드가 비었는지 확인
 template<typename T>
-bool Queue<T>::empty() const
+inline bool Queue<T>::empty() const
 {
 	return list.empty();
 }
 
 // 노드의 갯수
 template<typename T>
-int Queue<T>::size() const
+inline int Queue<T>::size() const
 {
 	return list.size();
 }
