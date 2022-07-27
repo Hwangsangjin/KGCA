@@ -108,12 +108,12 @@ LinkedList<T>::LinkedList()
 	// 초기 노드의 갯수
 	count = 0;
 
-	//// 머리와 꼬리 생성
+	// 머리와 꼬리 생성
 	head = new Node<T>{ T(), nullptr, nullptr };
 	tail = new Node<T>{ T(), nullptr, nullptr };
 
-	//// 머리의 다음 노드를 꼬리에 연결
-	//// 꼬리의 이전 노드를 머리에 연결
+	// 머리의 다음 노드를 꼬리에 연결
+	// 꼬리의 이전 노드를 머리에 연결
 	head->next = tail;
 	tail->prev = head;
 }
