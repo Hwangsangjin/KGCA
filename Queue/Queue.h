@@ -12,7 +12,7 @@ private:
 public:
 	Queue() {}
 
-	void enqueue(const T& value);
+	void enqueue(const T& e);
 	void denqueue();
 	const T& front() const;
 	
@@ -22,9 +22,9 @@ public:
 
 // 노드 추가
 template<typename T>
-void Queue<T>::enqueue(const T& value)
+void Queue<T>::enqueue(const T& e)
 {
-	list.push_back(value);
+	list.push_back(e);
 }
 
 // 노드 삭제
