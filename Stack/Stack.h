@@ -12,7 +12,7 @@ private:
 public:
 	Stack() {}
 
-	void push(const T& value);
+	void push(const T& e);
 	void pop();
 	const T& top() const;
 
@@ -22,9 +22,9 @@ public:
 
 // 노드 추가
 template <typename T>
-void Stack<T>::push(const T& value)
+void Stack<T>::push(const T& e)
 {
-	list.push_back(value);
+	list.push_back(e);
 }
 
 // 노드 삭제
