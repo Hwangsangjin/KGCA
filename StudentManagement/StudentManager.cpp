@@ -251,7 +251,7 @@ void StudentManager::sample()
 // 정렬
 void StudentManager::sort()
 {
-	students.sort();
+	
 }
 
 // 검색
@@ -398,6 +398,7 @@ void StudentManager::load()
 
 	if (fin.is_open())
 	{
+		cout << endl;
 		print_list();
 
 		string str;
