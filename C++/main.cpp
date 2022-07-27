@@ -1,26 +1,31 @@
 #include <iostream>
-#include <queue>
+#include <CircularQueue.h>
 
 using namespace std;
 
 int main()
 {
-	queue<int> q;
-	q.push(10);
-	q.push(20);
-	q.push(30);
-	q.pop();
+	CircularQueue<int> q(5);
+	
+	q.enqueue(10);
+	q.enqueue(20);
+	q.enqueue(30);
+	q.enqueue(40);
+	q.enqueue(50);
+	q.dequeue();
+	q.dequeue();
+	q.enqueue(60);
+	q.enqueue(70);
 
-	cout << q.front() << endl;
-	q.push(40);
-
+	q.enqueue(80);
+	
 	while (!q.empty())
 	{
 		auto& e = q.front();
 		cout << e << " ";
-		q.pop();
+		q.dequeue();
 	}
 	cout << endl;
-	
+
 	return 0;
 }
