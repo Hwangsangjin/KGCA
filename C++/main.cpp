@@ -1,5 +1,5 @@
 #include <iostream>
-#include <CircularQueue.h>
+#include <Queue.h>
 
 using namespace std;
 
