@@ -77,6 +77,7 @@ void delete_node(Node* node)
 		delete_node(node->left);
 		delete_node(node->right);
 		delete node;
+		node = nullptr;
 	}
 }
 
