@@ -52,6 +52,7 @@ private:
 			}
 		}
 	}
+
 	// 탐색 구현
 	Node* find_impl(Node* current, int value)
 	{
@@ -84,6 +85,7 @@ private:
 			}
 		}
 	}
+
 	// 중위 순회 출력 구현
 	void inorder_impl(Node* current)
 	{
@@ -149,6 +151,7 @@ private:
 		// 현재 노드가 삭제되지 않은 경우
 		return node;
 	}
+
 	// 후속 노드 찾기
 	Node* successor(Node* node)
 	{
