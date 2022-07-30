@@ -18,35 +18,35 @@ enum MENU
 class StudentManager
 {
 private:
-	static unsigned int index;
-	static StudentManager* instance;
-	LinkedList<Student*> students;
+	static unsigned int _index;
+	static StudentManager* _instance;
+	LinkedList<Student*> _students;
 
 	StudentManager();
 	~StudentManager();
 
 public:
-	static StudentManager* create();
-	static void release();
+	static StudentManager* Instance();
+	static void Release();
 
-	void run();
+	void Run();
 
-	void print_data();
-	void print_all_data();
-	void print_no_data();
-	void print_title();
-	void print_list();
-	void print_menu();
-	void print_search();
-	void print_save();
-	void print_exit();
+	void PrintData();
+	void PrintAllData();
+	void PrintNoData();
+	void PrintTitle();
+	void PrintList();
+	void PrintMenu();
+	void PrintSearch();
+	void PrintSave();
+	void PrintExit();
 
-	void sample();
-	void sort();
-	void search();
-	void add();
-	void remove();
-	void save();
-	void load();
+	void Sample();
+	void Sort();
+	void Search();
+	void Add();
+	void Remove();
+	void Save();
+	void Load();
 };
 

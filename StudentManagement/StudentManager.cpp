@@ -7,10 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-using namespace std;
-
-unsigned int StudentManager::index = 1;
-StudentManager* StudentManager::instance = nullptr;
+unsigned int StudentManager::_index = 1;
+StudentManager* StudentManager::_instance = nullptr;
 
 StudentManager::StudentManager()
 {
@@ -21,30 +19,30 @@ StudentManager::~StudentManager()
 }
 
 // 생성
-StudentManager* StudentManager::create()
+StudentManager* StudentManager::Instance()
 {
-	if (instance == nullptr)
+	if (_instance == nullptr)
 	{
-		instance = new StudentManager;
+		_instance = new StudentManager;
 	}
 
-	return instance;
+	return _instance;
 }
 
 // 해제
-void StudentManager::release()
+void StudentManager::Release()
 {
-	if (instance == nullptr)
+	if (_instance == nullptr)
 	{
 		return;
 	}
 
-	delete instance;
-	instance = nullptr;
+	delete _instance;
+	_instance = nullptr;
 }
 
 // 실행
-void StudentManager::run()
+void StudentManager::Run()
 {
 
 	while (true)
@@ -56,24 +54,24 @@ void StudentManager::run()
 		setlocale(LC_ALL, "korean");
 
 		// 타이틀 출력
-		print_title();
+		PrintTitle();
 
 		// 데이터 출력
-		print_data();
+		PrintData();
 
 		// 메뉴 출력
-		print_menu();
+		PrintMenu();
 
 		// 메뉴 선택
 		int select;
-		cin >> select;
+		std::cin >> select;
 
 		// 메뉴 선택 오류 처리
-		if (cin.fail())
+		if (std::cin.fail())
 		{
 			system("cls");
-			cin.clear();
-			cin.ignore(INT_MAX, '\n');
+			std::cin.clear();
+			std::cin.ignore(INT_MAX, '\n');
 
 			continue;
 		}
@@ -81,10 +79,10 @@ void StudentManager::run()
 		// 종료 선택시 인스턴스 해제
 		if (select == EXIT)
 		{
-			cout << endl;
-			print_exit();
-			cout << endl;
-			release();
+			std::cout << std::endl;
+			PrintExit();
+			std::cout << std::endl;
+			Release();
 			system("pause");
 			break;
 		}
@@ -93,28 +91,28 @@ void StudentManager::run()
 		switch (select)
 		{
 		case SAMPLE:
-			sample();
+			Sample();
 			break;
 		case SORT:
-			sort();
+			Sort();
 			system("cls");
 			break;
 		case SEARCH:
-			search();
+			Search();
 			system("cls");
 			break;
 		case ADD:
-			add();
+			Add();
 			break;
 		case REMOVE:
 			system("cls");
-			remove();
+			Remove();
 			break;
 		case SAVE:
-			save();
+			Save();
 			break;
 		case LOAD:
-			load();
+			Load();
 			break;
 		default:
 			system("cls");
@@ -124,107 +122,107 @@ void StudentManager::run()
 }
 
 // 출력
-void StudentManager::print_data()
+void StudentManager::PrintData()
 {
-	if (students.empty())
+	if (_students.empty())
 	{
 		system("cls");
-		print_title();
-		print_no_data();
+		PrintTitle();
+		PrintNoData();
 	}
 	else
 	{
-		print_all_data();
+		PrintAllData();
 	}
 }
 
 // 데이터 전체
-void StudentManager::print_all_data()
+void StudentManager::PrintAllData()
 {
-	print_list();
+	PrintList();
 
-	for (auto& i : students)
+	for (auto& i : _students)
 	{
-		cout << i->get_index() << '\t';
-		cout << i->get_name() << '\t';
-		cout << i->get_kor() << '\t';
-		cout << i->get_eng() << '\t';
-		cout << i->get_math() << '\t';
-		cout << i->get_total() << '\t';
-		cout.setf(ios::showpoint);
-		cout.precision(4);
-		cout << i->get_avg();
-		cout << endl;
+		std::cout << i->GetIndex() << '\t';
+		std::cout << i->GetName() << '\t';
+		std::cout << i->GetKor() << '\t';
+		std::cout << i->GetEng() << '\t';
+		std::cout << i->GetMath() << '\t';
+		std::cout << i->GetTotal() << '\t';
+		std::cout.setf(std::ios::showpoint);
+		std::cout.precision(4);
+		std::cout << i->GetAvg();
+		std::cout << std::endl;
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
 
 // 데이터 없음
-void StudentManager::print_no_data()
+void StudentManager::PrintNoData()
 {
-	cout << "= 데이터 없음 =" << endl << endl;
+	std::cout << "= 데이터 없음 =" << std::endl << std::endl;
 }
 
 // 타이틀 출력
-void StudentManager::print_title()
+void StudentManager::PrintTitle()
 {
-	cout << "< 학생 관리 프로그램 >" << endl << endl;
+	std::cout << "< 학생 관리 프로그램 >" << std::endl << std::endl;
 }
 
 // 리스트 출력
-void StudentManager::print_list()
+void StudentManager::PrintList()
 {
-	cout << "번호" << '\t';
-	cout << "이름" << '\t';
-	cout << "국어" << '\t';
-	cout << "영어" << '\t';
-	cout << "수학" << '\t';
-	cout << "총점" << '\t';
-	cout << "평균" << '\t';
-	cout << endl;
+	std::cout << "번호" << '\t';
+	std::cout << "이름" << '\t';
+	std::cout << "국어" << '\t';
+	std::cout << "영어" << '\t';
+	std::cout << "수학" << '\t';
+	std::cout << "총점" << '\t';
+	std::cout << "평균" << '\t';
+	std::cout << std::endl;
 }
 
 // 메뉴 출력
-void StudentManager::print_menu()
+void StudentManager::PrintMenu()
 {
-	cout << "[1]샘플" << " ";
-	cout << "[2]정렬" << " ";
-	cout << "[3]검색" << " ";
-	cout << "[4]추가" << " ";
-	cout << "[5]삭제" << " ";
-	cout << "[6]저장" << " ";
-	cout << "[7]읽기" << " ";
-	cout << "[0]종료" << " ";
-	cout << endl << endl;
+	std::cout << "[1]샘플" << " ";
+	std::cout << "[2]정렬" << " ";
+	std::cout << "[3]검색" << " ";
+	std::cout << "[4]추가" << " ";
+	std::cout << "[5]삭제" << " ";
+	std::cout << "[6]저장" << " ";
+	std::cout << "[7]읽기" << " ";
+	std::cout << "[0]종료" << " ";
+	std::cout << std::endl << std::endl;
 
-	cout << "메뉴 선택 >> ";
+	std::cout << "메뉴 선택 >> ";
 }
 
 // 검색 출력
-void StudentManager::print_search()
+void StudentManager::PrintSearch()
 {
-	cout << "= 검색 완료 =" << endl << endl;
+	std::cout << "= 검색 완료 =" << std::endl << std::endl;
 }
 
 // 저장 완료
-void StudentManager::print_save()
+void StudentManager::PrintSave()
 {
-	cout << "= 저장 완료 =" << endl << endl;
+	std::cout << "= 저장 완료 =" << std::endl << std::endl;
 }
 
 // 종료 출력
-void StudentManager::print_exit()
+void StudentManager::PrintExit()
 {
-	cout << "= 프로그램 종료 = " << endl;
+	std::cout << "= 프로그램 종료 = " << std::endl;
 }
 
 // 샘플
-void StudentManager::sample()
+void StudentManager::Sample()
 {
-	if (students.empty() == false)
+	if (_students.empty() == false)
 	{
-		students.clear();
-		index = 1;
+		_students.clear();
+		_index = 1;
 	}
 
 	const int SAMPLE_SIZE = 20;
@@ -235,13 +233,13 @@ void StudentManager::sample()
 
 		if (random == 0)
 		{
-			students.push_back(new Student(index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
-			index++;
+			_students.push_back(new Student(_index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
+			_index++;
 		}
 		else
 		{
-			students.push_front(new Student(index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
-			index++;
+			_students.push_front(new Student(_index, "샘플", rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1));
+			_index++;
 		}
 	}
 
@@ -249,37 +247,37 @@ void StudentManager::sample()
 }
 
 // 정렬
-void StudentManager::sort()
+void StudentManager::Sort()
 {
 	
 }
 
 // 검색
-void StudentManager::search()
+void StudentManager::Search()
 {
-	int index;
+	int _index;
 
-	cout << "번호 선택 >> ";
-	cin >> index;
-	cout << endl;
+	std::cout << "번호 선택 >> ";
+	std::cin >> _index;
+	std::cout << std::endl;
 
-	for (auto& i : students)
+	for (auto& i : _students)
 	{
-		if (index == i->get_index())
+		if (_index == i->GetIndex())
 		{
-			print_search();
-			print_list();
+			PrintSearch();
+			PrintList();
 
-			cout << i->get_index() << '\t';
-			cout << i->get_name() << '\t';
-			cout << i->get_kor() << '\t';
-			cout << i->get_eng() << '\t';
-			cout << i->get_math() << '\t';
-			cout << i->get_total() << '\t';
-			cout.setf(ios::showpoint);
-			cout.precision(3);
-			cout << i->get_avg() << endl;
-			cout << endl;
+			std::cout << i->GetIndex() << '\t';
+			std::cout << i->GetName() << '\t';
+			std::cout << i->GetKor() << '\t';
+			std::cout << i->GetEng() << '\t';
+			std::cout << i->GetMath() << '\t';
+			std::cout << i->GetTotal() << '\t';
+			std::cout.setf(std::ios::showpoint);
+			std::cout.precision(3);
+			std::cout << i->GetAvg() << std::endl;
+			std::cout << std::endl;
 
 			system("pause");
 		}
@@ -287,97 +285,97 @@ void StudentManager::search()
 }
 
 // 추가
-void StudentManager::add()
+void StudentManager::Add()
 {
-	string name;
-	int kor;
-	int eng;
-	int math;
+	std::string _name;
+	int _kor;
+	int _eng;
+	int _math;
 
-	cout << "학생 이름 >> ";
-	cin >> name;
-	name = name.substr(0, 6);
+	std::cout << "학생 이름 >> ";
+	std::cin >> _name;
+	_name = _name.substr(0, 6);
 
-	cout << "국어 점수 >> ";
-	cin >> kor;
+	std::cout << "국어 점수 >> ";
+	std::cin >> _kor;
 
-	if (kor < 0 || kor > 100)
+	if (_kor < 0 || _kor > 100)
 	{
-		kor = 100;
-		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		_kor = 100;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
 	}
 
-	cout << "영어 점수 >> ";
-	cin >> eng;
+	std::cout << "영어 점수 >> ";
+	std::cin >> _eng;
 
-	if (eng < 0 || eng > 100)
+	if (_eng < 0 || _eng > 100)
 	{
-		eng = 100;
-		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		_eng = 100;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
 	}
 	
-	cout << "수학 점수 >> ";
-	cin >> math;
+	std::cout << "수학 점수 >> ";
+	std::cin >> _math;
 
-	if (math < 0 || math > 100)
+	if (_math < 0 || _math > 100)
 	{
-		math = 100;
-		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		_math = 100;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
 	}
 
-	students.push_back(new Student(index, name, kor, eng, math));
-	index++;
+	_students.push_back(new Student(_index, _name, _kor, _eng, _math));
+	_index++;
 
 	system("cls");
 }
 
 // 삭제
-void StudentManager::remove()
+void StudentManager::Remove()
 {
-	if (students.empty())
+	if (_students.empty())
 	{
-		print_no_data();
+		PrintNoData();
 	}
 	else
 	{
-		students.pop_back();
-		index--;
+		_students.pop_back();
+		_index--;
 	}
 }
 
 // 저장
-void StudentManager::save()
+void StudentManager::Save()
 {
-	if (students.empty())
+	if (_students.empty())
 	{
-		print_no_data();
+		PrintNoData();
 	}
 	else
 	{
-		ofstream fout;
-		string filename;
+		std::ofstream fout;
+		std::string filename;
 
-		cout << "파일명 입력 >> ";
-		cin >> filename;
+		std::cout << "파일명 입력 >> ";
+		std::cin >> filename;
 	
 
-		fout.open(filename, ios::out);
+		fout.open(filename, std::ios::out);
 
-		for (auto& i : students)
+		for (auto& i : _students)
 		{
-			fout << i->get_index() << '\t';
-			fout << i->get_name() << '\t';
-			fout << i->get_kor() << '\t';
-			fout << i->get_eng() << '\t';
-			fout << i->get_math() << '\t';
-			fout << i->get_total() << '\t';
-			fout << i->get_avg() << endl;
+			fout << i->GetIndex() << '\t';
+			fout << i->GetName() << '\t';
+			fout << i->GetKor() << '\t';
+			fout << i->GetEng() << '\t';
+			fout << i->GetMath() << '\t';
+			fout << i->GetTotal() << '\t';
+			fout << i->GetAvg() << std::endl;
 		}
 		
-		print_save();
+		PrintSave();
 		system("pause");
 
 		fout.close();
@@ -386,28 +384,28 @@ void StudentManager::save()
 }
 
 // 로드
-void StudentManager::load()
+void StudentManager::Load()
 {
-	ifstream fin;
-	string filename;
+	std::ifstream fin;
+	std::string filename;
 
-	cout << "파일명 입력 >> ";
-	cin >> filename;
+	std::cout << "파일명 입력 >> ";
+	std::cin >> filename;
 
 	fin.open(filename);
 
 	if (fin.is_open())
 	{
-		cout << endl;
-		print_list();
+		std::cout << std::endl;
+		PrintList();
 
-		string str;
+		std::string str;
 
-		while (::getline(fin, str))
+		while (std::getline(fin, str))
 		{
-			cout << str << endl;
+			std::cout << str << std::endl;
 		}
-		cout << endl;
+		std::cout << std::endl;
 
 		system("pause");
 	}

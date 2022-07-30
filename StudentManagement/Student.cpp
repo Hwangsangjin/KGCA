@@ -1,48 +1,48 @@
 #include "Student.h"
 
-Student::Student(unsigned int in_index, std::string in_name, int in_kor, int in_eng, int in_math)
-    : name(in_name), kor(in_kor), eng(in_eng), math(in_math)
+Student::Student(unsigned int index, std::string name, int kor, int eng, int math)
+    : _name(name), _kor(kor), _eng(eng), _math(math)
 {
-    index = in_index;
-    total = kor + eng + math;
-    avg = total / 3.0f;
+    _index = index;
+    _total = _kor + _eng + _math;
+    _avg = _total / 3.0f;
 }
 
 Student::~Student()
 {
 }
 
-const int& Student::get_index() const
+const int& Student::GetIndex() const
 {
-    return index;
+    return _index;
 }
 
-const std::string& Student::get_name() const
+const std::string& Student::GetName() const
 {
-    return name;
+    return _name;
 }
 
-const int& Student::get_kor() const
+const int& Student::GetKor() const
 {
-    return kor;
+    return _kor;
 }
 
-const int& Student::get_eng() const
+const int& Student::GetEng() const
 {
-    return eng;
+    return _eng;
 }
 
-const int& Student::get_math() const
+const int& Student::GetMath() const
 {
-    return math;
+    return _math;
 }
 
-const int& Student::get_total() const
+const int& Student::GetTotal() const
 {
-    return total;
+    return _total;
 }
 
-const float& Student::get_avg() const
+const float& Student::GetAvg() const
 {
-    return avg;
+    return _avg;
 }

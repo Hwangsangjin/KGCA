@@ -7,23 +7,23 @@
 class Student
 {
 private:
-    std::string name;
-    unsigned int index;
-    int kor;
-    int eng;
-    int math;
-    int total;
-    float avg;
+    std::string _name;
+    unsigned int _index;
+    int _kor;
+    int _eng;
+    int _math;
+    int _total;
+    float _avg;
 
 public:
     Student(unsigned int in_index, std::string in_name, int in_kor, int in_eng, int in_math);
 	~Student();
 
-    const int& get_index() const;
-    const std::string& get_name() const;
-    const int& get_kor() const;
-    const int& get_eng() const;
-    const int& get_math() const;
-    const int& get_total() const;
-    const float& get_avg() const;
+    const int& GetIndex() const;
+    const std::string& GetName() const;
+    const int& GetKor() const;
+    const int& GetEng() const;
+    const int& GetMath() const;
+    const int& GetTotal() const;
+    const float& GetAvg() const;
 };
