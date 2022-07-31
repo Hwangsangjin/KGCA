@@ -1,55 +1,30 @@
 #include <iostream>
-#include <Tree.h>
 
 int main()
 {
-	BinarySearchTree bst;
+    int aList[5] = { 10, 20, 30, 40, 50 };
 
-	bst.insert(10);
-	bst.insert(14);
-	bst.insert(5);
-	bst.insert(7);
-	bst.insert(18);
-	bst.insert(4);
-	bst.insert(6);
-	bst.insert(20);
-	bst.insert(16);
-	bst.inorder();
-	std::cout << std::endl;
+    // 전형적인 C 스타일 반복문
+    for (size_t i = 0; i < 5; i++)
+    {
+        std::cout << aList[i] << ' ';
+    }
+    std::cout << std::endl;
 
-	if (bst.find(7))
-	{
-		std::cout << "7 is found" << std::endl;
-	}
-	else
-	{
-		std::cout << "7 is not found" << std::endl;
-	}
+    // 범위 기반 C++11 스타일 반복문
+    // 각 요소의 값을 n에 복사한다.
+    for (auto n : aList)
+    {
+        std::cout << n << std::endl;
+    }
+    std::cout << std::endl;
 
-	if (bst.find(15))
-	{
-		std::cout << "15 is found" << std::endl;
-	}
-	else
-	{
-		std::cout << "15 is not found" << std::endl;
-	}
-
-	bst.insert(9);
-	bst.insert(12);
-	bst.inorder();
-	std::cout << std::endl;
-
-	bst.erase(4);
-	bst.erase(5);
-	bst.erase(14);
-	bst.inorder();
-	std::cout << std::endl;
-
-	bst.insert(15);
-	bst.erase(10);
-	bst.inorder();
-	std::cout << std::endl;
+    // n은 각 요소에 대한 참조다.
+    for (auto& n : aList)
+    {
+        std::cout << n << ' ';
+    }
+    std::cout << std::endl;
 
     return 0;
 }
