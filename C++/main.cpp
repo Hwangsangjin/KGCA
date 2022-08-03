@@ -1,59 +1,49 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 
 using namespace std;
 
-class Student
+vector<vector<int>> get_adj_list(const vector<vector<int>>& adj_matrix)
 {
-public:
-    string name;
-    int score;
+    vector<vector<int>> adj_list(adj_matrix.size());
 
-    bool operator<(const Student& st) const
+    for (size_t u = 0; u < adj_matrix.size(); u++)
     {
-        return score < st.score;
+        for (size_t v = 0; v < adj_matrix.size(); v++)
+        {
+            if (adj_matrix[u][v] == 1)
+            {
+                adj_list[u].push_back(v);
+            }
+        }
     }
-};
 
-template <typename T>
-void Print_queue(T q)
-{
-    while (!q.empty())
-    {
-        cout << q.top() << " ";
-        q.pop();
-    }
-    cout << endl;
+    return adj_list;
 }
 
 int main()
 {
-    std::vector<int> vec{ 4, 2, 3, 5, 1 };
-
-    priority_queue<int> pq1;
-
-    for (auto& n : vec)
+    // 인접 행렬
+    vector<vector<int>> adj_matrix =
     {
-        pq1.push(n);
-    }
-    Print_queue(pq1);
-
-    priority_queue<int, vector<int>, greater<int>> pq2(vec.begin(), vec.end());
-    Print_queue(pq2);
-
-    priority_queue<Student> students;
-    students.push({ "Amelia", 80 });
-    students.push({ "Sophia", 40 });
-    students.push({ "Olivia", 95 });
-    students.push({ "George", 70 });
-
-    while (!students.empty())
-    {
-        auto& s = students.top();
-        cout << s.name << " (" << s.score << ")" << endl;
-        students.pop();
-    }
+        { 0, 1, 0, 1, 1, 0 },
+        { 1, 0, 1, 0, 1, 0 },
+        { 0, 1, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 1, 0 },
+        { 1, 1, 0, 1, 0, 0 },
+        { 0, 0, 1, 0, 0, 0 }
+    };
     
+    vector<vector<int>> adj_list = get_adj_list(adj_matrix);
+
+    for (const auto& l : adj_list)
+    {
+        for (const auto& n : l)
+        {
+            cout << n << " ";
+        }
+        cout << endl;
+    }
+
     return 0;
 }
