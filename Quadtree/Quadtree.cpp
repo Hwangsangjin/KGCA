@@ -189,4 +189,6 @@ int main()
         Object* pObject = new Object;
         quadtree.AddObject(pObject);
     }
+    
+    return 0;
 }
