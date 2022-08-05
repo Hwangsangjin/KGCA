@@ -1,49 +1,31 @@
 #include <iostream>
-#include <vector>
-
 using namespace std;
 
-vector<vector<int>> get_adj_list(const vector<vector<int>>& adj_matrix)
+// 제작자 코드
+class CTest
 {
-    vector<vector<int>> adj_list(adj_matrix.size());
+public:
+    // 생성자 초기화 목록을 이용한 멤버 초기화
+    CTest() {}
 
-    for (size_t u = 0; u < adj_matrix.size(); u++)
+    // 두 개의 멤버 데이터 선언과 동시에 초기화
+    int m_nData1 = 10;
+    int m_nData2 = 20;
+
+    // 멤버 함수 선언 및 정의
+    void PrintData()
     {
-        for (size_t v = 0; v < adj_matrix.size(); v++)
-        {
-            if (adj_matrix[u][v] == 1)
-            {
-                adj_list[u].push_back(v);
-            }
-        }
+        // 두 개의 멤버 데이터에 접근하고 값을 출력한다.
+        cout << m_nData1 << endl;
+        cout << m_nData2 << endl;
     }
+};
 
-    return adj_list;
-}
-
+// 사용자 코드
 int main()
 {
-    // 인접 행렬
-    vector<vector<int>> adj_matrix =
-    {
-        { 0, 1, 0, 1, 1, 0 },
-        { 1, 0, 1, 0, 1, 0 },
-        { 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 1, 0 },
-        { 1, 1, 0, 1, 0, 0 },
-        { 0, 0, 1, 0, 0, 0 }
-    };
-    
-    vector<vector<int>> adj_list = get_adj_list(adj_matrix);
-
-    for (const auto& l : adj_list)
-    {
-        for (const auto& n : l)
-        {
-            cout << n << " ";
-        }
-        cout << endl;
-    }
+    CTest t;
+    t.PrintData();
 
     return 0;
 }
