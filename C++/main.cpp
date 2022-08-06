@@ -2,30 +2,32 @@
 using namespace std;
 
 // 제작자 코드
-class CTest
+class CRefTest
 {
+private:
+    // 참조형 멤버는 객체가 생성될 때 반드시 초기화해야 한다.
+    int& m_nData;
+    
 public:
-    // 생성자 초기화 목록을 이용한 멤버 초기화
-    CTest() {}
+    // 참조형 멤버는 반드시 생성자 초기화 목록을 이용해 초기화한다.
+    CRefTest(int& rParam) : m_nData(rParam) {}
 
-    // 두 개의 멤버 데이터 선언과 동시에 초기화
-    int m_nData1 = 10;
-    int m_nData2 = 20;
-
-    // 멤버 함수 선언 및 정의
-    void PrintData()
-    {
-        // 두 개의 멤버 데이터에 접근하고 값을 출력한다.
-        cout << m_nData1 << endl;
-        cout << m_nData2 << endl;
-    }
+    int GetData() { return m_nData; }
+    
 };
 
 // 사용자 코드
 int main()
 {
-    CTest t;
-    t.PrintData();
+    int a = 10;
+    CRefTest t(a);
+
+    cout << t.GetData() << endl;
+
+    // 참조 원본인 a의 값이 수정되었다.
+    a = 20;
+    
+    cout << t.GetData() << endl;
 
     return 0;
 }
