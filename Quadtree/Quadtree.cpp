@@ -1,10 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+#include "Collision.h"
+#include <windows.h>
 
 class Object
 {
 public:
+    CRect _rt;
     float _x;
     float _y;
     float _w;
@@ -12,28 +12,19 @@ public:
 
     Object()
     {
-        _x = 20 + (rand() % 80);
-        _y = 20 + (rand() % 80);
-        _w = 10.0f + (rand() % 10);
-        _h = 10.0f + (rand() % 10);
+        _rt.Set(20 + (rand() % 80), 20 + (rand() % 80), 5.0f + (rand() % 5), 5.0f + (rand() % 5));
     }
 
     void SetPosition(float x, float y, float w, float h)
     {
-        _x = x;
-        _y = y;
-        _w = w;
-        _h = h;
+        _rt.Set(x, y, w, h);
     }
 };
 
 class Node
 {
 public:
-    float _x;
-    float _y;
-    float _w;
-    float _h;
+    CRect _rt;
     int _depth;
     std::vector<Object*> _objects;
     Node* _pChild[4];
@@ -41,10 +32,7 @@ public:
 
     Node(Node* pParent, float x, float y, float w, float h)
     {
-        _x = x;
-        _y = y;
-        _w = w;
-        _h = h;
+        _rt.Set(x, y, w, h);
         _depth = 0;
         _pParent = nullptr;
 
@@ -76,9 +64,6 @@ public:
     void Buildtree(Node* pNode);
     void AddObject(Object* pObject);
     Node* FindNode(Node* pNode, Object* pObject);
-    bool RectToInRect(Node* pNode, Object* pObject);
-    int RectToRect(Node* pNode, Object* pObject);
-    int RectToRect(Object* pDestObject, Object* pSrcObject);
     void GetCollisitionObject(Node* pNode, Object* pObject, std::vector<Object*>& list);
 
     ~Quadtree()
@@ -106,22 +91,22 @@ void Quadtree::Buildtree(Node* pNode)
     }
 
     float x, y, w, h;
-    x = pNode->_x;
-    y = pNode->_y;
-    w = pNode->_w / 2.0f;
-    h = pNode->_h / 2.0f;
+    x = pNode->_rt.x1;
+    y = pNode->_rt.y1;
+    w = pNode->_rt.w / 2.0f;
+    h = pNode->_rt.h / 2.0f;
 
     pNode->_pChild[0] = CreateNode(pNode, x, y, w, h);
-    x = pNode->_x + w;
-    y = pNode->_y;
+    x = pNode->_rt.x1 + w;
+    y = pNode->_rt.y1;
 
     pNode->_pChild[1] = CreateNode(pNode, x, y, w, h);
-    x = pNode->_x;
-    y = pNode->_y + h;
+    x = pNode->_rt.x1;
+    y = pNode->_rt.y1 + h;
 
     pNode->_pChild[2] = CreateNode(pNode, x, y, w, h);
-    x = pNode->_x + w;
-    y = pNode->_y + h;
+    x = pNode->_rt.x1 + w;
+    y = pNode->_rt.y1 + h;
 
     pNode->_pChild[3] = CreateNode(pNode, x, y, w, h);
 
@@ -155,7 +140,7 @@ Node* Quadtree::FindNode(Node* pNode, Object* pObject)
         {
             if (pNode->_pChild[i] != nullptr)
             {
-                bool in = RectToInRect(pNode->_pChild[i], pObject);
+                bool in = Collision::RectToInRect(pNode->_pChild[i]->_rt, pObject->_rt);
                 if (in > 0)
                 {
                     g_Queue.push(pNode->_pChild[i]);
@@ -176,103 +161,6 @@ Node* Quadtree::FindNode(Node* pNode, Object* pObject)
 
     return pNode;
 }
-bool Quadtree::RectToInRect(Node* pNode, Object* pObject)
-{
-    //  |             |
-    if (pNode->_x <= pObject->_x)
-    {
-        if ((pNode->_x + pNode->_w) >= pObject->_x + pObject->_w)
-        {
-            if (pNode->_y <= pObject->_y)
-            {
-                if ((pNode->_y + pNode->_h) >= pObject->_y + pObject->_h)
-                {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
-}
-
-int Quadtree::RectToRect(Node* pNode, Object* pObject)
-{
-    // 0 : 완전제외(0)
-    // 1 : 완전포함(1) -> 걸쳐져 있는 상태(2)
-    // x1(10)----30------x2(40)
-    float x1 = pNode->_x;
-    float y1 = pNode->_y;
-    float x2 = pNode->_x + pNode->_w;
-    float y2 = pNode->_y + pNode->_h;
-
-    float z1 = pObject->_x;
-    float w1 = pObject->_y;
-    float z2 = pObject->_x + pObject->_w;
-    float w2 = pObject->_y + pObject->_h;
-
-    // 합집합
-    float minX;
-    float minY;
-    float maxX;
-    float maxY;
-    minX = x1 < z1 ? x1 : z1;
-    minY = y1 < w1 ? y1 : w1;
-    maxX = x2 < z2 ? x2 : z2;
-    maxY = y2 < w2 ? y2 : w2;
-
-    // 가로 판정
-    if ((pNode->_w + pObject->_w) >= (maxX - minX))
-    {
-        // 세로 판정
-        if ((pNode->_h + pObject->_h) >= (maxY - minY))
-        {
-            // 교집합
-            return 1;
-        }
-    }
-
-    return 0;
-}
-
-int Quadtree::RectToRect(Object* pDestObject, Object* pObject)
-{
-    // 0 : 완전제외(0)
-    // 1 : 완전포함(1) -> 걸쳐져 있는 상태(2)
-    // x1(10)----30------x2(40)
-    float x1 = pDestObject->_x;
-    float y1 = pDestObject->_y;
-    float x2 = pDestObject->_x + pDestObject->_w;
-    float y2 = pDestObject->_y + pDestObject->_h;
-
-    float z1 = pObject->_x;
-    float w1 = pObject->_y;
-    float z2 = pObject->_x + pObject->_w;
-    float w2 = pObject->_y + pObject->_h;
-
-    // 합집합
-    float minX;
-    float minY;
-    float maxX;
-    float maxY;
-    minX = x1 < z1 ? x1 : z1;
-    minY = y1 < w1 ? y1 : w1;
-    maxX = x2 > z2 ? x2 : z2;
-    maxY = y2 > w2 ? y2 : w2;
-
-    // 가로 판정
-    if ((pDestObject->_w + pObject->_w) >= (maxX - minX))
-    {
-        // 세로 판정
-        if ((pDestObject->_h + pObject->_h) >= (maxY - minY))
-        {
-            // 교집합
-            return 1;
-        }
-    }
-
-    return 0;
-}
 
 std::vector<Object*> Quadtree::Collision(Object* pObject)
 {
@@ -291,7 +179,7 @@ void Quadtree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector
 
     for (int i = 0; i < pNode->_objects.size(); i++)
     {
-        if (RectToRect(pNode->_objects[i], pSrcObject))
+        if (Collision::RectToRect(pNode->_objects[i]->_rt, pSrcObject->_rt))
         {
             list.push_back(pNode->_objects[i]);
         }
@@ -301,7 +189,7 @@ void Quadtree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector
     {
         for (int i = 0; i < 4; i++)
         {
-            if (RectToRect(pNode->_pChild[i], pSrcObject))
+            if (Collision::RectToRect(pNode->_pChild[i]->_rt, pSrcObject->_rt))
             {
                 GetCollisitionObject(pNode->_pChild[i], pSrcObject, list);
             }
@@ -312,22 +200,62 @@ void Quadtree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector
 int main()
 {
     Object player;
-    player.SetPosition(10, 10, 30, 30);
+    player.SetPosition(50, 50, 20, 20);
     Quadtree quadtree;
     quadtree.Create(100.0f, 100.0f);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
         Object* pObject = new Object;
         quadtree.AddObject(pObject);
     }
 
-    std::vector<Object*> list = quadtree.Collision(&player);
-    if (!list.empty())
+    Object* pObject = new Object;
+    pObject->_rt.Set(50, 50, 20, 20);
+    quadtree.AddObject(pObject);
+
+    while (true)
     {
-        for (int i = 0; i < list.size(); i++)
+        std::vector<Object*> list = quadtree.Collision(&player);
+        std::cout << "player : "
+            << player._rt.x1 << " " << player._rt.y1 << " "
+            << player._rt.x2 << " " << player._rt.y2
+            << std::endl;
+
+        if (!list.empty())
         {
-            std::cout << list[i]->_x << " " << list[i]->_y << std::endl;
+            for (int i = 0; i < list.size(); i++)
+            {
+                std::cout << "object : "
+                    << list[i]->_rt.x1 << " " << list[i]->_rt.y1 << " "
+                    << list[i]->_rt.x2 << " " << list[i]->_rt.y2
+                    << std::endl;
+            }
         }
+
+        static float directionX = 10.0f;
+        if (rand() % 2 == 0)
+        {
+            directionX *= -1.0f;
+        }
+
+        static float directionY = 10.0f;
+        if (rand() % 2 == 0)
+        {
+            directionY *= -1.0f;
+        }
+
+        player._rt.x1 = player._rt.x1 + directionX;
+        player._rt.y1 = player._rt.y1 + directionY;
+
+        player._rt.x1 = min(player._rt.x1, 100.0f);
+        player._rt.x1 = max(player._rt.x1, 0);
+        player._rt.y1 = min(player._rt.y1, 100.0f);
+        player._rt.y1 = max(player._rt.y1, 0);
+
+        player.SetPosition(player._rt.x1, player._rt.y1, 30, 30);
+
+        Sleep(1000);
+        system("cls");
     }
 }
