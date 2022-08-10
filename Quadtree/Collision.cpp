@@ -1,33 +1,36 @@
 #include "Collision.h"
 
-CollisionType Collision::RectToRect(CRect& a, CRect& b)
+CollisionType Collision::RectToRect(Rect& a, Rect& b)
 {
     // 0 : 완전제외(0)
     // 1 : 완전포함(1) -> 걸쳐져 있는 상태(2)
     // a.x(10)----30------a.x2(40)
     // 합집합
-    float fMinX;   float fMinY;
-    float fMaxX;   float fMaxY;
-    fMinX = a.x1 < b.x1 ? a.x1 : b.x1;
-    fMinY = a.y1 < b.y1 ? a.y1 : b.y1;
-    fMaxX = a.x2 > b.x2 ? a.x2 : b.x2;
-    fMaxY = a.y2 > b.y2 ? a.y2 : b.y2;
+    float minX;
+    float minY;
+    float maxX;
+    float maxY;
+    minX = a.x1 < b.x1 ? a.x1 : b.x1;
+    minY = a.y1 < b.y1 ? a.y1 : b.y1;
+    maxX = a.x2 > b.x2 ? a.x2 : b.x2;
+    maxY = a.y2 > b.y2 ? a.y2 : b.y2;
+
     //  가로 판정
-    if ((a.w + b.w) >= (fMaxX - fMinX))
+    if ((a.w + b.w) >= (maxX - minX))
     {
         //  세로 판정
-        if ((a.h + b.h) >= (fMaxY - fMinY))
+        if ((a.h + b.h) >= (maxY - minY))
         {
             // 교집합
             float x, y, x2, y2;
-            CRect Intersect;
+            Rect intersect;
             x = a.x1 > b.x1 ? a.x1 : b.y1;
             y = a.y1 > b.y1 ? a.y1 : b.y1;
             x2 = a.x2 < b.x2 ? a.x2 : b.x2;
             y2 = a.y2 < b.y2 ? a.y2 : b.y2;
-            Intersect.Set(x, y, x2 - x, y2 - y);
+            intersect.Set(x, y, x2 - x, y2 - y);
 
-            if (Intersect == a || Intersect == b)
+            if (intersect == a || intersect == b)
             {
                 return CollisionType::RECT_IN;
             }
@@ -39,7 +42,7 @@ CollisionType Collision::RectToRect(CRect& a, CRect& b)
     return CollisionType::RECT_OUT;
 }
 
-bool Collision::RectToInRect(CRect& a, CRect& b)
+bool Collision::RectToInRect(Rect& a, Rect& b)
 {
     //  |             |
     if (a.x1 <= b.x1)
@@ -54,6 +57,21 @@ bool Collision::RectToInRect(CRect& a, CRect& b)
                 }
             }
         }
+    }
+
+    return false;
+}
+
+bool Collision::CircleToCircle(Circle& a, Circle& b)
+{
+    float sumRadius = a.radius + b.radius;
+    float x = a.cx - b.cx;
+    float y = a.cy - b.cy;
+    float distance = sqrt(x * x + y * y);
+
+    if (distance <= sumRadius)
+    {
+        return true;
     }
 
     return false;

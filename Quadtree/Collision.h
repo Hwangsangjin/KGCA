@@ -17,7 +17,22 @@ struct Vector2D
     float y;
 };
 
-struct Rect
+struct Circle
+{
+    float cx;
+    float cy;
+    float radius;
+
+    Circle() {};
+    Circle(float x, float y, float r)
+    {
+        cx = x;
+        cy = y;
+        radius = r;
+    };
+};
+
+struct CRect
 {
     float x1;
     float y1;
@@ -25,13 +40,13 @@ struct Rect
     float h;
 };
 
-struct CRect : Rect
+struct Rect : CRect
 {
     float x2; // x+w
     float y2; // y+h
     float cx;
     float cy;
-    bool operator == (CRect& dest)
+    bool operator == (Rect& dest)
     {
         if (fabs(x1 - dest.x1) < 0.001f)
         {
@@ -50,8 +65,8 @@ struct CRect : Rect
         return false;
     }
 
-    CRect() {}
-    CRect(float x, float y, float z, float w)
+    Rect() {}
+    Rect(float x, float y, float z, float w)
     {
         Set(x, y, z, w);
     }
@@ -72,6 +87,7 @@ struct CRect : Rect
 class Collision
 {
 public:
-    static CollisionType RectToRect(CRect& a, CRect& b);
-    static bool RectToInRect(CRect& a, CRect& b);
+    static CollisionType RectToRect(Rect& a, Rect& b);
+    static bool RectToInRect(Rect& a, Rect& b);
+    static bool CircleToCircle(Circle& a, Circle& b);
 };

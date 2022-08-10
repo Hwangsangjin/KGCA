@@ -4,27 +4,35 @@
 class Object
 {
 public:
-    CRect _rt;
-    float _x;
-    float _y;
-    float _w;
-    float _h;
+    Rect _rt;
+    Circle _circle;
 
     Object()
     {
         _rt.Set(20 + (rand() % 80), 20 + (rand() % 80), 5.0f + (rand() % 5), 5.0f + (rand() % 5));
+        SetCircle(_rt.cx, _rt.cy, _rt.w, _rt.h);
     }
 
     void SetPosition(float x, float y, float w, float h)
     {
         _rt.Set(x, y, w, h);
+        SetCircle(_rt.cx, _rt.cy, _rt.w, _rt.h);
+    }
+
+    void   SetCircle(float x, float y, float w, float h)
+    {
+        _circle.cx = x;
+        _circle.cy = y;
+        float x1 = w / 2.0f;
+        float y1 = h / 2.0f;
+        _circle.radius = sqrt(x1 * x1 + y1 * y1);
     }
 };
 
 class Node
 {
 public:
-    CRect _rt;
+    Rect _rt;
     int _depth;
     std::vector<Object*> _objects;
     Node* _pChild[4];
@@ -200,19 +208,16 @@ void Quadtree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector
 int main()
 {
     Object player;
-    player.SetPosition(50, 50, 20, 20);
+    player.SetPosition(0, 100, 20, 20);
     Quadtree quadtree;
     quadtree.Create(100.0f, 100.0f);
+    float distance = 0.0f;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 100; i++)
     {
         Object* pObject = new Object;
         quadtree.AddObject(pObject);
     }
-
-    Object* pObject = new Object;
-    pObject->_rt.Set(50, 50, 20, 20);
-    quadtree.AddObject(pObject);
 
     while (true)
     {
