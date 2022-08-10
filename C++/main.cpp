@@ -102,13 +102,24 @@ public:
 
 class Data
 {
-public:
+private:
 	int _data;
 
 public:
-	Data() : _data(0) {}
+	Data()
+		: _data(0)
+	{
+		cout << "Data()" << endl;
+	}
 
-	int GetData() { return _data; }
+	// 복사 생성자 선언 및 정의
+	Data(const Data& rhs)
+		: _data(rhs._data)
+	{
+		cout << "Data(const Data&)" << endl;
+	}
+
+	int GetData() const { return _data; }
 	void SetData(int param) { _data = param; }
 
 	// 실수로 double 자료형 실인수가 넘어오는 경우를 차단한다.
@@ -129,14 +140,13 @@ int Test::_count = 0;
 
 int main()
 {
-	Test a(5), b(10);
+	// 디폴트 생성자가 호출되는 경우
+	Data a;
+	a.SetData(10);
 
-	// 정적 멤버에 접근
-	cout << a.GetCount() << endl;
-	b.ResetCount();
-
-	// 정적 멤버에 접근. 인스턴스 없이도 접근 가능!
-	cout << Test::GetCount() << endl;
+	// 복사 생성자가 호출되는 경우
+	Data b(a);
+	cout << b.GetData() << endl;
 
     return 0;
 }
