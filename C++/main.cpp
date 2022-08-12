@@ -112,6 +112,12 @@ public:
 		cout << "Data()" << endl;
 	}
 
+	Data(int param)
+		: _data(param)
+	{
+		cout << "Data(int)" << endl;
+	}
+
 	// 복사 생성자 선언 및 정의
 	Data(const Data& rhs)
 		: _data(rhs._data)
@@ -119,34 +125,35 @@ public:
 		cout << "Data(const Data&)" << endl;
 	}
 
+	// 읽기 전용인 상수형 메서드
 	int GetData() const { return _data; }
+
+	// 멤버 변수에 쓰기를 시도하는 메서드
 	void SetData(int param) { _data = param; }
 
 	// 실수로 double 자료형 실인수가 넘어오는 경우를 차단한다.
 	void SetData(double param) = delete;
 };
 
-void TestFunc(const int& param)
+// 매개변수가 Data 클래스 형식이므로 복사 생성자가 호출된다.
+void TestFunc(Data param)
 {
-	// 상수형 참조였으나 일반 참조로 형변환했다.
-	int& newParam = const_cast<int&>(param);
+	cout << "TestFunc()" << endl;
 
-	// 따라서 l-value가 될 수 있다.
-	newParam = 20;
+	// 피호출자 함수에서 매개변수 인스턴스의 값을 변경한다.
+	param.SetData(20);
 }
-
-// Test 클래스의 정적 멤버 변수 정의
-int Test::_count = 0;
 
 int main()
 {
-	// 디폴트 생성자가 호출되는 경우
-	Data a;
-	a.SetData(10);
+	cout << "Begin" << endl;
+	Data a(10);
+	TestFunc(a);
 
-	// 복사 생성자가 호출되는 경우
-	Data b(a);
-	cout << b.GetData() << endl;
+	// 함수 호출 후 a의 값을 출력한다.
+	cout << "a: " << a.GetData() << endl;
+
+	cout << "End" << endl;
 
     return 0;
 }
