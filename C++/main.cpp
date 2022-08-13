@@ -118,12 +118,8 @@ public:
 		cout << "Data(int)" << endl;
 	}
 
-	// 복사 생성자 선언 및 정의
-	Data(const Data& rhs)
-		: _data(rhs._data)
-	{
-		cout << "Data(const Data&)" << endl;
-	}
+	// 복사 생성자를 아예 삭제함으로써 복사 생성을 막는다.
+	Data(const Data& rhs) = delete;
 
 	// 읽기 전용인 상수형 메서드
 	int GetData() const { return _data; }
@@ -135,8 +131,8 @@ public:
 	void SetData(double param) = delete;
 };
 
-// 매개변수가 Data 클래스 형식이므로 복사 생성자가 호출된다.
-void TestFunc(Data param)
+// 매개변수가 Data 클래스 '참조' 형식이므로 객체가 생성되지 않는다!
+void TestFunc(Data& param)
 {
 	cout << "TestFunc()" << endl;
 
