@@ -137,7 +137,7 @@ void TestFunc(const Data& param)
 	cout << "TestFunc()" << endl;
 
 	// 피호출자 함수에서 매개변수 인스턴스의 값을 변경할 수 없다!
-	//param.SetData(20);
+	param.SetData(20);
 }
 
 int main()
