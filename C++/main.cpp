@@ -131,13 +131,13 @@ public:
 	void SetData(double param) = delete;
 };
 
-// 매개변수가 Data 클래스 '참조' 형식이므로 객체가 생성되지 않는다!
-void TestFunc(Data& param)
+// 매개변수가 클래스에 대한 상수형 참조다!
+void TestFunc(const Data& param)
 {
 	cout << "TestFunc()" << endl;
 
-	// 피호출자 함수에서 매개변수 인스턴스의 값을 변경한다.
-	param.SetData(20);
+	// 피호출자 함수에서 매개변수 인스턴스의 값을 변경할 수 없다!
+	//param.SetData(20);
 }
 
 int main()
