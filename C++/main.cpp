@@ -103,53 +103,52 @@ public:
 class Data
 {
 private:
-	int _data;
+	// 포인터 멤버 데이터
+	int* _pData = nullptr;
 
 public:
-	Data()
-		: _data(0)
-	{
-		cout << "Data()" << endl;
-	}
-
 	Data(int param)
-		: _data(param)
 	{
-		cout << "Data(int)" << endl;
+		_pData = new int;
+		*_pData = param;
 	}
 
-	// 복사 생성자를 아예 삭제함으로써 복사 생성을 막는다.
-	Data(const Data& rhs) = delete;
+	// 복사 생성자 선언 및 정의
+	Data(const Data& rhs)
+	{
+		cout << "Data(const Data&)" << endl;
 
-	// 읽기 전용인 상수형 메서드
-	int GetData() const { return _data; }
+		// 메모리를 할당한다.
+		_pData = new int;
 
-	// 멤버 변수에 쓰기를 시도하는 메서드
-	void SetData(int param) { _data = param; }
+		// 포인터가 가리키는 위치에 값을 복사한다.
+		*_pData = *rhs._pData;
+	}
 
-	// 실수로 double 자료형 실인수가 넘어오는 경우를 차단한다.
-	void SetData(double param) = delete;
+	// 객체가 소멸하면 동적 할당한 메모리를 해제한다.
+	~Data()
+	{
+		delete _pData;
+	}
+
+	int GetData()
+	{
+		if (_pData != nullptr)
+		{
+			return *_pData;
+		}
+
+		return 0;
+	}
 };
-
-// 매개변수가 클래스에 대한 상수형 참조다!
-void TestFunc(const Data& param)
-{
-	cout << "TestFunc()" << endl;
-
-	// 피호출자 함수에서 매개변수 인스턴스의 값을 변경할 수 없다!
-	param.SetData(20);
-}
 
 int main()
 {
-	cout << "Begin" << endl;
 	Data a(10);
-	TestFunc(a);
+	Data b(a);
 
-	// 함수 호출 후 a의 값을 출력한다.
-	cout << "a: " << a.GetData() << endl;
-
-	cout << "End" << endl;
+	cout << a.GetData() << endl;
+	cout << b.GetData() << endl;
 
     return 0;
 }
