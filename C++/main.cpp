@@ -131,6 +131,15 @@ public:
 		delete _pData;
 	}
 
+	// 단순 대입 연산자 함수를 정의한다.
+	Data& operator=(const Data& rhs)
+	{
+		*_pData = *rhs._pData;
+
+		// 객체 자신에 대한 참조를 반환한다.
+		return *this;
+	}
+
 	int GetData()
 	{
 		if (_pData != nullptr)
@@ -145,10 +154,12 @@ public:
 int main()
 {
 	Data a(10);
-	Data b(a);
+	Data b(20);
+
+	// 단순 대입을 시도하면 모든 멤버의 값을 그대로 복사한다.
+	a = b;
 
 	cout << a.GetData() << endl;
-	cout << b.GetData() << endl;
 
     return 0;
 }
