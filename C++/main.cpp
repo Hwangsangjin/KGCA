@@ -23,6 +23,14 @@ public:
 		Release();
 	}
 
+	// 복사 생성자
+	Str(const Str& rhs)
+		: _pszData(nullptr)
+		, _nLength(0)
+	{
+		this->SetString(rhs.GetString());
+	}
+
 	int SetString(const char* pszParam)
 	{
 		// 새로운 문자열 할당에 앞서 기존 정보를 해제한다.
@@ -54,7 +62,7 @@ public:
 		return nLength;
 	}
 
-	// 멤버 읽기만 수행하므로 메서드를 상화한다.
+	// 멤버 읽기만 수행하므로 메서드를 상수화한다.
 	const char* GetString() const
 	{
 		return _pszData;
@@ -75,6 +83,17 @@ public:
 	void TestFunc(const Str& param)
 	{
 		cout << param.GetString() << endl;
+	}
+
+	Str& operator=(const Str& rhs)
+	{
+		// 자기 자신에 대한 대입이면 아무것도 하지 않는다.
+		if (this != &rhs)
+		{
+			this->SetString(rhs.GetString());
+		}
+
+		return *this;
 	}
 };
 
@@ -153,13 +172,17 @@ public:
 
 int main()
 {
-	Data a(10);
-	Data b(20);
+	Str strData, strTest;
+	strData.SetString("Hello");
+	strTest.SetString("World");
 
-	// 단순 대입을 시도하면 모든 멤버의 값을 그대로 복사한다.
-	a = b;
+	// 복사 생성
+	Str strNewData(strData);
+	cout << strNewData.GetString() << endl;
 
-	cout << a.GetData() << endl;
+	// 단순 대입 연산자 호출
+	strNewData = strTest;
+	cout << strNewData.GetString() << endl;
 
     return 0;
 }
