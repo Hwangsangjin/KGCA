@@ -97,92 +97,46 @@ public:
 	}
 };
 
-class Test
-{
-private:
-	int _data;
-
-	// 정적 멤버 변수 선언(정의는 아니다!)
-	static int _count;
-
-public:
-	Test(int param) : _data(param) { _count++; }
-	~Test() {}
-
-	int GetData() { return _data; }
-	void ResetCount() { _count = 0; }
-
-	// 정적 메서드 선언 및 정의
-	static int GetCount()
-	{
-		return _count;
-	}
-};
-
 class Data
 {
 private:
-	// 포인터 멤버 데이터
-	int* _pData = nullptr;
+	int _nData = 0;
 
 public:
-	Data(int param)
+	// 매개변수가 하나뿐인 생성자는 형변환이 가능하다.
+	Data(int nParam)
+		: _nData(nParam)
 	{
-		_pData = new int;
-		*_pData = param;
+		cout << "Data(int)" << endl;
 	}
 
-	// 복사 생성자 선언 및 정의
 	Data(const Data& rhs)
+		: _nData(rhs._nData)
 	{
 		cout << "Data(const Data&)" << endl;
-
-		// 메모리를 할당한다.
-		_pData = new int;
-
-		// 포인터가 가리키는 위치에 값을 복사한다.
-		*_pData = *rhs._pData;
-	}
-
-	// 객체가 소멸하면 동적 할당한 메모리를 해제한다.
-	~Data()
-	{
-		delete _pData;
-	}
-
-	// 단순 대입 연산자 함수를 정의한다.
-	Data& operator=(const Data& rhs)
-	{
-		*_pData = *rhs._pData;
-
-		// 객체 자신에 대한 참조를 반환한다.
-		return *this;
 	}
 
 	int GetData()
 	{
-		if (_pData != nullptr)
-		{
-			return *_pData;
-		}
+		return _nData;
+	}
 
-		return 0;
+	void SetData(int nParam)
+	{
+		_nData = nParam;
 	}
 };
 
+// 매개변수가 클래스 형식이며 변환 생성이 가능하다.
+void TestFunc(Data param)
+{
+	cout << "TestFunc(): " << param.GetData() << endl;
+}
+
 int main()
 {
-	Str strData, strTest;
-	strData.SetString("Hello");
-	strTest.SetString("World");
-
-	// 복사 생성
-	Str strNewData(strData);
-	cout << strNewData.GetString() << endl;
-
-	// 단순 대입 연산자 호출
-	strNewData = strTest;
-	cout << strNewData.GetString() << endl;
+	// int 자료형에서 Data 형식으로 변환될 수 있다.
+	TestFunc(5);
 
     return 0;
 }
