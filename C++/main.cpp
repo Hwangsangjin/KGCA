@@ -34,6 +34,24 @@ public:
 		this->SetString(rhs.GetString());
 	}
 
+	// 이동 생성자
+	Str(Str&& rhs)
+		: _pszData(nullptr)
+		, _nLength(0)
+	{
+		cout << "Str 이동 생성자 호출" << endl;
+
+		// 얕은 복사를 수행해도 상관없다.
+		// 어차피 원본이 곧 소멸되기 때문이다!
+		_pszData = rhs._pszData;
+		_nLength = rhs._nLength;
+
+		// 원본 임시 객체의 멤버들은 초기화한다.
+		// 절대로 해제하면 안 된다.
+		rhs._pszData = nullptr;
+		rhs._nLength = 0;
+	}
+
 	// 소멸자
 	~Str()
 	{
@@ -107,60 +125,58 @@ public:
 	}
 };
 
+Str TestStr()
+{
+	Str str("TestStr() return");
+	cout << str << endl;
+	return str;
+}
+
 class Data
 {
 private:
 	int _nData = 0;
 
 public:
-	// 매개변수가 하나뿐인 생성자는 형변환이 가능하다.
-	// 하지만 묵시적으로는 불가능하도록 차단한다.
-	explicit Data(int nParam)
-		: _nData(nParam)
-	{
-		cout << "Data(int)" << endl;
-	}
+	Data() { cout << "Data()" << endl; }
+	~Data() { cout << "~Data()" << endl; }
 
 	Data(const Data& rhs)
 		: _nData(rhs._nData)
 	{
-		cout << "Data(const Data&)" << endl;
+		cout << "Data(const Data&): " << endl;
 	}
 
-	~Data()
+	// 이동 생성자
+	Data(Data&& rhs) noexcept
+		: _nData(rhs._nData)
 	{
-		cout << "~Data()" << endl;
+		cout << "Data(Data&&)" << endl;
 	}
 
-	// Data 클래스는 int 자료형으로 변환될 수 있다!
-	explicit operator int()
-	{
-		return _nData;
-	}
+	Data& operator=(const Data& rhs) = default;
 
-	int GetData() const
-	{
-		return _nData;
-	}
-
-	void SetData(int nParam)
-	{
-		_nData = nParam;
-	}
+	int GetData() const { return _nData; }
+	void SetData(int nParam) { _nData = nParam; }
 };
 
-// 매개변수가 클래스 형식이며 변환 생성이 가능하다.
-void TestFunc(const Str& strParam)
+Data TestData(int nParam)
 {
-	cout << strParam << endl;
+	cout << "TestData(): Begin" << endl;
+
+	Data a;
+	a.SetData(nParam);
+
+	cout << "TestData(): End" << endl;
+
+	return a;
 }
+
 
 int main()
 {
-	Str str("Hello");
-
-	::TestFunc(str);
-	::TestFunc(Str("World"));
+	// 이름 없는 임시 객체가 만들어진다.
+	TestStr();
 
     return 0;
 }
