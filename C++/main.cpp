@@ -11,16 +11,19 @@ private:
 	int _nLength;
 
 public:
+	// 기본 생성자
 	Str()
 		: _pszData(nullptr)
 		, _nLength(0)
 	{
 	}
 
-	~Str()
+	// 변환 생성자
+	explicit Str(const char* pszParam)
+		: _pszData(nullptr)
+		, _nLength(0)
 	{
-		// 객체가 소멸하기 전에 메모리를 해제한다.
-		Release();
+		SetString(pszParam);
 	}
 
 	// 복사 생성자
@@ -29,6 +32,13 @@ public:
 		, _nLength(0)
 	{
 		this->SetString(rhs.GetString());
+	}
+
+	// 소멸자
+	~Str()
+	{
+		// 객체가 소멸하기 전에 메모리를 해제한다.
+		Release();
 	}
 
 	int SetString(const char* pszParam)
@@ -80,11 +90,6 @@ public:
 		_nLength = 0;
 	}
 
-	void TestFunc(const Str& param)
-	{
-		cout << param.GetString() << endl;
-	}
-
 	Str& operator=(const Str& rhs)
 	{
 		// 자기 자신에 대한 대입이면 아무것도 하지 않는다.
@@ -95,6 +100,11 @@ public:
 
 		return *this;
 	}
+
+	operator char* () const
+	{
+		return _pszData;
+	}
 };
 
 class Data
@@ -104,7 +114,8 @@ private:
 
 public:
 	// 매개변수가 하나뿐인 생성자는 형변환이 가능하다.
-	Data(int nParam)
+	// 하지만 묵시적으로는 불가능하도록 차단한다.
+	explicit Data(int nParam)
 		: _nData(nParam)
 	{
 		cout << "Data(int)" << endl;
@@ -116,7 +127,18 @@ public:
 		cout << "Data(const Data&)" << endl;
 	}
 
-	int GetData()
+	~Data()
+	{
+		cout << "~Data()" << endl;
+	}
+
+	// Data 클래스는 int 자료형으로 변환될 수 있다!
+	explicit operator int()
+	{
+		return _nData;
+	}
+
+	int GetData() const
 	{
 		return _nData;
 	}
@@ -128,15 +150,17 @@ public:
 };
 
 // 매개변수가 클래스 형식이며 변환 생성이 가능하다.
-void TestFunc(Data param)
+void TestFunc(const Str& strParam)
 {
-	cout << "TestFunc(): " << param.GetData() << endl;
+	cout << strParam << endl;
 }
 
 int main()
 {
-	// int 자료형에서 Data 형식으로 변환될 수 있다.
-	TestFunc(5);
+	Str str("Hello");
+
+	::TestFunc(str);
+	::TestFunc(Str("World"));
 
     return 0;
 }
