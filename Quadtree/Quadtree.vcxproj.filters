@@ -9,18 +9,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Application">
+      <UniqueIdentifier>{ca14eee1-6b90-4a0f-8024-333fb72af3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Quadtree">
+      <UniqueIdentifier>{c850fa88-6ef1-418c-a1ad-ccab512a92cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Node">
+      <UniqueIdentifier>{13630d4f-31e9-47b2-bea2-9312685efce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{111d88b5-7fc0-413b-b29f-173b9a66cd59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Vector2D">
+      <UniqueIdentifier>{a6ec4f6a-94d6-4cf5-a129-4d20de673bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Collision">
+      <UniqueIdentifier>{b3e1f6e8-16dc-4b56-ab96-997fa9854299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Rect">
+      <UniqueIdentifier>{08a3edf8-7aad-4387-8b48-4d784ddc5ff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
     <ClCompile Include="Quadtree.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>소스 파일\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>소스 파일\Vector2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>소스 파일\Rect</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Quadtree.h">
+      <Filter>소스 파일\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>소스 파일\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>소스 파일\Vector2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>소스 파일\Rect</Filter>
+    </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
