@@ -27,10 +27,10 @@ Node::~Node()
 void Node::CreateChildNode(Node* pParent)
 {
 	Rect rect = pParent->_rect;
-	float halfW = _rect._right / 2.0f;
-	float halfH = rect._bottom / 2.0f;
-	_pChild[0] = new Node(pParent, { rect._left, rect._top, halfW, halfH });
-	_pChild[1] = new Node(pParent, { rect._left + halfW, rect._top, halfW, halfH });
-	_pChild[2] = new Node(pParent, { rect._left, rect._top + halfH, halfW, halfH });
-	_pChild[3] = new Node(pParent, { rect._left + halfW, rect._top + halfH, halfW, halfH });
+	float halfW = _rect.right / 2.0f;
+	float halfH = rect.bottom / 2.0f;
+	_pChild[0] = new Node(pParent, { rect.left, rect.top, halfW, halfH });
+	_pChild[1] = new Node(pParent, { rect.left + halfW, rect.top, halfW, halfH });
+	_pChild[2] = new Node(pParent, { rect.left, rect.top + halfH, halfW, halfH });
+	_pChild[3] = new Node(pParent, { rect.left + halfW, rect.top + halfH, halfW, halfH });
 }

@@ -4,13 +4,12 @@
 #include <vector>
 #include <map>
 
-class Rect
+struct Rect
 {
-public:
-	float _left;
-	float _top;
-	float _right;
-	float _bottom;
+	float left;
+	float top;
+	float right;
+	float bottom;
 
 	Rect() = default;
 	Rect(float left, float top, float right, float bottom);

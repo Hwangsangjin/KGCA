@@ -12,6 +12,6 @@ void Object::Create(Rect rect)
 
 void Object::SetPosition(float x, float y)
 {
-	_rect._left = x;
-	_rect._right = y;
+	_rect.left = x;
+	_rect.right = y;
 }

@@ -6,6 +6,7 @@ int main()
 {
 	// 쿼드트리
 	Quadtree quadtree;
+
 	// 오브젝트
 	std::map<int, Object*> objects;
 
@@ -17,10 +18,10 @@ int main()
 		{
 			Object* pNewObject = new Object;
 			Rect rect;
-			rect._left = cosf(rand()) * 100.0f;
-			rect._top = sinf(rand()) * 100.0f;
-			rect._right = 10.0f;
-			rect._bottom = 10.0f;
+			rect.left = cosf(rand()) * 100.0f;
+			rect.top = sinf(rand()) * 100.0f;
+			rect.right = 10.0f;
+			rect.bottom = 10.0f;
 			pNewObject->Create(rect);
 
 			// 오브젝트 통합 관리
@@ -35,16 +36,17 @@ int main()
 		for (auto& object : objects)
 		{
 			Object* pObject = object.second;
-			pObject->SetPosition(pObject->_rect._left, pObject->_rect._top);
+			pObject->SetPosition(pObject->_rect.left, pObject->_rect.top);
 			quadtree.AddObject(pObject);
 		}
 		
 		Sleep(1000);
 	}
 
-	for (auto& object : objects)
+	for (auto object : objects)
 	{
-		delete object.second;
+		Object* pObject = object.second;
+		delete pObject;
 	}
 
 	objects.clear();

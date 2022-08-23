@@ -2,9 +2,9 @@
 
 bool Collision::RectToInRect(Rect& a, Rect& b)
 {
-	if (a._left <= b._left && (a._left + a._right) >= (b._left + b._right)
+	if (a.left <= b.left && (a.left + a.right) >= (b.left + b.right)
 		&&
-		a._top <= b._top && (a._top + a._bottom) >= (b._top + b._bottom))
+		a.top <= b.top && (a.top + a.bottom) >= (b.top + b.bottom))
 	{
 		return true;
 	}
