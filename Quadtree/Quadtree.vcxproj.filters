@@ -21,14 +21,14 @@
     <Filter Include="소스 파일\Object">
       <UniqueIdentifier>{111d88b5-7fc0-413b-b29f-173b9a66cd59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Vector2D">
-      <UniqueIdentifier>{a6ec4f6a-94d6-4cf5-a129-4d20de673bbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Collision">
       <UniqueIdentifier>{b3e1f6e8-16dc-4b56-ab96-997fa9854299}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Rect">
       <UniqueIdentifier>{08a3edf8-7aad-4387-8b48-4d784ddc5ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Vector2">
+      <UniqueIdentifier>{a6ec4f6a-94d6-4cf5-a129-4d20de673bbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,8 +44,8 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Vector2D.cpp">
-      <Filter>소스 파일\Vector2D</Filter>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>소스 파일\Vector2</Filter>
     </ClCompile>
     <ClCompile Include="Rect.cpp">
       <Filter>소스 파일\Rect</Filter>
@@ -64,8 +64,8 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>소스 파일\Vector2D</Filter>
+    <ClInclude Include="Vector2.h">
+      <Filter>소스 파일\Vector2</Filter>
     </ClInclude>
     <ClInclude Include="Rect.h">
       <Filter>소스 파일\Rect</Filter>

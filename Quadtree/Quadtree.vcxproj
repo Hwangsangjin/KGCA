@@ -147,7 +147,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Rect.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h" />
@@ -155,7 +155,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Rect.h" />
-    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
