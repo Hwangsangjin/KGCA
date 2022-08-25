@@ -7,14 +7,14 @@ class Node
 public:
 	int _iDepth;
 	bool _bLeaf;
-	Rect _rect;
+	CRect _rect;
 
 	std::vector<Node*> _pChild;
 	std::vector<Node*> _pObjects;
 	std::vector<Object*> _pStaticObjects;
 	std::vector<Object*> _pDynamicObjects;
 
-	Node(Node* pParent, Rect rect);
+	Node(Node* pParent, CRect rect);
 	virtual ~Node();
 
 	void CreateChildNode(Node* pParent);

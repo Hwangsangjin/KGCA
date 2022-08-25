@@ -47,11 +47,11 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>소스 파일\Vector2</Filter>
     </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>소스 파일\Rect</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>소스 파일\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>소스 파일\Rect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,11 +67,11 @@
     <ClInclude Include="Vector2.h">
       <Filter>소스 파일\Vector2</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>소스 파일\Rect</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>소스 파일\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>소스 파일\Rect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
