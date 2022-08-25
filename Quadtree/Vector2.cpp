@@ -25,10 +25,10 @@ float Vector2::Dot(const Vector2& other) const
 
 float Vector2::Length() const
 {
-	return std::sqrt(LenghtSquared());
+	return std::sqrtf(LenghtSquared());
 }
 
-float Vector2::LenghtSquared() const
+float Vector2::LenghtSquared() const												
 {
 	return (_x * _x + _y * _y);
 }
@@ -40,13 +40,13 @@ float Vector2::distance(const Vector2& other) const
 
 Vector2 Vector2::Normalize() const
 {
-	const float length = Length();
-	if (length < FLT_EPSILON)
+	const float magitude = Length();
+	if (magitude < FLT_EPSILON)
 	{
 		return Vector2::ZERO;
 	}
 
-	return *this / length;
+	return *this / magitude;
 }
 
 bool Vector2::IsZero() const
