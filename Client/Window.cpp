@@ -23,8 +23,6 @@ LRESULT Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 Window::Window()
 {
-    _hInstance = nullptr;
-    _hWnd = nullptr;
     _gpWindow = this;
 }
 
