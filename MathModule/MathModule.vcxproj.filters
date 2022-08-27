@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Vector3">
+      <UniqueIdentifier>{af1feccb-78aa-4a33-8ed4-ed59bba32754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Vector2">
+      <UniqueIdentifier>{106c91f0-a38e-4dd9-87da-d1901902f6b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Precompiled">
+      <UniqueIdentifier>{a06ed8bd-31a4-4fad-8b42-79a6496dfca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Box">
+      <UniqueIdentifier>{8df21b31-0c5c-463b-a672-578abe088a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Rectangle">
+      <UniqueIdentifier>{2b651beb-c239-4956-bcaf-20c8d5171e57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\MathModule">
+      <UniqueIdentifier>{0704d78b-67eb-4f74-a95f-dc9f0ea69058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Circle">
+      <UniqueIdentifier>{ae3e7af1-c7d2-44de-a89b-b1f61bc922a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Sphere">
+      <UniqueIdentifier>{56c22983-89bc-430f-9fcb-ceb5c84e9c0b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>소스 파일\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>소스 파일\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>소스 파일\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="MathModule.h">
+      <Filter>소스 파일\MathModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>소스 파일\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>소스 파일\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>소스 파일\Sphere</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>소스 파일\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>소스 파일\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>소스 파일\Rectangle</Filter>
+    </ClCompile>
+    <ClCompile Include="MathModule.cpp">
+      <Filter>소스 파일\MathModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>소스 파일\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>소스 파일\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>소스 파일\Sphere</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
