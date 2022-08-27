@@ -7,11 +7,10 @@ class Window
 public:
 	HINSTANCE _hInstance;	// 인스턴스 핸들
 	HWND _hWnd;				// 윈도우 핸들
-	DWORD _dwWindowStyle;	// 윈도우 스타일
-	RECT _rcWindowBounds;	// 윈도우 영역
-	RECT _rcWindowClient;	// 클라이언트 영역
-	UINT _iWindowWidth;		// 클라이언트 영역 가로 크기
-	UINT _iWindowHeight;	// 클라이언트 영역 세로 크기
+	RECT bound;	// 윈도우 영역
+	RECT _client;	// 클라이언트 영역
+	UINT _width;		// 클라이언트 영역 가로 크기
+	UINT _height;	// 클라이언트 영역 세로 크기
 
 	// 생성자
 	Window();
@@ -33,6 +32,6 @@ public:
 	// 실행
 	virtual bool Run();
 	// 윈도우 프로시저
-	virtual LRESULT WndProc(HWND, UINT, WPARAM, LPARAM);
+	virtual LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 };
 

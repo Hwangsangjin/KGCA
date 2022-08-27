@@ -3,14 +3,14 @@
 
 // 메인 윈도우 프로시저
 Window* _gpWindow = nullptr;
-LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     assert(_gpWindow);
-    return _gpWindow->WndProc(hWnd, message, wParam, lParam);
+    return _gpWindow->MsgProc(hWnd, message, wParam, lParam);
 }
 
 // 윈도우 프로시저
-LRESULT Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
@@ -33,7 +33,7 @@ bool Window::InitWindow(HINSTANCE hInstance, int nCmdShow, const TCHAR* strWindo
     ZeroMemory(&wcex, sizeof(WNDCLASSEX));
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = &StaticWndProc;
+    wcex.lpfnWndProc = WndProc;
     wcex.hInstance = hInstance;
     wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -66,15 +66,15 @@ bool Window::InitWindow(HINSTANCE hInstance, int nCmdShow, const TCHAR* strWindo
 void Window::CenterWindow(HWND hwnd)
 {
     // 화면 스크린의 해상도(넓이와 높이)을 얻는다.
-    int iScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
-    int iScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
+    const int width = GetSystemMetrics(SM_CXFULLSCREEN);
+    const int height = GetSystemMetrics(SM_CYFULLSCREEN);
 
     // 윈도우 클라이언트 중앙과 화면 스크린 중앙을 맞춘다.
-    int iDestX = (iScreenWidth - (_rcWindowBounds.right - _rcWindowBounds.left)) / 2;
-    int iDestY = (iScreenHeight - (_rcWindowBounds.bottom - _rcWindowBounds.top)) / 2;
+    int x = (width - (bound.right - bound.left)) / 2;
+    int y = (height - (bound.bottom - bound.top)) / 2;
 
     // 윈도우를 화면 중앙으로 이동한다.
-    MoveWindow(hwnd, iDestX, iDestY, _rcWindowBounds.right - _rcWindowBounds.left, _rcWindowBounds.bottom - _rcWindowBounds.top, true);
+    MoveWindow(hwnd, x, y, bound.right - bound.left, bound.bottom - bound.top, true);
 }
 
 bool Window::Init()
@@ -115,10 +115,8 @@ bool Window::Run()
         }
         else
         {
-            if (!(Frame() || Render()))
-            {
-                break;
-            }
+            Frame();
+            Render();
         }
     }
 
