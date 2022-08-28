@@ -8,7 +8,7 @@ struct Vector3
 	static const Vector3 UnitZ;
 	static const Vector3 One;
 	static const Vector3 Zero;
-	static constexpr unsigned char Dimension = 3;
+	static const unsigned char Dimension = 3;
 
 	// 멤버변수
 	union
@@ -22,23 +22,25 @@ struct Vector3
 	};
 
 	// 생성자
-	constexpr Vector3() = default;
-	constexpr Vector3(float x, float y, float z);
-	constexpr Vector3(const Vector3& vector);
+	Vector3() = default;
+	Vector3(float x, float y, float z);
+	Vector3(const Vector3& vector);
 
 	// 연산자
-	constexpr Vector3& operator+=(const Vector3& other);
-	constexpr Vector3& operator-=(const Vector3& other);
-	constexpr Vector3& operator*=(float scalar);
-	constexpr Vector3& operator/=(float scalar);
-	constexpr Vector3 operator+(const Vector3& other) const;
-	constexpr Vector3 operator-(const Vector3& other) const;
-	constexpr Vector3 operator*(float scalar) const;
-	constexpr Vector3 operator/(float scalar) const;
-	constexpr Vector3 operator-() const;
-	constexpr bool operator==(const Vector3& other) const;
-	constexpr bool operator!=(const Vector3& other) const;
-	constexpr bool operator<(const Vector3& other) const;
+	const Vector3& operator+=(const Vector3& other);
+	const Vector3& operator-=(const Vector3& other);
+	const Vector3& operator*=(float scalar);
+	const Vector3& operator/=(float scalar);
+	const Vector3 operator+(const Vector3& other) const;
+	const Vector3 operator-(const Vector3& other);
+	const Vector3 operator*(float scalar) const;
+	const Vector3 operator/(float scalar) const;
+	const Vector3 operator-() const;
+	const bool operator==(const Vector3& other) const;
+	const bool operator!=(const Vector3& other) const;
+	const bool operator<(const Vector3& other) const;
+	const bool operator<=(const Vector3& other) const;
+	const bool operator>=(const Vector3& other) const;
 
 	// 내적 계산
 	float Dot(const Vector3& other) const;

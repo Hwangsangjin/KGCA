@@ -2,10 +2,11 @@
 
 struct Circle
 {
-	Vector2 _vCenter;
+	float _x;
+	float _y;
 	float _radius;
 
 	Circle() = default;
-	Circle(const Vector2& vCenter, float radius);
+	Circle(float x, float y, float radius);
 };
 

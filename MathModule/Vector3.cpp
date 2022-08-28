@@ -7,82 +7,113 @@ const Vector3 Vector3::UnitZ(0.0f, 0.0f, 1.0f);
 const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);
 const Vector3 Vector3::One(1.0f, 1.0f, 1.0f);
 
-constexpr Vector3::Vector3(float x, float y, float z)
+Vector3::Vector3(float x, float y, float z)
 	: _x(x)
 	, _y(y)
 	, _z(z)
 {
 }
 
-constexpr Vector3::Vector3(const Vector3& vector)
+Vector3::Vector3(const Vector3& vector)
 	: _x(vector._x)
 	, _y(vector._y)
 	, _z(vector._z)
 {
 }
 
-constexpr Vector3& Vector3::operator+=(const Vector3& other)
+const Vector3& Vector3::operator+=(const Vector3& other)
 {
 	return *this = *this + other;
 }
 
-constexpr Vector3& Vector3::operator-=(const Vector3& other)
+const Vector3& Vector3::operator-=(const Vector3& other)
 {
 	return *this = *this - other;
+
 }
 
-constexpr Vector3& Vector3::operator*=(float scalar)
+const Vector3& Vector3::operator*=(float scalar)
 {
 	return *this = *this * scalar;
 }
 
-constexpr Vector3& Vector3::operator/=(float scalar)
+const Vector3& Vector3::operator/=(float scalar)
 {
 	return *this = *this / scalar;
 }
 
-constexpr Vector3 Vector3::operator+(const Vector3& other) const
+const Vector3 Vector3::operator+(const Vector3& other) const
 {
 	return Vector3(_x + other._x, _y + other._y, other._z);
 }
 
-constexpr Vector3 Vector3::operator-(const Vector3& other) const
+const Vector3 Vector3::operator-(const Vector3& other)
 {
 	return Vector3(_x - other._x, _y - other._y, _z - other._z);
 }
 
-constexpr Vector3 Vector3::operator*(float scalar) const
+const Vector3 Vector3::operator*(float scalar) const
 {
 	return Vector3(_x * scalar, _y * scalar, _z * scalar);
 }
 
-constexpr Vector3 Vector3::operator/(float scalar) const
+const Vector3 Vector3::operator/(float scalar) const
 {
 	return Vector3(_x / scalar, _y / scalar, _z / scalar);
 }
 
-constexpr Vector3 Vector3::operator-() const
+const Vector3 Vector3::operator-() const
 {
 	return Vector3();
 }
 
-
-
-constexpr bool Vector3::operator==(const Vector3& other) const
+const bool Vector3::operator==(const Vector3& other) const
 {
 	return (_x == other._x) && (_y == other._y) && (_z == other._z);
 }
 
-constexpr bool Vector3::operator!=(const Vector3& other) const
+const bool Vector3::operator!=(const Vector3& other) const
 {
 	return !(*this == other);
 }
 
-constexpr bool Vector3::operator<(const Vector3& other) const
+const bool Vector3::operator<(const Vector3& other) const
 {
 	if (_x != other._x) return _x < other._x;
 	if (_y != other._y) return _y < other._y;
 	if (_z != other._z) return _z < other._z;
+
+	return false;
+}
+
+const bool Vector3::operator<=(const Vector3& other) const
+{
+	if (fabs(_x - other._x) <= FLT_EPSILON)
+	{
+		if (fabs(_y - other._y) <= FLT_EPSILON)
+		{
+			if (fabs(_z - other._z) <= FLT_EPSILON)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+const bool Vector3::operator>=(const Vector3& other) const
+{
+	if (fabs(_x - other._x) >= FLT_EPSILON)
+	{
+		if (fabs(_y - other._y) >= FLT_EPSILON)
+		{
+			if (fabs(_z - other._z) >= FLT_EPSILON)
+			{
+				return true;
+			}
+		}
+	}
 
 	return false;
 }

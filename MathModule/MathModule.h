@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <queue>
+#include <map>
 #include <iterator>
 #include <algorithm>
 

@@ -4,13 +4,14 @@ struct Box
 {
 	Vector3 _vMin;
 	Vector3 _vMax;
+	Vector3 _vCenter;
+	Vector3 _vSize;
 
 	Box() = default;
-	Box(const Box& box);
-	Box(const Vector3& vMin, const Vector3& vMax);
+	Box(const Vector3& vPos, const Vector3& vSize);
 
-	bool Intersect(const Box& box) const;
-	bool IsInside(const Box& box) const;
-	bool IsInside(const Vector3& vector) const;
+	bool operator==(const Box& dest);
+
+	void Set(const Vector3& vPos, const Vector3& vSize);
 };
 
