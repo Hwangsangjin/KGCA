@@ -80,6 +80,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../Output/</OutDir>
     <IntDir>../../Output/SpaceDivision</IntDir>
+    <IncludePath>$(SolutionDir)MathModule\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -125,7 +126,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MathModule.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\Library\MathModule.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,17 +149,23 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object2D.h" />
+    <ClInclude Include="Object3D.h" />
+    <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Precompiled.h" />
+    <ClInclude Include="SpaceDivision.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Precompiled.cpp" />
+    <ClCompile Include="Object2D.cpp" />
+    <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="ObjectBase.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SpaceDivision.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

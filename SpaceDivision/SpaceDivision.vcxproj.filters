@@ -24,6 +24,18 @@
     <Filter Include="소스 파일\Precompiled">
       <UniqueIdentifier>{74644a3d-51c6-43f9-bb55-6a674c108791}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\SpaceDivision">
+      <UniqueIdentifier>{8d198123-e2cd-4d94-824d-91fcc8c43a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object\Object2D">
+      <UniqueIdentifier>{8c6c7e48-b2d1-4aab-ac27-d91301f30803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object\ObjectBase">
+      <UniqueIdentifier>{7820a2ec-6ca8-4833-898c-9d3c93c87407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object\Object3D">
+      <UniqueIdentifier>{5182af4a-23f8-459c-a656-390fdaaee6f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -35,14 +47,20 @@
     <ClInclude Include="Node.h">
       <Filter>소스 파일\Node</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\Object</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
-    <ClInclude Include="Precompiled.h">
-      <Filter>소스 파일\Precompiled</Filter>
+    <ClInclude Include="SpaceDivision.h">
+      <Filter>소스 파일\SpaceDivision</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBase.h">
+      <Filter>소스 파일\Object\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Object2D.h">
+      <Filter>소스 파일\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>소스 파일\Object\Object3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,14 +73,20 @@
     <ClCompile Include="Node.cpp">
       <Filter>소스 파일\Node</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Object</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Precompiled</Filter>
     </ClCompile>
-    <ClCompile Include="Precompiled.cpp">
-      <Filter>소스 파일\Precompiled</Filter>
+    <ClCompile Include="SpaceDivision.cpp">
+      <Filter>소스 파일\SpaceDivision</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBase.cpp">
+      <Filter>소스 파일\Object\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Object2D.cpp">
+      <Filter>소스 파일\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>소스 파일\Object\Object3D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

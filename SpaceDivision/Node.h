@@ -1,16 +1,19 @@
 #pragma once
 
 #include "pch.h"
-#include "Object.h"
+#include "ObjectBase.h"
+#include "Collision.h"
 
-class Node
+struct Node
 {
 public:
 	int _depth;
-	bool _leaf;
-	
-	virtual ~Node();
+	Rectangle _rect;
+	Box _box;
 
-	void CreateChildNode(Node* pParent);
+	Node* _pParent;
+	std::vector<Node*> _pChild;
+	std::vector<ObjectBase*> _staticObjects;
+	std::vector<ObjectBase*> _dynamicObjects;
 };
 
