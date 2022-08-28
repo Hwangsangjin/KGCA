@@ -1,36 +1,28 @@
 #pragma once
 
-#include <windows.h>
-
 class Window
 {
 public:
-	HINSTANCE _hInstance;	// 인스턴스 핸들
-	HWND _hWnd;				// 윈도우 핸들
-	RECT bound;	// 윈도우 영역
-	RECT _client;	// 클라이언트 영역
-	UINT _width;		// 클라이언트 영역 가로 크기
-	UINT _height;	// 클라이언트 영역 세로 크기
+	// 윈도우 정보
+	WindowInfo _info;
 
 	// 생성자
 	Window();
 	// 소멸자
-	virtual ~Window() {}
+	~Window() {}
 
 	// 윈도우 생성
-	bool InitWindow(HINSTANCE hInstance, int nCmdShow, const TCHAR* strWindowTitle);
+	HRESULT InitWindow(const WindowInfo& info);
 	// 윈도우 위치를 화면 중앙으로 이동
-	void CenterWindow(HWND hwnd);
+	void CenterWindow(const WindowInfo& info);
 	// 초기화
-	virtual bool Init();
+	HRESULT Init(const WindowInfo& info);
 	// 프레임 계산
-	virtual bool Frame();
+	HRESULT Frame();
 	// 렌더
-	virtual bool Render();
+	HRESULT Render();
 	// 메모리 소멸 및 객체 해제
-	virtual bool Release();
-	// 실행
-	virtual bool Run();
+	HRESULT Release();
 	// 윈도우 프로시저
 	virtual LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 };

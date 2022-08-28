@@ -1,17 +1,24 @@
 #pragma once
 
 #include "Window.h"
+#include "Graphics.h"
 
-class Application : public Window
+class Application
 {
+private:
+	Window _window;
+	Graphics _graphics;
+
 public:
 	// 초기화
-	bool Init();
+	HRESULT Init(const WindowInfo& info);
 	// 실시간 계산
-	bool Frame();
+	HRESULT Frame();
 	// 실시간 렌더링
-	bool Render();
+	HRESULT Render();
 	// 소멸 및 삭제
-	bool Release();
+	HRESULT Release();
+	// 실행
+	HRESULT Run();
 };
 

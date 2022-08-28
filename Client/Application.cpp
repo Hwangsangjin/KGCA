@@ -1,35 +1,64 @@
+#include "pch.h"
 #include "Application.h"
 
+WindowInfo gWindowInfo;
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
+	gWindowInfo.hInstance = hInstance;
+	gWindowInfo.nCmdShow = nCmdShow;
+	gWindowInfo.title = L"Client";
+
 	Application app;
-	if (!app.InitWindow(hInstance, nCmdShow, L"Client"))
+	if (FAILED(app.Init(gWindowInfo)))
 	{
-		return 0;
+		return FALSE;
 	}
 
 	ShowCursor(TRUE);
 	app.Run();
 
-	return 1;
+	return 0;
 }
 
-bool Application::Init()
+HRESULT Application::Init(const WindowInfo& info)
 {
-	return true;
+	if (FAILED(_window.Init(info))) return E_FAIL;
+	if (FAILED(_graphics.Init(info))) return E_FAIL;
+
+	return TRUE;
 }
 
-bool Application::Frame()
+HRESULT Application::Frame()
 {
-	return true;
+	return TRUE;
 }
 
-bool Application::Render()
+HRESULT Application::Render()
 {
-	return true;
+	return TRUE;
 }
 
-bool Application::Release()
+HRESULT Application::Release()
 {
-	return true;
+	return TRUE;
+}
+
+HRESULT Application::Run()
+{
+	MSG msg = { 0 };
+	while (WM_QUIT != msg.message)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			Frame();
+			Render();
+		}
+	}
+
+	return E_FAIL;
 }
