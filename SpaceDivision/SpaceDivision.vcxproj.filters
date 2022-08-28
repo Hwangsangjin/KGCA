@@ -12,29 +12,29 @@
     <Filter Include="소스 파일\Application">
       <UniqueIdentifier>{b7bdca78-f21b-4229-9600-1331bf402213}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Collision">
-      <UniqueIdentifier>{f325d3f1-35ad-470d-8860-21e3114f810f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Node">
-      <UniqueIdentifier>{adaf46e0-5fde-4145-bed7-fc26887d99ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Object">
-      <UniqueIdentifier>{9a58b21f-c910-44c1-abda-2b252e1b5261}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Precompiled">
       <UniqueIdentifier>{74644a3d-51c6-43f9-bb55-6a674c108791}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\SpaceDivision">
-      <UniqueIdentifier>{8d198123-e2cd-4d94-824d-91fcc8c43a0d}</UniqueIdentifier>
+    <Filter Include="소스 파일\GameCore">
+      <UniqueIdentifier>{0ae0cdf4-c45e-41c8-918e-9013e16fbf8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object\Object2D">
-      <UniqueIdentifier>{8c6c7e48-b2d1-4aab-ac27-d91301f30803}</UniqueIdentifier>
+    <Filter Include="소스 파일\GameCore\Collision">
+      <UniqueIdentifier>{f325d3f1-35ad-470d-8860-21e3114f810f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object\ObjectBase">
-      <UniqueIdentifier>{7820a2ec-6ca8-4833-898c-9d3c93c87407}</UniqueIdentifier>
+    <Filter Include="소스 파일\GameCore\Node">
+      <UniqueIdentifier>{adaf46e0-5fde-4145-bed7-fc26887d99ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object\Object3D">
-      <UniqueIdentifier>{5182af4a-23f8-459c-a656-390fdaaee6f2}</UniqueIdentifier>
+    <Filter Include="소스 파일\GameCore\Object">
+      <UniqueIdentifier>{9a58b21f-c910-44c1-abda-2b252e1b5261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Player">
+      <UniqueIdentifier>{532e1c5c-9ce8-47f4-8ddf-52137f2c9589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Enemy">
+      <UniqueIdentifier>{e2804c73-b07f-4332-a546-bfc452d41cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Octree">
+      <UniqueIdentifier>{940878e1-9ebf-4dc4-b014-4e310d93d5b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,25 +42,28 @@
       <Filter>소스 파일\Application</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>소스 파일\Collision</Filter>
+      <Filter>소스 파일\GameCore\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>소스 파일\Node</Filter>
+      <Filter>소스 파일\GameCore\Node</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceDivision.h">
-      <Filter>소스 파일\SpaceDivision</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\GameCore\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectBase.h">
-      <Filter>소스 파일\Object\ObjectBase</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>소스 파일\GameCore\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Object2D.h">
-      <Filter>소스 파일\Object\Object2D</Filter>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\GameCore\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>소스 파일\Object\Object3D</Filter>
+    <ClInclude Include="GameCore.h">
+      <Filter>소스 파일\GameCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Octree.h">
+      <Filter>소스 파일\GameCore\Octree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,25 +71,28 @@
       <Filter>소스 파일\Application</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>소스 파일\Collision</Filter>
+      <Filter>소스 파일\GameCore\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>소스 파일\Node</Filter>
+      <Filter>소스 파일\GameCore\Node</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Precompiled</Filter>
     </ClCompile>
-    <ClCompile Include="SpaceDivision.cpp">
-      <Filter>소스 파일\SpaceDivision</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\GameCore\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectBase.cpp">
-      <Filter>소스 파일\Object\ObjectBase</Filter>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일\GameCore\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Object2D.cpp">
-      <Filter>소스 파일\Object\Object2D</Filter>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\GameCore\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object3D.cpp">
-      <Filter>소스 파일\Object\Object3D</Filter>
+    <ClCompile Include="GameCore.cpp">
+      <Filter>소스 파일\GameCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Octree.cpp">
+      <Filter>소스 파일\GameCore\Octree</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

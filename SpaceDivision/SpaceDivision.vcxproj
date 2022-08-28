@@ -148,24 +148,26 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameCore.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Object2D.h" />
-    <ClInclude Include="Object3D.h" />
-    <ClInclude Include="ObjectBase.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Octree.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SpaceDivision.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Object2D.cpp" />
-    <ClCompile Include="Object3D.cpp" />
-    <ClCompile Include="ObjectBase.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Octree.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SpaceDivision.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

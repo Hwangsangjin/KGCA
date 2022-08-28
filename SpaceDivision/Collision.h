@@ -2,12 +2,20 @@
 
 enum CollisionType
 {
-	RECT_OUT = 0,
-	RECT_IN,
-	RECT_OVERLAP,
+	Out = 0,
+	In,
+	Overlap,
 };
 
 class Collision
 {
+public:
+    static CollisionType RectToRect(Rect& a, Rect& b);
+    static bool RectToInRect(Rect& a, Rect& b);
+    static bool CircleToCircle(Circle& a, Circle& b);
+
+    static CollisionType BoxToBox(Box& a, Box& b);
+    static bool BoxToInBox(Box& a, Box& b);
+    static bool SphereToSphere(Sphere& a, Sphere& b);
 };
 
