@@ -1,8 +1,7 @@
 #pragma once
 
-class Vector2
+struct Vector2
 {
-private:
 	// 정적 멤버변수 
 	static const Vector2 UnitX;
 	static const Vector2 UnitY;
@@ -22,7 +21,6 @@ private:
 		std::array<float, Dimension> _scalars = { 0.0f, 0.0f };
 	};
 
-public:
 	// 생성자
 	constexpr Vector2() = default;
 	constexpr Vector2(float x, float y);

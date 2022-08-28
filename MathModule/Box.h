@@ -1,8 +1,7 @@
 #pragma once
 
-class Box
+struct Box
 {
-public:
 	Vector3 _vMin;
 	Vector3 _vMax;
 

@@ -1,8 +1,7 @@
 #pragma once
 
-class Vector3
+struct Vector3
 {
-public:
 	// 정적 멤버변수 
 	static const Vector3 UnitX;
 	static const Vector3 UnitY;
