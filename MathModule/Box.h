@@ -2,10 +2,10 @@
 
 struct Box
 {
-	Vector3 _vMin;
-	Vector3 _vMax;
-	Vector3 _vCenter;
-	Vector3 _vSize;
+	Vector3 vMin;
+	Vector3 vMax;
+	Vector3 vCenter;
+	Vector3 vSize;
 
 	Box() = default;
 	Box(const Vector3& vPos, const Vector3& vSize);

@@ -2,9 +2,9 @@
 
 struct Circle
 {
-	float _x;
-	float _y;
-	float _radius;
+	float x;
+	float y;
+	float radius;
 
 	Circle() = default;
 	Circle(float x, float y, float radius);

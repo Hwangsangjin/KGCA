@@ -8,16 +8,16 @@ const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);
 const Vector3 Vector3::One(1.0f, 1.0f, 1.0f);
 
 Vector3::Vector3(float x, float y, float z)
-	: _x(x)
-	, _y(y)
-	, _z(z)
+	: x(x)
+	, y(y)
+	, z(z)
 {
 }
 
 Vector3::Vector3(const Vector3& vector)
-	: _x(vector._x)
-	, _y(vector._y)
-	, _z(vector._z)
+	: x(vector.x)
+	, y(vector.y)
+	, z(vector.z)
 {
 }
 
@@ -44,22 +44,22 @@ const Vector3& Vector3::operator/=(float scalar)
 
 const Vector3 Vector3::operator+(const Vector3& other) const
 {
-	return Vector3(_x + other._x, _y + other._y, other._z);
+	return Vector3(x + other.x, y + other.y, other.z);
 }
 
-const Vector3 Vector3::operator-(const Vector3& other)
+const Vector3 Vector3::operator-(const Vector3& other) const
 {
-	return Vector3(_x - other._x, _y - other._y, _z - other._z);
+	return Vector3(x - other.x, y - other.y, z - other.z);
 }
 
 const Vector3 Vector3::operator*(float scalar) const
 {
-	return Vector3(_x * scalar, _y * scalar, _z * scalar);
+	return Vector3(x * scalar, y * scalar, z * scalar);
 }
 
 const Vector3 Vector3::operator/(float scalar) const
 {
-	return Vector3(_x / scalar, _y / scalar, _z / scalar);
+	return Vector3(x / scalar, y / scalar, z / scalar);
 }
 
 const Vector3 Vector3::operator-() const
@@ -69,7 +69,7 @@ const Vector3 Vector3::operator-() const
 
 const bool Vector3::operator==(const Vector3& other) const
 {
-	return (_x == other._x) && (_y == other._y) && (_z == other._z);
+	return (x == other.x) && (y == other.y) && (z == other.z);
 }
 
 const bool Vector3::operator!=(const Vector3& other) const
@@ -79,20 +79,20 @@ const bool Vector3::operator!=(const Vector3& other) const
 
 const bool Vector3::operator<(const Vector3& other) const
 {
-	if (_x != other._x) return _x < other._x;
-	if (_y != other._y) return _y < other._y;
-	if (_z != other._z) return _z < other._z;
+	if (x != other.x) return x < other.x;
+	if (y != other.y) return y < other.y;
+	if (z != other.z) return z < other.z;
 
 	return false;
 }
 
 const bool Vector3::operator<=(const Vector3& other) const
 {
-	if (fabs(_x - other._x) <= FLT_EPSILON)
+	if (fabs(x - other.x) <= FLT_EPSILON)
 	{
-		if (fabs(_y - other._y) <= FLT_EPSILON)
+		if (fabs(y - other.y) <= FLT_EPSILON)
 		{
-			if (fabs(_z - other._z) <= FLT_EPSILON)
+			if (fabs(z - other.z) <= FLT_EPSILON)
 			{
 				return true;
 			}
@@ -104,11 +104,11 @@ const bool Vector3::operator<=(const Vector3& other) const
 
 const bool Vector3::operator>=(const Vector3& other) const
 {
-	if (fabs(_x - other._x) >= FLT_EPSILON)
+	if (fabs(x - other.x) >= FLT_EPSILON)
 	{
-		if (fabs(_y - other._y) >= FLT_EPSILON)
+		if (fabs(y - other.y) >= FLT_EPSILON)
 		{
-			if (fabs(_z - other._z) >= FLT_EPSILON)
+			if (fabs(z - other.z) >= FLT_EPSILON)
 			{
 				return true;
 			}
@@ -120,12 +120,12 @@ const bool Vector3::operator>=(const Vector3& other) const
 
 float Vector3::Dot(const Vector3& other) const
 {
-	return (_x * other._x) + (_y * other._y) + (_z * other._z);
+	return (x * other.x) + (y * other.y) + (z * other.z);
 }
 
 Vector3 Vector3::Cross(const Vector3& other) const
 {
-	return Vector3(_y * other._z - _z * other._y, _z * other._x - _x * other._z, _x * other._y - _y * other._x);
+	return Vector3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 }
 
 float Vector3::Size() const
@@ -135,7 +135,7 @@ float Vector3::Size() const
 
 float Vector3::SizeSquared() const
 {
-	return (_x * _x + _y * _y + _z * _z);
+	return (x * x + y * y + z * z);
 }
 
 void Vector3::Normalize()

@@ -2,8 +2,8 @@
 
 struct Rectangle
 {
-	Vector2 _vMin;
-	Vector2 _vMax;
+	Vector2 vMin;
+	Vector2 vMax;
 
 	Rectangle() = default;
 	Rectangle(const Rectangle& rect);

@@ -15,10 +15,10 @@ struct Vector3
 	{
 		struct
 		{
-			struct { float _x, _y, _z; };
+			struct { float x, y, z; };
 		};
 
-		std::array<float, Dimension> _scalars = { 0.0f, 0.0f, 0.0f };
+		std::array<float, Dimension> scalars = { 0.0f, 0.0f, 0.0f };
 	};
 
 	// »ý¼ºÀÚ
@@ -32,7 +32,7 @@ struct Vector3
 	const Vector3& operator*=(float scalar);
 	const Vector3& operator/=(float scalar);
 	const Vector3 operator+(const Vector3& other) const;
-	const Vector3 operator-(const Vector3& other);
+	const Vector3 operator-(const Vector3& other) const; 
 	const Vector3 operator*(float scalar) const;
 	const Vector3 operator/(float scalar) const;
 	const Vector3 operator-() const;

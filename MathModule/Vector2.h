@@ -15,10 +15,10 @@ struct Vector2
 	{
 		struct
 		{
-			struct { float _x, _y; };
+			struct { float x, y; };
 		};
 
-		std::array<float, Dimension> _scalars = { 0.0f, 0.0f };
+		std::array<float, Dimension> scalars = { 0.0f, 0.0f };
 	};
 
 	// »ı¼ºÀÚ
