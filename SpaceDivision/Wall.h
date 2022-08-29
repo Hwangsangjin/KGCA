@@ -2,11 +2,11 @@
 
 #include "Object.h"
 
-class Enemy : public Object
+class Wall : public Object
 {
 public:
-	Enemy();
-	Enemy(std::string name);
+	Wall();
+	Wall(std::string name);
 
 	virtual void Init() override;
 	virtual void Frame(float fDeltaTime, float fGameTime) override;

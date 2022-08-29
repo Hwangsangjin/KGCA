@@ -117,30 +117,30 @@ void Octree::Buildtree(Node* pNode)
     Vector3 pos;
     Vector3 size;
 
-    pos = pNode->_box._vMin;
-    size = pNode->_box._vSize / 2.0f;
+    pos = pNode->_box.vMin;
+    size = pNode->_box.vSize / 2.0f;
     pNode->_pChild[0] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x + size._x;
+    pos.x = pNode->_box.vMin.x + size.x;
     pNode->_pChild[1] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x;
-    pos._y = pNode->_box._vMin._y + size._y;
+    pos.x = pNode->_box.vMin.x;
+    pos.y = pNode->_box.vMin.y + size.y;
     pNode->_pChild[2] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x + size._x;
-    pos._y = pNode->_box._vMin._y + size._y;
+    pos.x = pNode->_box.vMin.x + size.x;
+    pos.y = pNode->_box.vMin.y + size.y;
     pNode->_pChild[3] = CreateNode(pNode, pos, size);
 
-    pos._x = pNode->_box._vMin._x;
-    pos._y = pNode->_box._vMin._y;
-    pos._z = pNode->_box._vMin._z + size._z;
+    pos.x = pNode->_box.vMin.x;
+    pos.y = pNode->_box.vMin.y;
+    pos.z = pNode->_box.vMin.z + size.z;
     pNode->_pChild[4] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x + size._x;
-    pos._y = pNode->_box._vMin._y;
+    pos.x = pNode->_box.vMin.x + size.x;
+    pos.y = pNode->_box.vMin.y;
     pNode->_pChild[5] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x;
-    pos._y = pNode->_box._vMin._y + size._y;
+    pos.x = pNode->_box.vMin.x;
+    pos.y = pNode->_box.vMin.y + size.y;
     pNode->_pChild[6] = CreateNode(pNode, pos, size);
-    pos._x = pNode->_box._vMin._x + size._x;
-    pos._y = pNode->_box._vMin._y + size._y;
+    pos.x = pNode->_box.vMin.x + size.x;
+    pos.y = pNode->_box.vMin.y + size.y;
     pNode->_pChild[7] = CreateNode(pNode, pos, size);
 
     for (int i = 0; i < pNode->_pChild.size(); i++)

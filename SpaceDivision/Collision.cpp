@@ -58,9 +58,9 @@ bool Collision::RectToInRect(Rect& a, Rect& b)
 
 bool Collision::CircleToCircle(Circle& a, Circle& b)
 {
-    float fSumRadius = a._radius + b._radius;
-    float x = a._x - b._x;
-    float y = a._y - b._y;
+    float fSumRadius = a.radius + b.radius;
+    float x = a.cx - b.cx;
+    float y = a.cy - b.cy;
     float fDistance = sqrtf(x * x + y * y);
     if (fDistance <= fSumRadius)
     {
@@ -79,32 +79,32 @@ CollisionType Collision::BoxToBox(Box& a, Box& b)
     float fMinX;    float fMaxX;
     float fMinY;    float fMaxY;
     float fMinZ;    float fMaxZ;
-    fMinX = a._vMin._x < b._vMin._x ? a._vMin._x : b._vMin._x;
-    fMinY = a._vMin._y < b._vMin._y ? a._vMin._y : b._vMin._y;
-    fMaxX = a._vMax._x > b._vMax._x ? a._vMax._x : b._vMax._x;
-    fMaxY = a._vMax._y > b._vMax._y ? a._vMax._y : b._vMax._y;
+    fMinX = a.vMin.x < b.vMin.x ? a.vMin.x : b.vMin.x;
+    fMinY = a.vMin.y < b.vMin.y ? a.vMin.y : b.vMin.y;
+    fMaxX = a.vMax.x > b.vMax.x ? a.vMax.x : b.vMax.x;
+    fMaxY = a.vMax.y > b.vMax.y ? a.vMax.y : b.vMax.y;
 
-    fMinZ = a._vMin._z < b._vMin._z ? a._vMin._z : b._vMin._z;
-    fMaxZ = a._vMax._z > b._vMax._z ? a._vMax._z : b._vMax._z;
+    fMinZ = a.vMin.z < b.vMin.z ? a.vMin.z : b.vMin.z;
+    fMaxZ = a.vMax.z > b.vMax.z ? a.vMax.z : b.vMax.z;
 
     //  가로 판정
-    if ((a._vSize._x + b._vSize._x) >= (fMaxX - fMinX))
+    if ((a.vSize.x + b.vSize.x) >= (fMaxX - fMinX))
     {
         //  세로 판정
-        if ((a._vSize._y + b._vSize._y) >= (fMaxY - fMinY))
+        if ((a.vSize.y + b.vSize.y) >= (fMaxY - fMinY))
         {
-            if ((a._vSize._z + b._vSize._z) >= (fMaxZ - fMinZ))
+            if ((a.vSize.z + b.vSize.z) >= (fMaxZ - fMinZ))
             {
                 // 교차한다. 교집합
                 Vector3 vMin, vMax;
                 Box Intersect;
-                vMin._x = a._vMin._x > b._vMin._x ? a._vMin._x : b._vMin._x;
-                vMin._y = a._vMin._y > b._vMin._y ? a._vMin._y : b._vMin._y;
-                vMin._z = a._vMin._z > b._vMin._z ? a._vMin._z : b._vMin._z;
+                vMin.x = a.vMin.x > b.vMin.x ? a.vMin.x : b.vMin.x;
+                vMin.y = a.vMin.y > b.vMin.y ? a.vMin.y : b.vMin.y;
+                vMin.z = a.vMin.z > b.vMin.z ? a.vMin.z : b.vMin.z;
 
-                vMax._x = a._vMax._x < b._vMax._x ? a._vMax._x : b._vMax._x;
-                vMax._y = a._vMax._y < b._vMax._y ? a._vMax._y : b._vMax._y;
-                vMax._z = a._vMax._z < b._vMax._z ? a._vMax._z : b._vMax._z;
+                vMax.x = a.vMax.x < b.vMax.x ? a.vMax.x : b.vMax.x;
+                vMax.y = a.vMax.y < b.vMax.y ? a.vMax.y : b.vMax.y;
+                vMax.z = a.vMax.z < b.vMax.z ? a.vMax.z : b.vMax.z;
 
                 Intersect.Set(vMin, vMax - vMin);
                 if (Intersect == a || Intersect == b)
@@ -121,9 +121,9 @@ CollisionType Collision::BoxToBox(Box& a, Box& b)
 bool Collision::BoxToInBox(Box& a, Box& b)
 {
     //  |             |
-    if (a._vMin <= b._vMin)
+    if (a.vMin <= b.vMin)
     {
-        if (a._vMax >= b._vMax)
+        if (a.vMax >= b.vMax)
         {
             return true;
         }
@@ -134,8 +134,8 @@ bool Collision::BoxToInBox(Box& a, Box& b)
 
 bool Collision::SphereToSphere(Sphere& a, Sphere& b)
 {
-    float fSumRadius = a._radius + b._radius;
-    Vector3 vDir = a._vCenter - b._vCenter;
+    float fSumRadius = a.radius + b.radius;
+    Vector3 vDir = a.vCenter - b.vCenter;
     float fDistance = vDir.Size();
     if (fDistance <= fSumRadius)
     {

@@ -14,15 +14,16 @@ GameCore* GameCore::Instance()
 
 bool GameCore::Init()
 {
-	_tree.Create(Vector3(0, 0, 0), Vector3(100, 100, 0));
+	_player.Init();
 	_player.SetPosition(Vector3(50, 50, 50), Vector3(50, 50, 50));
+	_tree.Create(Vector3(0, 0, 0), Vector3(100, 100, 0));
 
 	for (int i = 0; i < 10; i++)
 	{
 		std::string name = std::to_string(i);
-		name += " Static";
+		name += " Wall ";
 
-		Object* pObject = new Object(name);
+		Object* pObject = new Wall(name);
 
 		_objectList.insert(std::make_pair(i, pObject));
 		_tree.AddStaticObject(pObject);
@@ -31,9 +32,9 @@ bool GameCore::Init()
 	for (int i = 0; i < 10; i++)
 	{
 		std::string name = std::to_string(i);
-		name += " Dynamic";
+		name += " Enemy ";
 
-		Object* pObject = new Enemy;
+		Object* pObject = new Enemy(name);
    
 		pObject->_name = name;
 		_npcList.insert(std::make_pair(i, pObject));
@@ -61,17 +62,17 @@ bool GameCore::Frame(float fDeltaTime, float fGameTime)
 
 bool GameCore::Render()
 {
-	std::cout << "Player:"
-		<< _player._box._vMin._x << ", " << _player._box._vMin._y << ", "
-		<< _player._box._vMin._z << std::endl;
+	std::cout << "Player "
+		<< _player._box.vMin.x << ", " << _player._box.vMin.y << ", "
+		<< _player._box.vMin.z << std::endl;
 	if (!_drawList.empty())
 	{
 		for (int i = 0; i < _drawList.size(); i++)
 		{
-			std::cout << _drawList[i]->_name << ", "
-				<< _drawList[i]->_box._vMin._x << ", "
-				<< _drawList[i]->_box._vMin._y << ", "
-				<< _drawList[i]->_box._vMin._z << std::endl;
+			std::cout << _drawList[i]->_name << " "
+				<< _drawList[i]->_box.vMin.x << ", "
+				<< _drawList[i]->_box.vMin.y << ", "
+				<< _drawList[i]->_box.vMin.z << std::endl;
 		}
 	}
 
@@ -80,13 +81,20 @@ bool GameCore::Render()
 
 bool GameCore::Release()
 {
-	if (_instance == nullptr)
+	for (auto object : _objectList)
 	{
-		return false;
+		delete object.second;
 	}
+	_objectList.clear();
+	_npcList.clear();
 
-	delete _instance;
-	_instance = nullptr;
+	//if (_instance == nullptr)
+	//{
+	//	return false;
+	//}
+
+	//delete _instance;
+	//_instance = nullptr;
 
 	return true;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Octree.h"
+#include "Wall.h"
 #include "Object.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -16,6 +17,7 @@ private:
 
 public:
     Octree _tree;
+    Wall _wall;
     Player _player;
     Enemy _enemy;
 

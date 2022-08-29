@@ -21,8 +21,8 @@ public:
 	Object();
 	Object(std::string name);
 
-    virtual void Init();
-    virtual void Frame(float fDeltaTime, float fGameTime);
+	virtual void Init();
+    virtual void Frame(float fDeltaTime, float fGameTime) {}
 
 	void SetSphere(Vector3 vCenter, float radius);
 	void SetSphere(Box box);
