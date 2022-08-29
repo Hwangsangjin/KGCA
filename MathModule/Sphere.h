@@ -6,6 +6,6 @@ struct Sphere
 	float radius;
 
 	Sphere() = default;
-	Sphere(const Vector3& vCenter, float radius);
+	Sphere(Vector3 vC, float r);
 };
 

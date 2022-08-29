@@ -8,10 +8,10 @@ struct Box
 	Vector3 vSize;
 
 	Box() = default;
-	Box(const Vector3& vPos, const Vector3& vSize);
+	Box(Vector3 vPos, Vector3 vSize);
 
-	bool operator==(const Box& dest);
+	bool operator==(Box& dest);
 
-	void Set(const Vector3& vPos, const Vector3& vSize);
+	void Set(Vector3 vPos, Vector3 vSize);
 };
 

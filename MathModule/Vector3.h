@@ -2,14 +2,6 @@
 
 struct Vector3
 {
-	// 정적 멤버변수 
-	static const Vector3 UnitX;
-	static const Vector3 UnitY;
-	static const Vector3 UnitZ;
-	static const Vector3 One;
-	static const Vector3 Zero;
-	static const unsigned char Dimension = 3;
-
 	// 멤버변수
 	union
 	{
@@ -18,13 +10,13 @@ struct Vector3
 			struct { float x, y, z; };
 		};
 
-		std::array<float, Dimension> scalars = { 0.0f, 0.0f, 0.0f };
+		float v[3];
 	};
 
 	// 생성자
-	Vector3() = default;
+	Vector3();
 	Vector3(float x, float y, float z);
-	Vector3(const Vector3& vector);
+	Vector3(const Vector3& v);
 
 	// 연산자
 	const Vector3& operator+=(const Vector3& other);

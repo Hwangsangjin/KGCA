@@ -2,11 +2,11 @@
 
 struct Circle
 {
-	float x;
-	float y;
+	float cx;
+	float cy;
 	float radius;
 
 	Circle() = default;
-	Circle(float x, float y, float radius);
+	Circle(float x, float y, float r);
 };
 

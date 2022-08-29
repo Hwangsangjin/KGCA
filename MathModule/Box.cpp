@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "Box.h"
 
-Box::Box(const Vector3& vPos, const Vector3& vSize)
+Box::Box(Vector3 vPos, Vector3 vSize)
 {
     Set(vPos, vSize);
 }
 
-bool Box::operator==(const Box& dest)
+bool Box::operator==(Box& dest)
 {
     if (vMin == dest.vMin)
     {
@@ -15,11 +15,10 @@ bool Box::operator==(const Box& dest)
             return true;
         }
     }
-
     return false;
 }
 
-void Box::Set(const Vector3& vPos, const Vector3& vSize)
+void Box::Set(Vector3 vPos, Vector3 vSize)
 {
 	vMin = vPos;
 	this->vSize = vSize;

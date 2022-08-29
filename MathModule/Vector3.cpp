@@ -1,24 +1,25 @@
 #include "pch.h"
 #include "Vector3.h"
 
-const Vector3 Vector3::UnitX(1.0f, 0.0f, 0.0f);
-const Vector3 Vector3::UnitY(0.0f, 1.0f, 0.0f);
-const Vector3 Vector3::UnitZ(0.0f, 0.0f, 1.0f);
-const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);
-const Vector3 Vector3::One(1.0f, 1.0f, 1.0f);
-
-Vector3::Vector3(float x, float y, float z)
-	: x(x)
-	, y(y)
-	, z(z)
+Vector3::Vector3()
 {
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
 }
 
-Vector3::Vector3(const Vector3& vector)
-	: x(vector.x)
-	, y(vector.y)
-	, z(vector.z)
+Vector3::Vector3(float x, float y, float z)
 {
+	v[0] = x;
+	v[1] = y;
+	v[2] = z;
+}
+
+Vector3::Vector3(const Vector3& v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
 }
 
 const Vector3& Vector3::operator+=(const Vector3& other)
@@ -145,15 +146,10 @@ void Vector3::Normalize()
 
 Vector3 Vector3::GetNormalize() const
 {
-	const float magitude = SizeSquared();
-	if (magitude == 1.0f)
-	{
-		return *this;
-	}
-	else if (magitude < FLT_EPSILON)
-	{
-		return Vector3::Zero;
-	}
-
-	return *this / magitude;
+	Vector3 ret = *this;
+	float fInvertLength = 1.0f / Size();
+	ret.x = ret.x * fInvertLength;
+	ret.y = ret.y * fInvertLength;
+	ret.z = ret.z * fInvertLength;
+	return ret;
 }
