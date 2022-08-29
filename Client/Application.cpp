@@ -7,6 +7,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	gWindowInfo.hInstance = hInstance;
 	gWindowInfo.nCmdShow = nCmdShow;
 	gWindowInfo.title = L"Client";
+	gWindowInfo.width = 800;
+	gWindowInfo.height = 600;
 
 	Application app;
 	if (FAILED(app.Init(gWindowInfo)))
@@ -15,7 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	}
 
 	ShowCursor(TRUE);
-	app.Run();
+	app.Run(gWindowInfo);
 
 	return 1;
 }
@@ -35,7 +37,7 @@ HRESULT Application::Frame()
 
 HRESULT Application::Render()
 {
-	if (FAILED(_graphics.Render())) return E_FAIL;
+	//if (FAILED(_graphics.Render())) return E_FAIL;
 
 	return TRUE;
 }
@@ -45,8 +47,13 @@ HRESULT Application::Release()
 	return TRUE;
 }
 
-HRESULT Application::Run()
+HRESULT Application::Run(const WindowInfo& info)
 {
+	if (FAILED(Init(info)))
+	{
+		return E_FAIL;
+	}
+
 	MSG msg = { 0 };
 	while (WM_QUIT != msg.message)
 	{

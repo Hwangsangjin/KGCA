@@ -41,7 +41,7 @@ public:
 	// 렌더타켓뷰 생성
 	HRESULT CreateRenderTargetView();
 	// 뷰포트 설정
-	void CreateViewport(const WindowInfo& info);
+	HRESULT CreateViewport(const WindowInfo& info);
 
 	// 정점 버퍼 생성
 	HRESULT CreateVertexBuffer();

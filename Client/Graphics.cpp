@@ -85,11 +85,17 @@ HRESULT Graphics::Release()
 
 HRESULT Graphics::ReleaseDevice()
 {
-    if (_pd3dDevice) _pd3dDevice->Release();
-    if (_pImmediateContext) _pImmediateContext->Release();
+    if (_pImmediateContext) _pImmediateContext->ClearState();
     if (_pGIFactory) _pGIFactory->Release();
     if (_pSwapChain) _pSwapChain->Release();
     if (_pRenderTargetView) _pRenderTargetView->Release();
+    if (_pImmediateContext) _pImmediateContext->Release();
+    if (_pd3dDevice) _pd3dDevice->Release();
+    _pd3dDevice = nullptr;
+    _pImmediateContext = nullptr;
+    _pRenderTargetView = nullptr;
+    _pSwapChain = nullptr;
+    _pGIFactory = nullptr;
 
     return TRUE;
 }
@@ -113,15 +119,11 @@ HRESULT Graphics::CreateDevice()
     UINT Flags = 0;
     D3D_FEATURE_LEVEL pFeatureLevels[] =
     {
-        D3D_FEATURE_LEVEL_11_0,
+        D3D_FEATURE_LEVEL_11_1,
+        D3D_FEATURE_LEVEL_11_0
     };
     UINT FeatureLevels = 1;
-    hr = D3D11CreateDevice(
-        nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, pFeatureLevels, 1, D3D11_SDK_VERSION,
-        &_pd3dDevice,
-        &pFeatureLevel,
-        &_pImmediateContext
-    );
+    hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, pFeatureLevels, 1, D3D11_SDK_VERSION, &_pd3dDevice, &pFeatureLevel, &_pImmediateContext);
 
     return hr;
 }
@@ -130,7 +132,6 @@ HRESULT Graphics::CreateDXGIDevice()
 {
     HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&_pGIFactory);
     return hr;
-    return TRUE;
 }
 
 HRESULT Graphics::CreateSwapChain(const WindowInfo& info)
@@ -138,20 +139,18 @@ HRESULT Graphics::CreateSwapChain(const WindowInfo& info)
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.BufferCount = 1;
-    sd.BufferDesc.Width = info.client.right;
-    sd.BufferDesc.Height = info.client.bottom;
+    sd.BufferDesc.Width = info.width;
+    sd.BufferDesc.Height = info.height;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = info.hWnd;
-    sd.Windowed = true;
-
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
-
+    sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    sd.OutputWindow = info.hWnd;
     sd.SampleDesc.Count = 1;
     sd.SampleDesc.Quality = 0;
-
+    sd.Windowed = true;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
     return _pGIFactory->CreateSwapChain(_pd3dDevice, &sd, &_pSwapChain);
 }
 
@@ -159,22 +158,26 @@ HRESULT Graphics::CreateRenderTargetView()
 {
     HRESULT hr;
     ID3D11Texture2D* pBackBuffer = nullptr;
-    _pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer);
+    _pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
     hr = _pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &_pRenderTargetView);
     pBackBuffer->Release();
+    _pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
+
     return hr;
 }
 
-void Graphics::CreateViewport(const WindowInfo& info)
+HRESULT Graphics::CreateViewport(const WindowInfo& info)
 {
     D3D11_VIEWPORT vp;
-    vp.Width = info.client.right;
-    vp.Height = info.client.bottom;
+    vp.Width = info.width;
+    vp.Height = info.height;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
     _pImmediateContext->RSSetViewports(1, &vp);
+    
+    return S_OK;
 }
 
 HRESULT Graphics::CreateVertexBuffer()

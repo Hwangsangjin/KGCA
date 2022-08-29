@@ -51,18 +51,18 @@ HRESULT Window::InitWindow(const WindowInfo& info)
 
     _info.hInstance = info.hInstance;
     _info.nCmdShow = info.nCmdShow;
-    RECT rect = { 0, 0, 640, 480 };
+    RECT rect = { 0, 0, info.width, info.height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
     // 운영체제에 등록한 윈도우를 생성한다.
-    _info.hWnd = CreateWindowEx(WS_EX_TOPMOST, info.title, info.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, info.hInstance, NULL);
-    if (FAILED(_info.hWnd))
+    HWND hWnd = CreateWindowW(info.title, info.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, info.hInstance, NULL);
+    if (FAILED(hWnd))
     {
         return E_FAIL;
     }
 
-    ShowWindow(_info.hWnd, _info.nCmdShow);
-    UpdateWindow(_info.hWnd);
+    ShowWindow(hWnd, SW_SHOW);
+    CenterWindow(info);
 
     return TRUE;
 }

@@ -19,6 +19,6 @@ public:
 	// 소멸 및 삭제
 	HRESULT Release();
 	// 실행
-	HRESULT Run();
+	HRESULT Run(const WindowInfo& info);
 };
 
