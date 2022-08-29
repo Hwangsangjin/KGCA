@@ -11,13 +11,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	Application app;
 	if (FAILED(app.Init(gWindowInfo)))
 	{
-		return FALSE;
+		return 0;
 	}
 
 	ShowCursor(TRUE);
 	app.Run();
 
-	return 0;
+	return 1;
 }
 
 HRESULT Application::Init(const WindowInfo& info)
@@ -35,6 +35,8 @@ HRESULT Application::Frame()
 
 HRESULT Application::Render()
 {
+	if (FAILED(_graphics.Render())) return E_FAIL;
+
 	return TRUE;
 }
 
@@ -60,5 +62,7 @@ HRESULT Application::Run()
 		}
 	}
 
-	return E_FAIL;
+	if (FAILED(Release())) return E_FAIL;
+
+	return TRUE;
 }

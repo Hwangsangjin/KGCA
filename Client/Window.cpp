@@ -62,6 +62,7 @@ HRESULT Window::InitWindow(const WindowInfo& info)
     }
 
     ShowWindow(_info.hWnd, _info.nCmdShow);
+    UpdateWindow(_info.hWnd);
 
     return TRUE;
 }

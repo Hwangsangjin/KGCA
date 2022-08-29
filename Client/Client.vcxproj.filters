@@ -21,6 +21,12 @@
     <Filter Include="소스 파일\Precompiled">
       <UniqueIdentifier>{2e7436c5-bcb6-413c-867e-30b3babda14a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Graphics\Vertex">
+      <UniqueIdentifier>{ce2ab789-551c-48fe-a0bc-d10591fcfd6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Graphics\Shader">
+      <UniqueIdentifier>{f3f395d0-bb9e-4ebb-9257-07a10bc5b39a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -34,6 +40,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,5 +58,16 @@
     <ClInclude Include="pch.h">
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
+    <ClInclude Include="Vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="VertexShader.hlsl">
+      <Filter>소스 파일\Graphics\Shader</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>소스 파일\Graphics\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
