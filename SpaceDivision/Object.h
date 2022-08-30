@@ -22,7 +22,7 @@ public:
 	Object(std::string name);
 
 	virtual void Init();
-    virtual void Frame(float fDeltaTime, float fGameTime) {}
+    virtual void Frame(float elapsedTime, float gameTime) {}
 
 	void SetSphere(Vector3 vCenter, float radius);
 	void SetSphere(Box box);

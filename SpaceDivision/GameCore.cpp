@@ -44,17 +44,18 @@ bool GameCore::Init()
 	return true;
 }
 
-bool GameCore::Frame(float fDeltaTime, float fGameTime)
+bool GameCore::Frame(float elapsedTime, float gameTime)
 {
 	_tree.DynamicObjectReset();
+
 	for (auto object : _npcList)
 	{
 		Object* pObject = object.second;
-		pObject->Frame(fDeltaTime, fGameTime);
+		pObject->Frame(elapsedTime, gameTime);
 		_tree.AddDynamicObject(pObject);
 	}
 
-	_player.Frame(fDeltaTime, fGameTime);
+	_player.Frame(elapsedTime, gameTime);
 	_drawList = _tree.CollisionQuery(&_player);
 
 	return false;
@@ -62,17 +63,13 @@ bool GameCore::Frame(float fDeltaTime, float fGameTime)
 
 bool GameCore::Render()
 {
-	std::cout << "Player "
-		<< _player._box.vMin.x << ", " << _player._box.vMin.y << ", "
-		<< _player._box.vMin.z << std::endl;
+	std::cout << "Player " << _player._box.vMin.x << ", " << _player._box.vMin.y << ", " << _player._box.vMin.z << std::endl;
+
 	if (!_drawList.empty())
 	{
 		for (int i = 0; i < _drawList.size(); i++)
 		{
-			std::cout << _drawList[i]->_name << " "
-				<< _drawList[i]->_box.vMin.x << ", "
-				<< _drawList[i]->_box.vMin.y << ", "
-				<< _drawList[i]->_box.vMin.z << std::endl;
+			std::cout << _drawList[i]->_name << " " << _drawList[i]->_box.vMin.x << ", " << _drawList[i]->_box.vMin.y << ", " << _drawList[i]->_box.vMin.z << std::endl;
 		}
 	}
 
@@ -102,15 +99,15 @@ bool GameCore::Release()
 bool GameCore::Run()
 {
 	Init();
-	float  fGameTimer = 0.0f;
-	float  fDelay = 10;
-	while (fGameTimer < 10.0f)
+	float  gameTimer = 0.0f;
+	float  elapsedTime = 10;
+	while (gameTimer < 10.0f)
 	{
-		Frame(fDelay / 1000.0f, fGameTimer);
+		Frame(elapsedTime / 1000.0f, gameTimer);
 		Render();
-		Sleep(fDelay);
+		Sleep(elapsedTime);
 		system("cls");
-		fGameTimer += fDelay / 1000.0f;
+		gameTimer += elapsedTime / 1000.0f;
 	}
 	Release();
 	return true;

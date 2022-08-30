@@ -42,7 +42,7 @@ void Object::SetSphere(Box box)
 {
 	_sphere.vCenter = box.vCenter;
 	// v0  -vC-  v1
-	_sphere.radius = (box.vSize * 0.5f).Size();
+	_sphere.radius = (box.vSize * 0.5f).Length();
 }
 
 void Object::SetPosition(Vector3 vPos, Vector3 vSize)

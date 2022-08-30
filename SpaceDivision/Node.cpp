@@ -6,6 +6,7 @@ Node::Node(Node* pParent, Vector3 vPos, Vector3 vSize)
     _box.Set(vPos, vSize);
     _depth = 0;
     _pParent = nullptr;
+
     if (pParent != nullptr)
     {
         _pParent = pParent;

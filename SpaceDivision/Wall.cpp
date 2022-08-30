@@ -32,15 +32,16 @@ void Wall::Init()
     _speed = 10.0f;
 }
 
-void Wall::Frame(float fDeltaTime, float fGameTime)
+void Wall::Frame(float elapsedTime, float fGameTime)
 {
     Vector3 vPos = _box.vMin;
     Vector3 vSize = _box.vSize;
 
-    _vVelocity = _vDirection * _speed * fDeltaTime;
+    _vVelocity = _vDirection * _speed * elapsedTime;
     vPos = vPos + _vVelocity;
-    _friction = (fDeltaTime * _speed * 0.1f);
+    _friction = (elapsedTime * _speed * 0.1f);
     _speed -= _friction;
+
     if (0 >= _speed)
     {
         _speed = rand() % 10;
@@ -51,26 +52,31 @@ void Wall::Frame(float fDeltaTime, float fGameTime)
         vPos.x = 100.0f;
         _vDirection.x *= -1.0f;
     }
+
     if (vPos.x < 0.0f)
     {
         vPos.x = 0.0f;
         _vDirection.x *= -1.0f;
     }
+
     if (vPos.y > 100.0f)
     {
         vPos.y = 100.0f;
         _vDirection.y *= -1.0f;
     }
+
     if (vPos.y < 0.0f)
     {
         vPos.y = 0.0f;
         _vDirection.y *= -1.0f;
     }
+
     if (vPos.z > 100.0f)
     {
         vPos.z = 100.0f;
         _vDirection.z *= -1.0f;
     }
+
     if (vPos.z < 0.0f)
     {
         vPos.z = 0.0f;

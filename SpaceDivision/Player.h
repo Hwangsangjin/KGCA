@@ -6,6 +6,6 @@ class Player : public Object
 {
 public:
 	virtual void Init() override;
-    virtual void Frame(float fDeltaTime, float fGameTime) override;
+    virtual void Frame(float elapsedTime, float gameTime) override;
 };
 

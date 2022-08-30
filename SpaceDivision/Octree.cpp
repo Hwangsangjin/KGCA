@@ -105,7 +105,7 @@ bool Octree::IsCollision(Node* pNode, Object* pSrc)
 Node* Octree::CreateNode(Node* pParent, Vector3 vPos, Vector3 vSize)
 {
     Node* pNode = new Node(pParent, vPos, vSize);
-    pNode->_pChild.resize(_gMaxOctreeChild);
+    pNode->_pChild.resize(_gMaxChild);
     return pNode;
 }
 
@@ -160,6 +160,7 @@ void Octree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector<O
             list.push_back(pNode->_staticObjects[i]);
         }
     }
+
     for (int i = 0; i < pNode->_dynamicObjects.size(); i++)
     {
         if (IsCollision(pNode->_dynamicObjects[i], pSrcObject))
@@ -167,6 +168,7 @@ void Octree::GetCollisitionObject(Node* pNode, Object* pSrcObject, std::vector<O
             list.push_back(pNode->_dynamicObjects[i]);
         }
     }
+
     if (pNode->_pChild[0] != nullptr)
     {
         for (int i = 0; i < pNode->_pChild.size(); i++)

@@ -12,6 +12,7 @@ class GameCore
 {
 private:
     static GameCore* _instance;
+
     GameCore() {}
     ~GameCore() {}
 
@@ -28,7 +29,7 @@ public:
     static GameCore* Instance();
 
     bool Init();                                    // 초기화
-    bool Frame(float fDeltaTime, float fGameTime);  // 실시간 계산
+    bool Frame(float elapsedTime, float gameTime);  // 실시간 계산
     bool Render();                                  // 렌더
     bool Release();                                 // 해제
     bool Run();                                     // 실행

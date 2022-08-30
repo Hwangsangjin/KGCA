@@ -3,7 +3,7 @@
 #include "Node.h"
 #include "Object.h"
 
-static const int _gMaxOctreeChild = 8;
+static const int _gMaxChild = 8;
 class Octree
 {
 public:
