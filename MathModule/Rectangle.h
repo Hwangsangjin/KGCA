@@ -1,24 +1,11 @@
 #pragma once
 
-struct Rectangle
-{
-	Vector2 vMin;
-	Vector2 vMax;
-
-	Rectangle() = default;
-	Rectangle(const Rectangle& rect);
-};
-
-struct RectBase
+struct Rect
 {
     float  x1;
     float  y1;
     float  w;
     float  h;
-};
-
-struct Rect : RectBase
-{
     float  x2;//x+w
     float  y2;//y+h
     float  cx;

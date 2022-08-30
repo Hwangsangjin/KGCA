@@ -86,32 +86,46 @@ float Vector2::Dot(const Vector2& other) const
 	return (x * other.x) + (y * other.y);
 }
 
-float Vector2::Size() const
+float Vector2::Angle(const Vector2& other) const
 {
-	return std::sqrtf(SizeSquared());
+	float cos = Dot(other);
+	cos /= (Length() * other.Length());
+	float radian = acos(cos);
+	float degree = RadianToDegree(radian);
+	return degree;
 }
 
-float Vector2::SizeSquared() const
+float Vector2::Length() const
+{
+	return std::sqrtf(LengthSquared());
+}
+
+float Vector2::LengthSquared() const
 {
 	return (x * x + y * y);
 }
 
-void Vector2::Normalize()
+float Vector2::Distance(const Vector2& other) const
 {
-	*this = GetNormalize();
+	return (*this - other).Length();
 }
 
-Vector2 Vector2::GetNormalize() const
+void Vector2::Normalize()
 {
-	const float magitude = SizeSquared();
-	if (magitude == 1.0f)
+	*this = Identity();
+}
+
+Vector2 Vector2::Identity() const
+{
+	const float magnitude = LengthSquared();
+	if (magnitude == 1.0f)
 	{
 		return *this;
 	}
-	else if (magitude < FLT_EPSILON)
+	else if (magnitude < FLT_EPSILON)
 	{
 		return Vector2::Zero;
 	}
 
-	return *this / magitude;
+	return *this / magnitude;
 }

@@ -2,21 +2,17 @@
 
 struct Vector2
 {
-	// 정적 멤버변수 
+	// 정적멤버변수 
 	static const Vector2 UnitX;
 	static const Vector2 UnitY;
-	static const Vector2 UnitZ;
 	static const Vector2 One;
 	static const Vector2 Zero;
 	static const unsigned char Dimension = 2;
 
-	// 멤버 변수
+	// 멤버변수
 	union
 	{
-		struct
-		{
-			struct { float x, y; };
-		};
+		struct { float x, y; };
 
 		std::array<float, Dimension> scalars = { 0.0f, 0.0f };
 	};
@@ -43,12 +39,21 @@ struct Vector2
 	// 내적 계산
 	float Dot(const Vector2& other) const;
 
+	// 각도 계산
+	float Angle(const Vector2& other) const;
+
 	// 길이 계산
-	float Size() const;
-	float SizeSquared() const;
+	float Length() const;
+	float LengthSquared() const;
+
+	// 거리 계산
+	float Distance(const Vector2& other) const;
+
+	// 단위 벡터
+	Vector2 Identity() const;
 
 	// 정규화
 	void Normalize();
-	Vector2 GetNormalize() const;
+
 };
 
