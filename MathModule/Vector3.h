@@ -15,7 +15,7 @@ struct Vector3
 	{
 		struct { float x, y, z; };
 
-		float v[3];
+		std::array<float, Dimension> scalars = { 0.0f, 0.0f, 0.0f };
 	};
 
 	// »ı¼ºÀÚ
