@@ -13,20 +13,5 @@
 // 여기에 미리 컴파일하려는 헤더 추가
 #include <assert.h>
 #include <Windows.h>
-#include <d3d11.h>
-#include <dxgi.h>
-#include <d3dcompiler.h>
-
-struct WindowInfo
-{
-	HINSTANCE hInstance;	// 인스턴스 핸들
-	HWND hWnd;				// 윈도우 핸들
-	int nCmdShow;			// 윈도우 컨트롤 상태
-	const TCHAR* title;		// 타이틀
-	RECT bound;				// 윈도우 영역
-	RECT client;			// 클라이언트 영역
-	UINT width;				// 클라이언트 영역 가로 크기
-	UINT height;			// 클라이언트 영역 세로 크기
-};
 
 #endif //PCH_H
