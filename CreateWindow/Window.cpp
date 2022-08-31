@@ -124,7 +124,7 @@ HRESULT Window::Run()
         }
         else
         {
-            if (!Frame() || !Render())
+            if (FAILED(Frame()) || FAILED(Render()))
             {
                 break;
             }
