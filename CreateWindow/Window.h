@@ -2,12 +2,13 @@
 
 class Window
 {
-public:
+private:
 	HINSTANCE _hInstance;	// 인스턴스 핸들
 	HWND _hWnd;				// 윈도우 핸들
 	RECT _rtWindow;			// 윈도우 영역
 	RECT _rtClient;			// 클라이언트 영역
 
+public:
 	// 생성자
 	Window();
 
