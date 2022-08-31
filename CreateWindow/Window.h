@@ -10,24 +10,22 @@ public:
 
 	// 생성자
 	Window();
-	// 소멸자
-	virtual ~Window() {}
 
 	// 윈도우 생성
-	HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow, const WCHAR* title, UINT width, UINT height);
+	HRESULT InitWindow(const WindowInfo& info);
 	// 윈도우 위치를 화면 중앙으로 이동
-	void CenterWindow(HWND hWnd);
+	void CenterWindow();
+
 	// 초기화
-	virtual HRESULT Init();
+	HRESULT Init(const WindowInfo& info);
 	// 프레임 계산
-	virtual HRESULT Frame();
+	HRESULT Frame();
 	// 렌더
-	virtual HRESULT Render();
+	HRESULT Render();
 	// 메모리 소멸 및 삭제
-	virtual HRESULT Release();
+	HRESULT Release();
+
 	// 메시지 프로시저
-	virtual LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
-	// 실행
-	HRESULT Run();
+	LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 };
 

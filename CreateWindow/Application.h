@@ -2,11 +2,14 @@
 
 #include "Window.h"
 
-class Sample : public Window
+class Application
 {
+private:
+	Window _window;
+
 public:
 	// 초기화
-	HRESULT Init();
+	HRESULT Init(const WindowInfo& info);
 	// 실시간 계산
 	HRESULT Frame();
 	// 실시간 렌더링
@@ -14,4 +17,3 @@ public:
 	// 소멸 및 삭제
 	HRESULT Release();
 };
-

@@ -15,30 +15,30 @@
     <Filter Include="소스 파일\Window">
       <UniqueIdentifier>{b1be4f3d-d87c-4f3e-92fe-32daed55c64c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Sample">
-      <UniqueIdentifier>{88218576-b561-4980-819e-3b758adecde3}</UniqueIdentifier>
+    <Filter Include="소스 파일\Application">
+      <UniqueIdentifier>{229eae13-a086-4b76-81db-dbf18a01dd7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sample.h">
-      <Filter>소스 파일\Sample</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>소스 파일\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>소스 파일\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sample.cpp">
-      <Filter>소스 파일\Sample</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>소스 파일\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>소스 파일\Application</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
