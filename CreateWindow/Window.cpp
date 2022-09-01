@@ -28,7 +28,7 @@ Window::Window()
 }
 
 // 윈도우 초기화
-HRESULT Window::InitWindow(const WindowInfo& info)
+HRESULT Window::InitWindow(const WindowInfo& gInfo)
 {
     // 윈도우 클래스를 등록한다.
     WNDCLASSEX wcex;
@@ -36,12 +36,12 @@ HRESULT Window::InitWindow(const WindowInfo& info)
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
-    wcex.hInstance = info.hInstance;
+    wcex.hInstance = gInfo.hInstance;
     wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = info.title;
+    wcex.lpszClassName = gInfo.title;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
 
     if (!RegisterClassEx(&wcex))
@@ -50,10 +50,10 @@ HRESULT Window::InitWindow(const WindowInfo& info)
     }
 
     // 등록한 윈도우를 생성한다.
-    _hInstance = info.hInstance;
-    RECT rect = { 0, 0, info.width, info.height };
+    _hInstance = gInfo.hInstance;
+    RECT rect = { 0, 0, gInfo.width, gInfo.height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    _hWnd = CreateWindowEx(WS_EX_TOPMOST, info.title, info.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, _hInstance, NULL);
+    _hWnd = CreateWindowEx(WS_EX_TOPMOST, gInfo.title, gInfo.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, _hInstance, NULL);
     if (FAILED(_hWnd))
     {
         return E_FAIL;
@@ -85,9 +85,9 @@ void Window::CenterWindow()
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
 
-HRESULT Window::Init(const WindowInfo& info)
+HRESULT Window::Init(const WindowInfo& gInfo)
 {
-    if (FAILED(InitWindow(info)))
+    if (FAILED(InitWindow(gInfo)))
     {
         return E_FAIL;
     }

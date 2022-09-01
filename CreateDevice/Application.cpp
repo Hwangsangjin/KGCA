@@ -2,16 +2,16 @@
 #include "Application.h"
 
 HWND gHandle;
-WindowInfo info;
+WindowInfo gInfo;
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-    info.hInstance = hInstance;
-    info.title = L"Client";
-    info.width = 800;
-    info.height = 600;
+    gInfo.hInstance = hInstance;
+    gInfo.title = L"Client";
+    gInfo.width = 800;
+    gInfo.height = 600;
 
     Application app;
-    if (FAILED(app.Init(info)))
+    if (FAILED(app.Init(gInfo)))
     {
         return E_FAIL;
     }
@@ -41,14 +41,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     return TRUE;
 }
 
-HRESULT Application::Init(const WindowInfo& info)
+HRESULT Application::Init(const WindowInfo& gInfo)
 {
-    if (FAILED(_window.Init(info)))
+    if (FAILED(_window.Init(gInfo)))
     {
         return E_FAIL;
     }
 
-    if (FAILED(_graphics.Init(info)))
+    if (FAILED(_graphics.Init(gInfo)))
     {
         return E_FAIL;
     }

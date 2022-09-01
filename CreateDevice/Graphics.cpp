@@ -24,14 +24,14 @@ HRESULT Graphics::CreateFactory()
     return hr;
 }
 
-HRESULT Graphics::CreateSwapChain(const WindowInfo& info)
+HRESULT Graphics::CreateSwapChain(const WindowInfo& gInfo)
 {
     HRESULT hr;
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.BufferCount = 1;
-    sd.BufferDesc.Width = info.width;
-    sd.BufferDesc.Height = info.height;
+    sd.BufferDesc.Width = gInfo.width;
+    sd.BufferDesc.Height = gInfo.height;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = gHandle;
@@ -60,11 +60,11 @@ HRESULT Graphics::CreateRenderTargetView()
     return hr;
 }
 
-HRESULT Graphics::SetViewport(const WindowInfo& info)
+HRESULT Graphics::CreateViewport(const WindowInfo& gInfo)
 {
     D3D11_VIEWPORT vp;
-    vp.Width = info.width;
-    vp.Height = info.height;
+    vp.Width = gInfo.width;
+    vp.Height = gInfo.height;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
     vp.MinDepth = 0.0f;
@@ -74,9 +74,9 @@ HRESULT Graphics::SetViewport(const WindowInfo& info)
     return TRUE;
 }
 
-HRESULT Graphics::Init(const WindowInfo& info)
+HRESULT Graphics::Init(const WindowInfo& gInfo)
 {
-    if (FAILED(InitDevice(info)))
+    if (FAILED(InitDevice(gInfo)))
     {
         return E_FAIL;
     }
@@ -84,7 +84,7 @@ HRESULT Graphics::Init(const WindowInfo& info)
     return TRUE;
 }
 
-HRESULT Graphics::InitDevice(const WindowInfo& info)
+HRESULT Graphics::InitDevice(const WindowInfo& gInfo)
 {
     if (FAILED(CreateDevice()))
     {
@@ -96,7 +96,7 @@ HRESULT Graphics::InitDevice(const WindowInfo& info)
         return E_FAIL;
     }
 
-    if (FAILED(CreateSwapChain(info)))
+    if (FAILED(CreateSwapChain(gInfo)))
     {
         return E_FAIL;
     }

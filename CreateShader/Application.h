@@ -1,19 +1,21 @@
 #pragma once
 
 #include "Window.h"
+#include "Graphics.h"
 
 class Application
 {
 private:
 	Window _window;
+	Graphics _graphics;
 
 public:
 	// 초기화
-	HRESULT Init(const WindowInfo& gInfo);
-	// 실시간 계산
+	HRESULT Init(const IWND& iWnd);
+	// 프레임
 	HRESULT Frame();
-	// 실시간 렌더링
+	// 렌더
 	HRESULT Render();
-	// 소멸 및 삭제
+	// 메모리 해제
 	HRESULT Release();
 };

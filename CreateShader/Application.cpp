@@ -1,16 +1,18 @@
 #include "pch.h"
 #include "Application.h"
 
-WindowInfo gInfo;
+IWND iWnd;
+HWND hWnd;
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-    gInfo.hInstance = hInstance;
-    gInfo.title = L"Client";
-    gInfo.width = 800;
-    gInfo.height = 600;
+    iWnd.hInstance = hInstance;
+    iWnd.nCmdShow = nCmdShow;
+    iWnd.title = L"Client";
+    iWnd.width = 800;
+    iWnd.height = 600;
 
     Application app;
-    if (FAILED(app.Init(gInfo)))
+    if (FAILED(app.Init(iWnd)))
     {
         return E_FAIL;
     }
@@ -40,27 +42,37 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     return TRUE;
 }
 
-HRESULT Application::Init(const WindowInfo& gInfo)
+HRESULT Application::Init(const IWND& iWnd)
 {
-	if (FAILED(_window.Init(gInfo)))
-	{
-		return E_FAIL;
-	}
+    if (FAILED(_window.Init(iWnd)))
+    {
+        return E_FAIL;
+    }
 
-	return TRUE;
+    if (FAILED(_graphics.Init(iWnd)))
+    {
+        return E_FAIL;
+    }
+
+    return TRUE;
 }
 
 HRESULT Application::Frame()
 {
-	return TRUE;
+    return TRUE;
 }
 
 HRESULT Application::Render()
 {
-	return TRUE;
+    if (FAILED(_graphics.Render()))
+    {
+        return E_FAIL;
+    }
+
+    return TRUE;
 }
 
 HRESULT Application::Release()
 {
-	return TRUE;
+    return TRUE;
 }
