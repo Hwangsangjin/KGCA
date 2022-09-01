@@ -21,9 +21,6 @@ public:
 	// 윈도우 위치를 화면 중앙으로 이동
 	void CenterWindow();
 
-	// 윈도우 핸들
-	 HWND GetHWND();
-
 	// 윈도우 프로시저
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };

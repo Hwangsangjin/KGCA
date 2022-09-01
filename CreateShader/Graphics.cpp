@@ -64,7 +64,7 @@ HRESULT Graphics::Render()
     // 그래픽스 파이프라인 바인딩
     _pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
     _pImmediateContext->IASetInputLayout(_pInputLayout);
-    UINT stride = sizeof(Vertex); 
+    UINT stride = sizeof(Vertex);
     UINT offset = 0;
     _pImmediateContext->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
     _pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -318,12 +318,9 @@ HRESULT Graphics::CreateVertexBuffer()
     HRESULT hr;
     Vertex vertices[] =
     {
-        /*0.0f, 0.5f, 0.5f,
+        0.0f, 0.5f, 0.5f,
         0.5f, -0.5f, 0.5f,
-        -0.5f, -0.5f, 0.5f*/
-        -1.0f, 1.0f,  0.0f, //0.0f,0.0f,0.0f,0.0f,// v0
-        +1.0f, 1.0f,  0.0f, //0.0f,0.0f,0.0f,0.0f,// v1
-        -1.0f, -1.0f, 0.0f, //0.0f,0.0f,0.0f,0.0f,// v2
+        -0.5f, -0.5f, 0.5f
     };
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
