@@ -9,7 +9,7 @@ private:
 
 public:
 	// 초기화
-	HRESULT Init(const WindowInfo& gInfo);
+	HRESULT Init(const IWND& iWnd);
 	// 실시간 계산
 	HRESULT Frame();
 	// 실시간 렌더링
