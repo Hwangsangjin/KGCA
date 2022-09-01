@@ -10,7 +10,7 @@ private:
 
 public:
 	// 초기화
-	HRESULT Init(const WindowInfo& gInfo);
+	HRESULT Init(const IWND& iWnd);
 	// 프레임
 	HRESULT Frame();
 	// 렌더
@@ -22,7 +22,7 @@ public:
 	Window();
 
 	// 윈도우 생성
-	HRESULT InitWindow(const WindowInfo& gInfo);
+	HRESULT InitWindow(const IWND& iWnd);
 	// 윈도우 위치를 화면 중앙으로 이동
 	void CenterWindow();
 

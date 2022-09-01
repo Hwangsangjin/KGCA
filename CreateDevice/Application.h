@@ -11,7 +11,7 @@ private:
 
 public:
 	// 초기화
-	HRESULT Init(const WindowInfo& gInfo);
+	HRESULT Init(const IWND& iWnd);
 	// 프레임
 	HRESULT Frame();
 	// 렌더

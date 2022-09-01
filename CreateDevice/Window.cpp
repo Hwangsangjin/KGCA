@@ -2,9 +2,9 @@
 #include "Window.h"
 
 // 초기화
-HRESULT Window::Init(const WindowInfo& gInfo)
+HRESULT Window::Init(const IWND& iWnd)
 {
-    if (FAILED(InitWindow(gInfo)))
+    if (FAILED(InitWindow(iWnd)))
     {
         return E_FAIL;
     }
@@ -57,7 +57,7 @@ Window::Window()
 }
 
 // 윈도우 초기화
-HRESULT Window::InitWindow(const WindowInfo& gInfo)
+HRESULT Window::InitWindow(const IWND& iWnd)
 {
     // 윈도우 클래스를 등록한다.
     WNDCLASSEX wcex;
@@ -65,12 +65,12 @@ HRESULT Window::InitWindow(const WindowInfo& gInfo)
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
-    wcex.hInstance = gInfo.hInstance;
+    wcex.hInstance = iWnd.hInstance;
     wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = gInfo.title;
+    wcex.lpszClassName = iWnd.title;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
 
     if (!RegisterClassEx(&wcex))
@@ -79,24 +79,22 @@ HRESULT Window::InitWindow(const WindowInfo& gInfo)
     }
 
     // 등록한 윈도우를 생성한다.
-    _hInstance = gInfo.hInstance;
-    RECT rect = { 0, 0, gInfo.width, gInfo.height };
+    _hInstance = iWnd.hInstance;
+    RECT rect = { 0, 0, iWnd.width, iWnd.height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    HWND hWnd = CreateWindowEx(WS_EX_TOPMOST, gInfo.title, gInfo.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, _hInstance, NULL);
-    if (FAILED(gHandle))
+    hWnd = CreateWindowEx(WS_EX_TOPMOST, iWnd.title, iWnd.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, _hInstance, NULL);
+    if (FAILED(hWnd))
     {
         return E_FAIL;
     }
 
-    _hWnd = hWnd;
-    gHandle = hWnd;
-
     // 윈도우 영역과 클라이언트 영역을 얻는다.
-    GetWindowRect(gHandle, &_rtWindow);
-    GetClientRect(gHandle, &_rtClient);
-    ShowWindow(gHandle, SW_SHOW);
+    GetWindowRect(hWnd, &_rtWindow);
+    GetClientRect(hWnd, &_rtClient);
+
+    // 윈도우를 출력한다.
+    ShowWindow(hWnd, SW_SHOW);
     ShowCursor(TRUE);
-    UpdateWindow(gHandle);
     CenterWindow();
 
     return TRUE;
