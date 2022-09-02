@@ -3,7 +3,22 @@
 #include "Vertex.h"
 
 // 초기화
-HRESULT Graphics::Init(const IWND& iWnd)
+HRESULT Graphics::Init(HINSTANCE hInstance, HWND hWnd, UINT width, UINT height)
+{
+    if (FAILED(InitDevice(hInstance, hWnd, width, height)))
+    {
+        return E_FAIL;
+    }
+
+    if (FAILED(InitShader()))
+    {
+        return E_FAIL;
+    }
+
+    return TRUE;
+}
+
+HRESULT Graphics::InitDevice(HINSTANCE hInstance, HWND hWnd, UINT width, UINT height)
 {
     if (FAILED(CreateDevice()))
     {
@@ -15,7 +30,7 @@ HRESULT Graphics::Init(const IWND& iWnd)
         return E_FAIL;
     }
 
-    if (FAILED(CreateSwapChain(iWnd)))
+    if (FAILED(CreateSwapChain(hWnd, width, height)))
     {
         return E_FAIL;
     }
@@ -25,11 +40,16 @@ HRESULT Graphics::Init(const IWND& iWnd)
         return E_FAIL;
     }
 
-    if (FAILED(CreateViewport(iWnd)))
+    if (FAILED(CreateViewport(width, height)))
     {
         return E_FAIL;
     }
 
+    return TRUE;
+}
+
+HRESULT Graphics::InitShader()
+{
     if (FAILED(CreateVertexBuffer()))
     {
         return E_FAIL;
@@ -195,14 +215,14 @@ HRESULT Graphics::CreateFactory()
 }
 
 // 스왑 체인
-HRESULT Graphics::CreateSwapChain(const IWND& iWnd)
+HRESULT Graphics::CreateSwapChain(HWND hWnd, UINT width, UINT height)
 {
     HRESULT hr;
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.BufferCount = 1;
-    sd.BufferDesc.Width = iWnd.width;
-    sd.BufferDesc.Height = iWnd.height;
+    sd.BufferDesc.Width = width;
+    sd.BufferDesc.Height = height;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = hWnd;
@@ -231,11 +251,11 @@ HRESULT Graphics::CreateRenderTargetView()
 }
 
 // 뷰 포트
-HRESULT Graphics::CreateViewport(const IWND& iWnd)
+HRESULT Graphics::CreateViewport(UINT width, UINT height)
 {
     D3D11_VIEWPORT vp;
-    vp.Width = iWnd.width;
-    vp.Height = iWnd.height;
+    vp.Width = width;
+    vp.Height = height;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
     vp.MinDepth = 0.0f;
