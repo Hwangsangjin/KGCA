@@ -6,6 +6,7 @@ struct Vertex
 	float  x;
 	float  y;
 	float  z;
+
 	// ÄÃ·¯
 	//float  r; 
 	//float  g;

@@ -11,8 +11,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     iWnd.width = 800;
     iWnd.height = 600;
 
-    Application app;
-    if (FAILED(app.Init(iWnd)))
+    Application* app = new Application;
+    if (FAILED(app->Init(iWnd)))
     {
         return E_FAIL;
     }
@@ -27,14 +27,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
         else
         {
-            if (FAILED(app.Frame()) || FAILED(app.Render()))
+            if (FAILED(app->Frame()) || FAILED(app->Render()))
             {
                 break;
             }
         }
     }
 
-    if (FAILED(app.Release()))
+    if (FAILED(app->Release()))
     {
         return E_FAIL;
     }
@@ -44,12 +44,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 HRESULT Application::Init(const IWND& iWnd)
 {
-    if (FAILED(_window.Init(iWnd)))
+    _pWindow = new Window;
+    if (FAILED(_pWindow->Init(iWnd)))
     {
         return E_FAIL;
     }
 
-    if (FAILED(_graphics.Init(iWnd)))
+    _pGraphics = new Graphics;
+    if (FAILED(_pGraphics->Init(iWnd)))
     {
         return E_FAIL;
     }
@@ -64,7 +66,7 @@ HRESULT Application::Frame()
 
 HRESULT Application::Render()
 {
-    if (FAILED(_graphics.Render()))
+    if (FAILED(_pGraphics->Render()))
     {
         return E_FAIL;
     }
@@ -74,5 +76,23 @@ HRESULT Application::Render()
 
 HRESULT Application::Release()
 {
+    if (_pGraphics != nullptr)
+    {
+        delete _pGraphics;
+        _pGraphics = nullptr;
+    }
+
+    if (_pWindow != nullptr)
+    {
+        delete _pWindow;
+        _pWindow = nullptr;
+    }
+
+    if (_pApplication != nullptr)
+    {
+        delete _pApplication;
+        _pApplication = nullptr;
+    }
+
     return TRUE;
 }

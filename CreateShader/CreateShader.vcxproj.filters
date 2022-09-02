@@ -21,11 +21,11 @@
     <Filter Include="소스 파일\Window">
       <UniqueIdentifier>{ec5c93b1-2b66-43b1-ab91-73a68db2c4e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일\HLSL">
-      <UniqueIdentifier>{5b369a02-e4f8-4c6f-bd26-e04a0a783edb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Graphics\Vertex">
       <UniqueIdentifier>{783f4096-5a0f-4ba8-85ce-21f22c343cd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Graphics\Shader">
+      <UniqueIdentifier>{5b369a02-e4f8-4c6f-bd26-e04a0a783edb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -64,10 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
-      <Filter>리소스 파일\HLSL</Filter>
+      <Filter>소스 파일\Graphics\Shader</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>리소스 파일\HLSL</Filter>
+      <Filter>소스 파일\Graphics\Shader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -6,8 +6,9 @@
 class Application
 {
 private:
-	Window _window;
-	Graphics _graphics;
+	Application* _pApplication = nullptr;
+	Window* _pWindow = nullptr;
+	Graphics* _pGraphics = nullptr;
 
 public:
 	// √ ±‚»≠
