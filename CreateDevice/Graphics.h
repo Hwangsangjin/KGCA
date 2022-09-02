@@ -11,8 +11,8 @@ private:
 
 public:
 	// 초기화
-	HRESULT Init(const IWND& iWnd);
-	HRESULT InitDevice(const IWND& iWnd);
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd, UINT width, UINT height);
+	HRESULT InitDevice(HINSTANCE hInstance, HWND hWnd, UINT width, UINT height);
 	// 프레임
 	HRESULT Frame();
 	// 렌더
@@ -25,10 +25,10 @@ public:
 	// 팩토리 생성
 	HRESULT CreateFactory();
 	// 스왑체인 생성
-	HRESULT CreateSwapChain(const IWND& iWnd);
+	HRESULT CreateSwapChain(HWND hWnd, UINT width, UINT height);
 	// 렌더타겟뷰 생성
 	HRESULT CreateRenderTargetView();
 	// 뷰포트 설정
-	HRESULT CreateViewport(const IWND& iWnd);
+	HRESULT CreateViewport(UINT width, UINT height);
 };
 
