@@ -1,34 +1,47 @@
 #include "pch.h"
 #include "Window.h"
 
-// 윈도우 프로시저
-Window* gWindow = nullptr;
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    assert(gWindow);
-    return gWindow->MsgProc(hWnd, message, wParam, lParam);
-}
-
-// 메시지 프로시저
-LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    }
-    return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
 // 생성자
 Window::Window()
+    : _hWnd(0)
+    , _rtWindow{ 0, 0 }
+    , _rtClient{ 0, 0 }
 {
-    gWindow = this;
+}
+
+// 소멸자
+Window::~Window()
+{
+}
+
+// 초기화
+HRESULT Window::Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
+{
+    InitWindow(hInstance, title, width, height);
+
+    return TRUE;
+}
+
+// 프레임
+HRESULT Window::Frame()
+{
+    return TRUE;
+}
+
+// 렌더
+HRESULT Window::Render()
+{
+    return TRUE;
+}
+
+// 릴리즈
+HRESULT Window::Release()
+{
+    return TRUE;
 }
 
 // 윈도우 초기화
-HRESULT Window::InitWindow(const IWND& iWnd)
+HRESULT Window::InitWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
     // 윈도우 클래스를 등록한다.
     WNDCLASSEX wcex;
@@ -36,12 +49,12 @@ HRESULT Window::InitWindow(const IWND& iWnd)
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
-    wcex.hInstance = iWnd.hInstance;
+    wcex.hInstance = hInstance;
     wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = iWnd.title;
+    wcex.lpszClassName = title;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
 
     if (!RegisterClassEx(&wcex))
@@ -50,10 +63,9 @@ HRESULT Window::InitWindow(const IWND& iWnd)
     }
 
     // 등록한 윈도우를 생성한다.
-    _hInstance = iWnd.hInstance;
-    RECT rect = { 0, 0, iWnd.width, iWnd.height };
+    RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    _hWnd = CreateWindowEx(WS_EX_TOPMOST, iWnd.title, iWnd.title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, _hInstance, NULL);
+    _hWnd = CreateWindowEx(WS_EX_TOPMOST, title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
     if (FAILED(_hWnd))
     {
         return E_FAIL;
@@ -64,7 +76,6 @@ HRESULT Window::InitWindow(const IWND& iWnd)
     GetClientRect(_hWnd, &_rtClient);
     ShowWindow(_hWnd, SW_SHOW);
     ShowCursor(TRUE);
-    UpdateWindow(_hWnd);
     CenterWindow();
 
     return TRUE;
@@ -85,27 +96,14 @@ void Window::CenterWindow()
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
 
-HRESULT Window::Init(const IWND& iWnd)
+// 윈도우 프로시저
+LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    if (FAILED(InitWindow(iWnd)))
+    switch (message)
     {
-        return E_FAIL;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
     }
-
-    return TRUE;
-}
-
-HRESULT Window::Frame()
-{
-    return TRUE;
-}
-
-HRESULT Window::Render()
-{
-    return TRUE;
-}
-
-HRESULT Window::Release()
-{
-    return TRUE;
+    return DefWindowProc(hWnd, message, wParam, lParam);
 }

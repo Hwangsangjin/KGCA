@@ -1,17 +1,10 @@
 #include "pch.h"
 #include "Application.h"
 
-IWND iWnd;
-HWND hWnd;
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-    iWnd.hInstance = hInstance;
-    iWnd.title = L"Client";
-    iWnd.width = 800;
-    iWnd.height = 600;
-
     Application app;
-    if (FAILED(app.Init(iWnd)))
+    if (FAILED(app.Init(hInstance, L"Client", 800, 600)))
     {
         return E_FAIL;
     }
@@ -41,12 +34,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     return TRUE;
 }
 
-HRESULT Application::Init(const IWND& iWnd)
+HRESULT Application::Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
-	if (FAILED(_window.Init(iWnd)))
-	{
-		return E_FAIL;
-	}
+    if (FAILED(Window::Init(hInstance, title, width, height)))
+    {
+        return E_FAIL;
+    }
 
 	return TRUE;
 }

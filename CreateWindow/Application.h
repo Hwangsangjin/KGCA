@@ -2,14 +2,11 @@
 
 #include "Window.h"
 
-class Application
+class Application : public Window
 {
-private:
-	Window _window;
-
 public:
 	// 초기화
-	HRESULT Init(const IWND& iWnd);
+	HRESULT Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height);
 	// 실시간 계산
 	HRESULT Frame();
 	// 실시간 렌더링

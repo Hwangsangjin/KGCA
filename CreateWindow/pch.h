@@ -14,16 +14,4 @@
 #include <assert.h>
 #include <Windows.h>
 
-struct IWND
-{
-	HINSTANCE hInstance;	// 인스턴스 핸들
-	int nCmdShow;			// 윈도우 컨트롤 상태
-	const WCHAR* title;		// 타이틀
-	UINT width;				// 클라이언트 영역 가로 크기
-	UINT height;			// 클라이언트 영역 세로 크기
-};
-
-extern HWND hWnd;			// 윈도우 핸들
-extern IWND iWnd;			// 윈도우 정보
-
 #endif //PCH_H
