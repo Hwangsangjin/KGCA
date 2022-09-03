@@ -91,8 +91,8 @@ HRESULT Graphics::Render()
     _pImmediateContext->VSSetShader(_pVertexShader, NULL, 0);
     _pImmediateContext->PSSetShader(_pPixelShader, NULL, 0);
 
-    // 삼각형 그리기
-    _pImmediateContext->Draw(3, 0);
+    // 드로우
+    _pImmediateContext->Draw(6, 0);
 
     // 플릿핑
     _pSwapChain->Present(0, 0);
@@ -214,7 +214,7 @@ HRESULT Graphics::CreateFactory()
     return hr;
 }
 
-// 스왑 체인
+// 스왑체인
 HRESULT Graphics::CreateSwapChain(HWND hWnd, UINT width, UINT height)
 {
     HRESULT hr;
@@ -238,7 +238,7 @@ HRESULT Graphics::CreateSwapChain(HWND hWnd, UINT width, UINT height)
     return hr;
 }
 
-// 렌더 타겟 뷰
+// 렌더타겟뷰
 HRESULT Graphics::CreateRenderTargetView()
 {
     HRESULT hr;
@@ -250,7 +250,7 @@ HRESULT Graphics::CreateRenderTargetView()
     return hr;
 }
 
-// 뷰 포트
+// 뷰포트
 HRESULT Graphics::CreateViewport(UINT width, UINT height)
 {
     D3D11_VIEWPORT vp;
@@ -263,6 +263,41 @@ HRESULT Graphics::CreateViewport(UINT width, UINT height)
     _pImmediateContext->RSSetViewports(1, &vp);
 
     return TRUE;
+}
+
+// 정점 버퍼
+HRESULT Graphics::CreateVertexBuffer()
+{
+    HRESULT hr;
+    Vertex vertices[] =
+    {
+        //Vector3{ 0.0f, 0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 0.0f, 1.0f },
+        //Vector3{ 0.5f, -0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
+        //Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 0.0f, 0.0f, 1.0f, 1.0f },
+        
+        Vector3{ -0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ 0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
+        Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ 0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
+        Vector3{ 0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 1.0f, 0.0f, 1.0f },
+    };
+    D3D11_BUFFER_DESC bd;
+    ZeroMemory(&bd, sizeof(bd));
+    bd.ByteWidth = sizeof(Vertex) * 6; // 바이트 용량
+    // GPU 메모리에 할당
+    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
+    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    bd.CPUAccessFlags = 0;
+    D3D11_SUBRESOURCE_DATA sd;
+    ZeroMemory(&sd, sizeof(sd));
+    sd.pSysMem = vertices;
+    hr = _pd3dDevice->CreateBuffer(
+        &bd, // 버퍼 할당
+        &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
+        &_pVertexBuffer);
+
+    return hr;
 }
 
 // 셰이더
@@ -284,7 +319,18 @@ HRESULT Graphics::CreateShader()
         return hr;
     }
 
+    // 정점 셰이더 생성
     hr = _pd3dDevice->CreateVertexShader(_pVertexShaderCode->GetBufferPointer(), _pVertexShaderCode->GetBufferSize(), NULL, &_pVertexShader);
+    if (FAILED(hr))
+    {
+        if (pErrorCode)
+        {
+            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
+            pErrorCode->Release();
+        }
+
+        return hr;
+    }
 
     // 픽셀 셰이더 컴파일  
     hr = D3DCompileFromFile(L"PixelShader.hlsl", NULL, NULL, "main", "ps_5_0", 0, 0, &_pPixelShaderCode, &pErrorCode);
@@ -299,6 +345,7 @@ HRESULT Graphics::CreateShader()
         return hr;
     }
 
+    // 픽셀 셰이더 생성
     hr = _pd3dDevice->CreatePixelShader(_pPixelShaderCode->GetBufferPointer(), _pPixelShaderCode->GetBufferSize(), NULL, &_pPixelShader);
     if (FAILED(hr))
     {
@@ -310,10 +357,11 @@ HRESULT Graphics::CreateShader()
 
         return hr;
     }
+
     return hr;
 }
 
-// 인풋 레이아웃
+// 입력 레이아웃
 HRESULT Graphics::CreateInputLayout()
 {
     HRESULT hr;
@@ -322,41 +370,13 @@ HRESULT Graphics::CreateInputLayout()
     D3D11_INPUT_ELEMENT_DESC layout[] =
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     UINT numElements = ARRAYSIZE(layout);
 
     // 생성
     hr = _pd3dDevice->CreateInputLayout(layout, numElements, _pVertexShaderCode->GetBufferPointer(),
         _pVertexShaderCode->GetBufferSize(), &_pInputLayout);
-
-    return hr;
-}
-
-// 정점 버퍼
-HRESULT Graphics::CreateVertexBuffer()
-{
-    HRESULT hr;
-    Vertex vertices[] =
-    {
-        0.0f, 0.5f, 0.5f,
-        0.5f, -0.5f, 0.5f,
-        -0.5f, -0.5f, 0.5f
-    };
-    D3D11_BUFFER_DESC bd;
-    ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(Vertex) * 3; // 바이트 용량
-    // GPU 메모리에 할당
-    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
-    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    //bd.CPUAccessFlags = 0;
-    D3D11_SUBRESOURCE_DATA sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = vertices;
-    hr = _pd3dDevice->CreateBuffer(
-        &bd, // 버퍼 할당
-        &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &_pVertexBuffer);
 
     return hr;
 }
