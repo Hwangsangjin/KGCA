@@ -271,16 +271,12 @@ HRESULT Graphics::CreateVertexBuffer()
     HRESULT hr;
     Vertex vertices[] =
     {
-        //Vector3{ 0.0f, 0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 0.0f, 1.0f },
-        //Vector3{ 0.5f, -0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
-        //Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 0.0f, 0.0f, 1.0f, 1.0f },
-        
-        Vector3{ -0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 0.0f, 1.0f, 1.0f },
-        Vector3{ 0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
-        Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
-        Vector3{ -0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
-        Vector3{ 0.5f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
-        Vector3{ 0.5f, -0.5f, 0.0f }, Vector4{ 1.0f, 1.0f, 0.0f, 1.0f },
+        Vector3{ -0.4f, 0.5f, 0.0f }, Vector4{ 0.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ 0.4f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
+        Vector3{ -0.4f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ -0.4f, -0.5f, 0.0f }, Vector4{ 1.0f, 0.0f, 1.0f, 1.0f },
+        Vector3{ 0.4f, 0.5f, 0.0f }, Vector4{ 0.0f, 1.0f, 0.0f, 1.0f },
+        Vector3{ 0.4f, -0.5f, 0.0f }, Vector4{ 1.0f, 1.0f, 0.0f, 1.0f },
     };
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
