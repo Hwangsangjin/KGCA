@@ -23,5 +23,6 @@
 #include "DDSTextureLoader.h"
 
 #include <chrono>
+#include <mmsystem.h>
 
 #endif //PCH_H

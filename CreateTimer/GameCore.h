@@ -6,8 +6,6 @@
 
 class GameCore : public Window
 {
-	float _gameTimer;
-
 protected:
 	Graphics* _pGraphics;
 	Timer* _pTimer;

@@ -16,12 +16,10 @@ HRESULT GameCore::Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT
 
 HRESULT GameCore::Frame()
 {
-    float deltaTime = _pTimer->GetElapsed();
-    _pTimer->Reset();
-
-    _gameTimer += deltaTime;
-
-    std::cout << _gameTimer / 1000.0f << std::endl;
+    if (FAILED(_pTimer->Frame()))
+    {
+        return E_FAIL;
+    }
 
     return TRUE;
 }
@@ -37,6 +35,7 @@ HRESULT GameCore::Render()
 HRESULT GameCore::Release()
 {
     if (FAILED(_pGraphics->Release())) return E_FAIL;
+    if (FAILED(_pTimer->Release())) return E_FAIL;
 
     return TRUE;
 }

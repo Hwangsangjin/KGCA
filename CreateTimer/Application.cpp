@@ -55,7 +55,6 @@ HRESULT Application::Frame()
 HRESULT Application::Render()
 {
     if (FAILED(GameCore::Render())) return E_FAIL;
-    if (FAILED(Window::Render())) return E_FAIL;
 
     return TRUE;
 }
