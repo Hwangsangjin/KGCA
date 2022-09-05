@@ -45,6 +45,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateShader", "CreateShade
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateTexture", "CreateTexture\CreateTexture.vcxproj", "{225A7F99-C8A0-4707-9CE7-5F4AE0DDE4A4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateTimer", "CreateTimer\CreateTimer.vcxproj", "{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -197,6 +199,14 @@ Global
 		{225A7F99-C8A0-4707-9CE7-5F4AE0DDE4A4}.Release|x64.Build.0 = Release|x64
 		{225A7F99-C8A0-4707-9CE7-5F4AE0DDE4A4}.Release|x86.ActiveCfg = Release|Win32
 		{225A7F99-C8A0-4707-9CE7-5F4AE0DDE4A4}.Release|x86.Build.0 = Release|Win32
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Debug|x64.ActiveCfg = Debug|x64
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Debug|x64.Build.0 = Debug|x64
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Debug|x86.ActiveCfg = Debug|Win32
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Debug|x86.Build.0 = Debug|Win32
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Release|x64.ActiveCfg = Release|x64
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Release|x64.Build.0 = Release|x64
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Release|x86.ActiveCfg = Release|Win32
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +230,7 @@ Global
 		{38ED91F1-1888-40DA-A4CF-D4F3466B94DC} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 		{FE18EE1D-AD62-4430-83E7-4EA074C188B8} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 		{225A7F99-C8A0-4707-9CE7-5F4AE0DDE4A4} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
+		{81DE9CA7-6CF4-4876-A59C-075EE6E19DFE} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8687645-F4EE-4A93-BE97-7DD2357B4FDA}
