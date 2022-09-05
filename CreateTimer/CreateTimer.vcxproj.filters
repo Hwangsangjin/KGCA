@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Application">
+      <UniqueIdentifier>{3da16c85-a274-44d4-98bd-5692336963c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore">
+      <UniqueIdentifier>{ed4a45c6-1a2e-4f94-8849-6074f1b39321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Graphics">
+      <UniqueIdentifier>{7bedc674-c61a-4a8f-8b88-4e4b514cae6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Graphics\Vertex">
+      <UniqueIdentifier>{312d7c19-f6da-4160-82e8-1035dc948a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Graphics\Shader">
+      <UniqueIdentifier>{af3121e8-0d34-4971-9ef8-f1120815951f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Precompiled">
+      <UniqueIdentifier>{7524159c-d908-4557-9cf1-88e3175cf35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Window">
+      <UniqueIdentifier>{6168d80c-c64e-4a0e-a9e0-5c7537f60301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameCore\Timer">
+      <UniqueIdentifier>{a178de78-a015-4e7e-8430-a4f0ac9aa6ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>소스 파일\GameCore\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCore.cpp">
+      <Filter>소스 파일\GameCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>소스 파일\GameCore\Graphics\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>소스 파일\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\GameCore\Timer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>소스 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCore.h">
+      <Filter>소스 파일\GameCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>소스 파일\GameCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>소스 파일\GameCore\Graphics\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>소스 파일\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\GameCore\Timer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>소스 파일\GameCore\Graphics\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>소스 파일\GameCore\Graphics\Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
