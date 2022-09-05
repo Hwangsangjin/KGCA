@@ -6,7 +6,7 @@
 class GameCore : public Window
 {
 protected:
-	Graphics* _graphics;
+	Graphics* _pGraphics;
 
 public:
 	// √ ±‚»≠

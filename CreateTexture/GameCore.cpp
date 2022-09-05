@@ -5,8 +5,8 @@ HRESULT GameCore::Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT
 {
     if (FAILED(Window::Init(hInstance, title, width, height))) return E_FAIL;
  
-    _graphics = new Graphics;
-    if (FAILED(_graphics->Init(hInstance, this->GetHWND(), width, height))) return E_FAIL;
+    _pGraphics = new Graphics;
+    if (FAILED(_pGraphics->Init(hInstance, this->GetHWND(), width, height))) return E_FAIL;
 
     return TRUE;
 }
@@ -18,14 +18,14 @@ HRESULT GameCore::Frame()
 
 HRESULT GameCore::Render()
 {
-    if (FAILED(_graphics->Render())) return E_FAIL;
+    if (FAILED(_pGraphics->Render())) return E_FAIL;
 
     return TRUE;
 }
 
 HRESULT GameCore::Release()
 {
-    if (FAILED(_graphics->Release())) return E_FAIL;
+    if (FAILED(_pGraphics->Release())) return E_FAIL;
 
     return TRUE;
 }
