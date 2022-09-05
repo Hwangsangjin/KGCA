@@ -17,7 +17,7 @@ private:
 	ID3D11SamplerState* _pSamplerState = nullptr;
 	ID3DBlob* _pVertexShaderCode = nullptr;
 	ID3DBlob* _pPixelShaderCode = nullptr;
-	ID3D11Resource* _pTexture = nullptr;
+	ID3D11Texture2D* _pTexture = nullptr;
 	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
 
 public:

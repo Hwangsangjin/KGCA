@@ -271,7 +271,7 @@ HRESULT Graphics::CreateShader()
 // ≈ÿΩ∫√≥
 HRESULT Graphics::CreateTexture()
 {
-    if (FAILED(DirectX::CreateWICTextureFromFile(_pd3dDevice, _pImmediateContext, L"../../Resource/Ryan.png", &_pTexture, &_pShaderResourceView)))
+    if (FAILED(DirectX::CreateWICTextureFromFile(_pd3dDevice, _pImmediateContext, L"../../Resource/Ryan.png", (ID3D11Resource**) &_pTexture, &_pShaderResourceView)))
     {
         return E_FAIL;
     }
@@ -303,12 +303,12 @@ HRESULT Graphics::CreateVertexBuffer()
     HRESULT hr;
     Vertex vertices[] =
     {
-        Vector3{ -0.2f, 0.5f, 0.0f }, Vector2{ 0.0f, 0.0f },
-        Vector3{ 0.2f, 0.5f, 0.0f }, Vector2{ 1.0f, 0.0f },
-        Vector3{ -0.2f, -0.5f, 0.0f }, Vector2{ 0.0f, 1.0f },
-        Vector3{ -0.2f, -0.5f, 0.0f },  Vector2{ 0.0f, 1.0f },
-        Vector3{ 0.2f, 0.5f, 0.0f }, Vector2{ 1.0f, 0.0f },
-        Vector3{ 0.2f, -0.5f, 0.0f }, Vector2{ 1.0f, 1.0f }
+        Vector3{ -0.1f, 0.2f, 0.0f }, Vector2{ 0.0f, 0.0f },
+        Vector3{ 0.1f, 0.2f, 0.0f }, Vector2{ 1.0f, 0.0f },
+        Vector3{ -0.1f, -0.2f, 0.0f }, Vector2{ 0.0f, 1.0f },
+        Vector3{ -0.1f, -0.2f, 0.0f },  Vector2{ 0.0f, 1.0f },
+        Vector3{ 0.1f, 0.2f, 0.0f }, Vector2{ 1.0f, 0.0f },
+        Vector3{ 0.1f, -0.2f, 0.0f }, Vector2{ 1.0f, 1.0f }
     };
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
