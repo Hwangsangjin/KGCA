@@ -1,18 +1,19 @@
 #include "pch.h"
 #include "Core.h"
 
-HRESULT Core::CInit()
+HRESULT Core::CoreInit()
 {
 	Device::Init();
+
 	return Init();
 }
 
-HRESULT Core::CFrame()
+HRESULT Core::CoreFrame()
 {
 	return Frame();
 }
 
-HRESULT Core::CPreRender()
+HRESULT Core::CorePreRender()
 {
 	// 후면 버퍼 클리어
 	float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
@@ -21,16 +22,16 @@ HRESULT Core::CPreRender()
 	return TRUE;
 }
 
-HRESULT Core::CRender()
+HRESULT Core::CoreRender()
 {
-	CPreRender();
+	CorePreRender();
 	Render();
-	CPostRender();
+	CorePostRender();
 
 	return TRUE;
 }
 
-HRESULT Core::CPostRender()
+HRESULT Core::CorePostRender()
 {
 	// 플릿핑
 	_pSwapChain->Present(0, 0);
@@ -38,7 +39,7 @@ HRESULT Core::CPostRender()
 	return TRUE;
 }
 
-HRESULT Core::CRelease()
+HRESULT Core::CoreRelease()
 {
 	Release();
 	Device::Release();
@@ -69,14 +70,14 @@ HRESULT Core::Release()
 HRESULT Core::Run()
 {
 	if (FAILED(Device::SetDevice(Window::GetHWND(), Window::GetRECT()))) return E_FAIL;
-	if (FAILED(CInit())) return E_FAIL;
+	if (FAILED(CoreInit())) return E_FAIL;
 
 	while (_isRunning)
 	{
 		if (Window::Run() == TRUE)
 		{
-			CFrame();
-			CRender();
+			CoreFrame();
+			CoreRender();
 		}
 		else
 		{
@@ -84,7 +85,7 @@ HRESULT Core::Run()
 		}
 	}
 
-	if (FAILED(CRelease())) return E_FAIL;
+	if (FAILED(CoreRelease())) return E_FAIL;
 
 	return TRUE;
 }

@@ -1,6 +1,14 @@
 #include "pch.h"
 #include "Device.h"
 
+// 생성자
+Device::Device()
+    : _hWnd(0)
+    , _rtClient{ 0, 0}
+{
+
+}
+
 // 초기화
 HRESULT Device::Init()
 {

@@ -9,12 +9,12 @@ private:
 	bool _isRunning = true;
 
 	// 코어 함수
-	HRESULT CInit();
-	HRESULT CFrame();
-	HRESULT CPreRender();
-	HRESULT CRender();
-	HRESULT CPostRender();
-	HRESULT CRelease();
+	HRESULT CoreInit();
+	HRESULT CoreFrame();
+	HRESULT CorePreRender();
+	HRESULT CoreRender();
+	HRESULT CorePostRender();
+	HRESULT CoreRelease();
 
 public:
 	Core() = default;
@@ -22,13 +22,13 @@ public:
 
 	// 초기화
 	virtual HRESULT Init() override;
-	// 프레임
+	// 프레임 계산
 	virtual HRESULT Frame() override;
 	// 렌더
 	virtual HRESULT Render() override;
-	// 릴리즈
+	// 메모리 해제
 	virtual HRESULT Release() override;
 	// 실행
-	virtual HRESULT Run() override;
+	virtual HRESULT Run() final;
 };
 

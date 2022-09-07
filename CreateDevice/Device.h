@@ -16,12 +16,12 @@ protected:
 	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
 
 public:
-	Device() = default;
+	Device();
 	virtual ~Device() = default;
 
 	// 초기화
 	virtual HRESULT Init();
-	// 프레임
+	// 프레임 계산
 	virtual HRESULT Frame();
 	// 렌더
 	virtual HRESULT Render();
@@ -30,6 +30,7 @@ public:
 
 	// 디바이스 설정
 	HRESULT SetDevice(HWND hWnd, RECT rect);
+
 	// 디바이스 생성
 	HRESULT CreateDevice();
 	// 팩토리 생성
