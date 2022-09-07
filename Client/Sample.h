@@ -5,6 +5,9 @@
 class Sample : public Core
 {
 public:
+	Sample() = default;
+	virtual ~Sample() = default;
+
 	// 초기화
 	virtual HRESULT Init() override;
 	// 프레임
