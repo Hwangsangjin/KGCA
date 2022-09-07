@@ -40,6 +40,9 @@ HRESULT Core::CPostRender()
 
 HRESULT Core::CRelease()
 {
+	Release();
+	Device::Release();
+
 	return Release();
 }
 
@@ -60,7 +63,6 @@ HRESULT Core::Render()
 
 HRESULT Core::Release()
 {
-
 	return TRUE;
 }
 

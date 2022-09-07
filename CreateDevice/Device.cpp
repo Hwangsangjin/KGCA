@@ -40,10 +40,10 @@ HRESULT Device::Release()
     if (_pd3dDevice) _pd3dDevice->Release();
 
     _pd3dDevice = nullptr;
+    _pImmediateContext = nullptr;
     _pFactory = nullptr;
     _pSwapChain = nullptr;
     _pRenderTargetView = nullptr;
-    _pImmediateContext = nullptr;
 
     return TRUE;
 }
