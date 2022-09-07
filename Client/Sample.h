@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-class Application : public Core
+class Sample : public Core
 {
 public:
 	// √ ±‚»≠
