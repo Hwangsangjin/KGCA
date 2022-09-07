@@ -3,9 +3,9 @@
 class Window
 {
 private:
-	HWND _hWnd;				// 윈도우 핸들
-	RECT _rtWindow;			// 윈도우 영역
-	RECT _rtClient;			// 클라이언트 영역
+	HWND _hWnd;		// 윈도우 핸들
+	RECT _rtWindow;	// 윈도우 영역
+	RECT _rtClient;	// 클라이언트 영역
 
 public:
 	Window();
@@ -13,11 +13,11 @@ public:
 
 	// 초기화
 	virtual HRESULT Init();
-	// 프레임 계산
+	// 프레임
 	virtual HRESULT Frame();
 	// 렌더
 	virtual HRESULT Render();
-	// 메모리 소멸 및 삭제
+	// 릴리즈
 	virtual HRESULT Release();
 	// 실행
 	virtual HRESULT Run();
