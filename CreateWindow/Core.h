@@ -17,6 +17,9 @@ private:
 	HRESULT CRelease();
 
 public:
+	Core() = default;
+	virtual ~Core() = default;
+
 	// 초기화
 	virtual HRESULT Init() override;
 	// 프레임

@@ -1,17 +1,16 @@
 #include "pch.h"
 #include "Window.h"
 
-// 생성자
-Window::Window()
-    : _hWnd(0)
-    , _rtClient{ 0, 0 }
-    , _rtWindow{ 0, 0 }
+// 윈도우 프로시저
+LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-}
-
-// 소멸자
-Window::~Window()
-{
+    switch (message)
+    {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    }
+    return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 // 초기화
@@ -107,19 +106,13 @@ void Window::CenterWindow()
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
 
+// 윈도우 핸들
 const HWND Window::GetHWND() const
 {
     return _hWnd;
 }
 
-// 윈도우 프로시저
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+const RECT Window::GetRECT() const
 {
-    switch (message)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    }
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return _rtClient;
 }

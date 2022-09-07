@@ -3,15 +3,17 @@
 class Window
 {
 private:
-	HWND _hWnd;		// 윈도우 핸들
-	RECT _rtWindow;	// 윈도우 영역
-	RECT _rtClient;	// 클라이언트 영역
+	HWND _hWnd;				// 윈도우 핸들
+	RECT _rtWindow;			// 윈도우 영역
+	RECT _rtClient;			// 클라이언트 영역
+
+protected:
+	// 윈도우 프로시저
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
-	// 생성자
-	Window();
-	// 소멸자
-	virtual ~Window();
+	Window() = default;
+	virtual ~Window() = default;
 
 	// 초기화
 	virtual HRESULT Init();
@@ -32,7 +34,7 @@ public:
 	// 윈도우 핸들
 	const HWND GetHWND() const;
 
-	// 윈도우 프로시저
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	// 클라이언트 영역
+	const RECT GetRECT() const;
 };
 
