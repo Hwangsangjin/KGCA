@@ -12,23 +12,23 @@ private:
     static int _frameCnt;
     static float _elapsed;
 
-    double _duration = 0;
-
+    float _duration = 0;
     float _fps = 0;
     float _mspf = 0;
 
-    float m_fGameTimer = 0.0f;
-    float m_fElapseTimer = 10.0f;
-    UINT  m_iFPS = 0;
-    std::wstring m_szTimer;
-    DWORD m_dwBeforeTime;
-    UINT  m_iFPSCounter = 0;
-    float m_fFPSTimer = 0.0f;
+    HWND _hWnd;
 
 public:
+    // 초기화
     HRESULT Init();
+    // 프레임 계산
     HRESULT Frame();
+    // 렌더
     HRESULT Render();
+    // 메모리 해제
     HRESULT Release();
+
+    // 설정
+    HRESULT SetTimer(HWND hWnd);
 };
 

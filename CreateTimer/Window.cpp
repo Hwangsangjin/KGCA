@@ -1,24 +1,46 @@
 #include "pch.h"
 #include "Window.h"
 
+// 윈도우 프로시저
+Window* window = nullptr;
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    assert(window);
+    return window->MsgProc(hWnd, message, wParam, lParam);
+}
+
+// 메시지 프로시저
+LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_SIZE:
+        if (SIZE_MINIMIZED != wParam)
+        {
+            UINT width = LOWORD(lParam);
+            UINT height = HIWORD(lParam);
+            ResizeDevice(width, height);
+        }
+        break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    }
+    return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
 // 생성자
 Window::Window()
     : _hWnd(0)
-    , _rtClient{ 0, 0 }
     , _rtWindow{ 0, 0 }
+    , _rtClient{ 0, 0 }
 {
-}
-
-// 소멸자
-Window::~Window()
-{
+    window = this;
 }
 
 // 초기화
-HRESULT Window::Init(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
+HRESULT Window::Init()
 {
-    if (FAILED(InitWindow(hInstance, title, width, height))) return E_FAIL;
-
     return TRUE;
 }
 
@@ -40,8 +62,29 @@ HRESULT Window::Release()
     return TRUE;
 }
 
-// 윈도우 초기화
-HRESULT Window::InitWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
+// 실행
+HRESULT Window::Run()
+{
+    MSG msg = { 0 };
+    while (WM_QUIT != msg.message)
+    {
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+#ifdef CORE
+        else
+        {
+            return TRUE;
+        }
+#endif
+    }
+    return E_FAIL;
+}
+
+// 윈도우 설정
+HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
     // 윈도우 클래스를 등록한다.
     WNDCLASSEX wcex;
@@ -89,19 +132,14 @@ void Window::CenterWindow()
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
 
+// 윈도우 핸들
 const HWND Window::GetHWND() const
 {
     return _hWnd;
 }
 
-// 윈도우 프로시저
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+// 클라이언트 영역
+const RECT Window::GetRECT() const
 {
-    switch (message)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    }
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return _rtClient;
 }

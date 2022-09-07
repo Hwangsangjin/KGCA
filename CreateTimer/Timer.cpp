@@ -8,10 +8,6 @@ HRESULT Timer::Init()
 {
 	_start = clock::now();
 
-	m_fGameTimer = 0.0f;
-	m_fElapseTimer = 10.0f;
-	m_dwBeforeTime = timeGetTime();
-
 	return TRUE;
 }
 
@@ -35,40 +31,26 @@ HRESULT Timer::Frame()
 		_elapsed += 1.0f;
 	}
 
-	DWORD dwCurrentTime = timeGetTime();
-	DWORD dwElapseTime = dwCurrentTime - m_dwBeforeTime;
-	m_fElapseTimer = dwElapseTime / 1000.0f;
-	m_fGameTimer += m_fElapseTimer;
-	{
-		m_iFPSCounter++;
-		m_fFPSTimer += m_fElapseTimer;
-		if (m_fFPSTimer >= 1.0f)
-		{
-			m_iFPS = m_iFPSCounter;
-			m_iFPSCounter = 0;
-			m_fFPSTimer = m_fFPSTimer - 1.0f;
-		}
-	}
-
-	m_dwBeforeTime = dwCurrentTime;
-
 	return TRUE;
 }
 
 HRESULT Timer::Render()
 {
-	std::cout << "FPS: " << _fps << " " << "MSPF: " << _mspf << std::endl;
-
-	m_szTimer = std::to_wstring(m_fGameTimer);
-	m_szTimer += L"   ";
-	m_szTimer += std::to_wstring(m_iFPS);
-	m_szTimer += L"\n";
-	OutputDebugString(m_szTimer.c_str());
+	std::wstring fpsText = L"Client FPS: ";
+	fpsText += std::to_wstring((int)_fps);
+	SetWindowText(_hWnd, fpsText.c_str());
 
 	return TRUE;
 }
 
 HRESULT Timer::Release()
 {
+	return TRUE;
+}
+
+HRESULT Timer::SetTimer(HWND hWnd)
+{
+	_hWnd = hWnd;
+
 	return TRUE;
 }
