@@ -23,6 +23,9 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 // 생성자
 Window::Window()
+    : _hWnd(0)
+    , _rtWindow{ 0, 0 }
+    , _rtClient{ 0, 0 }
 {
     window = this;
 }
@@ -51,6 +54,7 @@ HRESULT Window::Release()
     return TRUE;
 }
 
+// 실행
 HRESULT Window::Run()
 {
     MSG msg = { 0 };
@@ -71,7 +75,7 @@ HRESULT Window::Run()
     return E_FAIL;
 }
 
-// 윈도우 초기화
+// 윈도우 설정
 HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
     // 윈도우 클래스를 등록한다.
@@ -126,6 +130,7 @@ const HWND Window::GetHWND() const
     return _hWnd;
 }
 
+// 클라이언트 영역
 const RECT Window::GetRECT() const
 {
     return _rtClient;

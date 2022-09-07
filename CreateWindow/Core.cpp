@@ -1,32 +1,32 @@
 #include "pch.h"
 #include "Core.h"
 
-HRESULT Core::CInit()
+HRESULT Core::CoreInit()
 {
 	return Init();
 }
 
-HRESULT Core::CFrame()
+HRESULT Core::CoreFrame()
 {
 	return Frame();
 }
 
-HRESULT Core::CPreRender()
+HRESULT Core::CorePreRender()
 {
 	return TRUE;
 }
 
-HRESULT Core::CRender()
+HRESULT Core::CoreRender()
 {
 	return Render();
 }
 
-HRESULT Core::CPostRender()
+HRESULT Core::CorePostRender()
 {
 	return TRUE;
 }
 
-HRESULT Core::CRelease()
+HRESULT Core::CoreRelease()
 {
 	return Release();
 }
@@ -48,20 +48,19 @@ HRESULT Core::Render()
 
 HRESULT Core::Release()
 {
-
 	return TRUE;
 }
 
 HRESULT Core::Run()
 {
-	if (FAILED(CInit())) return E_FAIL;
+	if (FAILED(CoreInit())) return E_FAIL;
 
 	while (_isRunning)
 	{
 		if (Window::Run() == TRUE)
 		{
-			CFrame();
-			CRender();
+			CoreFrame();
+			CoreRender();
 		}
 		else
 		{
@@ -69,7 +68,7 @@ HRESULT Core::Run()
 		}
 	}
 
-	if (FAILED(CRelease())) return E_FAIL;
+	if (FAILED(CoreRelease())) return E_FAIL;
 
 	return TRUE;
 }
