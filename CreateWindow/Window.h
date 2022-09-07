@@ -17,7 +17,7 @@ public:
 	virtual HRESULT Frame();
 	// 렌더
 	virtual HRESULT Render();
-	// 메모리 소멸 및 삭제
+	// 메모리 해제
 	virtual HRESULT Release();
 	// 실행
 	virtual HRESULT Run();
