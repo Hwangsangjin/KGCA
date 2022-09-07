@@ -2,7 +2,15 @@
 #include "Window.h"
 
 // 윈도우 프로시저
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+Window* window = nullptr;
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    assert(window);
+    return window->MsgProc(hWnd, message, wParam, lParam);
+}
+
+// 메시지 프로시저
+LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
@@ -11,6 +19,12 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
         break;
     }
     return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+// 생성자
+Window::Window()
+{
+    window = this;
 }
 
 // 초기화

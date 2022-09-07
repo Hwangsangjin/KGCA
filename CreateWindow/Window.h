@@ -7,12 +7,8 @@ private:
 	RECT _rtWindow;			// 윈도우 영역
 	RECT _rtClient;			// 클라이언트 영역
 
-protected:
-	// 윈도우 프로시저
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 public:
-	Window() = default;
+	Window();
 	virtual ~Window() = default;
 
 	// 초기화
@@ -36,5 +32,8 @@ public:
 
 	// 클라이언트 영역
 	const RECT GetRECT() const;
+
+	// 메시지 프로시저
+	LRESULT MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
