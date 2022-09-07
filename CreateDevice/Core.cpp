@@ -71,7 +71,7 @@ HRESULT Core::Run()
 	if (FAILED(Device::SetDevice(Window::GetHWND(), Window::GetRECT()))) return E_FAIL;
 	if (FAILED(CInit())) return E_FAIL;
 
-	while (_isRun)
+	while (_isRunning)
 	{
 		if (Window::Run() == TRUE)
 		{
@@ -80,7 +80,7 @@ HRESULT Core::Run()
 		}
 		else
 		{
-			_isRun = false;
+			_isRunning = false;
 		}
 	}
 
