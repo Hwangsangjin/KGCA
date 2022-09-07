@@ -9,12 +9,12 @@ public:
 	virtual ~Sample() = default;
 
 	// 초기화
-	virtual HRESULT Init() override;
+	virtual HRESULT Init() final;
 	// 프레임
-	virtual HRESULT Frame() override;
+	virtual HRESULT Frame() final;
 	// 렌더
-	virtual HRESULT Render() override;
+	virtual HRESULT Render() final;
 	// 릴리즈
-	virtual HRESULT Release() override;
+	virtual HRESULT Release() final;
 };
 
