@@ -56,7 +56,7 @@ HRESULT Core::Run()
 {
 	if (FAILED(CInit())) return E_FAIL;
 
-	while (_isRun)
+	while (_isRunning)
 	{
 		if (Window::Run() == TRUE)
 		{
@@ -65,7 +65,7 @@ HRESULT Core::Run()
 		}
 		else
 		{
-			_isRun = false;
+			_isRunning = false;
 		}
 	}
 

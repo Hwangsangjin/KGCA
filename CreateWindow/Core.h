@@ -6,7 +6,7 @@ class Core : public Window
 {
 private:
 	// 실행 플래그
-	bool _isRun = true;
+	bool _isRunning = true;
 
 	// 코어 함수
 	HRESULT CInit();
