@@ -79,6 +79,7 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     // 등록한 윈도우를 생성한다.
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+    _hInstance = hInstance;
     _hWnd = CreateWindowEx(WS_EX_TOPMOST, title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
     if (FAILED(_hWnd)) return E_FAIL;
 
@@ -107,6 +108,13 @@ void Window::CenterWindow()
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
 
+// 인스턴스 핸들
+const HINSTANCE Window::GetHINSTANCE() const
+{
+    return _hInstance;
+}
+
+// 윈도우 핸들
 const HWND Window::GetHWND() const
 {
     return _hWnd;
