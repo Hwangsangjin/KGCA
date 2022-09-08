@@ -29,11 +29,6 @@ public:
 	// 윈도우 위치를 화면 중앙으로 이동
 	void CenterWindow();
 
-	// 윈도우 핸들
-	const HWND GetHWND() const;
-	// 클라이언트 영역
-	const RECT GetRECT() const;
-
 	// 메시지 프로시저
 	LRESULT MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };

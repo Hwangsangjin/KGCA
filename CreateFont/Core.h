@@ -2,20 +2,17 @@
 
 #include "Window.h"
 #include "Timer.h"
-#include "Write.h"
+#include "Font.h"
 
 class Core : public Window
 {
 private:
-	HWND _hWnd;
-	RECT _rtClient;
-
-	Timer _timer;
-	Write _write;
-	IDXGISurface1* _pBackBuffer;
-
 	// 실행 플래그
-	bool _isRunning = true;
+	bool _isRun = true;
+
+	// 폰트
+	Font _font;
+	IDXGISurface1* _pBackBuffer;
 
 	// 코어 함수
 	HRESULT CoreInit();

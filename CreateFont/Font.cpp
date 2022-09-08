@@ -1,29 +1,29 @@
 #include "pch.h"
-#include "Write.h"
+#include "Font.h"
 
-HRESULT Write::Init()
+HRESULT Font::Init()
 {
     if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &_pd2dFactory))) return E_FAIL;
     if (FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)&_pWriteFactory))) return E_FAIL;
     if (FAILED(_pWriteFactory->CreateTextFormat(L"Consolas", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", &_pTextFormat))) return E_FAIL;
-    if (FAILED(_pWriteFactory->CreateTextLayout(_defaultText.c_str(), _defaultText.size(), _pTextFormat, _rtClient.right, _rtClient.bottom, &_pTextLayout))) return E_FAIL;
+    if (FAILED(_pWriteFactory->CreateTextLayout(_defaultText.c_str(), _defaultText.size(), _pTextFormat, rtClient.right, rtClient.bottom, &_pTextLayout))) return E_FAIL;
 
     return TRUE;
 }
 
-HRESULT Write::Frame()
+HRESULT Font::Frame()
 {
     return TRUE;
 }
 
-HRESULT Write::Render()
+HRESULT Font::Render()
 {
     Draw(0, 0, _defaultText, { 1, 0, 0, 1 });
 
     return TRUE;
 }
 
-HRESULT Write::Release()
+HRESULT Font::Release()
 {
     if (_pTextLayout) _pTextLayout->Release();
     if (_pTextColor) _pTextColor->Release();
@@ -40,7 +40,7 @@ HRESULT Write::Release()
     return TRUE;
 }
 
-HRESULT Write::SetWrite(IDXGISurface1* pDXGISurface1)
+HRESULT Font::SetSurface(IDXGISurface1* pDXGISurface1)
 {
     D2D1_RENDER_TARGET_PROPERTIES props;
     ZeroMemory(&props, sizeof(props));
@@ -57,21 +57,20 @@ HRESULT Write::SetWrite(IDXGISurface1* pDXGISurface1)
     return TRUE;
 }
 
-HRESULT Write::Draw(float x, float y, std::wstring text, RECT rect, D2D1_COLOR_F color)
+HRESULT Font::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
 {
-    _rtClient = rect;
-    D2D1_RECT_F rt = { x, y, _rtClient.right, _rtClient.bottom };
+    D2D1_RECT_F rect = { x, y, rtClient.right, rtClient.bottom };
 
     _pd2dRenderTarget->BeginDraw();
 
     _pTextColor->SetColor(color);
     _pTextColor->SetOpacity(1.0f);
 
-    _pd2dRenderTarget->DrawText(text.c_str(), text.size(), _pTextFormat, rt, _pTextColor);
-    
+    _pd2dRenderTarget->DrawText(text.c_str(), text.size(), _pTextFormat, rect, _pTextColor);
+
     _pTextLayout->SetFontSize(50, { 0, (UINT)_defaultText.size() });
     _pTextLayout->SetFontStyle(DWRITE_FONT_STYLE_ITALIC, { 0, (UINT)_defaultText.size() });
-    
+
     _pd2dRenderTarget->DrawTextLayout({ 400, 300 }, _pTextLayout, _pTextColor);
 
     _pd2dRenderTarget->EndDraw();

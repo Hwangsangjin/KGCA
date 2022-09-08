@@ -1,6 +1,6 @@
 #pragma once
 
-class Write
+class Font
 {
 private:
 	ID2D1Factory* _pd2dFactory = nullptr;
@@ -10,8 +10,6 @@ private:
 	IDWriteTextLayout* _pTextLayout = nullptr;
 	ID2D1SolidColorBrush* _pTextColor = nullptr;
 	std::wstring _defaultText = L"KGCA Game Academy";
-
-	RECT _rtClient;
 
 public:
 	// 초기화
@@ -24,8 +22,8 @@ public:
 	HRESULT Release();
 
 	// 설정
-	HRESULT SetWrite(IDXGISurface1* pDXGISurface1);
+	HRESULT SetSurface(IDXGISurface1* pDXGISurface1);
 	// 그리기
-	HRESULT Draw(float x, float y, std::wstring text, RECT rect, D2D1_COLOR_F color = { 0, 0, 0, 1 });
+	HRESULT Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = { 0, 0, 0, 1 });
 };
 

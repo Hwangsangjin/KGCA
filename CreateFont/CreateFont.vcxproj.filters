@@ -24,8 +24,8 @@
     <Filter Include="소스 파일\Core\Timer">
       <UniqueIdentifier>{b186d36a-062d-4e52-9440-8eba4fe61a57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Write">
-      <UniqueIdentifier>{15d78d5e-881d-40e4-af36-e9c780fe087b}</UniqueIdentifier>
+    <Filter Include="소스 파일\Core\Font">
+      <UniqueIdentifier>{7819a383-ad0d-4fa4-b9ef-16e7e8197ab2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,14 +47,11 @@
     <ClInclude Include="Timer.h">
       <Filter>소스 파일\Core\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Write.h">
-      <Filter>소스 파일\Core\Write</Filter>
+    <ClInclude Include="Font.h">
+      <Filter>소스 파일\Core\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Precompiled</Filter>
     </ClCompile>
@@ -70,8 +67,11 @@
     <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\Core\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Write.cpp">
-      <Filter>소스 파일\Core\Write</Filter>
+    <ClCompile Include="Font.cpp">
+      <Filter>소스 파일\Core\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>소스 파일\Core\Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

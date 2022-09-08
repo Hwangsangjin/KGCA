@@ -4,15 +4,20 @@
 HRESULT Core::CoreInit()
 {
 	if (FAILED(Device::Init())) return E_FAIL;
-	if (FAILED(_timer.Init())) return E_FAIL;
-	if (FAILED(_write.Init())) return E_FAIL;
+	if (FAILED(TIMER->Init())) return E_FAIL;
+	if (FAILED(_font.Init())) return E_FAIL;
+
+	_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1),
+		(void**)&_pBackBuffer);
+	_font.SetSurface(_pBackBuffer);
 
 	return Init();
 }
 
 HRESULT Core::CoreFrame()
 {
-	_timer.Frame();
+	TIMER->Frame();
+	_font.Frame();
 
 	return Frame();
 }
@@ -31,8 +36,8 @@ HRESULT Core::CoreRender()
 	CorePreRender();
 
 	Render();
-	_timer.Render();
-	_write.Render();
+	TIMER->Render();
+	_font.Render();
 
 	CorePostRender();
 
@@ -50,9 +55,8 @@ HRESULT Core::CorePostRender()
 HRESULT Core::CoreRelease()
 {
 	_pBackBuffer->Release();
-	_write.Release();
-	_timer.Release();
 	Release();
+	_font.Release();
 	Device::Release();
 
 	return Release();
@@ -70,6 +74,10 @@ HRESULT Core::Frame()
 
 HRESULT Core::Render()
 {
+	// 그래픽스 파이프라인 바인딩
+    _pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
+    _pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 	return TRUE;
 }
 
@@ -80,15 +88,9 @@ HRESULT Core::Release()
 
 HRESULT Core::Run()
 {
-	if (FAILED(Device::SetDevice(Window::GetHWND(), Window::GetRECT()))) return E_FAIL;
-	if (FAILED(_timer.SetTimer(Window::GetHWND()))) return E_FAIL;
-
 	if (FAILED(CoreInit())) return E_FAIL;
 
-	_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer);
-	if (FAILED(_write.SetWrite(_pBackBuffer))) return E_FAIL;
-
-	while (_isRunning)
+	while (_isRun)
 	{
 		if (Window::Run() == TRUE)
 		{
@@ -97,7 +99,7 @@ HRESULT Core::Run()
 		}
 		else
 		{
-			_isRunning = false;
+			_isRun = false;
 		}
 	}
 
