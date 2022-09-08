@@ -2,21 +2,16 @@
 
 class Timer
 {
-private:
-    using clock = std::chrono::high_resolution_clock;
-    using second = std::chrono::duration<double, std::ratio<1>>;
+    DECLARE_SINGLE(Timer);
 
-    std::chrono::time_point<clock> _start;
-    std::chrono::time_point<clock> _end;
+private: 
+    uint64 _frequency = 0;
+    uint64 _prevCount = 0;
+    float _deltaTime = 0;
 
-    static int _frameCnt;
-    static float _elapsed;
-
-    float _duration = 0;
-    float _fps = 0;
-    float _mspf = 0;
-
-    HWND _hWnd;
+    uint32 _frameCount = 0;
+    float _frameTime = 0;
+    uint32 _fps = 0;
 
 public:
     // 초기화
@@ -28,7 +23,9 @@ public:
     // 메모리 해제
     HRESULT Release();
 
-    // 설정
-    HRESULT SetTimer(HWND hWnd);
+    // 초당 프레임 수
+    uint32 GetFPS();
+    // 지연 시간
+    float GetDeltaTime();
 };
 

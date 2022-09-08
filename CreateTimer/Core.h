@@ -6,10 +6,8 @@
 class Core : public Window
 {
 private:
-	Timer _timer;
-
 	// 실행 플래그
-	bool _isRunning = true;
+	bool _isRun = true;
 
 	// 코어 함수
 	HRESULT CoreInit();

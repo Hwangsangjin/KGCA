@@ -2,11 +2,13 @@
 #include "Window.h"
 
 // 윈도우 프로시저
-Window* window = nullptr;
+HWND hWnd;
+RECT rtClient;
+Window* gWindow = nullptr;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    assert(window);
-    return window->MsgProc(hWnd, message, wParam, lParam);
+    assert(gWindow);
+    return gWindow->MsgProc(hWnd, message, wParam, lParam);
 }
 
 // 메시지 프로시저
@@ -35,7 +37,7 @@ Window::Window()
     , _rtWindow{ 0, 0 }
     , _rtClient{ 0, 0 }
 {
-    window = this;
+    gWindow = this;
 }
 
 // 초기화
@@ -114,6 +116,9 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     ShowCursor(TRUE);
     CenterWindow();
 
+    hWnd = _hWnd;
+    rtClient = _rtClient;
+
     return TRUE;
 }
 
@@ -130,16 +135,4 @@ void Window::CenterWindow()
 
     // 윈도우를 화면 중앙으로 이동한다.
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
-}
-
-// 윈도우 핸들
-const HWND Window::GetHWND() const
-{
-    return _hWnd;
-}
-
-// 클라이언트 영역
-const RECT Window::GetRECT() const
-{
-    return _rtClient;
 }

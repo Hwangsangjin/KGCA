@@ -1,14 +1,6 @@
 #include "pch.h"
 #include "Device.h"
 
-// 생성자
-Device::Device()
-    : _hWnd(0)
-    , _rtClient{ 0, 0}
-{
-
-}
-
 // 초기화
 HRESULT Device::Init()
 {
@@ -30,10 +22,6 @@ HRESULT Device::Frame()
 // 렌더
 HRESULT Device::Render()
 {
-    // 그래픽스 파이프라인 바인딩
-    _pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
-    _pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
     return TRUE;
 }
 
@@ -52,15 +40,6 @@ HRESULT Device::Release()
     _pFactory = nullptr;
     _pSwapChain = nullptr;
     _pRenderTargetView = nullptr;
-
-    return TRUE;
-}
-
-// 설정
-HRESULT Device::SetDevice(HWND hWnd, RECT rect)
-{
-    _hWnd = hWnd;
-    _rtClient = rect;
 
     return TRUE;
 }
@@ -116,15 +95,14 @@ HRESULT Device::CreateFactory()
 // 스왑체인
 HRESULT Device::CreateSwapChain()
 {
-    HRESULT hr;
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.BufferCount = 1;
-    sd.BufferDesc.Width = _rtClient.right;
-    sd.BufferDesc.Height = _rtClient.bottom;
+    sd.BufferDesc.Width = rtClient.right;
+    sd.BufferDesc.Height = rtClient.bottom;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = _hWnd;
+    sd.OutputWindow = hWnd;
     sd.Windowed = true;
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -132,9 +110,9 @@ HRESULT Device::CreateSwapChain()
     sd.SampleDesc.Quality = 0;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    hr = _pFactory->CreateSwapChain(_pd3dDevice, &sd, &_pSwapChain);
+    if (FAILED(_pFactory->CreateSwapChain(_pd3dDevice, &sd, &_pSwapChain))) return E_FAIL;
 
-    return hr;
+    return TRUE;
 }
 
 // 렌더타겟뷰
@@ -143,18 +121,18 @@ HRESULT Device::CreateRenderTargetView()
     HRESULT hr;
     ID3D11Texture2D* pBackBuffer = nullptr;
     _pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer);
-    hr = _pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &_pRenderTargetView);
+    if (FAILED(_pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &_pRenderTargetView))) return E_FAIL;
     pBackBuffer->Release();
 
-    return hr;
+    return TRUE;
 }
 
 // 뷰포트
 HRESULT Device::CreateViewport()
 {
     D3D11_VIEWPORT vp;
-    vp.Width = _rtClient.right;
-    vp.Height = _rtClient.bottom;
+    vp.Width = rtClient.right;
+    vp.Height = rtClient.bottom;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
     vp.MinDepth = 0.0f;
@@ -180,9 +158,9 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
 
     // 변경된 후면 버퍼의 크기를 얻는다.
     _pSwapChain->GetDesc(&after);
-    GetClientRect(_hWnd, &_rtClient);
-    _rtClient.right = after.BufferDesc.Width;
-    _rtClient.bottom = after.BufferDesc.Height;
+    GetClientRect(hWnd, &rtClient);
+    rtClient.right = after.BufferDesc.Width;
+    rtClient.bottom = after.BufferDesc.Height;
 
     // 렌더타겟뷰를 생성하고 적용한다.
     if (FAILED(CreateRenderTargetView())) return E_FAIL;

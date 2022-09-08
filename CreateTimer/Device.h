@@ -2,10 +2,6 @@
 
 class Device
 {
-private:
-	HWND _hWnd;
-	RECT _rtClient;
-
 protected:
 	D3D_DRIVER_TYPE _driverType = D3D_DRIVER_TYPE_NULL;
 	D3D_FEATURE_LEVEL _featureLevel = D3D_FEATURE_LEVEL_11_1;
@@ -16,7 +12,7 @@ protected:
 	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
 
 public:
-	Device();
+	Device() = default;
 	virtual ~Device() = default;
 
 	// 초기화
@@ -27,9 +23,6 @@ public:
 	virtual HRESULT Render();
 	// 메모리 해제
 	virtual HRESULT Release();
-
-	// 디바이스 설정
-	HRESULT SetDevice(HWND hWnd, RECT rect);
 
 	// 디바이스 생성
 	HRESULT CreateDevice();
