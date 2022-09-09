@@ -1,17 +1,43 @@
 #include "pch.h"
 #include "Window.h"
 
+// 윈도우 프로시저
+HWND hWnd;
+RECT rtClient;
+Window* gWindow = nullptr;
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    assert(gWindow);
+    return gWindow->MsgProc(hWnd, message, wParam, lParam);
+}
+
+// 메시지 프로시저
+LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_SIZE:
+        if (SIZE_MINIMIZED != wParam)
+        {
+            UINT width = LOWORD(lParam);
+            UINT height = HIWORD(lParam);
+            Device::ResizeDevice(width, height);
+        }
+        break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    }
+    return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
 // 생성자
 Window::Window()
     : _hWnd(0)
-    , _rtClient{ 0, 0 }
     , _rtWindow{ 0, 0 }
+    , _rtClient{ 0, 0 }
 {
-}
-
-// 소멸자
-Window::~Window()
-{
+    gWindow = this;
 }
 
 // 초기화
@@ -38,6 +64,7 @@ HRESULT Window::Release()
     return TRUE;
 }
 
+// 실행
 HRESULT Window::Run()
 {
     MSG msg = { 0 };
@@ -58,7 +85,7 @@ HRESULT Window::Run()
     return E_FAIL;
 }
 
-// 윈도우 초기화
+// 윈도우 설정
 HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
     // 윈도우 클래스를 등록한다.
@@ -79,7 +106,6 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     // 등록한 윈도우를 생성한다.
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    _hInstance = hInstance;
     _hWnd = CreateWindowEx(WS_EX_TOPMOST, title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
     if (FAILED(_hWnd)) return E_FAIL;
 
@@ -89,6 +115,9 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     ShowWindow(_hWnd, SW_SHOW);
     ShowCursor(TRUE);
     CenterWindow();
+
+    hWnd = _hWnd;
+    rtClient = _rtClient;
 
     return TRUE;
 }
@@ -106,28 +135,4 @@ void Window::CenterWindow()
 
     // 윈도우를 화면 중앙으로 이동한다.
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
-}
-
-// 인스턴스 핸들
-const HINSTANCE Window::GetHINSTANCE() const
-{
-    return _hInstance;
-}
-
-// 윈도우 핸들
-const HWND Window::GetHWND() const
-{
-    return _hWnd;
-}
-
-// 윈도우 프로시저
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    }
-    return DefWindowProc(hWnd, message, wParam, lParam);
 }

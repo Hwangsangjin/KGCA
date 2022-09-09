@@ -1,33 +1,70 @@
 #include "pch.h"
 #include "Core.h"
 
-HRESULT Core::CInit()
+HRESULT Core::CoreInit()
 {
-	return Init();
-}
+	HR(Device::Init());
+	HR(INPUT->Init());
+	HR(TIMER->Init());
+	HR(_font.Init());
 
-HRESULT Core::CFrame()
-{
-	return Frame();
-}
+	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer));
+	HR(_font.SetSurface(_pBackBuffer));
 
-HRESULT Core::CPreRender()
-{
 	return TRUE;
 }
 
-HRESULT Core::CRender()
+HRESULT Core::CoreFrame()
 {
-	return Render();
-}
+	INPUT->Frame();
+	TIMER->Frame();
+	_font.Frame();
+	Frame();
 
-HRESULT Core::CPostRender()
-{
 	return TRUE;
 }
 
-HRESULT Core::CRelease()
+HRESULT Core::CorePreRender()
 {
+	// 그래픽스 파이프라인 바인딩
+	_pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
+	_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// 후면 버퍼 클리어
+	float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
+	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
+
+	return TRUE;
+}
+
+HRESULT Core::CoreRender()
+{
+	CorePreRender();
+
+	_font.SetText(TIMER->GetText());
+	_font.Render();
+	Render();
+
+	CorePostRender();
+
+	return TRUE;
+}
+
+HRESULT Core::CorePostRender()
+{
+	// 플리핑
+	_pSwapChain->Present(0, 0);
+
+	return TRUE;
+}
+
+HRESULT Core::CoreRelease()
+{
+	SAFE_RELEASE(_pBackBuffer)
+	Release();
+	_font.Release();
+	Device::Release();
+
 	return Release();
 }
 
@@ -48,20 +85,19 @@ HRESULT Core::Render()
 
 HRESULT Core::Release()
 {
-
 	return TRUE;
 }
 
 HRESULT Core::Run()
 {
-	if (FAILED(CInit())) return E_FAIL;
+	HR(CoreInit());
 
 	while (_isRun)
 	{
 		if (Window::Run() == TRUE)
 		{
-			CFrame();
-			CRender();
+			CoreFrame();
+			CoreRender();
 		}
 		else
 		{
@@ -69,7 +105,7 @@ HRESULT Core::Run()
 		}
 	}
 
-	if (FAILED(CRelease())) return E_FAIL;
+	HR(CoreRelease());
 
 	return TRUE;
 }

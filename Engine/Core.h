@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Window.h"
+#include "Timer.h"
+#include "Font.h"
+#include "Input.h"
 
 class Core : public Window
 {
@@ -9,23 +12,31 @@ private:
 	bool _isRun = true;
 
 	// 코어 함수
-	HRESULT CInit();
-	HRESULT CFrame();
-	HRESULT CPreRender();
-	HRESULT CRender();
-	HRESULT CPostRender();
-	HRESULT CRelease();
+	HRESULT CoreInit();
+	HRESULT CoreFrame();
+	HRESULT CorePreRender();
+	HRESULT CoreRender();
+	HRESULT CorePostRender();
+	HRESULT CoreRelease();
 
 public:
+	// 폰트
+	Font _font;
+	IDXGISurface1* _pBackBuffer;
+
+public:
+	Core() = default;
+	virtual ~Core() = default;
+
 	// 초기화
 	virtual HRESULT Init() override;
-	// 프레임
+	// 프레임 계산
 	virtual HRESULT Frame() override;
 	// 렌더
 	virtual HRESULT Render() override;
-	// 릴리즈
+	// 메모리 해제
 	virtual HRESULT Release() override;
 	// 실행
-	virtual HRESULT Run() override;
+	virtual HRESULT Run() final;
 };
 
