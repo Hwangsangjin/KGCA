@@ -22,7 +22,6 @@ HRESULT Sample::Render()
 		_font.Draw(pos.x, pos.y - 20, L"MOUSE", { 1, 1, 1, 1 });
 	}
 
-
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
 	{
 		_font.Draw(50, 150, L"W", { 1, 1, 1, 1 });
