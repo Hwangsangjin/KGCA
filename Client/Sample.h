@@ -16,5 +16,7 @@ public:
 	virtual HRESULT Render() final;
 	// ∏±∏Æ¡Ó
 	virtual HRESULT Release() final;
+
+	POINT pos;
 };
 
