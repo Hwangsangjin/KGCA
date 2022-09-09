@@ -71,7 +71,7 @@
       <Filter>소스 파일\Core\Font</Filter>
     </ClCompile>
     <ClCompile Include="Core.cpp">
-      <Filter>소스 파일\Core\Window</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

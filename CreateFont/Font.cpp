@@ -18,7 +18,7 @@ HRESULT Font::Frame()
 
 HRESULT Font::Render()
 {
-    Draw(0, 0, _defaultText, { 1, 0, 0, 1 });
+    Draw(0, 0, _defaultText, { 1, 1, 1, 1 });
 
     return TRUE;
 }
@@ -71,7 +71,7 @@ HRESULT Font::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
     _pTextLayout->SetFontSize(50, { 0, (UINT)_defaultText.size() });
     _pTextLayout->SetFontStyle(DWRITE_FONT_STYLE_ITALIC, { 0, (UINT)_defaultText.size() });
 
-    _pd2dRenderTarget->DrawTextLayout({ 400, 300 }, _pTextLayout, _pTextColor);
+    _pd2dRenderTarget->DrawTextLayout({ 200, 250 }, _pTextLayout, _pTextColor);
 
     _pd2dRenderTarget->EndDraw();
 
