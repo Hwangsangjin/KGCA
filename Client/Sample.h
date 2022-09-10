@@ -5,7 +5,8 @@
 class Sample : public Core
 {
 private:
-	POINT pos{ 0, 0 };
+	POINT _pos{ 0, 0 };
+	std::vector<BaseObject*> _objects;
 
 public:
 	Sample() = default;
