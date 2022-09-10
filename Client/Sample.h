@@ -5,7 +5,7 @@
 class Sample : public Core
 {
 private:
-	POINT pos;
+	POINT pos{ 0, 0 };
 
 public:
 	Sample() = default;
