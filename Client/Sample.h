@@ -4,6 +4,9 @@
 
 class Sample : public Core
 {
+private:
+	POINT pos;
+
 public:
 	Sample() = default;
 	virtual ~Sample() = default;
@@ -16,7 +19,5 @@ public:
 	virtual HRESULT Render() final;
 	// ∏±∏Æ¡Ó
 	virtual HRESULT Release() final;
-
-	POINT pos;
 };
 

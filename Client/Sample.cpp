@@ -26,14 +26,17 @@ HRESULT Sample::Render()
 	{
 		_font.Draw(50, 150, L"W", { 1, 1, 1, 1 });
 	}
+
 	if (INPUT->GetKey('A') == KEY_STATE::HOLD)
 	{
 		_font.Draw(30, 170, L"A", { 1, 1, 1, 1 });
 	}
+
 	if (INPUT->GetKey('S') == KEY_STATE::HOLD)
 	{
 		_font.Draw(50, 170, L"S", { 1, 1, 1, 1 });
 	}
+
 	if (INPUT->GetKey('D') == KEY_STATE::HOLD)
 	{
 		_font.Draw(70, 170, L"D", { 1, 1, 1, 1 });
