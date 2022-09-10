@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Window.h"
+#include "Input.h"
 #include "Timer.h"
 #include "Font.h"
-#include "Input.h"
 
 class Core : public Window
 {
@@ -19,7 +19,7 @@ private:
 	HRESULT CorePostRender();
 	HRESULT CoreRelease();
 
-public:
+protected:
 	// ÆùÆ®
 	Font _font;
 	IDXGISurface1* _pBackBuffer;

@@ -4,7 +4,7 @@
 
 class Window : public Device
 {
-private:
+protected:
 	HWND _hWnd;		// 윈도우 핸들
 	RECT _rtWindow;	// 윈도우 영역
 	RECT _rtClient;	// 클라이언트 영역
@@ -26,6 +26,7 @@ public:
 
 	// 윈도우 설정
 	HRESULT SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height);
+
 	// 윈도우 위치를 화면 중앙으로 이동
 	void CenterWindow();
 

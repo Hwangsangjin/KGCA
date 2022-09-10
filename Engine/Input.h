@@ -28,7 +28,7 @@ public:
 
     // 키
     DWORD GetKey(DWORD key);
-    // 좌표
+    // 위치
     POINT GetPos();
 };
 

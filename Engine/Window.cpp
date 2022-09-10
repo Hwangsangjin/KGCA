@@ -21,7 +21,7 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             UINT width = LOWORD(lParam);
             UINT height = HIWORD(lParam);
-            Device::ResizeDevice(width, height);
+            ResizeDevice(width, height);
         }
         break;
     case WM_DESTROY:

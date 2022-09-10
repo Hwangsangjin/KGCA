@@ -1,8 +1,8 @@
 #pragma once
 
 // header
-#include <assert.h>
 #include <Windows.h>
+#include <assert.h>
 #include <string>
 #include <d3d11.h>
 #include <d2d1.h>
@@ -48,7 +48,7 @@ using uint64 = unsigned __int64;
 #define DECLARE_SINGLE(type)		\
 private:							\
 	type() {}						\
-	~type() {}		                \
+	~type() { Release(); }		    \
                                     \
 public:								\
 	static type* GetInstance()		\

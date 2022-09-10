@@ -23,7 +23,7 @@ HRESULT Timer::Frame()
 
 	if (_frameTime >= 1.0f)
 	{
-		_fps = _frameCount;
+		_fps = static_cast<uint32>(_frameCount / _frameTime);
 
 		_frameCount = 0;
 		_frameTime = 0;
