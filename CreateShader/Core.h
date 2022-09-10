@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Window.h"
-#include "Font.h"
 #include "Input.h"
 #include "Timer.h"
+#include "Font.h"
 #include "BaseObject.h"
 #include "ShaderManager.h"
 

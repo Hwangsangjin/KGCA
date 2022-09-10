@@ -21,10 +21,9 @@ HRESULT Timer::Frame()
 	_frameTime += _deltaTime;
 	_gameTime += _deltaTime;
 
-	if (_frameTime > 1.0f)
+	if (_frameTime >= 1.0f)
 	{
 		_fps = static_cast<uint32>(_frameCount / _frameTime);
-		_fps = _frameCount;
 
 		_frameTime = 0;
 		_frameCount = 0;
