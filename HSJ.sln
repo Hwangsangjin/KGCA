@@ -59,6 +59,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateShader", "CreateShade
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateTexture", "CreateTexture\CreateTexture.vcxproj", "{06573368-07EB-4EDE-A943-4A99B60FAFE3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateSampler", "CreateSampler\CreateSampler.vcxproj", "{D840BFCC-C89A-41DF-8026-2500B570BA54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -259,6 +261,14 @@ Global
 		{06573368-07EB-4EDE-A943-4A99B60FAFE3}.Release|x64.Build.0 = Release|x64
 		{06573368-07EB-4EDE-A943-4A99B60FAFE3}.Release|x86.ActiveCfg = Release|Win32
 		{06573368-07EB-4EDE-A943-4A99B60FAFE3}.Release|x86.Build.0 = Release|Win32
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Debug|x64.ActiveCfg = Debug|x64
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Debug|x64.Build.0 = Debug|x64
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Debug|x86.ActiveCfg = Debug|Win32
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Debug|x86.Build.0 = Debug|Win32
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Release|x64.ActiveCfg = Release|x64
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Release|x64.Build.0 = Release|x64
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Release|x86.ActiveCfg = Release|Win32
+		{D840BFCC-C89A-41DF-8026-2500B570BA54}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,6 +298,7 @@ Global
 		{748A2B2E-868B-4ECF-A009-957F0F8137F1} = {8D1EF29E-75E5-4127-8844-36E70416DEDA}
 		{F238C5CF-09F2-445E-A7D8-DA5B7EC3BD75} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 		{06573368-07EB-4EDE-A943-4A99B60FAFE3} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
+		{D840BFCC-C89A-41DF-8026-2500B570BA54} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8687645-F4EE-4A93-BE97-7DD2357B4FDA}
