@@ -133,7 +133,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/Engine/"</Command>
+      <Command>copy "*.h" "../../Include/Engine"</Command>
     </PostBuildEvent>
     <Lib>
       <OutputFile>$(OutDir)Engine.lib</OutputFile>
