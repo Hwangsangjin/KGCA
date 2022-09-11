@@ -5,11 +5,13 @@ GAME_RUN(Client, 800, 600)
 
 HRESULT Sample::Init()
 {
+	TEXTURE->Load(L"../../Resource/Ryan/Ryan.png");
+
 	BaseObject* pObject = new BaseObject;
-	pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl");
+	pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Ryan/Ryan.png");
 	_objects.push_back(pObject);
 
-    return TRUE;
+	return TRUE;
 }
 
 HRESULT Sample::Frame()
@@ -21,7 +23,7 @@ HRESULT Sample::Frame()
 		object->Frame();
 	}
 
-    return TRUE;
+	return TRUE;
 }
 
 HRESULT Sample::Render()
@@ -63,7 +65,7 @@ HRESULT Sample::Render()
 		object->Render();
 	}
 
-    return TRUE;
+	return TRUE;
 }
 
 HRESULT Sample::Release()
@@ -73,5 +75,5 @@ HRESULT Sample::Release()
 		object->Release();
 	}
 
-    return TRUE;
+	return TRUE;
 }
