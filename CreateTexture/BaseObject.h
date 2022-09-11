@@ -21,7 +21,6 @@ private:
 	Texture* _pTexture = nullptr;
 
 public:
-
 	// 초기화
 	HRESULT Init();
 	// 프레임 계산
