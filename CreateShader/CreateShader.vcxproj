@@ -134,8 +134,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/Engine/"
-copy "*.hlsl" "../../Resource/Shader/"</Command>
+      <Command>copy "*.h" "../../Include/Engine"
+copy "*.hlsl" "../../Resource/Shader"</Command>
     </PostBuildEvent>
     <Lib>
       <OutputFile>$(OutDir)Engine.lib</OutputFile>
