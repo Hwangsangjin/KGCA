@@ -19,8 +19,8 @@ HRESULT BaseObject::Render()
     UINT offset = 0;
     _pImmediateContext->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
     _pImmediateContext->IASetInputLayout(_pInputLayout);
-    _pImmediateContext->VSSetShader(_pShader->GetVS(), NULL, 0);
-    _pImmediateContext->PSSetShader(_pShader->GetPS(), NULL, 0);
+    _pImmediateContext->VSSetShader(_pShader->_pVertexShader, NULL, 0);
+    _pImmediateContext->PSSetShader(_pShader->_pPixelShader, NULL, 0);
     _pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     _pImmediateContext->PSSetShaderResources(0, 1, &_pTexture->_pShaderResourceView);
 
@@ -126,8 +126,8 @@ HRESULT BaseObject::CreateInputLayout()
     UINT numElements = ARRAYSIZE(ied);
 
     // »ý¼º
-    HR(_pd3dDevice->CreateInputLayout(ied, numElements, _pShader->GetVSCode()->GetBufferPointer(),
-        _pShader->GetVSCode()->GetBufferSize(), &_pInputLayout));
+    HR(_pd3dDevice->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
+        _pShader->_pVertexShaderCode->GetBufferSize(), &_pInputLayout));
 
     return TRUE;
 }

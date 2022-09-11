@@ -94,18 +94,3 @@ HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 
     return hr;
 }
-
-ID3D11VertexShader* Shader::GetVS()
-{
-    return _pVertexShader;
-}
-
-ID3D11PixelShader* Shader::GetPS()
-{
-    return _pPixelShader;
-}
-
-ID3DBlob* Shader::GetVSCode()
-{
-    return _pVertexShaderCode;
-}

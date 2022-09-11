@@ -18,9 +18,9 @@ private:
 	ID3D11PixelShader* _pPixelShader = nullptr;
 	ID3DBlob* _pVertexShaderCode = nullptr;
 	ID3DBlob* _pPixelShaderCode = nullptr;
+	Texture* _pTexture = nullptr;
 
 public:
-	Texture* _pTexture = nullptr;
 
 	// √ ±‚»≠
 	HRESULT Init();
