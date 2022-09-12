@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Precompiled">
+      <UniqueIdentifier>{a704c924-11c1-46f2-83e6-6faadc5321c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{9c9c780e-4355-43fe-b2dd-b9105e81d60e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Device">
+      <UniqueIdentifier>{4056bd43-d005-480e-9d8c-4a887e5bbb4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Font">
+      <UniqueIdentifier>{7819a383-ad0d-4fa4-b9ef-16e7e8197ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Input">
+      <UniqueIdentifier>{587e86c5-51cb-421c-84b5-9088d48587ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Timer">
+      <UniqueIdentifier>{b186d36a-062d-4e52-9440-8eba4fe61a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Window">
+      <UniqueIdentifier>{272d3ac7-92f3-40e7-85d6-8c45ab589630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object">
+      <UniqueIdentifier>{9842626c-b095-4ffb-9746-d5c9a0dae55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object\Shader">
+      <UniqueIdentifier>{c6e8abb3-3a1b-4569-b94f-4d4a6ec6d2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object\Texture">
+      <UniqueIdentifier>{c73be6af-b366-47e6-b14a-6b09a1ede615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxState">
+      <UniqueIdentifier>{09f79972-6ff2-412c-a018-d28b1f32ef13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object\Collision">
+      <UniqueIdentifier>{6b88e66d-dca2-49f3-8411-eedac9a37732}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core.h">
+      <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePCH.h">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>소스 파일\Core\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\Core\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>소스 파일\Core\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>소스 파일\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>소스 파일\Core\Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>소스 파일\Core\Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>소스 파일\Core\Object\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>소스 파일\Core\Object\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>소스 파일\Core\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="DxState.h">
+      <Filter>소스 파일\Core\DxState</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>소스 파일\Core\Object\Collision</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePCH.cpp">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>소스 파일\Core\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Core\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>소스 파일\Core\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>소스 파일\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>소스 파일\Core\Object\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>소스 파일\Core\Object\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\Core\Object\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>소스 파일\Core\Object\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>소스 파일\Core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="DxState.cpp">
+      <Filter>소스 파일\Core\DxState</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>소스 파일\Core\Object\Collision</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader.hlsl">
+      <Filter>소스 파일\Core\Object\Shader</Filter>
+    </None>
+  </ItemGroup>
+</Project>
