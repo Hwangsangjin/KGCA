@@ -8,6 +8,8 @@ private:
 	POINT _pos{ 0, 0 };
 	std::vector<BaseObject*> _objects;
 
+	Player* _player = nullptr;
+
 public:
 	Sample() = default;
 	virtual ~Sample() = default;

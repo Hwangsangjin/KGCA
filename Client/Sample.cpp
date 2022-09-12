@@ -7,9 +7,13 @@ HRESULT Sample::Init()
 {
 	TEXTURE->Load(L"../../Resource/Ryan/Ryan.png");
 
-	BaseObject* pObject = new BaseObject;
-	pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Ryan/Ryan.png");
-	_objects.push_back(pObject);
+	_player = new Player;
+	_player->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Ryan/Ryan.png");
+	_player->SetRectangle({ 0, 0, 200, 200 });
+	_player->SetPosition({ 0, 0 });
+
+	_objects.push_back(_player);
+
 
 	return TRUE;
 }
