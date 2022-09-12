@@ -5,15 +5,16 @@ GAME_RUN(Client, 800, 600)
 
 HRESULT Sample::Init()
 {
-	TEXTURE->Load(L"../../Resource/Ryan/Ryan.png");
+	// 로드
+	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sheet.png");
 
-	_player = new Player;
-	_player->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Ryan/Ryan.png");
-	_player->SetRectangle({ 0, 0, 200, 200 });
-	_player->SetPosition({ 0, 0 });
-
+	// 플레이어
+	_player = new Player2D;
+	_player->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+	_player->SetRectangle({ 0, 265, 65, 65 });
+	_player->SetScale(3.0f, 3.0f);
+	_player->SetPosition({ rtClient.left - 0.0f, rtClient.bottom - 95.0f });
 	_objects.push_back(_player);
-
 
 	return TRUE;
 }
@@ -68,6 +69,7 @@ HRESULT Sample::Render()
 	{
 		object->Render();
 	}
+
 
 	return TRUE;
 }

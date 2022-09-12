@@ -6,9 +6,9 @@ class Sample : public Core
 {
 private:
 	POINT _pos{ 0, 0 };
-	std::vector<BaseObject*> _objects;
+	std::vector<Object*> _objects;
 
-	Player* _player = nullptr;
+	Player2D* _player = nullptr;
 
 public:
 	Sample() = default;
@@ -16,11 +16,11 @@ public:
 
 	// 초기화
 	virtual HRESULT Init() final;
-	// 프레임
+	// 프레임 계산
 	virtual HRESULT Frame() final;
 	// 렌더
 	virtual HRESULT Render() final;
-	// 릴리즈
+	// 메모리 해제
 	virtual HRESULT Release() final;
 };
 
