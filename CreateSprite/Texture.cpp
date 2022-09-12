@@ -18,7 +18,7 @@ HRESULT Texture::Render()
 
 HRESULT Texture::Release()
 {
-    SAFE_RELEASE(_pResource);
+    SAFE_RELEASE(_pTexture2D);
     SAFE_RELEASE(_pShaderResourceView);
 
     return TRUE;
@@ -36,7 +36,9 @@ HRESULT Texture::CreateTexture(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pI
     SetDevice(pd3dDevice, pImmediateContext);
 
     // 텍스처 생성
-    HR(DirectX::CreateWICTextureFromFile(pd3dDevice, pImmediateContext, texturefile.c_str(), &_pResource, &_pShaderResourceView));
+    HR(DirectX::CreateWICTextureFromFile(pd3dDevice, pImmediateContext, texturefile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView));
+
+    _pTexture2D->GetDesc(&_desc);
 
     return TRUE;
 }

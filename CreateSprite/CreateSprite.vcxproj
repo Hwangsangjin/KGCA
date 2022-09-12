@@ -161,7 +161,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="DxState.h" />
@@ -169,7 +169,9 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClInclude Include="Core.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Object2D.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player2D.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Texture.h" />
@@ -178,7 +180,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="DxState.cpp" />
@@ -186,12 +188,14 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Object2D.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Texture.cpp" />

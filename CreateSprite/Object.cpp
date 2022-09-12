@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "BaseObject.h"
+#include "Object.h"
 #include "ShaderManager.h"
 #include "TextureManager.h"
 
-HRESULT BaseObject::Init()
+HRESULT Object::Init()
 {
     return TRUE;
 }
 
-HRESULT BaseObject::Frame()
+HRESULT Object::Frame()
 {
     return TRUE;
 }
 
-HRESULT BaseObject::Render()
+HRESULT Object::Render()
 {
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
@@ -29,7 +29,7 @@ HRESULT BaseObject::Render()
     return TRUE;
 }
 
-HRESULT BaseObject::Release()
+HRESULT Object::Release()
 {
     SAFE_RELEASE(_pVertexBuffer);
     SAFE_RELEASE(_pInputLayout);
@@ -38,7 +38,7 @@ HRESULT BaseObject::Release()
     return TRUE;
 }
 
-HRESULT BaseObject::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+HRESULT Object::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
     _pd3dDevice = pd3dDevice;
     _pImmediateContext = pImmediateContext;
@@ -46,7 +46,7 @@ HRESULT BaseObject::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pIm
     return TRUE;
 }
 
-HRESULT BaseObject::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile)
+HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile)
 {
     HR(SetDevice(pd3dDevice, pImmediateContext));
     HR(CreateVertexBuffer());
@@ -57,30 +57,30 @@ HRESULT BaseObject::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     return TRUE;
 }
 
-HRESULT BaseObject::CreateVertexBuffer()
+HRESULT Object::CreateVertexBuffer()
 {
     _vertices.resize(6);
-    _vertices[0].position = Vector3{ -0.1f, 0.2f, 0.0f };
+    _vertices[0].position = Vector3{ -1.0f, 1.0f, 0.0f };
     _vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
     _vertices[0].uv = Vector2{ 0.0f, 0.0f };
 
-    _vertices[1].position = Vector3{ 0.1f, 0.2f , 0.0f };
+    _vertices[1].position = Vector3{ 1.0f, 1.0f , 0.0f };
     _vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
     _vertices[1].uv = Vector2{ 1.0f, 0.0f };
 
-    _vertices[2].position = Vector3{ -0.1f, -0.2f, 0.0f };
+    _vertices[2].position = Vector3{ -1.0f, -1.0f, 0.0f };
     _vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
     _vertices[2].uv = Vector2{ 0.0f, 1.0f };
 
-    _vertices[3].position = Vector3{ -0.1f, -0.2f, 0.0f };
+    _vertices[3].position = Vector3{ -1.0f, -1.0f, 0.0f };
     _vertices[3].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
     _vertices[3].uv = Vector2{ 0.0f, 1.0f };
 
-    _vertices[4].position = Vector3{ 0.1f, 0.2f, 0.0f };
+    _vertices[4].position = Vector3{ 1.0f, 1.0f, 0.0f };
     _vertices[4].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
     _vertices[4].uv = Vector2{ 1.0f, 0.0f };
 
-    _vertices[5].position = Vector3{ 0.1f, -0.2f, 0.0f };
+    _vertices[5].position = Vector3{ 1.0f, -1.0f, 0.0f };
     _vertices[5].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
     _vertices[5].uv = Vector2{ 1.0f, 1.0f };
     UINT size = _vertices.size();
@@ -103,7 +103,7 @@ HRESULT BaseObject::CreateVertexBuffer()
     return TRUE;
 }
 
-HRESULT BaseObject::CreateShader(std::wstring shaderFile)
+HRESULT Object::CreateShader(std::wstring shaderFile)
 {
     _pShader = SHADER->Load(shaderFile);
     if (_pShader)
@@ -114,7 +114,7 @@ HRESULT BaseObject::CreateShader(std::wstring shaderFile)
     return E_FAIL;
 }
 
-HRESULT BaseObject::CreateInputLayout()
+HRESULT Object::CreateInputLayout()
 {
     // Á¤ÀÇ
     D3D11_INPUT_ELEMENT_DESC ied[] =
@@ -132,7 +132,7 @@ HRESULT BaseObject::CreateInputLayout()
     return TRUE;
 }
 
-HRESULT BaseObject::CreateTexture(std::wstring textureFile)
+HRESULT Object::CreateTexture(std::wstring textureFile)
 {
     _pTexture = TEXTURE->Load(textureFile);
     if (_pTexture)
@@ -141,20 +141,4 @@ HRESULT BaseObject::CreateTexture(std::wstring textureFile)
     }
 
     return E_FAIL;
-}
-
-void Player::SetRectangle(Rect rect)
-{
-    _rect.x1 = rect.x1 / 400.0f;
-    _rect.x2 = rect.y1 / 300.0f;
-    _rect.w = rect.w / 400.0f;
-    _rect.h = rect.w / 300.0f;
-}
-
-void Player::SetPosition(Vector2 pos)
-{
-    _pos.x = (pos.x / rtClient.right) * 2.0f - 1.0f;
-    _pos.y = -((pos.y / rtClient.bottom) * 2.0f - 1.0f);
-    _size.x = (pos.x / rtClient.right) * 2.0f - 1.0f;
-    _size.y = -((pos.y / rtClient.bottom) * 2.0f - 1.0f);
 }

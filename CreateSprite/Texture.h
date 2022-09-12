@@ -4,9 +4,10 @@ class Texture
 private:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
+	ID3D11Texture2D* _pTexture2D = nullptr;
 
 public:
-	ID3D11Resource* _pResource = nullptr;
+	D3D11_TEXTURE2D_DESC _desc;
 	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
 
 	// √ ±‚»≠

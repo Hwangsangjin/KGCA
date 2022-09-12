@@ -5,7 +5,9 @@
 #include "Timer.h"
 #include "Font.h"
 #include "DxState.h"
-#include "BaseObject.h"
+#include "Object.h"
+#include "Object2D.h"
+#include "Player2D.h"
 #include "ShaderManager.h"
 #include "TextureManager.h"
 

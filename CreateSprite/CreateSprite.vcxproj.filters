@@ -65,9 +65,6 @@
     <ClInclude Include="Input.h">
       <Filter>소스 파일\Core\Input</Filter>
     </ClInclude>
-    <ClInclude Include="BaseObject.h">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>소스 파일\Core\Object\Shader</Filter>
     </ClInclude>
@@ -92,6 +89,15 @@
     <ClInclude Include="Collision.h">
       <Filter>소스 파일\Core\Object\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Object2D.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player2D.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -115,9 +121,6 @@
     <ClCompile Include="Input.cpp">
       <Filter>소스 파일\Core\Input</Filter>
     </ClCompile>
-    <ClCompile Include="BaseObject.cpp">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>소스 파일\Core\Object\Shader</Filter>
     </ClCompile>
@@ -138,6 +141,15 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>소스 파일\Core\Object\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Object2D.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2D.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -97,6 +97,10 @@ struct Rect
 };
 
 // define
+#define RESOLUTION_X 800
+#define RESOLUTION_Y 600
+#define HALF         2
+
 #define CORE
 #define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
 #define GAME_WINDOW(s,x,y)  Sample sample; sample.SetWindow(hInstance,L#s,x,y); sample.Run(); return 0;
@@ -135,3 +139,5 @@ public:								\
 
 #define SHADER				GET_SINGLE(ShaderManager)
 #define TEXTURE				GET_SINGLE(TextureManager)
+
+#define RANDSTEP(min, max)  (min+((float)max-(float)min)*rand()/(float)RAND_MAX)

@@ -3,9 +3,9 @@
 #include "Shader.h"
 #include "Texture.h"
 
-class BaseObject
+class Object
 {
-private:
+protected:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
@@ -22,13 +22,13 @@ private:
 
 public:
 	// 초기화
-	HRESULT Init();
+	virtual HRESULT Init();
 	// 프레임 계산
-	HRESULT Frame();
+	virtual HRESULT Frame();
 	// 렌더
-	HRESULT Render();
+	virtual HRESULT Render();
 	// 메모리 해제
-	HRESULT Release();
+	virtual HRESULT Release();
 
 	// 디바이스 설정
 	HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
@@ -45,19 +45,4 @@ public:
 	// 텍스처 생성
 	HRESULT CreateTexture(std::wstring textureFile);
 };
-
-class Player : public BaseObject
-{
-private:
-	Rect _rect;
-	Vector2 _pos;
-	Vector2 _size;
-	Texture* _pTexture;
-	POINT _image;
-
-public:
-	void SetRectangle(Rect rect);
-	void SetPosition(Vector2 pos);
-};
-
 
