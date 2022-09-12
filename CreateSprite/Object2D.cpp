@@ -12,14 +12,15 @@ void Object2D::SetRectangle(Rect rect)
     _image.x = _pTexture->_desc.Width;
     _image.y = _pTexture->_desc.Height;
 
-    // 90  -> 0 ~ 1
-    _uv.x1 = _rect.x1 / _image.x; // u
-    // 1
-    _uv.y1 = _rect.y1 / _image.y; // v
-    // 40
+    _uv.x1 = _rect.x1 / _image.x;
+    _uv.y1 = _rect.y1 / _image.y;
     _uv.w = _rect.w / _image.x;
-    // 60
     _uv.h = _rect.h / _image.y;
+}
+
+void Object2D::SetSpeed(float speed)
+{
+    _speed = speed;
 }
 
 void Object2D::SetScale(float x, float y)
@@ -65,6 +66,3 @@ void Object2D::UpdateVertexBuffer()
 
     _pImmediateContext->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
 }
-
-
-
