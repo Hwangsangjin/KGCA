@@ -45,6 +45,6 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
     //FLOAT MaxLOD;
 
     HR(pd3dDevice->CreateSamplerState(&sd, &_pDefaultSamplerState));
-
+    
     return TRUE;
 }

@@ -161,6 +161,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy2D.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
@@ -180,6 +181,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy2D.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />

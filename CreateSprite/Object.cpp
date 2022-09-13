@@ -13,7 +13,7 @@ HRESULT Object::Frame()
     return TRUE;
 }
 
-HRESULT Object::Render()
+HRESULT Object::PreRender()
 {
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
@@ -21,9 +21,21 @@ HRESULT Object::Render()
     _pImmediateContext->IASetInputLayout(_pInputLayout);
     _pImmediateContext->VSSetShader(_pShader->_pVertexShader, NULL, 0);
     _pImmediateContext->PSSetShader(_pShader->_pPixelShader, NULL, 0);
-    _pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     _pImmediateContext->PSSetShaderResources(0, 1, &_pTexture->_pShaderResourceView);
 
+    return TRUE;
+}
+
+HRESULT Object::Render()
+{
+    PreRender();
+    PostRender();
+
+    return TRUE;
+}
+
+HRESULT Object::PostRender()
+{
     _pImmediateContext->Draw(_vertices.size(), 0);
 
     return TRUE;
@@ -60,29 +72,26 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 HRESULT Object::CreateVertexBuffer()
 {
     _vertices.resize(6);
+
     _vertices[0].position = Vector3{ -1.0f, 1.0f, 0.0f };
     _vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
     _vertices[0].uv = Vector2{ 0.0f, 0.0f };
-
     _vertices[1].position = Vector3{ 1.0f, 1.0f , 0.0f };
     _vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
     _vertices[1].uv = Vector2{ 1.0f, 0.0f };
-
     _vertices[2].position = Vector3{ -1.0f, -1.0f, 0.0f };
     _vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
     _vertices[2].uv = Vector2{ 0.0f, 1.0f };
-
     _vertices[3].position = Vector3{ -1.0f, -1.0f, 0.0f };
     _vertices[3].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
     _vertices[3].uv = Vector2{ 0.0f, 1.0f };
-
     _vertices[4].position = Vector3{ 1.0f, 1.0f, 0.0f };
     _vertices[4].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
     _vertices[4].uv = Vector2{ 1.0f, 0.0f };
-
     _vertices[5].position = Vector3{ 1.0f, -1.0f, 0.0f };
     _vertices[5].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
     _vertices[5].uv = Vector2{ 1.0f, 1.0f };
+
     UINT size = _vertices.size();
 
     D3D11_BUFFER_DESC bd;

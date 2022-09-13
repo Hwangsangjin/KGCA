@@ -4,10 +4,10 @@
 HRESULT Core::CoreInit()
 {
 	HR(Device::Init());
+	HR(DxState::SetSamplerState(_pd3dDevice));
 	HR(_font.Init());
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer));
 	HR(_font.SetSurface(_pBackBuffer));
-	HR(DxState::SetSamplerState(_pd3dDevice));
 	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(TEXTURE->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(INPUT->Init());
@@ -45,9 +45,9 @@ HRESULT Core::CoreRender()
 {
 	CorePreRender();
 
+	Render();
 	_font.SetText(TIMER->GetText());
 	_font.Render();
-	Render();
 
 	CorePostRender();
 
@@ -64,7 +64,7 @@ HRESULT Core::CorePostRender()
 
 HRESULT Core::CoreRelease()
 {
-	SAFE_RELEASE(_pBackBuffer)
+	SAFE_RELEASE(_pBackBuffer);
 	Release();
 	_font.Release();
 	TIMER->Release();

@@ -13,12 +13,12 @@ protected:
 	ID3D11Buffer* _pVertexBuffer = nullptr;
 	ID3D11InputLayout* _pInputLayout = nullptr;
 
-	Shader* _pShader;
+	Texture* _pTexture = nullptr;
+	Shader* _pShader = nullptr;
 	ID3D11VertexShader* _pVertexShader = nullptr;
 	ID3D11PixelShader* _pPixelShader = nullptr;
 	ID3DBlob* _pVertexShaderCode = nullptr;
 	ID3DBlob* _pPixelShaderCode = nullptr;
-	Texture* _pTexture = nullptr;
 
 public:
 	// 초기화
@@ -26,7 +26,9 @@ public:
 	// 프레임 계산
 	virtual HRESULT Frame();
 	// 렌더
+	virtual HRESULT PreRender();
 	virtual HRESULT Render();
+	virtual HRESULT PostRender();
 	// 메모리 해제
 	virtual HRESULT Release();
 

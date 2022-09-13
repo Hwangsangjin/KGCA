@@ -18,7 +18,7 @@ HRESULT Font::Frame()
 
 HRESULT Font::Render()
 {
-    Draw(0, 0, _text, { 1, 1, 1, 1 });
+    Draw(0, 0, _text, { 1, 1, 0, 1 });
 
     return TRUE;
 }

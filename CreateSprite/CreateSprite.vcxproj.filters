@@ -98,6 +98,9 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Core\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy2D.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -149,6 +152,9 @@
       <Filter>소스 파일\Core\Object</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy2D.cpp">
       <Filter>소스 파일\Core\Object</Filter>
     </ClCompile>
   </ItemGroup>
