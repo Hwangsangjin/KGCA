@@ -6,7 +6,8 @@ GAME_RUN(Client, 800, 600)
 HRESULT Sample::Init()
 {
 	// 로드
-	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sheet.png");
+	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sprite.png");
+	Texture* pMaskTexture = TEXTURE->Load(L"../../Resource/Pikachu/Image/Mask.png");
 
 	// 하늘
 	for (size_t y = 0; y < 12; y++)
@@ -14,7 +15,7 @@ HRESULT Sample::Init()
 		for (size_t x = 0; x < 25; x++)
 		{
 			_sky = new Tile;
-			_sky->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+			_sky->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 			_sky->SetRectangle({ 156, 2, 16, 16 });
 			_sky->SetScale(4.0f, 4.0f);
 			_sky->SetPosition({ rtClient.left - 0.0f + x * 32, rtClient.bottom - 600.0f + y * 32 });
@@ -23,16 +24,20 @@ HRESULT Sample::Init()
 	}
 
 	// 구름
-	_cloud = new Cloud;
-	_cloud->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
-	_cloud->SetRectangle({ 101, 90, 45, 20 });
-	_cloud->SetScale(5.0f, 5.0f);
-	_cloud->SetPosition({ rtClient.left + 200.0f, rtClient.bottom - 500.0f });
-	AddObject(_cloud);
+	for (size_t i = 0; i < 10; i++)
+	{
+		_cloud = new Cloud;
+		_cloud->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+		_cloud->SetMask(pMaskTexture);
+		_cloud->SetRectangle({ 101, 90, 45, 20 });
+		_cloud->SetScale(RAND(3.0f, 5.0f), RAND(3.0f, 5.0f));
+		_cloud->SetPosition({ rtClient.left + RAND(0, 800), rtClient.top + RAND(0, 300) });
+		AddObject(_cloud);
+	}
 
 	// 산
 	_mountain = new Tile;
-	_mountain->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+	_mountain->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 	_mountain->SetRectangle({ 2, 200, 432, 64 });
 	_mountain->SetScale(3.7f, 3.5f);
 	_mountain->SetPosition({ rtClient.left - 0.0f, rtClient.bottom - 220.0f });
@@ -42,8 +47,7 @@ HRESULT Sample::Init()
 	for (size_t x = 0; x < 25; x++)
 	{
 		_ground = new Tile;
-		_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
-
+		_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 		_ground->SetRectangle({ 120, 2, 16, 16 });
 		_ground->SetScale(4.0f, 4.0f);
 		_ground->SetPosition({ rtClient.left - 0.0f + x * 32, rtClient.bottom - 110.0f });
@@ -53,7 +57,7 @@ HRESULT Sample::Init()
 	for (size_t x = 0; x < 25; x++)
 	{
 		_ground = new Tile;
-		_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+		_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 
 		if (x == 0)
 		{
@@ -83,8 +87,7 @@ HRESULT Sample::Init()
 		for (size_t x = 0; x < 27; x++)
 		{
 			_ground = new Tile;
-			_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
-
+			_ground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 			_ground->SetRectangle({ 138, 2, 16, 16 });
 			_ground->SetScale(4.0f, 4.0f);
 			_ground->SetPosition({ rtClient.left - 0.0f + x * 30, rtClient.bottom - 48.0f + y * 30 });
@@ -96,7 +99,7 @@ HRESULT Sample::Init()
 	for (size_t y = 0; y < 12; y++)
 	{
 		_net = new Tile;
-		_net->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+		_net->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 
 		if (y == 0)
 		{
@@ -119,8 +122,8 @@ HRESULT Sample::Init()
 	//for (size_t x = 0; x < 27; x++)
 	//{
 	//	_wave = new Wave;
-	//	_wave->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
-
+	//	_wave->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+	//  _wave->SetMask(pMaskTexture);
 	//	_wave->SetRectangle({ 70, 160, 16, 30 });
 	//	_wave->SetScale(4.0f, 4.0f);
 	//	_wave->SetPosition({ rtClient.left - 0.0f + x * 30, rtClient.bottom - 40.0f });
@@ -129,16 +132,18 @@ HRESULT Sample::Init()
 
 	// 플레이어
 	_player = new Player;
-	_player->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+	_player->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+	_player->SetMask(pMaskTexture);
 	_player->SetRectangle({ 2, 265, 65, 65 });
-	_player->SetSpeed(300.0f);
-	_player->SetScale(3.5f, 3.5f);
 	_player->SetPosition({ rtClient.left - 0.0f, rtClient.bottom - 170.0f });
+	_player->SetScale(3.5f, 3.5f);
+	_player->SetSpeed(300.0f);
 	AddObject(_player);
 
 	// 적
 	_enemy = new Enemy;
-	_enemy->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+	_enemy->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+	_enemy->SetMask(pMaskTexture);
 	_enemy->SetRectangle({ 2, 265, 65, 65 });
 	_enemy->SetSpeed(300.0f);
 	_enemy->SetScale(3.5f, 3.5f);
@@ -147,9 +152,10 @@ HRESULT Sample::Init()
 
 	// 공
 	_ball = new Ball;
-	_ball->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shader.hlsl", L"../../Resource/Pikachu/Image/Sheet.png");
+	_ball->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+	_ball->SetMask(pMaskTexture);
 	_ball->SetRectangle({ 88, 158, 40, 40 });
-	_ball->SetSpeed(300.0f);
+	_ball->SetSpeed(500.0f);
 	_ball->SetScale(3.5f, 3.5f);
 	_ball->SetPosition({ rtClient.left + 370.0f, rtClient.bottom - 400.0f });
 	AddObject(_ball);
@@ -173,6 +179,8 @@ HRESULT Sample::Render()
 {
 	for (auto& object : _objects)
 	{
+		_pImmediateContext->PSSetShaderResources(1, 1, &_player->_pMaskTexture->_pShaderResourceView);
+
 		object->Render();
 	}
 
@@ -215,8 +223,18 @@ HRESULT Sample::Release()
 {
 	for (auto& object : _objects)
 	{
-		object->Release();
+		SAFE_RELEASE(object);
 	}
+
+	SAFE_DELETE(_sky);
+	SAFE_DELETE(_mountain);
+	SAFE_DELETE(_ground);
+	SAFE_DELETE(_net);
+	SAFE_DELETE(_cloud);
+	//SAFE_DELETE(_wave);
+	SAFE_DELETE(_player);
+	SAFE_DELETE(_enemy);
+	SAFE_DELETE(_ball);
 
 	return TRUE;
 }
