@@ -12,15 +12,54 @@
     <Filter Include="소스 파일\Sample">
       <UniqueIdentifier>{f1920d7c-1bf2-4148-8e93-c7e72ebfdbdb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Sample\Object">
+      <UniqueIdentifier>{48c97aaa-ad3b-4e1b-87cd-c5ed8d822ca6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
       <Filter>소스 파일\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
       <Filter>소스 파일\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>소스 파일\Sample\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>소스 파일\Sample\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,22 +1,29 @@
 #pragma once
 
 #include "Core.h"
-#include "Object2D.h"
-#include "Player2D.h"
+#include "Tile.h"
+#include "Cloud.h"
+#include "Wave.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Ball.h"
 
 class Sample : public Core
 {
 private:
 	POINT _pos{ 0, 0 };
+
 	std::vector<Object*> _objects;
 
-	Object2D* _sky = nullptr;
-	Object2D* _mountain = nullptr;
-	Object2D* _cloud = nullptr;
-	Object2D* _ground = nullptr;
-	Object2D* _net = nullptr;
-	Player2D* _player = nullptr;
-	Object2D* _ball = nullptr;
+	Tile* _sky = nullptr;
+	Tile* _mountain = nullptr;
+	Tile* _ground = nullptr;
+	Tile* _net = nullptr;
+	Cloud* _cloud = nullptr;
+	Wave* _wave = nullptr;
+	Player* _player = nullptr;
+	Enemy* _enemy = nullptr;
+	Ball* _ball = nullptr;
 
 public:
 	Sample() = default;
@@ -31,7 +38,7 @@ public:
 	// 메모리 해제
 	virtual HRESULT Release() final;
 
-	// 게임 오브젝트 추가
+	// 오브젝트 추가
 	void AddObject(Object* object);
 };
 
