@@ -2,6 +2,7 @@
 
 int main()
 {
+	// ÆÄÀÏ
 	FILE* fp;
 	char str[20] = "empty";
 	int ch;
