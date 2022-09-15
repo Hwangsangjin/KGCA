@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../Include/Engine;../../Include/DirectXTK;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -149,6 +149,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Tile.h" />
