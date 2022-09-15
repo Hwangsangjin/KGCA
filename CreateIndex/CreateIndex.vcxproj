@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8a9f3c74-dfd9-4b25-a412-c4368d2054f7}</ProjectGuid>
-    <RootNamespace>CreateIndexBuffer</RootNamespace>
+    <ProjectGuid>{bdc9a6b3-11e9-4169-891f-c0efa23bc0fe}</ProjectGuid>
+    <RootNamespace>CreateIndex</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
