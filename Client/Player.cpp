@@ -5,28 +5,28 @@
 
 HRESULT Player::Frame()
 {
-    Vector2 pos = _pos;
+    Vector2 position = _position;
 
     if (INPUT->GetKey('W'))
     {
-        pos.y -= 1.0f * DELTA_TIME * _speed;
+        position.y -= 1.0f * DELTA_TIME * _speed;
     }
 
     if (INPUT->GetKey('A'))
     {
-        pos.x -= 1.0f * DELTA_TIME * _speed;
-        if (pos.x <= 0)
+        position.x -= 1.0f * DELTA_TIME * _speed;
+        if (position.x <= 0)
         {
-            pos.x = 0;
+            position.x = 0;
         }
     }
 
     if (INPUT->GetKey('D'))
     {
-        pos.x += 1.0f * DELTA_TIME * _speed;
-        if (pos.x + 110 >= RESOLUTION_X / HALF)
+        position.x += 1.0f * DELTA_TIME * _speed;
+        if (position.x + 110 >= RESOLUTION_X / HALF)
         {
-            pos.x = RESOLUTION_X / HALF - 110;
+            position.x = RESOLUTION_X / HALF - 110;
         }
     }
 
@@ -35,7 +35,7 @@ HRESULT Player::Frame()
 
     }
 
-    SetPosition(pos);
+    SetPosition(position);
 
     return TRUE;
 }
