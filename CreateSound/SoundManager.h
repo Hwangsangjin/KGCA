@@ -4,7 +4,7 @@
 
 class SoundManager
 {
-	DECLARE_SINGLE(SoundManager)
+    DECLARE_SINGLE(SoundManager);
 
 public:
     FMOD::System* _pSystem = nullptr;

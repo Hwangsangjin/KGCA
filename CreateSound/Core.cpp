@@ -48,8 +48,6 @@ HRESULT Core::CoreRender()
 	CorePreRender();
 
 	Render();
-	_font.SetText(TIMER->GetText());
-	_font.Render();
 
 	CorePostRender();
 

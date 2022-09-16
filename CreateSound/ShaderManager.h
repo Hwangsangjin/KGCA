@@ -4,7 +4,7 @@
 
 class ShaderManager
 {
-	DECLARE_SINGLE(ShaderManager)
+	DECLARE_SINGLE(ShaderManager);
 
 private:
 	ID3D11Device* _pd3dDevice = nullptr;

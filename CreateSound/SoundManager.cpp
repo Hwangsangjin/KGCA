@@ -110,19 +110,12 @@ void SoundManager::LoadAll(std::wstring path)
 
 Sound* SoundManager::GetPtr(W_STR filename)
 {
-    /*for (auto& sound : _sounds)
+    for (auto& sound : _sounds)
     {
         if (sound.first == filename)
         {
             return sound.second;
         }
-    }*/
-
-    auto iter = _sounds.find(filename);
-    if (iter != _sounds.end())
-    {
-        Sound* pSound = iter->second;
-        return pSound;
     }
 
     return nullptr;

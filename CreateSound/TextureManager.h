@@ -4,7 +4,7 @@
 
 class TextureManager
 {
-	DECLARE_SINGLE(TextureManager)
+	DECLARE_SINGLE(TextureManager);
 
 private:
 	ID3D11Device* _pd3dDevice = nullptr;

@@ -22,6 +22,7 @@
 #include <codecvt>
 #include <tchar.h>
 #include <io.h>
+
 // lib
 #pragma comment (lib, "d3d11")
 #pragma comment (lib, "dxgi")
@@ -65,50 +66,46 @@ struct Vertex
 
 struct Rect
 {
-    float  x1;
-    float  y1;
-    float  w;
-    float  h;
-    float  x2;//x+w
-    float  y2;//y+h
-    float  cx;
-    float  cy;
-    bool   operator == (Rect& dest)
-    {
-        if (fabs(x1 - dest.x1) < FLT_EPSILON)
-        {
-            if (fabs(y1 - dest.y1) < FLT_EPSILON)
-            {
-                if (fabs(w - dest.w) < FLT_EPSILON)
-                {
-                    if (fabs(h - dest.h) < FLT_EPSILON)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
+	float x;
+	float y;
+	float w;
+	float h;
+	Vector2 center;
 
-        return false;
-    }
+	bool operator == (Rect& dest)
+	{
+		if (fabs(x - dest.x) < FLT_EPSILON)
+		{
+			if (fabs(y - dest.y) < FLT_EPSILON)
+			{
+				if (fabs(w - dest.w) < FLT_EPSILON)
+				{
+					if (fabs(h - dest.h) < FLT_EPSILON)
+					{
+						return true;
+					}
+				}
+			}
+		}
 
-    Rect() = default;
-    Rect(float x, float y, float z, float w)
-    {
-        Set(x, y, z, w);
-    }
+		return false;
+	}
 
-    void Set(float x, float y, float z, float w)
-    {
-        this->x1 = x;
-        this->y1 = y;
-        this->w = z;
-        this->h = w;
-        x2 = x + w;
-        y2 = y + h;
-        cx = (x + x2) / 2.0f;
-        cy = (y + y2) / 2.0f;
-    }
+	Rect() {}
+	Rect(float x, float y, float w, float h)
+	{
+		Set(x, y, w, h);
+	}
+
+	void  Set(float x, float y, float w, float h)
+	{
+		this->x = x;
+		this->y = y;
+		this->w = w;
+		this->h = h;
+		this->center.x = w / 2.0f;
+		this->center.y = h / 2.0f;
+	}
 };
 
 // String Convert

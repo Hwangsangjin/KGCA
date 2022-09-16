@@ -6,10 +6,10 @@ COLLISION_TYPE Collision::RectToRect(Rect& a, Rect& b)
     float minX;   float minY;
     float maxX;   float maxY;
 
-    minX = a.x1 < b.x1 ? a.x1 : b.x1;
-    minY = a.y1 < b.y1 ? a.y1 : b.y1;
-    maxX = a.x2 > b.x2 ? a.x2 : b.x2;
-    maxY = a.y2 > b.y2 ? a.y2 : b.y2;
+    minX = a.x < b.x ? a.x : b.x;
+    minY = a.y < b.y ? a.y : b.y;
+    maxX = a.w > b.w ? a.w : b.w;
+    maxY = a.h > b.h ? a.h : b.h;
 
     //  가로 판정
     if ((a.w + b.w) >= (maxX - minX))
@@ -18,14 +18,15 @@ COLLISION_TYPE Collision::RectToRect(Rect& a, Rect& b)
         if ((a.h + b.h) >= (maxY - minY))
         {
             // 교집합
-            float x, y, x2, y2;
+            float x, y, w, h;
             Rect intersect;
 
-            x = a.x1 > b.x1 ? a.x1 : b.y1;
-            y = a.y1 > b.y1 ? a.y1 : b.y1;
-            x2 = a.x2 < b.x2 ? a.x2 : b.x2;
-            y2 = a.y2 < b.y2 ? a.y2 : b.y2;
-            intersect.Set(x, y, x2 - x, y2 - y);
+            x = a.x > b.x ? a.x : b.y;
+            y = a.y > b.y ? a.y : b.y;
+            w = a.w < b.w ? a.w : b.w;
+            h = a.h < b.h ? a.h : b.h;
+
+            intersect.Set(x, y, w, h);
 
             if (intersect == a || intersect == b)
             {
@@ -41,13 +42,13 @@ COLLISION_TYPE Collision::RectToRect(Rect& a, Rect& b)
 
 bool Collision::RectToInRect(Rect& a, Rect& b)
 {
-    if (a.x1 <= b.x1)
+    if (a.x <= b.x)
     {
-        if ((a.x1 + a.w) >= b.x1 + b.w)
+        if ((a.x + a.w) >= b.x + b.w)
         {
-            if (a.y1 <= b.y1)
+            if (a.y <= b.y)
             {
-                if ((a.y1 + a.h) >= b.y1 + b.h)
+                if ((a.y + a.h) >= b.y + b.h)
                 {
                     return true;
                 }
