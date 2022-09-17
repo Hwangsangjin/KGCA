@@ -392,12 +392,105 @@ public:
 	}
 };
 
+// 최초 설계자 코드
+class Interface
+{
+public:
+	Interface()
+	{
+		cout << "Interface()" << endl;
+	}
+
+	// 선언만 있고 정의는 없는 순수 가상 함수
+	virtual int GetData() const abstract;
+	virtual void SetData(int data) abstract;
+};
+
+// 후기 개발자 코드
+class CData : public Interface
+{
+private:
+	int _data = 0;
+
+public:
+	CData()
+	{
+		cout << "CData()" << endl;
+	}
+
+	// 순수 가상 함수는 파생 클래스에서 '반드시' 정의해야 한다.
+	virtual int GetData() const
+	{
+		return _data;
+	}
+
+	virtual void SetData(int data)
+	{
+		_data = data;
+	}
+};
+
+// 초기 제작자의 코드
+class Object
+{
+protected:
+	int _deviceID = 0;
+
+public:
+	Object() {}
+	virtual ~Object() {}
+
+	// 모든 파생 클래스는 이 메서드를 가졌다고 가정할 수 있다.
+	virtual int GetDeviceID() abstract;
+};
+
+// 초기 제작자가 만든 함수
+void PrintID(Object* pObject)
+{
+	// 실제로 어떤 것일지는 모르지만 그래도 ID는 출력할 수 있다!
+	cout << "Device ID: " << pObject->GetDeviceID() << endl;
+}
+
+// 후기 제작자의 코드
+class TV : public Object
+{
+public:
+	TV(int id)
+	{
+		_deviceID = id;
+	}
+
+	virtual int GetDeviceID()
+	{
+		cout << "TV::GetDeivceID()" << endl;
+		return _deviceID;
+	}
+};
+
+class Phone : public Object
+{
+public:
+	Phone(int id)
+	{
+		_deviceID = id;
+	}
+
+	virtual int GetDeviceID()
+	{
+		cout << "Phone::GetDeivceID()" << endl;
+		return _deviceID;
+	}
+};
+
 // 사용자 코드
 int main()
 {
-	Data* pData = new DataEx;
-	pData->TestFunc2();
-	delete pData;
+	TV a(5);
+	Phone b(10);
+
+	// 실제 객체가 무엇이든 알아서 자신의 ID를 출력한다.
+	::PrintID(&a);
+	::PrintID(&b);
 
     return 0;
 }
