@@ -1,11 +1,12 @@
 #include <iostream>
+
 using namespace std;
 
 class Str
 {
 private:
 	// 문자열을 저장하기 위해 동적 할당한 메모리를 가리키는 포인터
-	char* _str;
+	char* _data;
 
 	// 저장된 문자열의 길이
 	int _length;
@@ -13,14 +14,14 @@ private:
 public:
 	// 기본 생성자
 	Str()
-		: _str(nullptr)
+		: _data(nullptr)
 		, _length(0)
 	{
 	}
 
 	// 변환 생성자
 	explicit Str(const char* str)
-		: _str(nullptr)
+		: _data(nullptr)
 		, _length(0)
 	{
 		SetString(str);
@@ -28,7 +29,7 @@ public:
 
 	// 복사 생성자
 	Str(const Str& rhs)
-		: _str(nullptr)
+		: _data(nullptr)
 		, _length(0)
 	{
 		this->SetString(rhs.GetString());
@@ -36,19 +37,19 @@ public:
 
 	// 이동 생성자
 	Str(Str&& rhs)
-		: _str(nullptr)
+		: _data(nullptr)
 		, _length(0)
 	{
 		cout << "Str 이동 생성자 호출" << endl;
 
 		// 얕은 복사를 수행해도 상관없다.
 		// 어차피 원본이 곧 소멸되기 때문이다!
-		_str = rhs._str;
+		_data = rhs._data;
 		_length = rhs._length;
 
 		// 원본 임시 객체의 멤버들은 초기화한다.
 		// 절대로 해제하면 안 된다.
-		rhs._str = nullptr;
+		rhs._data = nullptr;
 		rhs._length = 0;
 	}
 
@@ -57,6 +58,11 @@ public:
 	{
 		// 객체가 소멸하기 전에 메모리를 해제한다.
 		Release();
+	}
+
+	virtual void OnSetString(const char* data, int length)
+	{
+		// 아무런 코드도 추가하지 않는다.
 	}
 
 	int SetString(const char* str)
@@ -80,11 +86,14 @@ public:
 		}
 
 		// 문자열의 끝인 NULL 문자를 고려해 메모리를 할당한다.
-		_str = new char[length + 1];
+		_data = new char[length + 1];
 
 		// 새로 할당한 메모리에 문자열을 저장한다.
-		strcpy_s(_str, sizeof(char) * (length + 1), str);
+		strcpy_s(_data, sizeof(char) * (length + 1), str);
 		_length = length;
+
+		// 미래를 호출한다!
+		OnSetString(_data, _length);
 
 		// 문자열의 길이를 반환한다.
 		return length;
@@ -93,19 +102,115 @@ public:
 	// 멤버 읽기만 수행하므로 메서드를 상수화한다.
 	const char* GetString() const
 	{
-		return _str;
+		return _data;
 	}
 
 	void Release()
 	{
 		// 이 함수가 여러 번 호출될 경우를 고려해 주요 멤버를 초기화한다.
-		if (_str != nullptr)
+		if (_data != nullptr)
 		{
-			delete[] _str;
+			delete[] _data;
 		}
 
-		_str = nullptr;
+		_data = nullptr;
 		_length = 0;
+	}
+
+	int GetLength() const
+	{
+		return _length;
+	}
+
+	int Append(const char* str)
+	{
+		//매개변수 유효성 검사
+		if (str == nullptr)
+		{
+			return 0;
+		}
+
+		int length = strlen(str);
+		if (length == 0)
+		{
+			return 0;
+		}
+
+		// 세트된 문자열이 없다면 새로 문자열을 할당한 것과 동일하게 처리.
+		if (str == nullptr)
+		{
+			SetString(str);
+			return _length;
+		}
+
+		// 현재 문자열의 길이 백업.
+		int currentLength = _length;
+
+		// 두 문자열을 합쳐서 저장할 수 있는 메모리를 새로 할당.
+		char* result = new char[currentLength + length + 1];
+
+		// 문자열 조합
+		strcpy_s(result,
+			sizeof(char) * (currentLength + 1), _data);
+		strcpy_s(result + (sizeof(char) * currentLength),
+			sizeof(char) * (length + 1), str);
+
+		// 기존 문자열 삭제 및 멤버 정보 갱신
+		Release();
+
+		_data = result;
+		_length = currentLength + length;
+
+		return _length;
+	}
+
+	Str operator+(const Str& rhs)
+	{
+		Str result(_data);
+		result.Append(rhs.GetString());
+
+		return result;
+	}
+
+	Str& operator+=(const Str& rhs)
+	{
+		Append(rhs.GetString());
+
+		return *this;
+	}
+
+	char& operator[](int index)
+	{
+		return _data[index];
+	}
+
+	char operator[](int index) const
+	{
+		return _data[index];
+	}
+
+	int operator==(const Str& rhs)
+	{
+		if (_data != nullptr && rhs._data != nullptr)
+		{
+			if (strcmp(_data, rhs._data) == 0)
+			{
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+
+	int operator!=(const Str& rhs)
+	{
+		if (_data != nullptr && rhs._data != nullptr)
+		{
+			if (strcmp(_data, rhs._data) == 0)
+			{
+				return 0;
+			}
+		}
 	}
 
 	Str& operator=(const Str& rhs)
@@ -121,59 +226,178 @@ public:
 
 	operator char* () const
 	{
-		return _str;
+		return _data;
 	}
 };
 
-Str TestStr()
-{
-	Str str("TestStr() return");
-	cout << str << endl;
-	return str;
-}
-
-// 제작자 - 초기 개발자
-class Data
-{
-private:	// 누구도 접근 불가능
-	int _data = 0;
-
-protected:	// 파생 클래스만 접근 가능
-	void PrintData() { cout << "Data::PrintData()" << endl; }
-
-public:		// 누구나 접근 가능
-	Data() { cout << "Data()" << endl; }
-
-	int GetData() const { return _data; }
-	void SetData(int data) { _data = data; }
-};
-
-// 제작자 - 후기 개발자
-class DataEx : public Data
+class StrEx : public Str
 {
 public:
-	DataEx() { cout << "DataEx()" << endl; }
+	StrEx() = default;
+	StrEx(const char* data)
+		: Str(data)
+	{
+	}
+	~StrEx() = default;
+
+	int Find(const char* param)
+	{
+		if (param == nullptr || GetString() == nullptr)
+		{
+			return -1;
+		}
+
+		const char* result = strstr(GetString(), param);
+		if (result != nullptr)
+		{
+			return result - GetString();
+		}
+
+		return -1;
+	}
+
+	void OnSetString(char* data, int length)
+	{
+		if (strcmp(data, "멍멍이아들") == 0)
+		{
+			strcpy_s(data,
+				sizeof(char) * (length + 1), "*착한사람*");
+		}
+	}
+
+	int SetString(const char* param)
+	{
+		int result;
+
+		if (strcmp(param, "멍멍이아들") == 0)
+		{
+			result = Str::SetString("착한사람");
+		}
+		else
+		{
+			result = Str::SetString(param);
+		}
+
+		return result;
+	}
+};
+
+// 제작자 코드
+class Data
+{
+private:
+	char* _pszData;
+
+public:
+	Data()
+	{
+		cout << "Data()" << endl;
+		_pszData = new char[32];
+	}
+
+	virtual ~Data()
+	{
+		cout << "~Data()" << endl;
+		delete _pszData;
+	}
+
+	virtual void TestFunc1() {}
+	virtual void TestFunc2() {}
+
+	// 가상 함수로 선언 및 정의했다.
+	virtual void PrintData()
+	{
+		cout << "Data: " << _pszData << endl;
+	}
 
 	void TestFunc()
 	{
-		// 기본 형식 멤버에 접근
+		cout << "-TestFunc()-" << endl;
+
+		// 실 형식의 함수가 호출된디.
 		PrintData();
-		SetData(5);
-		cout << Data::GetData() << endl;
+		cout << "-----" << endl;
 	}
 };
 
-// 사용자
+class DataEx : public Data
+{
+private:
+	int* _pnData;
+public:
+	DataEx()
+	{
+		cout << "~DataEx()" << endl;
+		_pnData = new int;
+	}
+
+	~DataEx()
+	{
+		cout << "~DataEx()" << endl;
+		delete _pnData;
+	}
+
+	virtual void TestFunc1() {}
+	virtual void TestFunc2()
+	{
+		cout << "TestFunc2()" << endl;
+	}
+};
+
+class DataA
+{
+protected:
+	char* _data;
+
+public:
+	DataA()
+	{
+		cout << "DataA()" << endl;
+		_data = new char[32];
+
+	}
+	~DataA()
+	{
+		cout << "~DataA()" << endl;
+		delete _data;
+	}
+};
+
+class DataB : public DataA
+{
+public:
+	DataB()
+	{
+		cout << "DataB()" << endl;
+	}
+	~DataB()
+	{
+		cout << "~DataB()" << endl;
+	}
+};
+
+class DataC : public DataB
+{
+public:
+	DataC()
+	{
+		cout << "DataC()" << endl;
+	}
+	~DataC()
+	{
+		cout << "~DataC()" << endl;
+
+		// 파생 클래스에서 부모 클래스 멤버 메모리를 해제했다.
+		delete _data;
+	}
+};
+
+// 사용자 코드
 int main()
 {
-	DataEx data;
-
-	// 기본 클래스(Data) 멤버에 접근
-	data.SetData(10);
-	cout << data.GetData() << endl;
-
-	// 파생 클래스(DataEx) 멤버에 접근
-	data.TestFunc();
+	Data* pData = new DataEx;
+	pData->TestFunc2();
+	delete pData;
 
     return 0;
 }
