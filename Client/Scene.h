@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Camera.h"
 #include "Core.h"
+#include "Camera.h"
+#include "Background.h"
 #include "Map.h"
 #include "Tile.h"
 #include "Cloud.h"
@@ -26,6 +27,7 @@ protected:
 	Sound* _pEffect7 = nullptr;
 
 	Camera* _pCamera = nullptr;
+	Background* _pBackground = nullptr;
 	Map* _pMap = nullptr;
 	Tile* _pSky = nullptr;
 	Tile* _pMountain = nullptr;

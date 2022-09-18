@@ -12,13 +12,23 @@ HRESULT Title::Init()
 	// 텍스처
 	TEXTURE->Load(L"../../Resource/Pikachu/Image/Title.png");
 
-	// 맵
-	_pMap = new Map;
-	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Title.png");
-	_pMap->SetRect({ 0, 0, 800, 600 });
-	_pMap->SetScale(2.0f, 2.0f);
-	_pMap->SetPosition({ rtClient.right / 2.0f, rtClient.bottom / 2.0f });
-	AddObject(_pMap);
+	// 배경
+	for (size_t y = 0; y < 5; y++)
+	{
+		for (size_t x = 0; x < 5; x++)
+		{
+			_pBackground = new Background;
+			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Title.png");
+			_pBackground->SetRect({ 0, 0, 104, 104 });
+			_pBackground->SetPosition({ x * 208.0f, y * 208.0f });
+			_pBackground->SetScale(4.0f, 4.0f);
+			_pBackground->SetSpeed(100.0f);
+			_pBackground->SetUV();
+			_pBackground->SetNormalize();
+			_pBackground->SetVertexBuffer();
+			AddObject(_pBackground);
+		}
+	}
 
     return TRUE;
 }
