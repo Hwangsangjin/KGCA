@@ -228,7 +228,17 @@ public:
 	{
 		return _data;
 	}
+
+	friend Str operator+(const char* data, const Str& str);
 };
+
+Str operator+(const char* data, const Str& str)
+{
+	Str result(data);
+	result.Append(str._data);
+
+	return result;
+}
 
 class StrEx : public Str
 {
@@ -286,211 +296,213 @@ public:
 class Data
 {
 private:
-	char* _pszData;
-
-public:
-	Data()
-	{
-		cout << "Data()" << endl;
-		_pszData = new char[32];
-	}
-
-	virtual ~Data()
-	{
-		cout << "~Data()" << endl;
-		delete _pszData;
-	}
-
-	virtual void TestFunc1() {}
-	virtual void TestFunc2() {}
-
-	// 가상 함수로 선언 및 정의했다.
-	virtual void PrintData()
-	{
-		cout << "Data: " << _pszData << endl;
-	}
-
-	void TestFunc()
-	{
-		cout << "-TestFunc()-" << endl;
-
-		// 실 형식의 함수가 호출된디.
-		PrintData();
-		cout << "-----" << endl;
-	}
-};
-
-class DataEx : public Data
-{
-private:
-	int* _pnData;
-public:
-	DataEx()
-	{
-		cout << "~DataEx()" << endl;
-		_pnData = new int;
-	}
-
-	~DataEx()
-	{
-		cout << "~DataEx()" << endl;
-		delete _pnData;
-	}
-
-	virtual void TestFunc1() {}
-	virtual void TestFunc2()
-	{
-		cout << "TestFunc2()" << endl;
-	}
-};
-
-class DataA
-{
-protected:
-	char* _data;
-
-public:
-	DataA()
-	{
-		cout << "DataA()" << endl;
-		_data = new char[32];
-
-	}
-	~DataA()
-	{
-		cout << "~DataA()" << endl;
-		delete _data;
-	}
-};
-
-class DataB : public DataA
-{
-public:
-	DataB()
-	{
-		cout << "DataB()" << endl;
-	}
-	~DataB()
-	{
-		cout << "~DataB()" << endl;
-	}
-};
-
-class DataC : public DataB
-{
-public:
-	DataC()
-	{
-		cout << "DataC()" << endl;
-	}
-	~DataC()
-	{
-		cout << "~DataC()" << endl;
-
-		// 파생 클래스에서 부모 클래스 멤버 메모리를 해제했다.
-		delete _data;
-	}
-};
-
-// 최초 설계자 코드
-class Interface
-{
-public:
-	Interface()
-	{
-		cout << "Interface()" << endl;
-	}
-
-	// 선언만 있고 정의는 없는 순수 가상 함수
-	virtual int GetData() const abstract;
-	virtual void SetData(int data) abstract;
-};
-
-// 후기 개발자 코드
-class CData : public Interface
-{
-private:
 	int _data = 0;
 
 public:
-	CData()
+	Data() {}
+	Data(int data) : _data(data) {}
+	virtual ~Data() {}
+	void SetData(int data) { _data = data; }
+	int GetData() { return _data; }
+
+	// friend 함수로 선언한다.
+	friend void PrintData(const Data&);
+
+	Data operator+(const Data& rhs)
 	{
-		cout << "CData()" << endl;
+		return Data(_data + rhs._data);
 	}
 
-	// 순수 가상 함수는 파생 클래스에서 '반드시' 정의해야 한다.
-	virtual int GetData() const
+	Data& operator=(const Data& rhs)
 	{
-		return _data;
+		_data = rhs._data;
+
+		return *this;
 	}
 
-	virtual void SetData(int data)
-	{
-		_data = data;
-	}
+	operator int() { return _data; }
 };
 
-// 초기 제작자의 코드
-class Object
+void PrintData(const Data& rhs)
 {
-protected:
-	int _deviceID = 0;
-
-public:
-	Object() {}
-	virtual ~Object() {}
-
-	// 모든 파생 클래스는 이 메서드를 가졌다고 가정할 수 있다.
-	virtual int GetDeviceID() abstract;
-};
-
-// 초기 제작자가 만든 함수
-void PrintID(Object* pObject)
-{
-	// 실제로 어떤 것일지는 모르지만 그래도 ID는 출력할 수 있다!
-	cout << "Device ID: " << pObject->GetDeviceID() << endl;
+	// 프렌드 함수이므로 접근 제어 지시자의 영향을 받지 않고
+	// private 멤버에 직접 접근한다.
+	cout << "PrintData(): " << rhs._data << endl;
 }
 
-// 후기 제작자의 코드
-class TV : public Object
+class DataEx : public Data
 {
 public:
-	TV(int id)
+	DataEx(int data) : Data(data) {}
+
+	// 인터페이스를 맞춰주기 의한 연산자 다중 정의
+	using Data::operator+;
+	using Data::operator=;
+
+	DataEx operator+(const DataEx& rhs)
 	{
-		_deviceID = id;
+		return DataEx(static_cast<int>(Data::operator+(rhs)));
 	}
 
-	virtual int GetDeviceID()
+	void SetData(int data)
 	{
-		cout << "TV::GetDeivceID()" << endl;
-		return _deviceID;
+		if (data > 10) data = 10;
+
+		Data::SetData(data);
 	}
 };
 
-class Phone : public Object
+class USB
 {
 public:
-	Phone(int id)
-	{
-		_deviceID = id;
-	}
+	virtual int GetUsbVersion() abstract;
+	virtual int GetTransferRate() abstract;
+};
 
-	virtual int GetDeviceID()
+class Serial
+{
+public:
+	virtual int GetSignal() abstract;
+	virtual int GetRate() abstract;
+};
+
+class Device
+	: public USB
+	, public Serial
+{
+public:
+	// USB 인터페이스
+	virtual int GetUsbVersion() { return 0; }
+	virtual int GetTransferRate() { return 0; }
+
+	// 시리얼 인터페이스
+	virtual int GetSignal() { return 0; }
+	virtual int GetRate() { return 0; }
+};
+
+class Node
+{
+private:
+	// 단일 연결 리스트로 관리할 데이터
+	char _name[32];
+	Node* pNext = nullptr;
+
+	// friend 클래스 선언
+	friend class List;
+
+public:
+	explicit Node(const char* name)
 	{
-		cout << "Phone::GetDeivceID()" << endl;
-		return _deviceID;
+		strcpy_s(_name, sizeof(_name), name);
 	}
 };
 
-// 사용자 코드
+class List
+{
+private:
+	Node _head;
+
+public:
+	List()
+		: _head("Dummy Head")
+	{}
+	~List()
+	{
+		// 리스트에 담긴 데이터들을 모두 출력하고 삭제
+		Node* pNode = _head.pNext;
+		Node* pDelete = nullptr;
+
+		while (pNode)
+		{
+			pDelete = pNode;
+			pNode = pNode->pNext;
+			delete pDelete;
+		}
+
+		_head.pNext = nullptr;
+	}
+
+	// 리스트에 새로운 노드를 추가
+	void AddNewNode(const char* name)
+	{
+		Node* pNode = new Node(name);
+
+		pNode->pNext = _head.pNext;
+		_head.pNext = pNode;
+	}
+
+	// 리스트의 모든 노드 값을 출력
+	void Print()
+	{
+		Node* pNode = _head.pNext;
+		while (pNode)
+		{
+			cout << pNode->_name << endl;
+			pNode = pNode->pNext;
+		}
+	}
+};
+
+// UI 클래스
+class UI
+{
+private:
+	// UI 클래스 내부에 자료구조 객체에 대한 참조만 존재한다.
+	List& _list;
+
+public:
+	// 참조 멤버는 반드시 초기화 목록을 이용해 초기화해야 한다.
+	UI(List& list)
+		: _list(list)
+	{}
+
+	// 메뉴 출력 및 사용자 입력을 확인한다.
+	int PrintMenu()
+	{
+		system("cls");
+		cout << "[1]Add\t" << "[2]Print\t" << "[0]Exit\n:";
+		cout.flush();
+		int input = 0;
+		cin >> input;
+
+		return input;
+	}
+
+	// 지속적으로 메뉴를 출력하는 메인 이벤트 반복문
+	void Run()
+	{
+		char name[32];
+		int input = 0;
+
+		while ((input = PrintMenu()) > 0)
+		{
+			switch (input)
+			{
+			case 1:	// Add
+				cout << "이름: ";
+				cout.flush();
+				cin >> name;
+				_list.AddNewNode(name);
+				break;
+				
+			case 2:	// Print
+				_list.Print();
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+};
+
+// 프로그램 시작
 int main()
 {
-	TV a(5);
-	Phone b(10);
-
-	// 실제 객체가 무엇이든 알아서 자신의 ID를 출력한다.
-	::PrintID(&a);
-	::PrintID(&b);
+	// 자료구조와 UI 객체를 별도로 선언하고 연결한다.
+	List list;
+	UI ui(list);
+	ui.Run();
 
     return 0;
 }
