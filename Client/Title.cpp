@@ -38,9 +38,9 @@ HRESULT Title::Init()
 	_pBattleText->SetMask(pMaskTexture);
 	_pBattleText->SetUV({ 255, 725, 155, 155 });
 	_pBattleText->SetRect({ 255, 725, 155, 155 });
-	_pBattleText->SetPosition({ 100.0f, 50.0f });
+	_pBattleText->SetPosition({ 50.0f, 0.0f });
 	_pBattleText->SetScale(2.0f, 2.0f);
-	_pBattleText->SetSpeed(50.0f);
+	_pBattleText->SetSpeed(5.0f);
 	_pBattleText->SetNormalize();
 	_pBattleText->SetVertexBuffer();
 	AddObject(_pBattleText);
