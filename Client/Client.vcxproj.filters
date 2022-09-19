@@ -53,9 +53,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Sample\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일\Sample\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>소스 파일\Sample\Object</Filter>
     </ClCompile>
@@ -93,9 +90,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Sample\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>소스 파일\Sample\Object</Filter>
     </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>소스 파일\Sample\Object</Filter>

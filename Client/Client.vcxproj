@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="InGame.cpp" />
@@ -163,7 +162,6 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="InGame.h" />

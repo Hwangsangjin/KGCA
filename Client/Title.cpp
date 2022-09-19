@@ -13,17 +13,17 @@ HRESULT Title::Init()
 	TEXTURE->Load(L"../../Resource/Pikachu/Image/Title.png");
 
 	// ¹è°æ
-	for (size_t y = 0; y < 5; y++)
+	for (size_t y = 0; y < 10; y++)
 	{
-		for (size_t x = 0; x < 5; x++)
+		for (size_t x = 0; x < 10; x++)
 		{
 			_pBackground = new Background;
 			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Title.png");
+			_pBackground->SetUV({ 0, 0, 104, 104 });
 			_pBackground->SetRect({ 0, 0, 104, 104 });
-			_pBackground->SetPosition({ x * 208.0f, y * 208.0f });
+			_pBackground->SetPosition({ x * 200.0f, y * 200.0f });
 			_pBackground->SetScale(4.0f, 4.0f);
-			_pBackground->SetSpeed(100.0f);
-			_pBackground->SetUV();
+			_pBackground->SetSpeed(140.0f);
 			_pBackground->SetNormalize();
 			_pBackground->SetVertexBuffer();
 			AddObject(_pBackground);
