@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Object.h"
+#include "Collision.h"
 
 class Object2D : public Object
 {
 protected:
 	float _speed;
+	Rect _collision;
 	Rect _rect;
 	Rect _uv;
 	Vector2 _direction;
@@ -13,6 +15,7 @@ protected:
 	Vector2	_drawPosition;
 	Vector2	_drawSize;
 	Vector2 _imageSize;
+	Vector2 _pixelSize;
 
 public:
 	Texture* _pMaskTexture = nullptr;

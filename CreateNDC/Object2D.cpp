@@ -16,8 +16,11 @@ void Object2D::SetUV(Rect rect)
     _imageSize.x = _pTexture->_desc.Width;
     _imageSize.y = _pTexture->_desc.Height;
 
-    _uv.x = rect.x / _imageSize.x;
-    _uv.y = rect.y / _imageSize.y;
+    _pixelSize.x = (1.0f / _pTexture->_desc.Width) / 2.0f;
+    _pixelSize.y = (1.0f / _pTexture->_desc.Height) / 2.0f;
+
+    _uv.x = rect.x / _imageSize.x + _pixelSize.x;
+    _uv.y = rect.y / _imageSize.y + _pixelSize.y;
     _uv.w = rect.w / _imageSize.x;
     _uv.h = rect.h / _imageSize.y;
 }
@@ -29,7 +32,8 @@ void Object2D::SetRect(Rect rect)
 
 void Object2D::SetPosition(Vector2 position)
 {
-    _position = position;
+    _position.x = position.x - _rect.center.x;
+    _position.y = position.y - _rect.center.y;
 }
 
 void Object2D::SetDirection(Vector2 direction)
