@@ -19,7 +19,7 @@ HRESULT InGame::Init()
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Map.png");
 	_pMap->SetUV({ 0, 0, 800, 600 });
 	_pMap->SetRect({ 0, 0, 800, 600 });
-	_pMap->SetPosition({ 0.0f, 0.0f });
+	_pMap->SetPosition({ 400.0f, 300.0f });
 	_pMap->SetScale(2.0f, 2.0f);
 	_pMap->SetNormalize();
 	_pMap->SetVertexBuffer();
@@ -48,7 +48,7 @@ HRESULT InGame::Init()
 		_pWave->SetMask(pMaskTexture);
 		_pWave->SetUV({ 70, 160, 16, 30 });
 		_pWave->SetRect({ 70, 160, 16, 30 });
-		_pWave->SetPosition({ x * 30.0f, 560.0f });
+		_pWave->SetPosition({ x * 30.0f, 570.0f });
 		_pWave->SetScale(4.0f, 4.0f);
 		_pWave->SetNormalize();
 		_pWave->SetVertexBuffer();
@@ -61,7 +61,7 @@ HRESULT InGame::Init()
 	_pPlayer->SetMask(pMaskTexture);
 	_pPlayer->SetUV({ 2, 265, 65, 65 });
 	_pPlayer->SetRect({ 2, 265, 65, 65 });
-	_pPlayer->SetPosition({ 0.0f, 430.0f });
+	_pPlayer->SetPosition({ 32.5f, 470.0f });
 	_pPlayer->SetScale(3.5f, 3.5f);
 	_pPlayer->SetSpeed(300.0f);
 	_pPlayer->SetNormalize();
@@ -74,7 +74,7 @@ HRESULT InGame::Init()
 	_pEnemy->SetMask(pMaskTexture);
 	_pEnemy->SetUV({ 67, 265, -65, 65 });
 	_pEnemy->SetRect({ 2, 265, 65, 65 });
-	_pEnemy->SetPosition({ 670.0f, 430.0f });
+	_pEnemy->SetPosition({ 722.5f, 470.0f });
 	_pEnemy->SetScale(3.5f, 3.5f);
 	_pEnemy->SetSpeed(300.0f);
 	_pEnemy->SetNormalize();
@@ -87,7 +87,7 @@ HRESULT InGame::Init()
 	_pBall->SetMask(pMaskTexture);
 	_pBall->SetUV({ 88, 158, 40, 40 });
 	_pBall->SetRect({ 88, 158, 40, 40 });
-	_pBall->SetPosition({ 370.0f, 200.0f });
+	_pBall->SetPosition({ 390.0f, 200.0f });
 	_pBall->SetScale(3.5f, 3.5f);
 	_pBall->SetSpeed(200.0f);
 	_pBall->SetNormalize();

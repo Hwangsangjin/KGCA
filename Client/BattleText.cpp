@@ -15,7 +15,7 @@ HRESULT BattleText::Frame()
         _x += DELTA_TIME * _speed;
         _y += DELTA_TIME * _speed;
 
-        if (_timer >= 0.3f)
+        if (_timer >= 0.2f)
         {
             _isFull = true;
             _timer = 0.0f;
@@ -26,7 +26,7 @@ HRESULT BattleText::Frame()
         _x -= DELTA_TIME * _speed;
         _y -= DELTA_TIME * _speed;
 
-        if (_x <= 2.0f && _y <= 2.0f)
+        if (_x <= 2.5f && _y <= 2.5f)
         {
             _isFull = false;
             _timer = 0.0f;
