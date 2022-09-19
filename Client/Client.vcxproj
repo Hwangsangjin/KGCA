@@ -149,6 +149,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Cloud.cpp" />
+    <ClCompile Include="BattleText.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Cloud.h" />
+    <ClInclude Include="BattleText.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="Map.h" />

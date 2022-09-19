@@ -2,7 +2,7 @@
 
 #include "Object2D.h"
 
-class Background : public Object2D
+class BattleText : public Object2D
 {
 public:
 	virtual HRESULT Frame() override;

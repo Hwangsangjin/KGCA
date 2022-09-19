@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Background.h"
+#include "BattleText.h"
 #include "Map.h"
 #include "Tile.h"
 #include "Cloud.h"
@@ -26,6 +27,7 @@ protected:
 	Sound* _pEffect7 = nullptr;
 
 	Background* _pBackground = nullptr;
+	BattleText* _pBattleText = nullptr;
 	Map* _pMap = nullptr;
 	Tile* _pSky = nullptr;
 	Tile* _pMountain = nullptr;
