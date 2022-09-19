@@ -20,12 +20,12 @@ public:
 	virtual HRESULT Frame() override;
 
 	void SetMask(Texture* pMaskTexture);
+	void SetUV(Rect rect);
 	void SetRect(Rect rect);
 	void SetPosition(Vector2 position);
 	void SetDirection(Vector2 direction);
 	void SetScale(float x, float y);
 	void SetSpeed(float speed);
-	void SetUV();
 	void SetNormalize();
 	void SetVertexBuffer();
 };

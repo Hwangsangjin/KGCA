@@ -11,6 +11,17 @@ void Object2D::SetMask(Texture* pMaskTexture)
     _pMaskTexture = pMaskTexture;
 }
 
+void Object2D::SetUV(Rect rect)
+{
+    _imageSize.x = _pTexture->_desc.Width;
+    _imageSize.y = _pTexture->_desc.Height;
+
+    _uv.x = rect.x / _imageSize.x;
+    _uv.y = rect.y / _imageSize.y;
+    _uv.w = rect.w / _imageSize.x;
+    _uv.h = rect.h / _imageSize.y;
+}
+
 void Object2D::SetRect(Rect rect)
 {
     _rect = rect;
@@ -35,17 +46,6 @@ void Object2D::SetScale(float x, float y)
 void Object2D::SetSpeed(float speed)
 {
     _speed = speed;
-}
-
-void Object2D::SetUV()
-{
-    _imageSize.x = _pTexture->_desc.Width;
-    _imageSize.y = _pTexture->_desc.Height;
-
-    _uv.x = _rect.x / _imageSize.x;
-    _uv.y = _rect.y / _imageSize.y;
-    _uv.w = _rect.w / _imageSize.x;
-    _uv.h = _rect.h / _imageSize.y;
 }
 
 void Object2D::SetNormalize()
