@@ -10,11 +10,11 @@ enum KEY_STATE
 
 class Input
 {
-	DECLARE_SINGLE(Input)
+    DECLARE_SINGLE(Input);
 
 private:
     DWORD _keyState[256];
-    POINT _pos;
+    POINT _position;
 
 public:
     // √ ±‚»≠

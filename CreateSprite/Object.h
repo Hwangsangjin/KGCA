@@ -10,7 +10,9 @@ protected:
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
 	std::vector<Vertex> _vertices;
+	std::vector<DWORD> _indices;
 	ID3D11Buffer* _pVertexBuffer = nullptr;
+	ID3D11Buffer* _pIndexBuffer = nullptr;
 	ID3D11InputLayout* _pInputLayout = nullptr;
 
 	Texture* _pTexture = nullptr;
@@ -38,8 +40,14 @@ public:
 	// 오브젝트 생성
 	HRESULT CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile);
 
+	// 정점 데이터 생성
+	void CreateVertexData();
 	// 정점 버퍼 생성
 	HRESULT CreateVertexBuffer();
+	// 인덱스 데이터 생성
+	void CreateIndexData();
+	// 인덱스 버퍼 생성
+	HRESULT CreateIndexBuffer();
 	// 셰이더 생성
 	HRESULT CreateShader(std::wstring shaderFile);
 	// 입력 레이아웃 생성

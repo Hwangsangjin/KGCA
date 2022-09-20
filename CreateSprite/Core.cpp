@@ -9,9 +9,11 @@ HRESULT Core::CoreInit()
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer));
 	HR(_font.SetSurface(_pBackBuffer));
 	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
+	//HR(SPRITE->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(TEXTURE->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(INPUT->Init());
 	HR(TIMER->Init());
+	HR(SOUND->Init());
 	HR(Init());
 
 	return TRUE;
@@ -21,6 +23,7 @@ HRESULT Core::CoreFrame()
 {
 	INPUT->Frame();
 	TIMER->Frame();
+	SOUND->Frame();
 	_font.Frame();
 	Frame();
 
@@ -46,8 +49,6 @@ HRESULT Core::CoreRender()
 	CorePreRender();
 
 	Render();
-	_font.SetText(TIMER->GetText());
-	_font.Render();
 
 	CorePostRender();
 
@@ -69,10 +70,11 @@ HRESULT Core::CoreRelease()
 	_font.Release();
 	TIMER->Release();
 	INPUT->Release();
+	SOUND->Release();
 	DxState::Release();
 	Device::Release();
 
-	return Release();
+	return TRUE;
 }
 
 HRESULT Core::Init()

@@ -10,8 +10,8 @@ HRESULT Input::Init()
 
 HRESULT Input::Frame()
 {
-	::GetCursorPos(&_pos);			// 화면 좌표
-	::ScreenToClient(hWnd, &_pos);	// 클라이언트 화면
+	::GetCursorPos(&_position);			// 화면 좌표
+	::ScreenToClient(hWnd, &_position);	// 클라이언트 화면
 
     for (size_t i = 0; i < 256; i++)
     {
@@ -60,5 +60,5 @@ DWORD Input::GetKey(DWORD key)
 
 POINT Input::GetPos()
 {
-	return _pos;
+	return _position;
 }

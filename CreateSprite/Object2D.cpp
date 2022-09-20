@@ -6,16 +6,70 @@ HRESULT Object2D::Frame()
     return TRUE;
 }
 
-void Object2D::SetRectangle(Rect rect)
+void Object2D::SetMask(Texture* pMaskTexture)
+{
+    _pMaskTexture = pMaskTexture;
+}
+
+void Object2D::SetUV(Rect rect)
+{
+    _imageSize.x = _pTexture->_desc.Width;
+    _imageSize.y = _pTexture->_desc.Height;
+
+    _pixelSize.x = (1.0f / _pTexture->_desc.Width) / 2.0f;
+    _pixelSize.y = (1.0f / _pTexture->_desc.Height) / 2.0f;
+
+    _uv.x = rect.x / _imageSize.x + _pixelSize.x;
+    _uv.y = rect.y / _imageSize.y + _pixelSize.y;
+    _uv.w = rect.w / _imageSize.x;
+    _uv.h = rect.h / _imageSize.y;
+}
+
+void Object2D::SetRect(Rect rect)
 {
     _rect = rect;
-    _image.x = _pTexture->_desc.Width;
-    _image.y = _pTexture->_desc.Height;
 
-    _uv.x1 = _rect.x1 / _image.x;
-    _uv.y1 = _rect.y1 / _image.y;
-    _uv.w = _rect.w / _image.x;
-    _uv.h = _rect.h / _image.y;
+    _imageSize.x = _pTexture->_desc.Width;
+    _imageSize.y = _pTexture->_desc.Height;
+
+    _pixelSize.x = (1.0f / _pTexture->_desc.Width) / 2.0f;
+    _pixelSize.y = (1.0f / _pTexture->_desc.Height) / 2.0f;
+
+    _uv.x = rect.x / _imageSize.x;
+    _uv.y = rect.y / _imageSize.y;
+    _uv.w = rect.w / _imageSize.x;
+    _uv.h = rect.h / _imageSize.y;
+}
+
+void Object2D::SetPosition(Vector2 position)
+{
+    _position = position;
+
+    Vector2 vPos = _position;
+
+    _drawSize.x = (_rect.w / 2.0f) * _scale.x;
+    _drawSize.y = (_rect.h / 2.0f) * _scale.y;
+
+    vPos.x -= _drawSize.x;
+    vPos.y -= _drawSize.y;
+
+    _drawPosition.x = (vPos.x / rtClient.right) * 2.0f - 1.0f;
+    _drawPosition.y = -((vPos.y / rtClient.bottom) * 2.0f - 1.0f);
+    _drawSize.x = (_rect.w / rtClient.right) * 2.0f * _scale.x;
+    _drawSize.y = (_rect.h / rtClient.bottom) * 2.0f * _scale.y;
+
+    SetVertexBuffer();
+}
+
+void Object2D::SetDirection(Vector2 direction)
+{
+    _direction = direction;
+}
+
+void Object2D::SetScale(float x, float y)
+{
+    _scale.x = x;
+    _scale.y = y;
 }
 
 void Object2D::SetSpeed(float speed)
@@ -23,46 +77,25 @@ void Object2D::SetSpeed(float speed)
     _speed = speed;
 }
 
-void Object2D::SetScale(float x, float y)
+void Object2D::SetNormalize()
 {
-    _drawSize.x = (_rect.w / rtClient.right) * x;
-    _drawSize.y = (_rect.h / rtClient.bottom) * y;
+    _drawPosition.x = (_position.x / rtClient.right) * 2.0f - 1.0f;
+    _drawPosition.y = -((_position.y / rtClient.bottom) * 2.0f - 1.0f);
 }
 
-void Object2D::SetPosition(Vector2 pos)
+void Object2D::SetVertexBuffer()
 {
-    _pos = pos;
+    _vertices[0].position = { _drawPosition.x, _drawPosition.y, 0.0f };
+    _vertices[0].uv = { _uv.x, _uv.y };
 
-    _drawPos.x = (pos.x / rtClient.right) * 2.0f - 1.0f;
-    _drawPos.y = -((pos.y / rtClient.bottom) * 2.0f - 1.0f);
+    _vertices[1].position = { _drawPosition.x + _drawSize.x, _drawPosition.y,  0.0f };
+    _vertices[1].uv = { _uv.x + _uv.w, _uv.y };
 
-    UpdateVertexBuffer();
-}
+    _vertices[2].position = { _drawPosition.x, _drawPosition.y - _drawSize.y, 0.0f };
+    _vertices[2].uv = { _uv.x, _uv.y + _uv.h };
 
-void Object2D::SetDirection(Vector2 dir)
-{
-    _dir = dir;
-}
-
-void Object2D::UpdateVertexBuffer()
-{
-    _vertices[0].position = { _drawPos.x, _drawPos.y, 0.0f };
-    _vertices[0].uv = { _uv.x1, _uv.y1 };
-
-    _vertices[1].position = { _drawPos.x + _drawSize.x, _drawPos.y,  0.0f };
-    _vertices[1].uv = { _uv.x1 + _uv.w, _uv.y1 };
-
-    _vertices[2].position = { _drawPos.x, _drawPos.y - _drawSize.y, 0.0f };
-    _vertices[2].uv = { _uv.x1, _uv.y1 + _uv.h };
-
-    _vertices[3].position = _vertices[2].position;
-    _vertices[3].uv = _vertices[2].uv;
-
-    _vertices[4].position = _vertices[1].position;
-    _vertices[4].uv = _vertices[1].uv;
-
-    _vertices[5].position = { _drawPos.x + _drawSize.x, _drawPos.y - _drawSize.y, 0.0f };
-    _vertices[5].uv = { _uv.x1 + _uv.w , _uv.y1 + _uv.h };
+    _vertices[3].position = { _drawPosition.x + _drawSize.x, _drawPosition.y - _drawSize.y, 0.0f };
+    _vertices[3].uv = { _uv.x + _uv.w , _uv.y + _uv.h };
 
     _pImmediateContext->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
 }

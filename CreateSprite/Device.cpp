@@ -137,7 +137,7 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // µð¹ÙÀÌ½º°¡ »ý¼ºµÇÁö ¾ÊÀº °æ¿ì
     if (_pd3dDevice == nullptr) return TRUE;
 
-    // ·»´õÅ¸°Ù°ú ·»´õÅ¸°Ùºä ÇØÁ¦ÇÑ´Ù.
+    // ·»´õÅ¸°Ù°ú ·»´õÅ¸°Ùºä¸¦ ÇØÁ¦ÇÑ´Ù.
     _pImmediateContext->OMSetRenderTargets(0, nullptr, nullptr);
     SAFE_RELEASE(_pRenderTargetView);
 
