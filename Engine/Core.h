@@ -4,6 +4,10 @@
 #include "Input.h"
 #include "Timer.h"
 #include "Font.h"
+#include "DxState.h"
+#include "SoundManager.h"
+#include "ShaderManager.h"
+#include "TextureManager.h"
 
 class Core : public Window
 {

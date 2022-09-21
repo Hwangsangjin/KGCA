@@ -25,8 +25,8 @@ HRESULT Timer::Frame()
 	{
 		_fps = static_cast<uint32>(_frameCount / _frameTime);
 
-		_frameCount = 0;
 		_frameTime = 0;
+		_frameCount = 0;
 	}
 
 	_text = L"FPS: ";

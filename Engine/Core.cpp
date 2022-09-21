@@ -4,12 +4,16 @@
 HRESULT Core::CoreInit()
 {
 	HR(Device::Init());
-	HR(INPUT->Init());
-	HR(TIMER->Init());
+	HR(DxState::SetSamplerState(_pd3dDevice));
 	HR(_font.Init());
-
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer));
 	HR(_font.SetSurface(_pBackBuffer));
+	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
+	HR(TEXTURE->SetDevice(_pd3dDevice, _pImmediateContext));
+	HR(INPUT->Init());
+	HR(TIMER->Init());
+	HR(SOUND->Init());
+	HR(Init());
 
 	return TRUE;
 }
@@ -18,6 +22,7 @@ HRESULT Core::CoreFrame()
 {
 	INPUT->Frame();
 	TIMER->Frame();
+	SOUND->Frame();
 	_font.Frame();
 	Frame();
 
@@ -33,6 +38,7 @@ HRESULT Core::CorePreRender()
 	// 후면 버퍼 클리어
 	float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
 	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
+	_pImmediateContext->PSSetSamplers(0, 1, &DxState::_pDefaultSamplerState);
 
 	return TRUE;
 }
@@ -41,8 +47,6 @@ HRESULT Core::CoreRender()
 {
 	CorePreRender();
 
-	_font.SetText(TIMER->GetText());
-	_font.Render();
 	Render();
 
 	CorePostRender();
@@ -60,12 +64,16 @@ HRESULT Core::CorePostRender()
 
 HRESULT Core::CoreRelease()
 {
-	SAFE_RELEASE(_pBackBuffer)
+	SAFE_RELEASE(_pBackBuffer);
 	Release();
 	_font.Release();
+	TIMER->Release();
+	INPUT->Release();
+	SOUND->Release();
+	DxState::Release();
 	Device::Release();
 
-	return Release();
+	return TRUE;
 }
 
 HRESULT Core::Init()
