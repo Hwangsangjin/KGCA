@@ -43,9 +43,45 @@ void Object2D::SetPosition(Vector2 position)
     SetVertexBuffer();
 }
 
+void Object2D::SetPosition(Vector2 position, Vector2 cameraPosition)
+{
+    _position = position;
+
+    SetViewSpace(cameraPosition, _cameraViewSize);
+    SetVertexBuffer();
+}
+
 void Object2D::SetDirection(Vector2 direction)
 {
     _direction = direction;
+}
+
+void Object2D::SetCameraPosition(Vector2 cameraPosition)
+{
+    _cameraPosition = cameraPosition;
+}
+
+void Object2D::SetCameraViewSize(Vector2 cameraViewSize)
+{
+    _cameraViewSize = cameraViewSize;
+}
+
+void Object2D::SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize)
+{
+    Vector2 position;
+    Vector2 collision;
+    collision.x = _rect.w / 2.0f;
+    collision.y = _rect.h / 2.0f;
+
+    _collision.Set(_position.x - collision.x * _scale.x, _position.y - collision.y * _scale.y, _rect.w, _rect.h);
+
+    position.x = _collision.x - cameraPosition.x;
+    position.y = _collision.y - cameraPosition.y;
+
+    _drawPosition.x = (position.x / camerViewSize.x) * 2.0f - 1.0f;
+    _drawPosition.y = -((position.y / camerViewSize.y) * 2.0f - 1.0f);
+    _drawSize.x = (_rect.w / camerViewSize.x) * 2.0f * _scale.x;
+    _drawSize.y = (_rect.h / camerViewSize.y) * 2.0f * _scale.y;
 }
 
 void Object2D::SetNDC()
@@ -58,8 +94,8 @@ void Object2D::SetNDC()
 
     _drawPosition.x = (_collision.x / rtClient.right) * 2.0f - 1.0f;
     _drawPosition.y = -((_collision.y / rtClient.bottom) * 2.0f - 1.0f);
-    _drawSize.x = (_rect.w / rtClient.right)* 2.0f * _scale.x;
-    _drawSize.y = (_rect.h / rtClient.bottom)* 2.0f * _scale.y;
+    _drawSize.x = (_rect.w / rtClient.right) * 2.0f * _scale.x;
+    _drawSize.y = (_rect.h / rtClient.bottom) * 2.0f * _scale.y;
 }
 
 void Object2D::SetVertexBuffer()
