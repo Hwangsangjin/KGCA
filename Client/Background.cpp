@@ -4,24 +4,23 @@
 
 HRESULT Background::Frame()
 {
-    Vector2 normal{ 1.0f, 1.0f };
+    Vector2 normal{ RESOLUTION_X, RESOLUTION_Y };
     normal.Normalize();
 
     _position.x -= normal.x * DELTA_TIME * _speed;
     _position.y -= normal.y * DELTA_TIME * _speed;
 
-    if (_position.x <= -200.0f)
+    if (_position.x <= -_rect.w )
     {
-        _position.x = 800.0f;
+        _position.x = RESOLUTION_X;
     }
 
-    if (_position.y <= -200.0f)
+    if (_position.y <= -_rect.h)
     {
-        _position.y = 600.0f;
+        _position.y = RESOLUTION_Y;
     }
 
-    SetNormalize();
-    SetVertexBuffer();
+    SetPosition(_position);
 
     return TRUE;
 }

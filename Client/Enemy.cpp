@@ -5,7 +5,7 @@
 
 HRESULT Enemy::Frame()
 {
-    Vector2 normal{ 1.0f, 1.0f };
+    Vector2 normal{ RESOLUTION_X, RESOLUTION_Y };
     normal.Normalize();
 
     if (INPUT->GetKey(VK_UP))
@@ -16,18 +16,18 @@ HRESULT Enemy::Frame()
     if (INPUT->GetKey(VK_LEFT))
     {
         _position.x -= normal.x * DELTA_TIME * _speed;
-        if (_position.x <= RESOLUTION_X / HALF + 10)
+        if (_position.x - _rect.w <= RESOLUTION_X / HALF)
         {
-            _position.x = RESOLUTION_X / HALF + 10;
+            _position.x = RESOLUTION_X / HALF + _rect.w;
         }
     }
 
     if (INPUT->GetKey(VK_RIGHT))
     {
         _position.x += normal.x * DELTA_TIME * _speed;
-        if (_position.x + 110 >= RESOLUTION_X)
+        if (_position.x + _rect.w >= RESOLUTION_X)
         {
-            _position.x = RESOLUTION_X - 110;
+            _position.x = RESOLUTION_X - _rect.w;
         }
     }
 
@@ -36,8 +36,7 @@ HRESULT Enemy::Frame()
 
     }
 
-    SetNormalize();
-    SetVertexBuffer();
+    SetPosition(_position);
 
 	return TRUE;
 }

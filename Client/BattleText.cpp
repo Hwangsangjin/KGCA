@@ -26,7 +26,7 @@ HRESULT BattleText::Frame()
         _x -= DELTA_TIME * _speed;
         _y -= DELTA_TIME * _speed;
 
-        if (_x <= 2.5f && _y <= 2.5f)
+        if (_x <= 1.0f && _y <= 1.0f)
         {
             _isFull = false;
             _timer = 0.0f;
@@ -34,8 +34,7 @@ HRESULT BattleText::Frame()
     }
 
     SetScale(_x, _y);
-    SetNormalize();
-    SetVertexBuffer();
+    SetPosition(_position);
 
     return TRUE;
 }

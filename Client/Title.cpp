@@ -14,20 +14,16 @@ HRESULT Title::Init()
 	Texture* pMaskTexture = TEXTURE->Load(L"../../Resource/Pikachu/Image/Mask.png");
 
 	// ¹è°æ
-	for (size_t y = 0; y < 10; y++)
+	for (size_t y = 0; y < 1; y++)
 	{
-		for (size_t x = 0; x < 10; x++)
+		for (size_t x = 0; x < 1; x++)
 		{
 			_pBackground = new Background;
-			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
-			_pBackground->SetMask(pMaskTexture);
-			_pBackground->SetUV({ 280, 611, 104, 104 });
+			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 			_pBackground->SetRect({ 280, 611, 104, 104 });
-			_pBackground->SetPosition({ x * 200.0f, y * 200.0f });
-			_pBackground->SetScale(4.0f, 4.0f);
-			_pBackground->SetSpeed(140.0f);
-			_pBackground->SetNormalize();
-			_pBackground->SetVertexBuffer();
+			_pBackground->SetSpeed(120.0f);
+			_pBackground->SetScale(2.0f, 2.0f);
+			_pBackground->SetPosition({ x * 208.0f, y * 208.0f });
 			AddObject(_pBackground);
 		}
 	}
@@ -36,13 +32,9 @@ HRESULT Title::Init()
 	_pBattleText = new BattleText;
 	_pBattleText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 	_pBattleText->SetMask(pMaskTexture);
-	_pBattleText->SetUV({ 255, 725, 155, 155 });
 	_pBattleText->SetRect({ 255, 725, 155, 155 });
-	_pBattleText->SetPosition({ 100.0f, 100.0f });
-	_pBattleText->SetScale(2.0f, 2.0f);
 	_pBattleText->SetSpeed(5.0f);
-	_pBattleText->SetNormalize();
-	_pBattleText->SetVertexBuffer();
+	_pBattleText->SetPosition({ 200.0f, 150.0f });
 	AddObject(_pBattleText);
 
     return TRUE;
@@ -52,7 +44,6 @@ HRESULT Title::Frame()
 {
 	for (auto& pObject : _pObjects)
 	{
-		_pImmediateContext->PSSetShaderResources(1, 1, &_pBackground->_pMaskTexture->_pShaderResourceView);
 		_pImmediateContext->PSSetShaderResources(1, 1, &_pBattleText->_pMaskTexture->_pShaderResourceView);
 
 		pObject->Frame();
@@ -80,7 +71,8 @@ HRESULT Title::Release()
 		SAFE_RELEASE(pObject);
 	}
 
-	SAFE_DELETE(_pMap);
+	SAFE_DELETE(_pBackground);
+	SAFE_DELETE(_pBattleText);
 
     return TRUE;
 }
