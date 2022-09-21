@@ -183,9 +183,9 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 }
 
 // define
-#define RESOLUTION_X 800
-#define RESOLUTION_Y 600
-#define HALF         2
+#define RESOLUTION_X 800.0f
+#define RESOLUTION_Y 600.0f
+#define HALF         2.0f
 
 #define CORE
 #define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
