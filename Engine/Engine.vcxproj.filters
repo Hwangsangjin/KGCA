@@ -48,6 +48,9 @@
     <Filter Include="소스 파일\Core\Sound">
       <UniqueIdentifier>{c6ccdd55-c818-46a5-92c5-7494b6a7e2c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\Object\Sprite">
+      <UniqueIdentifier>{cf31510f-d1f1-4185-a142-5bbb3c44fd58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -104,6 +107,12 @@
     <ClInclude Include="SoundManager.h">
       <Filter>소스 파일\Core\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>소스 파일\Core\Object\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteManager.h">
+      <Filter>소스 파일\Core\Object\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -159,6 +168,12 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>소스 파일\Core\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>소스 파일\Core\Object\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -225,6 +225,7 @@ public:								\
 
 #define SOUND				GET_SINGLE(SoundManager)
 #define SHADER				GET_SINGLE(ShaderManager)
+#define SPRITE				GET_SINGLE(SpriteManager)
 #define TEXTURE				GET_SINGLE(TextureManager)
 
 #define RAND(min, max)      (min+((float)max-(float)min)*rand()/(float)RAND_MAX)

@@ -7,6 +7,7 @@
 #include "DxState.h"
 #include "SoundManager.h"
 #include "ShaderManager.h"
+#include "SpriteManager.h"
 #include "TextureManager.h"
 
 class Core : public Window

@@ -9,6 +9,7 @@ HRESULT Core::CoreInit()
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&_pBackBuffer));
 	HR(_font.SetSurface(_pBackBuffer));
 	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
+	HR(SPRITE->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(TEXTURE->SetDevice(_pd3dDevice, _pImmediateContext));
 	HR(INPUT->Init());
 	HR(TIMER->Init());
