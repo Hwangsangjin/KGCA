@@ -31,7 +31,7 @@ public:
 	void SetDirection(Vector2 direction);
 	void SetCameraPosition(Vector2 cameraPosition);
 	void SetCameraViewSize(Vector2 cameraViewSize);
-	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize = { 800.0f, 600.0f });
+	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
 	void SetNDC();
 	void SetVertexBuffer();
 };

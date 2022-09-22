@@ -68,18 +68,18 @@ void Object2D::SetCameraViewSize(Vector2 cameraViewSize)
 
 void Object2D::SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize)
 {
-    Vector2 position;
     Vector2 collision;
     collision.x = _rect.w / 2.0f;
     collision.y = _rect.h / 2.0f;
 
     _collision.Set(_position.x - collision.x * _scale.x, _position.y - collision.y * _scale.y, _rect.w, _rect.h);
 
-    position.x = _collision.x - cameraPosition.x;
-    position.y = _collision.y - cameraPosition.y;
+    Vector2 viewPosition;
+    viewPosition.x = _collision.x - cameraPosition.x;
+    viewPosition.y = _collision.y - cameraPosition.y;
 
-    _drawPosition.x = (position.x / camerViewSize.x) * 2.0f - 1.0f;
-    _drawPosition.y = -((position.y / camerViewSize.y) * 2.0f - 1.0f);
+    _drawPosition.x = viewPosition.x * (2.0f / camerViewSize.x);
+    _drawPosition.y = -(viewPosition.y * (2.0f / camerViewSize.y));
     _drawSize.x = (_rect.w / camerViewSize.x) * 2.0f * _scale.x;
     _drawSize.y = (_rect.h / camerViewSize.y) * 2.0f * _scale.y;
 }
