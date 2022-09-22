@@ -4,7 +4,7 @@
 HRESULT Title::Init()
 {
 	// 카메라
-	_camera = { 0, 0 };
+	_camera = { 0.0f, 0.0f };
 
 	// 사운드
 	SOUND->Init();
@@ -28,7 +28,8 @@ HRESULT Title::Init()
 			_pBackground->SetScale(2.0f, 2.0f);
 			_pBackground->SetCameraPosition(_camera);
 			_pBackground->SetCameraViewSize({ 800.0f, 600.0f });
-			_pBackground->SetPosition({ x * 208.0f, y * 208.0f });
+			_pBackground->SetPosition({ -400 + x * 208.0f, -300 + y * 208.0f });
+			_pBackground->init = _pBackground->_position;
 			AddObject(_pBackground);
 		}
 	}
@@ -41,7 +42,7 @@ HRESULT Title::Init()
 	_pBattleText->SetSpeed(5.0f);
 	_pBattleText->SetCameraPosition(_camera);
 	_pBattleText->SetCameraViewSize({ 800.0f, 600.0f });
-	_pBattleText->SetPosition({ 200.0f, 150.0f });
+	_pBattleText->SetPosition({ -200.0f, -150.0f });
 	AddObject(_pBattleText);
 
     return TRUE;
