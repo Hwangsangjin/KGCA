@@ -4,14 +4,11 @@
 
 HRESULT Wave::Frame()
 {
-    Vector2 normal{ RESOLUTION_X, RESOLUTION_Y };
-    normal.Normalize();
-
     _timer += DELTA_TIME * _speed;
 
     if (!_isFull)
     {
-        _position.y -= normal.x * DELTA_TIME * _speed;
+        _position.y -= 1.0f * DELTA_TIME * _speed;
 
         if (_timer >= 50.0f)
         {
@@ -21,7 +18,7 @@ HRESULT Wave::Frame()
     }
     else
     {
-        _position.y += normal.x * DELTA_TIME * _speed;
+        _position.y += 1.0f * DELTA_TIME * _speed;
 
         if (_position.y - _rect.h >= RESOLUTION_Y)
         {
