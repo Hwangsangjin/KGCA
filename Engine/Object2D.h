@@ -32,7 +32,7 @@ public:
 	void SetCameraPosition(Vector2 cameraPosition);
 	void SetCameraViewSize(Vector2 cameraViewSize);
 	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
-	void SetNDC();
+	void SetScreenSpace();
 	void SetVertexBuffer();
 };
 

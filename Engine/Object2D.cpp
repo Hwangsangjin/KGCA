@@ -39,7 +39,7 @@ void Object2D::SetPosition(Vector2 position)
 {
     _position = position;
 
-    SetNDC();
+    SetScreenSpace();
     SetVertexBuffer();
 }
 
@@ -84,7 +84,7 @@ void Object2D::SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize)
     _drawSize.y = (_rect.h / camerViewSize.y) * 2.0f * _scale.y;
 }
 
-void Object2D::SetNDC()
+void Object2D::SetScreenSpace()
 {
     Vector2 collision;
     collision.x = _rect.w / 2.0f;
