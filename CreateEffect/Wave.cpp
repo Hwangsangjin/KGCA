@@ -4,13 +4,13 @@
 
 HRESULT Wave::Frame()
 {
-    _timer += DELTA_TIME * _speed;
+    _timer += DELTA_TIME;
 
     if (!_isFull)
     {
         _position.y -= 1.0f * DELTA_TIME * _speed;
 
-        if (_timer >= 50.0f)
+        if (_timer >= 1.0f)
         {
             _isFull = true;
             _timer = 0.0f;

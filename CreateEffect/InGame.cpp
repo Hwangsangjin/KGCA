@@ -45,7 +45,7 @@ HRESULT InGame::Init()
 		_pWave->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
 		_pWave->SetMask(pMaskTexture);
 		_pWave->SetRect({ 70.0f, 160.0f, 16.0f, 30.0f });
-		_pWave->SetSpeed(RAND(39.8f, 40.0f));
+		_pWave->SetSpeed(RAND(35.0f, 40.0f));
 		_pWave->SetScale(2.0f, 2.0f);
 		_pWave->SetPosition({ x * 32.0f, 630.0f });
 		AddObject(_pWave);
