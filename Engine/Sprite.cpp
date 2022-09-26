@@ -26,7 +26,7 @@ HRESULT Sprite::CreateSprite(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 {
     Texture* pMaskTexture = TEXTURE->Load(L"../../Resource/Pikachu/Image/Mask.png");
 
-    CreateObject(pd3dDevice, pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+    CreateObject(pd3dDevice, pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
     SetMask(pMaskTexture);
 
     return TRUE;
