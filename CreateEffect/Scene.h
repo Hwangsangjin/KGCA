@@ -3,12 +3,19 @@
 #include "Core.h"
 #include "Background.h"
 #include "BattleText.h"
+#include "DynamicText.h"
+#include "StaticText.h"
 #include "Map.h"
 #include "Cloud.h"
 #include "Wave.h"
 #include "Player.h"
+#include "PlayerScore.h"
+#include "PlayerShadow.h"
 #include "Enemy.h"
+#include "EnemyScore.h"
+#include "EnemyShadow.h"
 #include "Ball.h"
+#include "BallShadow.h"
 #include "Effect.h"
 
 class Scene
@@ -28,12 +35,20 @@ protected:
 
 	Background* _pBackground = nullptr;
 	BattleText* _pBattleText = nullptr;
+	DynamicText* _pDynamicText = nullptr;
+	StaticText* _pPokeMonText = nullptr;
+	StaticText* _pCompanyText = nullptr;
 	Map* _pMap = nullptr;
 	Cloud* _pCloud = nullptr;
 	Wave* _pWave = nullptr;
 	Player* _pPlayer = nullptr;
+	PlayerScore* _pPlayerScore = nullptr;
+	PlayerShadow* _pPlayerShadow = nullptr;
 	Enemy* _pEnemy = nullptr;
+	EnemyScore* _pEnemyScore = nullptr;
+	EnemyShadow* _pEnemyShadow = nullptr;
 	Ball* _pBall = nullptr;
+	BallShadow* _pBallShadow = nullptr;
 
 	std::vector<Object*> _pObjects;
 	std::list<Effect*> _pEffects;

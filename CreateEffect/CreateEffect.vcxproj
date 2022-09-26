@@ -148,30 +148,44 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BallShadow.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="BattleText.cpp" />
+    <ClCompile Include="DynamicText.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyScore.cpp" />
+    <ClCompile Include="EnemyShadow.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerShadow.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="PlayerScore.cpp" />
+    <ClCompile Include="StaticText.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallShadow.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="BattleText.h" />
+    <ClInclude Include="DynamicText.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyScore.h" />
+    <ClInclude Include="EnemyShadow.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerShadow.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="PlayerScore.h" />
+    <ClInclude Include="StaticText.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Wave.h" />
   </ItemGroup>

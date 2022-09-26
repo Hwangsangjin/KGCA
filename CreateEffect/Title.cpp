@@ -10,7 +10,7 @@ HRESULT Title::Init()
 	_pBGM->PlayBGM(true);
 
 	// 텍스처
-	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sprite.png");
+	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sprite1.png");
 	Texture* pMaskTexture = TEXTURE->Load(L"../../Resource/Pikachu/Image/Mask.png");
 
 	// 배경
@@ -19,7 +19,7 @@ HRESULT Title::Init()
 		for (size_t x = 0; x < 6; x++)
 		{
 			_pBackground = new Background;
-			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+			_pBackground->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
 			_pBackground->SetRect({ 280.0f, 611.0f, 104.0f, 104.0f });			
 			_pBackground->SetSpeed(100.0f);
 			_pBackground->SetScale(2.0f, 2.0f);
@@ -29,14 +29,42 @@ HRESULT Title::Init()
 		}
 	}
 
-	// 텍스트
+	// 대결 텍스트
 	_pBattleText = new BattleText;
-	_pBattleText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite.png");
+	_pBattleText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
 	_pBattleText->SetMask(pMaskTexture);
 	_pBattleText->SetRect({ 255.0f, 725.0f, 155.0f, 155.0f });
 	_pBattleText->SetSpeed(5.0f);
 	_pBattleText->SetPosition({ 200.0f, 150.0f });
 	AddObject(_pBattleText);
+
+	// 피카츄 배구 텍스트
+	_pDynamicText = new DynamicText;
+	_pDynamicText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pDynamicText->SetMask(pMaskTexture);
+	_pDynamicText->SetRect({ 53.0f, 628.0f, 162.0f, 34.0f });
+	_pDynamicText->SetScale(2.0f, 2.0f);
+	_pDynamicText->SetSpeed(300.0f);
+	_pDynamicText->SetPosition({ 962.0f, 240.0f });
+	AddObject(_pDynamicText);
+
+	// 포켓몬스터 텍스트
+	_pPokeMonText = new StaticText;
+	_pPokeMonText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pPokeMonText->SetMask(pMaskTexture);
+	_pPokeMonText->SetRect({ 60.0f, 131.0f, 77.0f, 22.0f });
+	_pPokeMonText->SetScale(2.0f, 2.0f);
+	_pPokeMonText->SetPosition({ 520.0f, 130.0f });
+	AddObject(_pPokeMonText);
+
+	// 회사 정보 텍스트
+	_pCompanyText = new StaticText;
+	_pCompanyText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pCompanyText->SetMask(pMaskTexture);
+	_pCompanyText->SetRect({ 2.0f, 22.0f, 362.0f, 20.0f });
+	_pCompanyText->SetScale(1.8f, 1.8f);
+	_pCompanyText->SetPosition({ 400.0f, 550.0f });
+	AddObject(_pCompanyText);
 
     return TRUE;
 }
@@ -74,6 +102,7 @@ HRESULT Title::Release()
 
 	SAFE_DELETE(_pBackground);
 	SAFE_DELETE(_pBattleText);
+	SAFE_DELETE(_pDynamicText);
 
     return TRUE;
 }

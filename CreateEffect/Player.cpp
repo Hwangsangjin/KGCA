@@ -16,7 +16,7 @@ HRESULT Player::Frame()
     if (INPUT->GetKey('A'))
     {
         _position.x -= normal.x * DELTA_TIME * _speed;
-        if (_position.x <= _rect.w)
+        if (_position.x - _rect.w <= 0)
         {
             _position.x = _rect.w;
         }
