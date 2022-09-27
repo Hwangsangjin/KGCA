@@ -83,6 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>../../Library/Release/Engine</IntDir>
+    <OutDir>../../Library/Release</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,7 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -135,11 +137,10 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "*.h" "../../Include/Engine"
-copy "*.hlsl" "../../Resource/Shader"</Command>
+copy "*.lib" "../../Library/Debug"
+copy "*.hlsl" "../../Shader"</Command>
     </PostBuildEvent>
-    <Lib>
-      <OutputFile>$(OutDir)Engine.lib</OutputFile>
-    </Lib>
+    <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -151,6 +152,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -159,6 +161,11 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "*.h" "../../Include/Engine"
+copy "*.lib" "../../Library/Release"
+copy "*.hlsl" "../../Shader"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Object.h" />
