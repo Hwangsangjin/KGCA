@@ -13,7 +13,7 @@ Image::Image(const char* filename)
     File f(filename);
     _width = f.GetUnsigned(16);
     _height = f.GetUnsigned(12);
-    _data = new unsigned[_width * _height];
+    _data = new unsigned int[_width * _height];
 
     for (size_t i = 0; i < _width * _height; i++)
     {
@@ -46,8 +46,12 @@ void Image::Draw(int destX, int destY, int srcX, int srcY, int width, int height
     {
         for (size_t x = 0; x < width; x++)
         {
-            unsigned int* dest = &vram[(y + destY) * windowWidth + (x + destX)];
-            *dest = _data[(y + srcY) * _width + (x + srcX)];
+            unsigned int src = _data[(y + srcY) * _width + (x + srcX)];
+            if (src & 0x80000000)   // 알파 채널이 128이상
+            {
+                unsigned int* dest = &vram[(y + destY) * windowWidth + (x + destX)];
+                *dest = src;
+            }
         }
     }
 }

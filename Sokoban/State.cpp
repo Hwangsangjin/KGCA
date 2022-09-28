@@ -51,7 +51,7 @@ State::State(const char* stageData, int size)
 	}
 
 	// 이미지 읽기
-	_image = new Image("Sokoban.dds");
+	_image = new Image("Sokoban2.dds");
 }
 
 State::~State()
@@ -101,18 +101,18 @@ void State::Update(char input)
 	switch (input)
 	{
 	case 'a': dx = -1; break;	// 왼쪽
-	case 's': dx = 1; break;	// 오른쪽
+	case 'd': dx = 1; break;	// 오른쪽
 	case 'w': dy = -1; break;	// 위
-	case 'z': dy = 1; break;	// 아래
+	case 's': dy = 1; break;	// 아래
 	}
 
 	int w = _width;
 	int h = _height;
-	Array2D< Object >& o = _objects;
+	Array2D<Object>& o = _objects;
 
 	int x, y;
-	x = y = -1;
 	bool found = false;
+
 	for (y = 0; y < _height; ++y)
 	{
 		for (x = 0; x < _width; ++x)
@@ -169,30 +169,33 @@ void State::Draw() const
 		{
 			Object o = _objects(x, y);
 			bool goal = _flags(x, y);
+
+			// 벽을 제외하고 바닥을 그린다.
+			if (o != OBJ_WALL)
+			{
+				if (goal)
+				{
+					DrawCell(x, y, IMAGE_ID_GOAL);
+				}
+				else
+				{
+					DrawCell(x, y, IMAGE_ID_SPACE);
+				}
+			}
+
 			ImageID id = IMAGE_ID_SPACE;
 
-			if (goal)
+			switch (o)
 			{
-				switch (o)
-				{
-				case OBJ_SPACE: id = IMAGE_ID_GOAL; break;
-				case OBJ_WALL: id = IMAGE_ID_WALL; break;
-				case OBJ_BLOCK: id = IMAGE_ID_BLOCK_ON_GOAL; break;
-				case OBJ_MAN: id = IMAGE_ID_PLAYER; break;
-				}
-			}
-			else
-			{
-				switch (o)
-				{
-				case OBJ_SPACE: id = IMAGE_ID_SPACE; break;
-				case OBJ_WALL: id = IMAGE_ID_WALL; break;
-				case OBJ_BLOCK: id = IMAGE_ID_BLOCK; break;
-				case OBJ_MAN: id = IMAGE_ID_PLAYER; break;
-				}
+			case OBJ_WALL: id = IMAGE_ID_WALL; break;
+			case OBJ_BLOCK: id = IMAGE_ID_BLOCK; break;
+			case OBJ_MAN: id = IMAGE_ID_PLAYER; break;
 			}
 
-			DrawCell(x, y, id);
+			if (id != IMAGE_ID_SPACE)
+			{
+				DrawCell(x, y, id);
+			}
 		}
 	}
 }

@@ -36,10 +36,10 @@ unsigned int File::GetUnsigned(int position) const
 {
 	const unsigned char* up;
 	up = reinterpret_cast<const unsigned char*>(_data);
-	unsigned int r = up[0];
-	r |= up[1] << 8;
-	r |= up[2] << 16;
-	r |= up[3] << 24;
+	unsigned int r = up[position];
+	r |= up[position + 1] << 8;
+	r |= up[position + 2] << 16;
+	r |= up[position + 3] << 24;
 
 	return r;
 }

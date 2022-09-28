@@ -41,14 +41,12 @@ void MainLoop()
 		{
 			// 데이터 없음
 			cout << "Stage file could not be read." << endl;
-			return;
 		}
 
 		gState = new State(file.GetData(), file.GetSize());
 
 		// 렌더
 		gState->Draw();
-		return;
 	}
 
 	// 클리어 확인
@@ -60,7 +58,7 @@ void MainLoop()
 	}
 
 	// 입력
-	cout << "a:left s:right w:up z:down. command?" << endl; // 작동 설명
+	cout << "a:left d:right w:up s:down. command?" << endl; // 작동 설명
 	char input;
 	cin >> input;
 
@@ -70,7 +68,6 @@ void MainLoop()
 		delete gState;
 		gState = nullptr;
 		Framework::instance().requestEnd();
-		return;
 	}
 
 	// 갱신
