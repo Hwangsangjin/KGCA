@@ -39,7 +39,7 @@ HRESULT Sound::Load(FMOD::System* pSystem, std::wstring filename)
 {
     _pSystem = pSystem;
 
-    FMOD_RESULT hr = _pSystem->createSound(to_wm(filename).c_str(), FMOD_DEFAULT, nullptr, &_pSound);
+    FMOD_RESULT hr = _pSystem->createSound(to_wm(filename).c_str(), FMOD_LOOP_NORMAL, nullptr, &_pSound);
     if (hr == FMOD_OK)
     {
         _pSound->getLength(&_totalTime, FMOD_TIMEUNIT_MS);
