@@ -5,22 +5,22 @@ HRESULT InGame::Init()
 {
 	// 사운드
 	SOUND->Init();
-	SOUND->LoadAll(L"../../Resource/Pikachu/Sound/");
+	SOUND->LoadAll(L"../../../Resource/Pikachu/Sound/");
 	_pBGM = SOUND->GetPtr(L"BGM.wav");
 	_pBGM->PlayBGM(true);
 
 	// 텍스처
-	TEXTURE->Load(L"../../Resource/Pikachu/Image/Map.png");
-	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sprite1.png");
-	TEXTURE->Load(L"../../Resource/Pikachu/Image/Sprite2.png");
-	Texture* pMaskTexture = TEXTURE->Load(L"../../Resource/Pikachu/Image/Mask.png");
+	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Map.png");
+	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite1.png");
+	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite2.png");
+	Texture* pMaskTexture = TEXTURE->Load(L"../../../Resource/Pikachu/Image/Mask.png");
 
 	// 스프라이트 정보
-	SPRITE->Load(L"../../Resource/Pikachu/Image/Sprite.txt");
+	SPRITE->Load(L"../../../Resource/Pikachu/Image/Sprite.txt");
 
 	// 맵
 	_pMap = new Map;
-	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Pikachu/Image/Map.png");
+	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Map.png");
 	_pMap->SetRect({ 0.0f, 0.0f, 800.0f, 600.0f });
 	_pMap->SetScale(1.0f, 1.0f);
 	_pMap->SetPosition({ 400.0f, 300.0f });
@@ -30,7 +30,7 @@ HRESULT InGame::Init()
 	for (size_t i = 0; i < 10; i++)
 	{
 		_pCloud = new Cloud;
-		_pCloud->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+		_pCloud->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 		_pCloud->SetMask(pMaskTexture);
 		_pCloud->SetRect({ 101, 90, 45, 20 });
 		_pCloud->SetSpeed(RAND(40.0f, 50.0f));
@@ -43,7 +43,7 @@ HRESULT InGame::Init()
 	for (size_t x = 0; x < 26; x++)
 	{
 		_pWave = new Wave;
-		_pWave->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+		_pWave->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 		_pWave->SetMask(pMaskTexture);
 		_pWave->SetRect({ 70.0f, 160.0f, 16.0f, 30.0f });
 		_pWave->SetSpeed(RAND(35.0f, 40.0f));
@@ -54,7 +54,7 @@ HRESULT InGame::Init()
 
 	// 플레이어 점수
 	_pPlayerScore = new PlayerScore;
-	_pPlayerScore->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pPlayerScore->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pPlayerScore->SetMask(pMaskTexture);
 	_pPlayerScore->SetRect({ 205.0f, 125.0f, 30.0f, 30.0f });
 	_pPlayerScore->SetScale(2.2f, 2.2f);
@@ -63,7 +63,7 @@ HRESULT InGame::Init()
 
 	// 플레이어 그림자
 	_pPlayerShadow = new PlayerShadow;
-	_pPlayerShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pPlayerShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pPlayerShadow->SetMask(pMaskTexture);
 	_pPlayerShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
 	_pPlayerShadow->SetSpeed(300.0f);
@@ -73,7 +73,7 @@ HRESULT InGame::Init()
 
 	// 플레이어
 	_pPlayer = new Player;
-	_pPlayer->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pPlayer->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pPlayer->SetMask(pMaskTexture);
 	_pPlayer->SetRect({ 2.0f, 265.0f, 65.0f, 65.0f });
 	_pPlayer->SetSpeed(300.0f);
@@ -83,7 +83,7 @@ HRESULT InGame::Init()
 
 	// 적 점수
 	_pEnemyScore = new EnemyScore;
-	_pEnemyScore->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pEnemyScore->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pEnemyScore->SetMask(pMaskTexture);
 	_pEnemyScore->SetRect({ 205.0f, 125.0f, 30.0f, 30.0f });
 	_pEnemyScore->SetScale(2.2f, 2.2f);
@@ -92,7 +92,7 @@ HRESULT InGame::Init()
 
 	// 적 그림자
 	_pEnemyShadow = new EnemyShadow;
-	_pEnemyShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pEnemyShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pEnemyShadow->SetMask(pMaskTexture);
 	_pEnemyShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
 	_pEnemyShadow->SetSpeed(300.0f);
@@ -102,7 +102,7 @@ HRESULT InGame::Init()
 
 	// 적
 	_pEnemy = new Enemy;
-	_pEnemy->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite2.png");
+	_pEnemy->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite2.png");
 	_pEnemy->SetMask(pMaskTexture);
 	_pEnemy->SetRect({ 67.0f, 265.0f, -65.0f, 65.0f });
 	_pEnemy->SetSpeed(300.0f);
@@ -112,7 +112,7 @@ HRESULT InGame::Init()
 
 	// 공 그림자
 	_pBallShadow = new BallShadow;
-	_pBallShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pBallShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pBallShadow->SetMask(pMaskTexture);
 	_pBallShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
 	_pBallShadow->SetSpeed(500.0f);
@@ -122,7 +122,7 @@ HRESULT InGame::Init()
 
 	// 공
 	_pBall = new Ball;
-	_pBall->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Mask.hlsl", L"../../Resource/Pikachu/Image/Sprite1.png");
+	_pBall->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pBall->SetMask(pMaskTexture);
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
 	_pBall->SetSpeed(500.0f);
