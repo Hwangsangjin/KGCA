@@ -6,6 +6,7 @@ public:
 	FMOD::System* _pSystem = nullptr;
 	FMOD::Sound* _pSound = nullptr;
 	FMOD::Channel* _pChannel = nullptr;
+	FMOD::Channel* _pChannel2 = nullptr;
 
 	std::wstring _name;
 	std::wstring _buffer;
@@ -23,10 +24,10 @@ public:
 	HRESULT Release();
 
 	HRESULT Load(FMOD::System* pSystem, std::wstring filename);
-	HRESULT PlayBGM(bool isLooping = false);
-	HRESULT PlayEffect(bool isLooping = false);
+	HRESULT PlayBGM(bool isLoop = false);
+	HRESULT PlayEffect(bool isLoop = false);
 	bool IsPlaying();
-	void SetLoop(bool isLooping = false);
+	void SetLoop(bool isLoop = false);
 	void Paused();
 	void Stop();
 	void VolumeUp(float volume = 0.1f);

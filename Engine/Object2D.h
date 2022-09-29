@@ -16,6 +16,7 @@ public:
 	Vector2	_drawSize;
 	Vector2 _imageSize;
 	Vector2 _scale = { 1.0f, 1.0f };
+	Vector2 _velocity = { 1.0f, 1.0f };
 	Vector2 _cameraPosition;
 	Vector2 _cameraViewSize;
 	Texture* _pMaskTexture = nullptr;

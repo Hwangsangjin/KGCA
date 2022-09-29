@@ -39,7 +39,7 @@ HRESULT Sound::Load(FMOD::System* pSystem, std::wstring filename)
 {
     _pSystem = pSystem;
 
-    FMOD_RESULT hr = _pSystem->createSound(to_wm(filename).c_str(), FMOD_LOOP_NORMAL, nullptr, &_pSound);
+    FMOD_RESULT hr = _pSystem->createSound(to_wm(filename).c_str(), FMOD_DEFAULT, nullptr, &_pSound);
     if (hr == FMOD_OK)
     {
         _pSound->getLength(&_totalTime, FMOD_TIMEUNIT_MS);
@@ -48,7 +48,7 @@ HRESULT Sound::Load(FMOD::System* pSystem, std::wstring filename)
     return TRUE;
 }
 
-HRESULT Sound::PlayBGM(bool isLooping)
+HRESULT Sound::PlayBGM(bool isLoop)
 {
     if (IsPlaying() == false)
     {
@@ -57,21 +57,21 @@ HRESULT Sound::PlayBGM(bool isLooping)
         {
             _volume = 0.5f;
             _pChannel->setVolume(_volume);
-            SetLoop(isLooping);
+            SetLoop(isLoop);
         }
     }
 
     return TRUE;
 }
 
-HRESULT Sound::PlayEffect(bool isLooping)
+HRESULT Sound::PlayEffect(bool isLoop)
 {
-    FMOD_RESULT hr = _pSystem->playSound(_pSound, nullptr, false, &_pChannel);
+    FMOD_RESULT hr = _pSystem->playSound(_pSound, nullptr, false, &_pChannel2);
     if (hr == FMOD_OK)
     {
         _volume = 0.5f;
-        _pChannel->setVolume(_volume);
-        SetLoop(isLooping);
+        _pChannel2->setVolume(_volume);
+        SetLoop(isLoop);
     }
 
     return TRUE;
@@ -89,9 +89,9 @@ bool Sound::IsPlaying()
     return isPlaying;
 }
 
-void Sound::SetLoop(bool isLooping)
+void Sound::SetLoop(bool isLoop)
 {
-    if (isLooping)
+    if (isLoop)
     {
         _pSound->setMode(FMOD_LOOP_NORMAL);
     }
