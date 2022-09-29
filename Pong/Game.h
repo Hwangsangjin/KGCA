@@ -24,8 +24,10 @@ private:
 
 	// 패들의 방향
 	int _paddleDir;
+	int _paddleDir2;
 	// 패들의 위치
 	Vector2 _paddlePos;
+	Vector2 _paddlePos2;
 	// 공의 위치
 	Vector2 _ballPos;
 	// 공의 속도

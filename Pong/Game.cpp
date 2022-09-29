@@ -37,6 +37,7 @@ void Game::ProcessInput()
 
     // W, S 키를 기준으로 패들 방향 업데이트
     _paddleDir = 0;
+    _paddleDir2 = 0;
     
     if (state[SDL_SCANCODE_W])
     {
@@ -46,6 +47,16 @@ void Game::ProcessInput()
     if (state[SDL_SCANCODE_S])
     {
         _paddleDir += 1;
+    }
+
+    if (state[SDL_SCANCODE_UP])
+    {
+        _paddleDir2 -= 1;
+    }
+
+    if (state[SDL_SCANCODE_DOWN])
+    {
+        _paddleDir2 += 1;
     }
 }
 
@@ -68,7 +79,7 @@ void Game::UpdateGame()
     // 다음 프레임을 위해 틱값 업데이트
     _ticksCount = SDL_GetTicks();
 
-    // 방향에 따라 패들 위치 업데이트
+    // 패들의 방향에 따라 위치 업데이트
     if (_paddleDir != 0)
     {
         _paddlePos.y += _paddleDir * 300.0f * deltaTime;
@@ -78,10 +89,74 @@ void Game::UpdateGame()
         {
             _paddlePos.y = paddleH / 2.0f + thickness;
         }
-        else if (_paddlePos.y > (768.0f - paddleH / 2.0f - thickness))
+        else if (_paddlePos.y > (600.0f - paddleH / 2.0f - thickness))
         {
-            _paddlePos.y = 768.0f - paddleH / 2.0f - thickness;
+            _paddlePos.y = 600.0f - paddleH / 2.0f - thickness;
         }
+    }
+
+    if (_paddleDir2 != 0)
+    {
+        _paddlePos2.y += _paddleDir2 * 300.0f * deltaTime;
+
+        // 패들이 화면 영역을 벗어나는지를 검증하자!
+        if (_paddlePos2.y < (paddleH / 2.0f + thickness))
+        {
+            _paddlePos2.y = paddleH / 2.0f + thickness;
+        }
+        else if (_paddlePos2.y > (600.0f - paddleH / 2.0f - thickness))
+        {
+            _paddlePos2.y = 600.0f - paddleH / 2.0f - thickness;
+        }
+    }
+
+    // 공의 속도에 따라서 위치 업데이트
+    _ballPos.x += _ballVel.x * deltaTime;
+    _ballPos.y += _ballVel.y * deltaTime;
+
+    // 공의 y 위치와 패들의 y 위치 사이의 차 절대값
+    float diff = _paddlePos.y - _ballPos.y;
+    diff = (diff > 0.0f) ? diff : -diff;
+
+    float diff2 = _paddlePos2.y - _ballPos.y;
+    diff2 = (diff2 > 0.0f) ? diff2 : -diff2;
+
+    // 공이 패들과 충돌하는 경우
+    if (
+        // y 차가 충분히 작고
+        diff <= paddleH / 2.0f &&
+        // 공이 올바른 x 위치에 있고
+        _ballPos.x < 25.0f && _ballPos.x >= 20.0f &&
+        // 공이 왼쪽으로 이동하고 있다면
+        _ballVel.x < 0.0f)
+    {
+        _ballVel.x *= -1.0f;
+    }
+    else if (
+        // y 차가 충분히 작고
+        diff2 <= paddleH / 2.0f &&
+        // 공이 올바른 x 위치에 있고
+        _ballPos.x > 775.0f && _ballPos.x <= 780.0f &&
+        // 공이 왼쪽으로 이동하고 있다면
+        _ballVel.x > 0.0f)
+    {
+        _ballVel.x *= -1.0f;
+    }
+    // 공이 화면 밖으로 나가는 경우(게임 종료)
+    else if (_ballPos.x <= 0.0f || _ballPos.x >= 800.0f)
+    {
+        _isRunning = false;
+    }
+
+    // 공이 상단 벽과 충돌하는 경우
+    if (_ballPos.y <= thickness && _ballVel.y < 0.0f)
+    {
+        _ballVel.y *= -1.0f;
+    }
+    // 공이 하단 벽과 충돌하는 경우
+    else if (_ballPos.y >= (600 - thickness) && _ballVel.y > 0.0f)
+    {
+        _ballVel.y *= -1.0f;
     }
 }
 
@@ -116,13 +191,6 @@ void Game::GenerateOutput()
     wall.y = 600 - thickness;
     SDL_RenderFillRect(_pRenderer, &wall);
 
-    // 오른쪽 벽
-    wall.x = 800 - thickness;
-    wall.y = 0;
-    wall.w = thickness;
-    wall.h = 800;
-    SDL_RenderFillRect(_pRenderer, &wall);
-
     // 패들
     SDL_Rect paddle
     {
@@ -132,6 +200,15 @@ void Game::GenerateOutput()
         static_cast<int>(paddleH)
     };
     SDL_RenderFillRect(_pRenderer, &paddle);
+
+    SDL_Rect paddle2
+    {
+        static_cast<int>(_paddlePos2.x),
+        static_cast<int>(_paddlePos2.y - paddleH / 2),
+        thickness,
+        static_cast<int>(paddleH)
+    };
+    SDL_RenderFillRect(_pRenderer, &paddle2);
 
     // 공
     SDL_Rect ball
@@ -187,6 +264,8 @@ bool Game::Initialize()
     // 오브젝트 설정
     _paddlePos.x = 10.0f;
     _paddlePos.y = 600.0f / 2.0f;
+    _paddlePos2.x = 775.0f;
+    _paddlePos2.y = 600.0f / 2.0f;
     _ballPos.x = 800.0f / 2.0f;
     _ballPos.y = 600.0f / 2.0f;
     _ballVel.x = -200.0f;
