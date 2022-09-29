@@ -51,7 +51,7 @@ State::State(const char* stageData, int size)
 	}
 
 	// 이미지 읽기
-	_image = new Image("Sokoban2.dds");
+	_image = new Image("../../../Resource/Sokoban/Sokoban2.dds");
 }
 
 State::~State()

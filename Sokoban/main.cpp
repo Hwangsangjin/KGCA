@@ -36,7 +36,7 @@ void MainLoop()
 	// 프레임 초기화
 	if (!gState)
 	{
-		File file("StageData.txt");
+		File file("../../../Resource/Sokoban/StageData.txt");
 		if (!(file.GetData()))
 		{
 			// 데이터 없음
