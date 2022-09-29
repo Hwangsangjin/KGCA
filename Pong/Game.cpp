@@ -51,6 +51,38 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
+    // 마지막 프레임 이후로 16ms가 경과할 때까지 대기
+    while (!SDL_TICKS_PASSED(SDL_GetTicks(), _ticksCount + 16))
+        ;
+
+    // 델타 시간은 마지막 프레임 틱값과 현재 프레임 틱값의 차
+    // (초 단위로 변환)
+    float deltaTime = (SDL_GetTicks() - _ticksCount) / 1000.0f;
+
+    // 최대 델타 시간값으로 고정
+    if (deltaTime > 0.05f)
+    {
+        deltaTime = 0.05f;
+    }
+
+    // 다음 프레임을 위해 틱값 업데이트
+    _ticksCount = SDL_GetTicks();
+
+    // 방향에 따라 패들 위치 업데이트
+    if (_paddleDir != 0)
+    {
+        _paddlePos.y += _paddleDir * 300.0f * deltaTime;
+
+        // 패들이 화면 영역을 벗어나는지를 검증하자!
+        if (_paddlePos.y < (paddleH / 2.0f + thickness))
+        {
+            _paddlePos.y = paddleH / 2.0f + thickness;
+        }
+        else if (_paddlePos.y > (768.0f - paddleH / 2.0f - thickness))
+        {
+            _paddlePos.y = 768.0f - paddleH / 2.0f - thickness;
+        }
+    }
 }
 
 void Game::GenerateOutput()
