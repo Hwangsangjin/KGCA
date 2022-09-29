@@ -78,13 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../Library/Debug</OutDir>
-    <IntDir>../../Library/Debug/Engine</IntDir>
+    <OutDir>../../Library/$(ProjectName)/$(Configuration)</OutDir>
+    <IntDir>../../Library/$(ProjectName)/$(Configuration)/Intermediate</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>../../Library/Release/Engine</IntDir>
-    <OutDir>../../Library/Release</OutDir>
+    <IntDir>../../Library/$(ProjectName)/$(Configuration)/Intermediate</IntDir>
+    <OutDir>../../Library/$(ProjectName)/$(Configuration)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -128,7 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -136,8 +136,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/Engine"
-copy "*.lib" "../../Library/Debug"
+      <Command>copy "*.h" "../../Include/$(ProjectName)"
+copy "*.lib" "../../Library/$(ProjectName)/$(Configuration)"
 copy "*.hlsl" "../../Shader"</Command>
     </PostBuildEvent>
     <Lib />
@@ -152,7 +152,7 @@ copy "*.hlsl" "../../Shader"</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -162,8 +162,8 @@ copy "*.hlsl" "../../Shader"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/Engine"
-copy "*.lib" "../../Library/Release"
+      <Command>copy "*.h" "../../Include/$(ProjectName)"
+copy "*.lib" "../../Library/$(ProjectName)/$(Configuration)"
 copy "*.hlsl" "../../Shader"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

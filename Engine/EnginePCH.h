@@ -28,8 +28,8 @@
 #pragma comment (lib, "dxgi")
 #pragma comment (lib, "d2d1")
 #pragma comment (lib, "dwrite")
-#pragma comment(lib, "d3dcompiler.lib")
-#pragma comment(lib, "DirectXTK.lib")
+#pragma comment(lib, "d3dcompiler")
+#pragma comment(lib, "DirectXTK")
 #pragma comment(lib, "fmod_vc")
 
 // extern

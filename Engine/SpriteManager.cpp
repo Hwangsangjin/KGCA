@@ -137,13 +137,6 @@ Sprite& SpriteManager::Get(W_STR str)
 			return *sprite.second;
 		}
 	}
-
-	/*auto iter = _sprites.find(str);
-	if (iter != _sprites.end())
-	{
-		Sprite* pData = iter->second;
-		return *pData;
-	}*/
 }
 
 Sprite* SpriteManager::GetPtr(W_STR str)
@@ -155,13 +148,6 @@ Sprite* SpriteManager::GetPtr(W_STR str)
 			return sprite.second;
 		}
 	}
-
-	/*auto iter = _sprites.find(str);
-	if (iter != _sprites.end())
-	{
-		Sprite* pData = iter->second;
-		return pData;
-	}*/
 
 	return nullptr;
 }
