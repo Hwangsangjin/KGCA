@@ -32,6 +32,13 @@ HRESULT Timer::Frame()
 	_text = L"FPS: ";
 	_text += std::to_wstring((int)_fps);
 
+#ifdef _DEBUG
+	if (_deltaTime >= 1.0f / 60.0f)
+	{
+		_deltaTime = 1.0f / 60.0f;
+	}
+#endif
+
 	return TRUE;
 }
 

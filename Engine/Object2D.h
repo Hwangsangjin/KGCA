@@ -11,12 +11,12 @@ public:
 	Rect _collision;
 	Rect _rect;
 	Rect _uv;
+	Vector2 _scale = { 1.0f, 1.0f };
+	Vector2 _direction = { 0.0f, 0.0f };
 	Vector2 _position;
 	Vector2	_drawPosition;
 	Vector2	_drawSize;
 	Vector2 _imageSize;
-	Vector2 _scale = { 1.0f, 1.0f };
-	Vector2 _velocity = { 0.0f, 0.0f };
 	Vector2 _cameraPosition;
 	Vector2 _cameraViewSize;
 	Texture* _pMaskTexture = nullptr;
