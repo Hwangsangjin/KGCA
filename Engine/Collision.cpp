@@ -58,3 +58,18 @@ bool Collision::RectToInRect(Rect& a, Rect& b)
 
     return false;
 }
+
+bool Collision::CircleToCircle(Circle& a, Circle& b)
+{
+    float sum = a.radius + b.radius;
+    float x = a.cx - b.cx;
+    float y = a.cy - b.cy;
+    float distance = sqrtf(x * x + y * y);
+
+    if (distance <= sum)
+    {
+        return true;
+    }
+
+    return false;
+}

@@ -56,10 +56,31 @@ struct Rect
     }
 };
 
+struct Circle
+{
+    float cx;
+    float cy;
+    float radius;
+
+    Circle() {};
+    Circle(float x, float y, float r)
+    {
+        Set(x, y, r);
+    }
+
+    void Set(float x, float y, float r)
+    {
+        cx = x;
+        cy = y;
+        radius = r;
+    }
+};
+
 class Collision
 {
 public:
     static COLLISION_TYPE RectToRect(Rect& a, Rect& b);
     static bool RectToInRect(Rect& a, Rect& b);
+    static bool CircleToCircle(Circle& a, Circle& b);
 };
 

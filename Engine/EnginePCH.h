@@ -143,6 +143,10 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 #define RESOLUTION_Y 600.0f
 #define HALF         2.0f
 
+#define GRAVITY		9.8f
+#define FRICTION	0.9f
+#define COEFFICIENT	0.9f
+
 #define CORE
 #define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
 #define GAME_WINDOW(s,x,y)  Sample sample; sample.SetWindow(hInstance,L#s,x,y); sample.Run(); return 0;
