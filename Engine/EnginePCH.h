@@ -64,49 +64,6 @@ struct Vertex
 	Vector2 uv;
 };
 
-struct Rect
-{
-	float x;
-	float y;
-	float w;
-	float h;
-
-	bool operator == (Rect& dest)
-	{
-		if (fabs(x - dest.x) < FLT_EPSILON)
-		{
-			if (fabs(y - dest.y) < FLT_EPSILON)
-			{
-				if (fabs(w - dest.w) < FLT_EPSILON)
-				{
-					if (fabs(h - dest.h) < FLT_EPSILON)
-					{
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
-	Rect()
-		: x(0), y(0), w(0), h(0)
-	{}
-	Rect(float x, float y, float w, float h)
-	{
-		Set(x, y, w, h);
-	}
-
-	void  Set(float x, float y, float w, float h)
-	{
-		this->x = x;
-		this->y = y;
-		this->w = w;
-		this->h = h;
-	}
-};
-
 // String Convert
 static std::wstring to_mw(const std::string& _src)
 {
