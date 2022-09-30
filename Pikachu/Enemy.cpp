@@ -6,18 +6,17 @@
 HRESULT Enemy::Frame()
 {
     const float offsetX = 15.0f;
-
-    Vector2 normal{ RESOLUTION_X, RESOLUTION_Y };
+    Vector2 normal{ 1.0f, 1.0f };
     normal.Normalize();
 
     if (INPUT->GetKey(VK_UP))
     {
-        _position.y -= normal.y * DELTA_TIME * _speed;
+        _position.y -= normal.y * _speed * DELTA_TIME;
     }
 
     if (INPUT->GetKey(VK_LEFT))
     {
-        _position.x -= normal.x * DELTA_TIME * _speed;
+        _position.x -= normal.x * _speed * DELTA_TIME;
         if (_position.x + _rect.w - offsetX <= RESOLUTION_X / HALF)
         {
             _position.x = RESOLUTION_X / HALF - _rect.w + offsetX;
@@ -26,7 +25,7 @@ HRESULT Enemy::Frame()
 
     if (INPUT->GetKey(VK_RIGHT))
     {
-        _position.x += normal.x * DELTA_TIME * _speed;
+        _position.x += normal.x * _speed * DELTA_TIME;
         if (_position.x - _rect.w >= RESOLUTION_X)
         {
             _position.x = RESOLUTION_X + _rect.w;

@@ -8,7 +8,7 @@ HRESULT Wave::Frame()
 
     if (!_isFull)
     {
-        _position.y -= 1.0f * DELTA_TIME * _speed;
+        _position.y -= 1.0f * _speed * DELTA_TIME;
 
         if (_timer >= 1.0f)
         {
@@ -18,7 +18,7 @@ HRESULT Wave::Frame()
     }
     else
     {
-        _position.y += 1.0f * DELTA_TIME * _speed;
+        _position.y += 1.0f * _speed * DELTA_TIME;
 
         if (_position.y - _rect.h >= RESOLUTION_Y)
         {

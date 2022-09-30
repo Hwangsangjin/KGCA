@@ -3,14 +3,25 @@
 
 HRESULT InGame::Init()
 {
+	// 타이머
+	_netTimer = GetTickCount64();
+	_playerTimer = GetTickCount64();
+	_enemyTimer = GetTickCount64();
+
 	// 사운드
 	SOUND->Init();
 	SOUND->LoadAll(L"../../../Resource/Pikachu/Sound/");
-	_pBGM = SOUND->GetPtr(L"BGM.wav");
-	_pBGM->PlayBGM(true);
+	_pEffect1 = SOUND->GetPtr(L"Effect1.wav");
+	_pEffect2 = SOUND->GetPtr(L"Effect2.wav");
+	_pEffect3 = SOUND->GetPtr(L"Effect3.wav");
+	_pEffect4 = SOUND->GetPtr(L"Effect4.wav");
+	_pEffect5 = SOUND->GetPtr(L"Effect5.wav");
+	_pEffect6 = SOUND->GetPtr(L"Effect6.wav");
+	_pEffect7 = SOUND->GetPtr(L"Effect7.wav");
 
 	// 텍스처
 	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Map.png");
+	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Net.png");
 	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite1.png");
 	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite2.png");
 	Texture* pMaskTexture = TEXTURE->Load(L"../../../Resource/Pikachu/Image/Mask.png");
@@ -66,7 +77,7 @@ HRESULT InGame::Init()
 	_pPlayerShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pPlayerShadow->SetMask(pMaskTexture);
 	_pPlayerShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
-	_pPlayerShadow->SetSpeed(300.0f);
+	_pPlayerShadow->SetSpeed(400.0f);
 	_pPlayerShadow->SetScale(2.0f, 2.0f);
 	_pPlayerShadow->SetPosition({ 65.0f, 535.0f });
 	AddObject(_pPlayerShadow);
@@ -76,7 +87,7 @@ HRESULT InGame::Init()
 	_pPlayer->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pPlayer->SetMask(pMaskTexture);
 	_pPlayer->SetRect({ 2.0f, 265.0f, 65.0f, 65.0f });
-	_pPlayer->SetSpeed(300.0f);
+	_pPlayer->SetSpeed(400.0f);
 	_pPlayer->SetScale(2.0f, 2.0f);
 	_pPlayer->SetPosition({ 65.0f, 480.0f });
 	AddObject(_pPlayer);
@@ -95,7 +106,7 @@ HRESULT InGame::Init()
 	_pEnemyShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pEnemyShadow->SetMask(pMaskTexture);
 	_pEnemyShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
-	_pEnemyShadow->SetSpeed(300.0f);
+	_pEnemyShadow->SetSpeed(400.0f);
 	_pEnemyShadow->SetScale(2.0f, 2.0f);
 	_pEnemyShadow->SetPosition({ 735.0f, 535.0f });
 	AddObject(_pEnemyShadow);
@@ -105,7 +116,7 @@ HRESULT InGame::Init()
 	_pEnemy->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite2.png");
 	_pEnemy->SetMask(pMaskTexture);
 	_pEnemy->SetRect({ 67.0f, 265.0f, -65.0f, 65.0f });
-	_pEnemy->SetSpeed(300.0f);
+	_pEnemy->SetSpeed(400.0f);
 	_pEnemy->SetScale(-2.0f, 2.0f);
 	_pEnemy->SetPosition({ 735.0f, 480.0f });
 	AddObject(_pEnemy);
@@ -115,9 +126,9 @@ HRESULT InGame::Init()
 	_pBallShadow->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pBallShadow->SetMask(pMaskTexture);
 	_pBallShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
-	_pBallShadow->SetSpeed(500.0f);
+	_pBallShadow->SetSpeed(300.0f);
 	_pBallShadow->SetScale(2.0f, 2.0f);
-	_pBallShadow->SetPosition({ 400.0f, 535.0f });
+	_pBallShadow->SetPosition({ 735.0f, 535.0f });
 	AddObject(_pBallShadow);
 
 	// 공
@@ -125,10 +136,17 @@ HRESULT InGame::Init()
 	_pBall->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pBall->SetMask(pMaskTexture);
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
-	_pBall->SetSpeed(500.0f);
+	_pBall->SetSpeed(300.0f);
 	_pBall->SetScale(2.0f, 2.0f);
-	_pBall->SetPosition({ 400.0f, 200.0f });
+	_pBall->SetPosition({ 200.0f, 200.0f });
 	AddObject(_pBall);
+
+	// 네트
+	_pNet = new Object2D;
+	_pNet->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Net.png");
+	_pNet->SetRect({ 0.0f, 0.0f, 12.0f, 192.0f });
+	_pNet->SetScale(1.0f, 1.0f);
+	_pNet->SetPosition({ 400.0f, 400.0f });
 
 	return TRUE;
 }
@@ -142,6 +160,31 @@ HRESULT InGame::Frame()
 		_pPlayerShadow->_position.x = _pPlayer->_position.x;
 		_pEnemyShadow->_position.x = _pEnemy->_position.x;
 		_pBallShadow->_position.x = _pBall->_position.x;
+		
+		if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+		{
+			_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+		}
+
+		if (GetTickCount64() - _netTimer > 500 && _pBall->NetCollision(*_pNet))
+		{
+			_netTimer = GetTickCount64();
+		}
+
+		if (GetTickCount64() - _playerTimer > 500 && _pBall->ActorCollision(*_pPlayer))
+		{
+			_playerTimer = GetTickCount64();
+		}
+
+		if (_pBall->_isCollision)
+		{
+			AddEffect();
+		}
+
+		if (GetTickCount64() - _enemyTimer > 500 && _pBall->ActorCollision(*_pEnemy))
+		{
+			_enemyTimer = GetTickCount64();
+		}
 
 		pObject->Frame();
 	}
@@ -203,6 +246,7 @@ HRESULT InGame::Release()
 		SAFE_RELEASE(pObject);
 	}
 
+	SAFE_DELETE(_pNet);
 	SAFE_DELETE(_pMap);
 	SAFE_DELETE(_pCloud);
 	SAFE_DELETE(_pWave);

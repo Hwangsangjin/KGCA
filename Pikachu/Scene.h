@@ -5,6 +5,7 @@
 #include "BattleText.h"
 #include "DynamicText.h"
 #include "StaticText.h"
+#include "Net.h"
 #include "Map.h"
 #include "Cloud.h"
 #include "Wave.h"
@@ -38,6 +39,7 @@ protected:
 	DynamicText* _pDynamicText = nullptr;
 	StaticText* _pPokeMonText = nullptr;
 	StaticText* _pCompanyText = nullptr;
+
 	Map* _pMap = nullptr;
 	Cloud* _pCloud = nullptr;
 	Wave* _pWave = nullptr;
@@ -49,6 +51,7 @@ protected:
 	EnemyShadow* _pEnemyShadow = nullptr;
 	Ball* _pBall = nullptr;
 	BallShadow* _pBallShadow = nullptr;
+	Object2D* _pNet = nullptr;
 
 	std::vector<Object*> _pObjects;
 	std::list<Effect*> _pEffects;

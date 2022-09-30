@@ -4,8 +4,8 @@
 Rect Effect::Convert(RECT rect)
 {
 	Rect rt;
-	rt.x = rect.left;
-	rt.y = rect.top;
+	rt.x1 = rect.left;
+	rt.y1 = rect.top;
 	rt.w = rect.right;
 	rt.h = rect.bottom;
 
@@ -31,8 +31,8 @@ HRESULT Effect::Update()
 	_rect = Convert(rect);
 
 	_position += _direction * _speed * DELTA_TIME;
-	_collision.x = _position.x;
-	_collision.y = _position.y;
+	_collision.x1 = _position.x;
+	_collision.y1 = _position.y;
 
 	return TRUE;
 }

@@ -10,12 +10,12 @@ HRESULT Player::Frame()
 
     if (INPUT->GetKey('W'))
     {
-        _position.y -= normal.y * DELTA_TIME * _speed;
+        _position.y -= normal.y * _speed * DELTA_TIME;
     }
 
     if (INPUT->GetKey('A'))
     {
-        _position.x -= normal.x * DELTA_TIME * _speed;
+        _position.x -= normal.x * _speed * DELTA_TIME;
         if (_position.x - _rect.w <= 0)
         {
             _position.x = _rect.w;
@@ -24,7 +24,7 @@ HRESULT Player::Frame()
 
     if (INPUT->GetKey('D'))
     {
-        _position.x += normal.x * DELTA_TIME * _speed;
+        _position.x += normal.x * _speed * DELTA_TIME;
         if (_position.x + _rect.w >= RESOLUTION_X / HALF)
         {
             _position.x = RESOLUTION_X / HALF - _rect.w;

@@ -7,6 +7,7 @@ HRESULT Title::Init()
 	SOUND->Init();
 	SOUND->LoadAll(L"../../../Resource/Pikachu/Sound/");
 	_pBGM = SOUND->GetPtr(L"BGM.wav");
+	_pBGM->SetLoop(true);
 	_pBGM->PlayBGM(true);
 
 	// ≈ÿΩ∫√≥

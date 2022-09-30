@@ -4,7 +4,11 @@
 
 class InGame : public Scene
 {
-public:
+public: 
+	uint64 _netTimer;
+	uint64 _playerTimer;
+	uint64 _enemyTimer;
+
 	// 초기화
 	virtual HRESULT Init() override;
 	// 프레임 계산

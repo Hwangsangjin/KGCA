@@ -42,8 +42,8 @@ void Scene::AddEffect()
 
 	pEffect->_effectTimer = 0.0f;
 	RECT rt = pEffect->_pSprite->_uvs[0];
-	pEffect->_rect.x = rt.left;
-	pEffect->_rect.y = rt.top;
+	pEffect->_rect.x1 = rt.left;
+	pEffect->_rect.y1 = rt.top;
 	pEffect->_rect.w = rt.right;
 	pEffect->_rect.h = rt.bottom;
 
@@ -52,7 +52,7 @@ void Scene::AddEffect()
 
 	if (_pBall)
 	{
-		pEffect->_position = { _pBall->_collision.x + 40.0f, _pBall->_collision.y + 80.0f };
+		pEffect->_position = { _pBall->_collision.cx , _pBall->_collision.cy };
 	}
 
 	pEffect->_step = pEffect->_lifeTime / pEffect->_pSprite->_uvs.size();

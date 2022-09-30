@@ -8,7 +8,7 @@ float Cloud::_timer = 0.0f;
 
 HRESULT Cloud::Frame()
 {
-    _timer += DELTA_TIME * _speed / HALF;
+    _timer += _speed * DELTA_TIME / HALF;
 
     if (!_isFull)
     {
@@ -33,7 +33,7 @@ HRESULT Cloud::Frame()
         }
     }
 
-    _position.x += 1.0f * DELTA_TIME * _speed;
+    _position.x += 1.0f * _speed * DELTA_TIME;
     if (_position.x - _rect.w >= RESOLUTION_X)
     {
         _position.x = 0.0f;
