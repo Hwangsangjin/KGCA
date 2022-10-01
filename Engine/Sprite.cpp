@@ -22,12 +22,23 @@ HRESULT Sprite::Release()
     return TRUE;
 }
 
-HRESULT Sprite::CreateSprite(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring spriteFile)
+HRESULT Sprite::CreateSprite(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
 {
-    Texture* pMaskTexture = TEXTURE->Load(L"../../../Resource/Pikachu/Image/Mask.png");
+    Texture* pMask = TEXTURE->Load(_maskPath);
 
-    CreateObject(pd3dDevice, pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
-    SetMask(pMaskTexture);
+    HR(CreateObject(pd3dDevice, pImmediateContext, _shaderPath, _texturePath));
+    SetMask(pMask);
 
     return TRUE;
+}
+
+HRESULT SpriteTexture::CreateSpriteTextrue(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
+{
+    _pTextures.resize(_textures.size());
+    for (int i = 0; i < _textures.size(); i++)
+    {
+        _pTextures[i] = TEXTURE->Load(_textures[i]);
+    }
+
+    return Sprite::CreateSprite(pd3dDevice, pImmediateContext, name);
 }

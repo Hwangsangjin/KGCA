@@ -6,6 +6,12 @@
 class Object2D : public Object
 {
 public:
+	W_STR _name;
+	UINT _index;
+	W_STR _texturePath;
+	W_STR _maskPath;
+	W_STR _shaderPath;
+
 	float _speed;
 	Circle _circle;
 	Rect _collision;
