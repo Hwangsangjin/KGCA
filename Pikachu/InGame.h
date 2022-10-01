@@ -4,7 +4,7 @@
 
 class InGame : public Scene
 {
-public: 
+public:
 	uint64 _netTimer;
 	uint64 _playerTimer;
 	uint64 _enemyTimer;

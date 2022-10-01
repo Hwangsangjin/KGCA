@@ -55,21 +55,7 @@ HRESULT Ball::Frame()
     return TRUE;
 }
 
-bool Ball::NetCollision(Object2D& object)
-{
-    if (!_isCollision && Collision::RectToRect(this->_rect, object._rect))
-    {
-
-        _isCollision = true;
-    }
-    else
-        _isCollision = false;
-
-
-    return false;
-}
-
-bool Ball::ActorCollision(Object2D& object)
+bool Ball::CheckCollision(Object2D& object)
 {
     if (!_isCollision && Collision::CircleToCircle(this->_circle, object._circle))
     {
@@ -78,13 +64,15 @@ bool Ball::ActorCollision(Object2D& object)
         v1 -= v2;
         v1.Normalize();
         
-        _direction = v1 * 5.0f * COEFFICIENT;
+        _direction.x = v1.x * 3.0f * COEFFICIENT;
+        _direction.y = v1.y * 6.0f * COEFFICIENT;
 
         _isCollision = true;
     }
     else
+    {
         _isCollision = false;
-   
+    }
 
     return false;
 }

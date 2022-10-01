@@ -9,13 +9,14 @@ HRESULT Title::Init()
 	_pBGM = SOUND->GetPtr(L"BGM.wav");
 	_pBGM->SetLoop(true);
 	_pBGM->PlayBGM(true);
+	_pEffect1 = SOUND->GetPtr(L"Effect1.wav");
 
 	// 텍스처
 	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite1.png");
 	Texture* pMaskTexture = TEXTURE->Load(L"../../../Resource/Pikachu/Image/Mask.png");
 
 	// 배경
-	for (size_t y = 0; y < 5; y++)
+	for (size_t y = 0; y < 6; y++)
 	{
 		for (size_t x = 0; x < 6; x++)
 		{
@@ -24,6 +25,7 @@ HRESULT Title::Init()
 			_pBackground->SetRect({ 280.0f, 611.0f, 104.0f, 104.0f });			
 			_pBackground->SetSpeed(100.0f);
 			_pBackground->SetScale(2.0f, 2.0f);
+			_pBackground->SetDirection({ -1.0f, -1.0f });
 			_pBackground->SetPosition({ x * 208.0f, y * 208.0f });
 			_pBackground->init = _pBackground->_position;
 			AddObject(_pBackground);
@@ -46,6 +48,7 @@ HRESULT Title::Init()
 	_pDynamicText->SetRect({ 53.0f, 628.0f, 162.0f, 34.0f });
 	_pDynamicText->SetScale(2.0f, 2.0f);
 	_pDynamicText->SetSpeed(300.0f);
+	_pBackground->SetDirection({ -1.0f, 0.0f });
 	_pDynamicText->SetPosition({ 962.0f, 240.0f });
 	AddObject(_pDynamicText);
 

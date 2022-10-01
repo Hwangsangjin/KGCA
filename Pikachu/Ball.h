@@ -14,8 +14,6 @@ public:
 	bool _isCollision = false;
 
 	virtual HRESULT Frame() override;
-
-	bool NetCollision(Object2D& object);
-	bool ActorCollision(Object2D& object);
+	bool CheckCollision(Object2D& object);
 };
 

@@ -8,7 +8,7 @@ class Effect
 public:
 	Vector2 _position;
 	Vector2 _direction = { 0.0f, 1.0f };
-	float _lifeTime = 1.33f;
+	float _lifeTime = 0.33f;
 	float _speed = 300.0f;
 	UINT _index = 0;
 	UINT _maxIndex = 1;

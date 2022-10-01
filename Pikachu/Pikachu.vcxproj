@@ -170,7 +170,6 @@
     <ClCompile Include="EnemyShadow.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Net.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerShadow.cpp" />
     <ClCompile Include="Sample.cpp" />
@@ -193,7 +192,6 @@
     <ClInclude Include="EnemyShadow.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Net.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerShadow.h" />
     <ClInclude Include="Sample.h" />

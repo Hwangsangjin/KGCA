@@ -5,7 +5,6 @@
 #include "BattleText.h"
 #include "DynamicText.h"
 #include "StaticText.h"
-#include "Net.h"
 #include "Map.h"
 #include "Cloud.h"
 #include "Wave.h"
@@ -32,7 +31,6 @@ protected:
 	Sound* _pEffect4 = nullptr;
 	Sound* _pEffect5 = nullptr;
 	Sound* _pEffect6 = nullptr;
-	Sound* _pEffect7 = nullptr;
 
 	Background* _pBackground = nullptr;
 	BattleText* _pBattleText = nullptr;
@@ -51,7 +49,9 @@ protected:
 	EnemyShadow* _pEnemyShadow = nullptr;
 	Ball* _pBall = nullptr;
 	BallShadow* _pBallShadow = nullptr;
-	Object2D* _pNet = nullptr;
+	Object2D* _pNet1 = nullptr;
+	Object2D* _pNet2 = nullptr;
+	Object2D* _pNet3 = nullptr;
 
 	std::vector<Object*> _pObjects;
 	std::list<Effect*> _pEffects;
@@ -72,6 +72,6 @@ public:
 	void AddObject(Object* pObject);
 
 	// ¿Ã∆Â∆Æ √ﬂ∞°
-	void AddEffect();
+	void AddEffect(Object2D* pObject);
 };
 
