@@ -36,6 +36,7 @@ HRESULT Player::Frame()
 
     }
 
+    SetRect(_rect);
     SetPosition(_position);
 
     return TRUE;
