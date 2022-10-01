@@ -27,6 +27,7 @@ public:
 	void SetRect(Rect rect);
 	void SetSpeed(float speed);
 	void SetScale(float x, float y);
+	void SetDirection(Vector2 direction);
 	void SetPosition(Vector2 position);
 	void SetPosition(Vector2 position, Vector2 cameraPosition);
 	void SetCameraPosition(Vector2 cameraPosition);

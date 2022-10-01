@@ -19,13 +19,12 @@ COLLISION_TYPE Collision::RectToRect(Rect& a, Rect& b)
         {
             // ±³ÁýÇÕ
             float x1, y1, x2, y2;
-            Rect intersect;
-
             x1 = a.x1 > b.x1 ? a.x1 : b.x1;
             y1 = a.y1 > b.y1 ? a.y1 : b.y1;
             x2 = a.x2 < b.x2 ? a.x2 : b.x2;
             y2 = a.y2 < b.y2 ? a.y2 : b.y2;
 
+            Rect intersect;
             intersect.Set(x1, y1, x2 - x1, y2 - y1);
 
             if (intersect == a || intersect == b)

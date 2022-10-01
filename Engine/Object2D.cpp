@@ -35,6 +35,11 @@ void Object2D::SetScale(float x, float y)
     _scale.y = y;
 }
 
+void Object2D::SetDirection(Vector2 direction)
+{
+    _direction = direction;
+}
+
 void Object2D::SetPosition(Vector2 position)
 {
     _position = position;
