@@ -7,34 +7,16 @@ class Image;
 class State
 {
 private:
-	enum Object
-	{
-		OBJ_SPACE,
-		OBJ_WALL,
-		OBJ_BLOCK,
-		OBJ_MAN,
-
-		OBJ_UNKNOWN
-	};
-
-	enum ImageID
-	{
-		IMAGE_ID_PLAYER,
-		IMAGE_ID_WALL,
-		IMAGE_ID_BLOCK,
-		IMAGE_ID_GOAL,
-		IMAGE_ID_SPACE
-	};
-
+	class Object;	// 클래스 선언
 	int _width;
 	int _height;
 
 	Array2D<Object> _objects;
 	Array2D<bool> _flags;
-	Image* _image;
+	Image* _image;	// 이미지
+	int _moveCount;	// 이동 중 카운트
 
 	void SetSize(const char* stageData, int size);
-	void DrawCell(int x, int y, ImageID id) const;
 
 public:
 	State(const char* stageData, int size);

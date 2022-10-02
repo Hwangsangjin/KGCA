@@ -37,6 +37,7 @@ void MainLoop()
 		{
 			// 데이터 없음
 			cout << "Stage file could not be read." << endl;
+			return;
 		}
 
 		gState = new State(file.GetData(), file.GetSize());
