@@ -51,7 +51,7 @@ State::State(const char* stageData, int size)
 	}
 
 	// 이미지 읽기
-	_image = new Image("../../../Resource/Sokoban/Sokoban2.dds");
+	_image = new Image("../../../Resource/Sokoban/Sokoban.dds");
 }
 
 State::~State()
@@ -110,7 +110,7 @@ void State::Update(char input)
 	int h = _height;
 	Array2D<Object>& o = _objects;
 
-	int x, y;
+	int x = -1, y = -1;
 	bool found = false;
 
 	for (y = 0; y < _height; ++y)

@@ -11,8 +11,8 @@ Image::Image(const char* filename)
     , _data(nullptr)
 {
     File f(filename);
-    _width = f.GetUnsigned(16);
     _height = f.GetUnsigned(12);
+    _width = f.GetUnsigned(16);
     _data = new unsigned int[_width * _height];
 
     for (size_t i = 0; i < _width * _height; i++)
@@ -46,12 +46,19 @@ void Image::Draw(int destX, int destY, int srcX, int srcY, int width, int height
     {
         for (size_t x = 0; x < width; x++)
         {
-            unsigned int src = _data[(y + srcY) * _width + (x + srcX)];
-            if (src & 0x80000000)   // 알파 채널이 128이상
-            {
-                unsigned int* dest = &vram[(y + destY) * windowWidth + (x + destX)];
-                *dest = src;
-            }
+            unsigned src = _data[(y + srcY) * _width + (x + srcX)];
+            unsigned* dst = &vram[(y + destY) * windowWidth + (x + destX)];
+            unsigned srcA = (src & 0xff000000) >> 24;
+            unsigned srcR = src & 0xff0000;
+            unsigned srcG = src & 0x00ff00;
+            unsigned srcB = src & 0x0000ff;
+            unsigned dstR = *dst & 0xff0000;
+            unsigned dstG = *dst & 0x00ff00;
+            unsigned dstB = *dst & 0x0000ff;
+            unsigned r = (srcR - dstR) * srcA / 255 + dstR;
+            unsigned g = (srcG - dstG) * srcA / 255 + dstG;
+            unsigned b = (srcB - dstB) * srcA / 255 + dstB;
+            *dst = (r & 0xff0000) | (g & 0x00ff00) | b;
         }
     }
 }
