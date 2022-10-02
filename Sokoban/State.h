@@ -40,7 +40,7 @@ public:
 	State(const char* stageData, int size);
 	~State();
 
-	void Update(char input);
+	void Update(int dx, int dy);
 	void Draw() const;
 	bool IsCleared() const;
 };

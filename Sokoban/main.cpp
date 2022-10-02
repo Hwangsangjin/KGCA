@@ -10,6 +10,10 @@ void MainLoop();
 
 // 전역 변수
 State* gState = nullptr;
+bool gPrevInputA = false;
+bool gPrevInputD = false;
+bool gPrevInputW = false;
+bool gPrevInputS = false;
 
 // 사용자 구현 기능, 내용은 메인 루프로 전달
 namespace GameLib
@@ -23,15 +27,7 @@ namespace GameLib
 // 메인 루프
 void MainLoop()
 {
-	// 종료 버튼이 눌린 경우
-	if (Framework::instance().isEndRequested())
-	{
-		if (gState)
-		{
-			delete gState;
-			gState = nullptr;
-		}
-	}
+	Framework f = Framework::instance();
 
 	// 프레임 초기화
 	if (!gState)
@@ -44,9 +40,6 @@ void MainLoop()
 		}
 
 		gState = new State(file.GetData(), file.GetSize());
-
-		// 렌더
-		gState->Draw();
 	}
 
 	// 클리어 확인
@@ -58,33 +51,53 @@ void MainLoop()
 	}
 
 	// 입력
-	cout << "a:left d:right w:up s:down. command?" << endl; // 작동 설명
-	char input;
-	cin >> input;
+	int dx = 0;
+	int dy = 0;
+	bool inputA = f.isKeyOn('a');
+	bool inputD = f.isKeyOn('d');
+	bool inputW = f.isKeyOn('w');
+	bool inputS = f.isKeyOn('s');
 
-	// 종료키 선택
-	if (input == 'q')
+	if (inputA && (!gPrevInputA))
 	{
-		delete gState;
-		gState = nullptr;
-		Framework::instance().requestEnd();
+		dx -= 1;
+	}
+	else if (inputD && (!gPrevInputD))
+	{
+		dx += 1;
+	}
+	else if (inputW && (!gPrevInputW))
+	{
+		dy -= 1;
+	}
+	else if (inputS && (!gPrevInputS))
+	{
+		dy += 1;
 	}
 
-	// 갱신
-	gState->Update(input);
+	gPrevInputA = inputA;
+	gPrevInputD = inputD;
+	gPrevInputW = inputW;
+	gPrevInputS = inputS;
+
+	// 업데이트
+	gState->Update(dx, dy);
 
 	// 렌더
 	gState->Draw();
 
-	if (cleared)
+	// 종료 버튼이 눌린 경우
+	if (f.isKeyOn('q'))
 	{
-		// 축하 메시지
-		cout << "Congratulation! you win." << endl;
+		f.requestEnd();
+	}
 
-		// 메모리 해제
-		delete gState;
-		gState = nullptr;
+	if (f.isEndRequested())
+	{
+		if (gState)
+		{
+			delete gState;
+			gState = nullptr;
+		}
 	}
 }
-
-

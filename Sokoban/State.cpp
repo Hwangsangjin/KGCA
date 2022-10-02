@@ -93,24 +93,13 @@ void State::DrawCell(int x, int y, ImageID id) const
 	_image->Draw(x * 32, y * 32, id * 32, 0, 32, 32);
 }
 
-void State::Update(char input)
+void State::Update(int dx, int dy)
 {
-	int dx = 0;
-	int dy = 0;
-
-	switch (input)
-	{
-	case 'a': dx = -1; break;	// 왼쪽
-	case 'd': dx = 1; break;	// 오른쪽
-	case 'w': dy = -1; break;	// 위
-	case 's': dy = 1; break;	// 아래
-	}
-
 	int w = _width;
 	int h = _height;
 	Array2D<Object>& o = _objects;
 
-	int x = -1, y = -1;
+	int x, y;
 	bool found = false;
 
 	for (y = 0; y < _height; ++y)
