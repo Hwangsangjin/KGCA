@@ -14,6 +14,7 @@ public:
 	UINT _maxIndex = 1;
 	float _effectTimer = 0.0f;
 	Rect _rect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	Vector2 _scale = { 1.0f, 1.0f };
 	float _step = 1.0f;
 	Rect _collision;
 	Sprite* _pSprite = nullptr;

@@ -4,7 +4,9 @@
 HRESULT InGame::Init()
 {
 	// 타이머
-	_netTimer = GetTickCount64();
+	_netTimer1 = GetTickCount64();
+	_netTimer2 = GetTickCount64();
+	_netTimer3 = GetTickCount64();
 	_playerTimer = GetTickCount64();
 	_enemyTimer = GetTickCount64();
 
@@ -153,6 +155,12 @@ HRESULT InGame::Init()
 
 	// 공
 	_pBall = new Ball;
+	_pBall->_pSprite = SPRITE->GetPtr(L"rtBall");
+
+	_pBall->_index = 0;
+
+	_pBall->_maxIndex = _pBall->_pSprite->_uvs.size();
+
 	_pBall->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pBall->SetMask(pMaskTexture);
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
@@ -173,25 +181,30 @@ HRESULT InGame::Frame()
 		_pPlayerShadow->_position.x = _pPlayer->_position.x;
 		_pEnemyShadow->_position.x = _pEnemy->_position.x;
 		_pBallShadow->_position.x = _pBall->_position.x;
-		
-		if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+
+		//if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+		//{
+		//	_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+		//}
+
+		//if (_pBall->_position.x <= RESOLUTION_X / HALF - _pBall->_rect.w)
+		//{
+		//	_pPlayer->_position.x = _pBall->_position.x - _pBall->_rect.w;
+		//}
+
+		if (GetTickCount64() - _netTimer1 > 500 && _pBall->CheckCollision(*_pNet1))
 		{
-			_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+			_netTimer1 = GetTickCount64();
 		}
 
-		if (GetTickCount64() - _netTimer > 500 && _pBall->CheckCollision(*_pNet1))
+		if (GetTickCount64() - _netTimer2 > 500 && _pBall->CheckCollision(*_pNet2))
 		{
-			_netTimer = GetTickCount64();
+			_netTimer2 = GetTickCount64();
 		}
 
-		if (GetTickCount64() - _netTimer > 500 && _pBall->CheckCollision(*_pNet2))
+		if (GetTickCount64() - _netTimer3 > 500 && _pBall->CheckCollision(*_pNet3))
 		{
-			_netTimer = GetTickCount64();
-		}
-
-		if (GetTickCount64() - _netTimer > 500 && _pBall->CheckCollision(*_pNet3))
-		{
-			_netTimer = GetTickCount64();
+			_netTimer3 = GetTickCount64();
 		}
 
 		if (GetTickCount64() - _playerTimer > 500 && _pBall->CheckCollision(*_pPlayer))
@@ -214,16 +227,18 @@ HRESULT InGame::Frame()
 			AddEffect(_pBall);
 		}
 
-		if (_pBall->_position.y >= 470.0f + _pBall->_rect.h)
+		if (_pBall->_position.y >= 470.0f + _pBall->_rect.h && _pBall->_speed >= 0.1f)
 		{
 			AddEffect(_pBall);
 		}
+
+		//_pBall->Update();
 
 		pObject->Frame();
 	}
 
 	for (auto iter = _pEffects.begin();
-		iter != _pEffects.end(); )
+		iter != _pEffects.end();)
 	{
 		Effect* pEffect = *iter;
 		if (FAILED(pEffect->Update()))
@@ -236,11 +251,20 @@ HRESULT InGame::Frame()
 		iter++;
 	}
 
+	for (auto pEffect : _pEffects)
+	{
+		pEffect->_pSprite->SetScale(1.5f, 1.5f);
+		pEffect->_pSprite->SetRect(pEffect->_rect);
+		pEffect->_pSprite->SetPosition(pEffect->_position);
+	}
+
 	return TRUE;
 }
 
 HRESULT InGame::Render()
 {
+	_pBall->Update();
+
 	for (auto& pObject : _pObjects)
 	{
 		_pImmediateContext->PSSetShaderResources(1, 1, &_pCloud->_pMaskTexture->_pShaderResourceView);

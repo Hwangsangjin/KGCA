@@ -36,11 +36,7 @@ void Scene::AddEffect(Object2D* pObject)
 {
 	Effect* pEffect = new Effect;
 
-	UINT iEffect = 0;
-	if (iEffect == 0)
-	{
-		pEffect->_pSprite = SPRITE->GetPtr(L"rtEffect");
-	}
+	pEffect->_pSprite = SPRITE->GetPtr(L"rtEffect");
 
 	pEffect->_effectTimer = 0.0f;
 	RECT rt = pEffect->_pSprite->_uvs[0];
@@ -52,12 +48,15 @@ void Scene::AddEffect(Object2D* pObject)
 	pEffect->_index = 0;
 	pEffect->_lifeTime = 0.2f;
 	pEffect->_position = { pObject->_collision.cx , pObject->_collision.cy + pObject->_rect.h / HALF };
-
 	pEffect->_step = pEffect->_lifeTime / pEffect->_pSprite->_uvs.size();
 	pEffect->_maxIndex = pEffect->_pSprite->_uvs.size();
 
 	pEffect->_pSprite->SetRect(pEffect->_rect);
 	pEffect->_pSprite->SetPosition(pEffect->_position);
+
+	pEffect->_collision = pEffect->_pSprite->_collision;
+	pEffect->_collision.x1 = pEffect->_position.x;
+	pEffect->_collision.y1 = pEffect->_position.y;
 
 	_pEffects.push_back(pEffect);
 }
