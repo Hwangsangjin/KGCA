@@ -22,7 +22,7 @@ HRESULT Sprite::Release()
     return TRUE;
 }
 
-HRESULT Sprite::CreateSprite(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
+HRESULT Sprite::Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
 {
     Texture* pMask = TEXTURE->Load(_maskPath);
 
@@ -32,7 +32,7 @@ HRESULT Sprite::CreateSprite(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     return TRUE;
 }
 
-HRESULT SpriteTexture::CreateSpriteTextrue(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
+HRESULT SpriteTexture::Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
 {
     _pTextures.resize(_textures.size());
     for (int i = 0; i < _textures.size(); i++)
@@ -40,5 +40,5 @@ HRESULT SpriteTexture::CreateSpriteTextrue(ID3D11Device* pd3dDevice, ID3D11Devic
         _pTextures[i] = TEXTURE->Load(_textures[i]);
     }
 
-    return Sprite::CreateSprite(pd3dDevice, pImmediateContext, name);
+    return Sprite::Load(pd3dDevice, pImmediateContext, name);
 }

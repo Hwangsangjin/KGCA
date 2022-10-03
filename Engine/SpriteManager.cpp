@@ -96,6 +96,7 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 					&rt.left, &rt.top, &rt.right, &rt.bottom);
 				rtList.push_back(rt);
 			}
+
 			m_rtSpriteList.push_back(rtList);
 		}
 		else
@@ -121,10 +122,6 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 
 HRESULT SpriteManager::Load(std::wstring filename)
 {
-	HRESULT hr;
-	UINT iCurrentTexIndex = 0;
-	UINT iCurrentUVIndex = 0;
-
 	m_rtSpriteList.clear();
 	m_szSpriteList.clear();
 	m_iSpriteTypeList.clear();
@@ -139,10 +136,15 @@ HRESULT SpriteManager::Load(std::wstring filename)
 	{
 		if (filelist[ifile] == filename)
 		{
-			return true;
+			return TRUE;
 		}
 	}
+
 	filelist.push_back(filename);
+
+	HRESULT hr;
+	UINT iCurrentTexIndex = 0;
+	UINT iCurrentUVIndex = 0;
 
 	for (size_t i = 0; i < m_rtNameList.size(); i++)
 	{
@@ -175,7 +177,7 @@ HRESULT SpriteManager::Load(std::wstring filename)
 
 		if (pNewSprite)
 		{
-			bool bRet = pNewSprite->CreateSprite(_pd3dDevice, _pImmediateContext, filename);
+			bool bRet = pNewSprite->Load(_pd3dDevice, _pImmediateContext, filename);
 			if (bRet)
 			{
 				m_List.insert(std::make_pair(pNewSprite->_name, std::move(pNewSprite)));
