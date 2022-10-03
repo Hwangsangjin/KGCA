@@ -52,6 +52,7 @@ protected:
 	Object2D* _pNet1 = nullptr;
 	Object2D* _pNet2 = nullptr;
 	Object2D* _pNet3 = nullptr;
+	Object2D* _pNet4 = nullptr;
 
 	std::vector<Object*> _pObjects;
 	std::list<Effect*> _pEffects;

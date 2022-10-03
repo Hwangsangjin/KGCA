@@ -50,23 +50,23 @@ HRESULT Ball::Frame()
             _direction.x *= -1.0f * COEFFICIENT;
         }
     }
+    
+    // 스프라이트
+    _spriteTimer += DELTA_TIME;
+    _spriteMaxIndex = _pSprite->_uvs.size();
 
-    _effectTimer += DELTA_TIME;
-    _index = 0;
-    _maxIndex = _pSprite->_uvs.size();
-
-    if (_step <= _effectTimer)
+    if (_spriteStep <= _spriteTimer)
     {
-        _effectTimer -= _step;
-        _index++;
+        _spriteTimer -= _spriteStep;
+        _spriteIndex++;
     }
 
-    if (_index >= _maxIndex)
+    if (_spriteIndex >= _spriteMaxIndex)
     {
-        0;
+        _spriteIndex = 0;
     }
 
-    RECT rect = _pSprite->_uvs[_index];
+    RECT rect = _pSprite->_uvs[_spriteIndex];
     _rect.x1 = rect.left;
     _rect.y1 = rect.top;
     _rect.w = rect.right;
@@ -100,35 +100,4 @@ bool Ball::CheckCollision(Object2D& object)
     }
 
     return false;
-}
-
-HRESULT Ball::Update()
-{
-    _effectTimer += _speed * DELTA_TIME;
-
-    if (_step <= _effectTimer)
-    {
-        _effectTimer -= _step;
-        _index++;
-    }
-
-    if (_index >= _maxIndex)
-    {
-        _index = 0;
-    }
-
-    RECT rect = _pSprite->_uvs[_index];
-    _rect.x1 = rect.left;
-    _rect.y1 = rect.top;
-    _rect.w = rect.right;
-    _rect.h = rect.bottom;
-
-    Vector2 center;
-    center.x = _pSprite->_rect.w / 2.0f;
-    center.y = _pSprite->_rect.h / 2.0f;
-
-    SetRect(_rect);
-    SetPosition(_position);
-
-    return TRUE;
 }

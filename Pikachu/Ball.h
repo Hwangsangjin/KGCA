@@ -15,15 +15,13 @@ private:
 public:
 	bool _isCollision = false;
 
-	UINT _index = 0;
-	UINT _maxIndex = 1;
-	float _effectTimer = 0.0f;
-	float _step = 1.0f;
 	Sprite* _pSprite = nullptr;
+	UINT _spriteIndex = 0;
+	UINT _spriteMaxIndex = 1;
+	float _spriteTimer = 0.0f;
+	float _spriteStep = 1.0f;
 
 	virtual HRESULT Frame() override;
 	bool CheckCollision(Object2D& object);
-
-	HRESULT Update();
 };
 
