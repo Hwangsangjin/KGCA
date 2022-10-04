@@ -54,6 +54,7 @@ HRESULT Ball::Frame()
     // 스프라이트
     _spriteTimer += DELTA_TIME;
     _spriteMaxIndex = _pSprite->_uvs.size();
+    _spriteStep = 1.0f / _spriteMaxIndex;
 
     if (_spriteStep <= _spriteTimer)
     {
