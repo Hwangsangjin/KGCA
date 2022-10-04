@@ -91,7 +91,7 @@ void Object2D::SetScreenSpace()
     center.y = _rect.h / 2.0f;
 
     _collision.Set(_position.x - center.x * _scale.x, _position.y - center.y * _scale.y, _rect.w * _scale.x, _rect.h * _scale.y);
-    _circle.Set(_position.x, _position.y, 25.0f);
+    _circle.Set(_position.x, _position.y, 30.0f);
 
     _drawPosition.x = (_collision.x1 / rtClient.right) * 2.0f - 1.0f;
     _drawPosition.y = -((_collision.y1 / rtClient.bottom) * 2.0f - 1.0f);
