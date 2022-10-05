@@ -83,7 +83,7 @@ HRESULT Player::Frame()
 
     if (!_isDig)
     {
-        if (_position.y >= groundY && INPUT->GetKey('A') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+        if (_position.y >= groundY && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
         {
             _position.x -= normal.x * _speed * DELTA_TIME;
             if (_position.x - _rect.w <= 0)
@@ -91,14 +91,8 @@ HRESULT Player::Frame()
                 _position.x = _rect.w;
             }
 
-            _pSprite = SPRITE->GetPtr(L"rtPlayerDig");
+            _pSprite = SPRITE->GetPtr(L"rtPlayerLeftDig");
             _isDig = true;
-        }
-
-        if (_spriteIndex >= _spriteMaxIndex)
-        {
-            _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
-            _isDig = false;
         }
     }
 
@@ -112,22 +106,18 @@ HRESULT Player::Frame()
         }
     }
 
-    if (_position.y >= groundY && INPUT->GetKey('D') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+    if (!_isDig)
     {
-        _position.x += normal.x * _speed * DELTA_TIME;
-        if (_position.x + _rect.w >= RESOLUTION_X / HALF)
+        if (_position.y >= groundY && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
         {
-            _position.x = RESOLUTION_X / HALF - _rect.w;
-        }
+            _position.x += normal.x * _speed;
+            if (_position.x + _rect.w >= RESOLUTION_X / HALF)
+            {
+                _position.x = RESOLUTION_X / HALF - _rect.w;
+            }
 
-        _pSprite = SPRITE->GetPtr(L"rtPlayerDig");
-        _isDig = true;
-
-        if (_spriteIndex >= _spriteMaxIndex)
-        {
-            _spriteIndex = 0;
-            _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
-            _isDig = false;
+            _pSprite = SPRITE->GetPtr(L"rtPlayerRightDig");
+            _isDig = true;
         }
     }
 
@@ -144,9 +134,22 @@ HRESULT Player::Frame()
 
     if (_spriteIndex >= _spriteMaxIndex)
     {
-        if (_pSprite->_name == L"rtPlayerDig")
+        if (_isDig)
         {
-            return E_FAIL;
+            _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
+            _isDig = false;
+        }
+        else if (_isWin)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtPlayerWin");
+            _spriteIndex = _spriteMaxIndex - 1;
+            _spriteStep = 1.0f;
+        }
+        else if (_isLose)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtPlayerLose");
+            _spriteIndex = _spriteMaxIndex - 1;
+            _spriteStep = 1.0f;
         }
 
         _spriteIndex = 0;
@@ -172,9 +175,4 @@ bool Player::IsSpike()
 bool Player::IsJump()
 {
     return _isJump;
-}
-
-bool Player::IsDig()
-{
-    return _isDig;
 }

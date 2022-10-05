@@ -19,11 +19,11 @@ HRESULT Sample::Init()
 
 HRESULT Sample::Frame()
 {
-	if (_pScene->_isSinglePlay && INPUT->GetKey(VK_RETURN) == KEY_STATE::DOWN)
+	if (_pScene->_isSinglePlay && _pScene->_isInGame)
 	{
 		_pScene = _pInGame;
 	}
-	else if (_pScene->_isMultiPlay && INPUT->GetKey(VK_RETURN) == KEY_STATE::DOWN)
+	else if (_pScene->_isMultiPlay && _pScene->_isInGame)
 	{
 		_pScene = _pInGame;
 	}

@@ -61,6 +61,12 @@ protected:
 	std::list<Effect*> _pEffects;
 
 public:
+	// 플레이 타입 플래그
+	bool _isSinglePlay = true;
+	bool _isMultiPlay = false;
+
+	bool _isInGame = false;
+
 	// 초기화
 	virtual HRESULT Init();
 	// 프레임 계산
@@ -77,9 +83,5 @@ public:
 
 	// 이펙트 추가
 	void AddEffect(Object2D* pObject);
-
-	// 플레이 타입 플래그
-	bool _isSinglePlay = true;
-	bool _isMultiPlay = false;
 };
 

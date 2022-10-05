@@ -10,7 +10,6 @@ Rect Effect::Convert(RECT rect)
 	rt.h = rect.bottom;
 
 	return rt;
-
 }
 
 HRESULT Effect::Update()

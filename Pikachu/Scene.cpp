@@ -36,7 +36,7 @@ void Scene::AddEffect(Object2D* pObject)
 {
 	Effect* pEffect = new Effect;
 
-	pEffect->_pSprite = SPRITE->GetPtr(L"rtEffect");
+	pEffect->_pSprite = SPRITE->GetPtr(L"rtBallEffect");
 
 	pEffect->_effectTimer = 0.0f;
 	RECT rt = pEffect->_pSprite->_uvs[0];

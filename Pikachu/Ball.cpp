@@ -23,27 +23,33 @@ HRESULT Ball::Frame()
     {
         _isEnemyBall = true;
 
-        _position.y = 470.0f + _rect.h;
+        _position = { RAND(500.0f, 700.0f), 100.0f };
+        _direction = { 0.0f, 0.0f };
 
-        if (_direction.y >= 0.0f)
-        {
-            _direction.y *= -1.0f * COEFFICIENT;
-        }
+        //_position.y = 470.0f + _rect.h;
 
-        _direction.x *= FRICTION;
+        //if (_direction.y >= 0.0f)
+        //{
+        //    _direction.y *= -1.0f * COEFFICIENT;
+        //}
+
+        //_direction.x *= FRICTION;
     }
     else if (_position.y >= 470.0f + _rect.h && _position.x >= 410.0f)
     {
         _isPlayerBall = true;
 
-        _position.y = 470.0f + _rect.h;
+        _position = { RAND(100.0f, 300.0f), 100.0f };
+        _direction = { 0.0f, 0.0f };
 
-        if (_direction.y >= 0.0f)
-        {
-            _direction.y *= -1.0f * COEFFICIENT;
-        }
+        //_position.y = 470.0f + _rect.h;
 
-        _direction.x *= FRICTION;
+        //if (_direction.y >= 0.0f)
+        //{
+        //    _direction.y *= -1.0f * COEFFICIENT;
+        //}
+
+        //_direction.x *= FRICTION;
     }
     // аб
     else if (_position.x <= 0.0f + _rect.w)

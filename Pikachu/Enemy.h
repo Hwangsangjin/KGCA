@@ -16,6 +16,8 @@ public:
 	bool _isJump = false;
 	bool _isSpike = false;
 	bool _isDig = false;
+	bool _isWin = false;
+	bool _isLose = false;
 
 	virtual HRESULT Frame() override;
 

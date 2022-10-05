@@ -91,16 +91,8 @@ HRESULT Enemy::Frame()
                 _position.x = RESOLUTION_X / HALF - _rect.w + offsetX;
             }
 
+            _pSprite = SPRITE->GetPtr(L"rtEnemyRightDig");
             _isDig = true;
-            _pSprite = SPRITE->GetPtr(L"rtEnemyDig");
-        }
-    }
-    else
-    {
-        if (_spriteIndex >= _spriteMaxIndex)
-        {
-            _isDig = false;
-            _pSprite = SPRITE->GetPtr(L"rtEnemyRun");
         }
     }
 
@@ -114,19 +106,18 @@ HRESULT Enemy::Frame()
         }
     }
 
-    if (_position.y >= groundY && INPUT->GetKey(VK_RIGHT) && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+    if (!_isDig)
     {
-        _position.x += normal.x * _speed * DELTA_TIME;
-        if (_position.x - _rect.w >= RESOLUTION_X)
+        if (_position.y >= groundY && INPUT->GetKey(VK_RIGHT) && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
         {
-            _position.x = RESOLUTION_X + _rect.w;
-        }
+            _position.x += normal.x * _speed * DELTA_TIME;
+            if (_position.x - _rect.w >= RESOLUTION_X)
+            {
+                _position.x = RESOLUTION_X + _rect.w;
+            }
 
-        _pSprite = SPRITE->GetPtr(L"rtEnemyDig");
-        if (_spriteIndex >= _spriteMaxIndex)
-        {
-            _spriteIndex = 0;
-            _pSprite = SPRITE->GetPtr(L"rtEnemyRun");
+            _pSprite = SPRITE->GetPtr(L"rtEnemyRightDig");
+            _isDig = true;
         }
     }
 
@@ -143,6 +134,23 @@ HRESULT Enemy::Frame()
 
     if (_spriteIndex >= _spriteMaxIndex)
     {
+        if (_isDig)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtEnemyRun");
+            _isDig = false;
+        }
+        else if (_isWin)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtEnemyWin");
+            _spriteIndex = _spriteMaxIndex - 1;
+
+        }
+        else if (_isLose)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtEnemyLose");
+            _spriteIndex = _spriteMaxIndex - 1;
+        }
+
         _spriteIndex = 0;
     }
 

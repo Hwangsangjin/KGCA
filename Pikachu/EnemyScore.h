@@ -14,6 +14,7 @@ public:
 	float _spriteStep = 1.0f;
 
 	bool _isAddScore = false;
+	bool _isEnemyWin = false;
 
 	virtual HRESULT Frame() override;
 	void AddScore();

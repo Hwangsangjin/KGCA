@@ -10,6 +10,7 @@ HRESULT EnemyScore::Frame()
     if (_spriteIndex >= _spriteMaxIndex)
     {
         _spriteIndex = _spriteMaxIndex - 1;
+        _isEnemyWin = true;
     }
 
     RECT rect = _pSprite->_uvs[_spriteIndex];

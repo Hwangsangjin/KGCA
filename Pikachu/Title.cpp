@@ -117,6 +117,11 @@ HRESULT Title::Frame()
 			_isSinglePlay = false;
 			_isMultiPlay = true;
 		}
+		else if (INPUT->GetKey(VK_RETURN) == KEY_STATE::DOWN)
+		{
+			_pEffect1->PlayEffect();
+			_isInGame = true;
+		}
 
 		pObject->Frame();
 	}

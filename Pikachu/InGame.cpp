@@ -31,13 +31,13 @@ HRESULT InGame::Init()
 	_pNet1->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pNet1->SetRect({ 0.0f, 0.0f, 20.0f, 50.0f });
 	_pNet1->SetScale(1.0f, 1.0f);
-	_pNet1->SetPosition({ 410.0f, 380.0f });
+	_pNet1->SetPosition({ 410.0f, 400.0f });
 	AddObject(_pNet1);
 	_pNet2 = new Object2D;
 	_pNet2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pNet2->SetRect({ 0.0f, 0.0f, 20.0f, 50.0f });
 	_pNet2->SetScale(1.0f, 1.0f);
-	_pNet2->SetPosition({ 410.0f, 420.0f });
+	_pNet2->SetPosition({ 410.0f, 430.0f });
 	AddObject(_pNet2);
 	_pNet3 = new Object2D;
 	_pNet3->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
@@ -49,7 +49,7 @@ HRESULT InGame::Init()
 	_pNet4->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pNet4->SetRect({ 0.0f, 0.0f, 20.0f, 50.0f });
 	_pNet4->SetScale(1.0f, 1.0f);
-	_pNet4->SetPosition({ 410.0f, 500.0f });
+	_pNet4->SetPosition({ 410.0f, 490.0f });
 	AddObject(_pNet4);
 
 	// 맵
@@ -95,7 +95,7 @@ HRESULT InGame::Init()
 	_pBallShadow->SetRect({ 32.0f, 2.0f, 32.0f, 7.0f });
 	_pBallShadow->SetSpeed(300.0f);
 	_pBallShadow->SetScale(2.0f, 2.0f);
-	_pBallShadow->SetPosition({ 100.0f, 535.0f });
+	_pBallShadow->SetPosition({ 400.0f, 535.0f });
 	AddObject(_pBallShadow);
 
 	// 플레이어 그림자
@@ -168,7 +168,7 @@ HRESULT InGame::Init()
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
 	_pBall->SetSpeed(300.0f);
 	_pBall->SetScale(2.0f, 2.0f);
-	_pBall->SetPosition({ 300.0f, 200.0f });
+	_pBall->SetPosition({ 400.0f, 100.0f });
 	AddObject(_pBall);
 
 	return TRUE;
@@ -180,21 +180,26 @@ HRESULT InGame::Frame()
 
 	for (auto& pObject : _pObjects)
 	{
+		// 그림자
 		_pPlayerShadow->_position.x = _pPlayer->_position.x;
 		_pEnemyShadow->_position.x = _pEnemy->_position.x;
 		_pBallShadow->_position.x = _pBall->_position.x;
 
-		//if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
-		//{
-		//	_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
-		//}
+		// 인공지능
+		if (_isSinglePlay)
+		{
+			if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+			{
+				_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+			}
+		}
 
 		// 효과음
-		if (_pPlayer->_isJump && INPUT->GetKey('W') == KEY_STATE::DOWN)
+		if (INPUT->GetKey('W') == KEY_STATE::DOWN)
 		{
 			_pEffect3->PlayEffect();
 		}
-		else if (_pEnemy->_isJump && INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
+		else if (INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
 		{
 			_pEffect3->PlayEffect();
 		}
@@ -209,6 +214,19 @@ HRESULT InGame::Frame()
 		{
 			_pEnemyScore->AddScore();
 			_pBall->_isEnemyBall = false;
+		}
+
+		if (_pPlayerScore->_isPlayerWin)
+		{
+			_pBall->_position = { (-100.0f, -100.0f) };
+			_pPlayer->_isWin = true;
+			_pEnemy->_isLose = true;
+		}
+		else if (_pEnemyScore->_isEnemyWin)
+		{
+			_pBall->_position = { (-100.0f, -100.0f) };
+			_pEnemy->_isWin = true;
+			_pPlayer->_isLose = true;
 		}
 
 		// 네트 충돌
@@ -249,12 +267,19 @@ HRESULT InGame::Frame()
 		}
 
 		// 그라운드 충돌
-		if (_pBall->_position.y >= 470.0f + _pBall->_rect.h && _pBall->IsSpin())
+		if (_pBall->_position.y >= 470.0f)
 		{
 			AddEffect(_pBall);
 		}
 
 		pObject->Frame();
+	}
+
+	for (auto& pEffect : _pEffects)
+	{
+		pEffect->_pSprite->SetRect(pEffect->_rect);
+		pEffect->_pSprite->SetScale(2.0f, 2.0f);
+		pEffect->_pSprite->SetPosition(pEffect->_position);
 	}
 
 	for (auto iter = _pEffects.begin(); iter != _pEffects.end();)
@@ -268,13 +293,6 @@ HRESULT InGame::Frame()
 		}
 
 		iter++;
-	}
-
-	for (auto pEffect : _pEffects)
-	{
-		pEffect->_pSprite->SetScale(1.5f, 1.5f);
-		pEffect->_pSprite->SetRect(pEffect->_rect);
-		pEffect->_pSprite->SetPosition(pEffect->_position);
 	}
 
 	return TRUE;

@@ -13,6 +13,8 @@ public:
 	float _spriteTimer = 0.0f;
 	float _spriteStep = 1.0f;
 
+	bool _isPlayerWin = false;
+
 	virtual HRESULT Frame() override;
 	void AddScore();
 };
