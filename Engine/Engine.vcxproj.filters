@@ -176,9 +176,4 @@
       <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Mask.hlsl">
-      <Filter>소스 파일\Core\Object\Shader</Filter>
-    </None>
-  </ItemGroup>
 </Project>

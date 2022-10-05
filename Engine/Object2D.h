@@ -27,7 +27,10 @@ public:
 	Vector2 _cameraViewSize;
 	Texture* _pMaskTexture = nullptr;
 
+	bool _isCollision = false;
+
 	virtual HRESULT Frame() override;
+	virtual bool CheckCollision(Object2D& object);
 
 	void SetMask(Texture* pMaskTexture);
 	void SetRect(Rect rect);
@@ -41,5 +44,6 @@ public:
 	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
 	void SetScreenSpace();
 	void SetVertexBuffer();
+
 };
 

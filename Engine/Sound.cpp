@@ -39,7 +39,7 @@ HRESULT Sound::Load(FMOD::System* pSystem, std::wstring filename)
 {
     _pSystem = pSystem;
 
-    FMOD_RESULT hr = _pSystem->createSound(to_wm(filename).c_str(), FMOD_DEFAULT, nullptr, &_pSound);
+    FMOD_RESULT hr = _pSystem->createStream(to_wm(filename).c_str(), FMOD_DEFAULT, nullptr, &_pSound);
     if (hr == FMOD_OK)
     {
         _pSound->getLength(&_totalTime, FMOD_TIMEUNIT_MS);
@@ -69,7 +69,7 @@ HRESULT Sound::PlayEffect(bool isLoop)
     FMOD_RESULT hr = _pSystem->playSound(_pSound, nullptr, false, &_pChannel2);
     if (hr == FMOD_OK)
     {
-        _volume = 0.5f;
+        _volume = 1.0f;
         _pChannel2->setVolume(_volume);
         SetLoop(isLoop);
     }

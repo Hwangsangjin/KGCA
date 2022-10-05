@@ -128,7 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -136,9 +136,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/$(ProjectName)"
-copy "*.lib" "../../Library/$(ProjectName)/$(Configuration)"
-copy "*.hlsl" "../../Shader"</Command>
+      <Command>copy "*.h" "../../Include/$(ProjectName)"</Command>
     </PostBuildEvent>
     <Lib />
   </ItemDefinitionGroup>
@@ -152,7 +150,7 @@ copy "*.hlsl" "../../Shader"</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -162,9 +160,7 @@ copy "*.hlsl" "../../Shader"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/$(ProjectName)"
-copy "*.lib" "../../Library/$(ProjectName)/$(Configuration)"
-copy "*.hlsl" "../../Shader"</Command>
+      <Command>copy "*.h" "../../Include/$(ProjectName)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -215,11 +211,6 @@ copy "*.hlsl" "../../Shader"</Command>
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Mask.hlsl">
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
