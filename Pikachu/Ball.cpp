@@ -19,8 +19,23 @@ HRESULT Ball::Frame()
         }
     }
     // 하
-    else if (_position.y >= 470.0f + _rect.h)
+    else if (_position.y >= 470.0f + _rect.h && _position.x <= 410.0f)
     {
+        _isEnemyBall = true;
+
+        _position.y = 470.0f + _rect.h;
+
+        if (_direction.y >= 0.0f)
+        {
+            _direction.y *= -1.0f * COEFFICIENT;
+        }
+
+        _direction.x *= FRICTION;
+    }
+    else if (_position.y >= 470.0f + _rect.h && _position.x >= 410.0f)
+    {
+        _isPlayerBall = true;
+
         _position.y = 470.0f + _rect.h;
 
         if (_direction.y >= 0.0f)
@@ -49,6 +64,12 @@ HRESULT Ball::Frame()
         {
             _direction.x *= -1.0f * COEFFICIENT;
         }
+    }
+    else
+    {
+        _isSpin = false;
+        _isPlayerBall = false;
+        _isEnemyBall = false;
     }
     
     // 스프라이트
@@ -92,6 +113,7 @@ bool Ball::CheckCollision(Object2D& object)
         _direction.y = v1.y * 6.0f * COEFFICIENT;
 
         _isCollision = true;
+        _isSpin = true;
 
         return true;
     }
@@ -101,4 +123,9 @@ bool Ball::CheckCollision(Object2D& object)
     }
 
     return false;
+}
+
+bool Ball::IsSpin()
+{
+    return _isSpin;
 }

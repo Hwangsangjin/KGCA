@@ -10,13 +10,14 @@ HRESULT Title::Init()
 	_pBGM->SetLoop(true);
 	_pBGM->PlayBGM(true);
 	_pEffect1 = SOUND->GetPtr(L"Effect1.wav");
+	_pEffect2 = SOUND->GetPtr(L"Effect2.wav");
 
 	// 텍스처
 	TEXTURE->Load(L"../../../Resource/Pikachu/Image/Sprite1.png");
 	Texture* pMaskTexture = TEXTURE->Load(L"../../../Resource/Pikachu/Image/Mask.png");
 
 	// 배경
-	for (size_t y = 0; y < 6; y++)
+	for (size_t y = 0; y < 5; y++)
 	{
 		for (size_t x = 0; x < 6; x++)
 		{
@@ -42,15 +43,15 @@ HRESULT Title::Init()
 	AddObject(_pBattleText);
 
 	// 피카츄 배구 텍스트
-	_pDynamicText = new DynamicText;
-	_pDynamicText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
-	_pDynamicText->SetMask(pMaskTexture);
-	_pDynamicText->SetRect({ 53.0f, 628.0f, 162.0f, 34.0f });
-	_pDynamicText->SetScale(2.0f, 2.0f);
-	_pDynamicText->SetSpeed(300.0f);
-	_pBackground->SetDirection({ -1.0f, 0.0f });
-	_pDynamicText->SetPosition({ 962.0f, 240.0f });
-	AddObject(_pDynamicText);
+	_pVolleyballText = new DynamicText;
+	_pVolleyballText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
+	_pVolleyballText->SetMask(pMaskTexture);
+	_pVolleyballText->SetRect({ 53.0f, 628.0f, 162.0f, 34.0f });
+	_pVolleyballText->SetScale(2.0f, 2.0f);
+	_pVolleyballText->SetSpeed(300.0f);
+	_pVolleyballText->SetDirection({ -1.0f, 0.0f });
+	_pVolleyballText->SetPosition({ 962.0f, 240.0f });
+	AddObject(_pVolleyballText);
 
 	// 포켓몬스터 텍스트
 	_pPokeMonText = new StaticText;
@@ -70,6 +71,24 @@ HRESULT Title::Init()
 	_pCompanyText->SetPosition({ 400.0f, 550.0f });
 	AddObject(_pCompanyText);
 
+	// 싱글 플레이 텍스트
+	_pSinglePlayText = new SelectText;
+	_pSinglePlayText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
+	_pSinglePlayText->SetMask(pMaskTexture);
+	_pSinglePlayText->SetRect({ 258.0f, 49.0f, 76.0f, 13.0f });
+	_pSinglePlayText->SetScale(3.0f, 3.0f);
+	_pSinglePlayText->SetPosition({ 400.0f, 380.0f });
+	AddObject(_pSinglePlayText);
+
+	// 멀티 플레이 텍스트
+	_pMultiPlayText = new SelectText;
+	_pMultiPlayText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
+	_pMultiPlayText->SetMask(pMaskTexture);
+	_pMultiPlayText->SetRect({ 14.0f, 68.0f, 61.0f, 12.0f });
+	_pMultiPlayText->SetScale(2.0f, 2.0f);
+	_pMultiPlayText->SetPosition({ 400.0f, 430.0f });
+	AddObject(_pMultiPlayText);
+
     return TRUE;
 }
 
@@ -80,6 +99,24 @@ HRESULT Title::Frame()
 	for (auto& pObject : _pObjects)
 	{
 		_pImmediateContext->PSSetShaderResources(1, 1, &_pBattleText->_pMaskTexture->_pShaderResourceView);
+
+		if (INPUT->GetKey('W') == KEY_STATE::DOWN || INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
+		{
+			_pEffect2->PlayEffect();
+			_pSinglePlayText->SetScale(3.0f, 3.0f);
+			_pMultiPlayText->SetScale(2.0f, 2.0f);
+			_isSinglePlay = true;
+			_isMultiPlay = false;
+
+		}
+		else if (INPUT->GetKey('S') == KEY_STATE::DOWN || INPUT->GetKey(VK_DOWN) == KEY_STATE::DOWN)
+		{
+			_pEffect2->PlayEffect();
+			_pSinglePlayText->SetScale(2.0f, 2.0f);
+			_pMultiPlayText->SetScale(3.0f, 3.0f);
+			_isSinglePlay = false;
+			_isMultiPlay = true;
+		}
 
 		pObject->Frame();
 	}
@@ -106,7 +143,11 @@ HRESULT Title::Release()
 
 	SAFE_DELETE(_pBackground);
 	SAFE_DELETE(_pBattleText);
-	SAFE_DELETE(_pDynamicText);
+	SAFE_DELETE(_pVolleyballText);
+	SAFE_DELETE(_pPokeMonText);
+	SAFE_DELETE(_pCompanyText);
+	SAFE_DELETE(_pSinglePlayText);
+	SAFE_DELETE(_pMultiPlayText);
 
     return TRUE;
 }

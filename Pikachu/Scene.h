@@ -5,6 +5,7 @@
 #include "BattleText.h"
 #include "DynamicText.h"
 #include "StaticText.h"
+#include "SelectText.h"
 #include "Map.h"
 #include "Cloud.h"
 #include "Wave.h"
@@ -34,9 +35,11 @@ protected:
 
 	Background* _pBackground = nullptr;
 	BattleText* _pBattleText = nullptr;
-	DynamicText* _pDynamicText = nullptr;
+	DynamicText* _pVolleyballText = nullptr;
 	StaticText* _pPokeMonText = nullptr;
 	StaticText* _pCompanyText = nullptr;
+	SelectText* _pSinglePlayText = nullptr;
+	SelectText* _pMultiPlayText = nullptr;
 
 	Map* _pMap = nullptr;
 	Cloud* _pCloud = nullptr;
@@ -74,5 +77,9 @@ public:
 
 	// 이펙트 추가
 	void AddEffect(Object2D* pObject);
+
+	// 플레이 타입 플래그
+	bool _isSinglePlay = true;
+	bool _isMultiPlay = false;
 };
 

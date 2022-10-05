@@ -1,23 +1,15 @@
 #include "pch.h"
 #include "EnemyScore.h"
-#include "Timer.h"
 #include "SpriteManager.h"
 
 HRESULT EnemyScore::Frame()
 {
     // 스프라이트
-    _spriteTimer += DELTA_TIME;
     _spriteMaxIndex = _pSprite->_uvs.size();
-
-    if (_spriteStep <= _spriteTimer)
-    {
-        _spriteTimer -= _spriteStep;
-        _spriteIndex++;
-    }
 
     if (_spriteIndex >= _spriteMaxIndex)
     {
-        _spriteIndex = 0;
+        _spriteIndex = _spriteMaxIndex - 1;
     }
 
     RECT rect = _pSprite->_uvs[_spriteIndex];
@@ -30,4 +22,9 @@ HRESULT EnemyScore::Frame()
     SetPosition(_position);
 
     return TRUE;
+}
+
+void EnemyScore::AddScore()
+{
+    _spriteIndex++;
 }

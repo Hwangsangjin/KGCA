@@ -80,6 +80,9 @@
     <ClCompile Include="BallShadow.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
+    <ClCompile Include="SelectText.cpp">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -140,6 +143,9 @@
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="EnemyShadow.h">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectText.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>

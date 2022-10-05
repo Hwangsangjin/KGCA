@@ -14,5 +14,6 @@ public:
 	float _spriteStep = 1.0f;
 
 	virtual HRESULT Frame() override;
+	void AddScore();
 };
 

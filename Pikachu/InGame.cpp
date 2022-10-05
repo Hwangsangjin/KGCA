@@ -12,10 +12,6 @@ HRESULT InGame::Init()
 	_enemyTimer = GetTickCount64();
 
 	// 사운드
-	SOUND->Init();
-	SOUND->LoadAll(L"../../../Resource/Pikachu/Sound/");
-	_pEffect1 = SOUND->GetPtr(L"Effect1.wav");
-	_pEffect2 = SOUND->GetPtr(L"Effect2.wav");
 	_pEffect3 = SOUND->GetPtr(L"Effect3.wav");
 	_pEffect4 = SOUND->GetPtr(L"Effect4.wav");
 	_pEffect5 = SOUND->GetPtr(L"Effect5.wav");
@@ -47,13 +43,13 @@ HRESULT InGame::Init()
 	_pNet3->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pNet3->SetRect({ 0.0f, 0.0f, 20.0f, 50.0f });
 	_pNet3->SetScale(1.0f, 1.0f);
-	_pNet3->SetPosition({ 410.0f, 470.0f });
+	_pNet3->SetPosition({ 410.0f, 460.0f });
 	AddObject(_pNet3);
 	_pNet4 = new Object2D;
 	_pNet4->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
 	_pNet4->SetRect({ 0.0f, 0.0f, 20.0f, 50.0f });
 	_pNet4->SetScale(1.0f, 1.0f);
-	_pNet4->SetPosition({ 410.0f, 520.0f });
+	_pNet4->SetPosition({ 410.0f, 500.0f });
 	AddObject(_pNet4);
 
 	// 맵
@@ -172,7 +168,7 @@ HRESULT InGame::Init()
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
 	_pBall->SetSpeed(300.0f);
 	_pBall->SetScale(2.0f, 2.0f);
-	_pBall->SetPosition({ 400.0f, 200.0f });
+	_pBall->SetPosition({ 300.0f, 200.0f });
 	AddObject(_pBall);
 
 	return TRUE;
@@ -188,9 +184,31 @@ HRESULT InGame::Frame()
 		_pEnemyShadow->_position.x = _pEnemy->_position.x;
 		_pBallShadow->_position.x = _pBall->_position.x;
 
-		if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+		//if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+		//{
+		//	_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+		//}
+
+		// 효과음
+		if (_pPlayer->_isJump && INPUT->GetKey('W') == KEY_STATE::DOWN)
 		{
-			_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+			_pEffect3->PlayEffect();
+		}
+		else if (_pEnemy->_isJump && INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
+		{
+			_pEffect3->PlayEffect();
+		}
+
+		// 점수
+		if (_pBall->_isPlayerBall)
+		{
+			_pPlayerScore->AddScore();
+			_pBall->_isPlayerBall = false;
+		}
+		else if (_pBall->_isEnemyBall)
+		{
+			_pEnemyScore->AddScore();
+			_pBall->_isEnemyBall = false;
 		}
 
 		// 네트 충돌
@@ -215,29 +233,23 @@ HRESULT InGame::Frame()
 		}
 
 		// 플레이어 충돌
-		if (GetTickCount64() - _playerTimer > 500 && _pBall->CheckCollision(*_pPlayer))
+		if (GetTickCount64() - _playerTimer > 500 && _pBall->CheckCollision(*_pPlayer) && _pPlayer->IsSpike())
 		{
 			_playerTimer = GetTickCount64();
-		}
-
-		if (_pBall->_isCollision)
-		{
+			_pEffect4->PlayEffect();
 			AddEffect(_pBall);
 		}
 
 		// 적 충돌
-		if (GetTickCount64() - _enemyTimer > 500 && _pBall->CheckCollision(*_pEnemy))
+		if (GetTickCount64() - _enemyTimer > 500 && _pBall->CheckCollision(*_pEnemy) && _pEnemy->IsSpike())
 		{
 			_enemyTimer = GetTickCount64();
-		}
-
-		if (_pBall->_isCollision)
-		{
+			_pEffect4->PlayEffect();
 			AddEffect(_pBall);
 		}
 
 		// 그라운드 충돌
-		if (_pBall->_position.y >= 470.0f + _pBall->_rect.h && _pBall->_speed >= 0.1f)
+		if (_pBall->_position.y >= 470.0f + _pBall->_rect.h && _pBall->IsSpin())
 		{
 			AddEffect(_pBall);
 		}
@@ -306,6 +318,7 @@ HRESULT InGame::Release()
 	SAFE_DELETE(_pNet1);
 	SAFE_DELETE(_pNet2);
 	SAFE_DELETE(_pNet3);
+	SAFE_DELETE(_pNet4);
 	SAFE_DELETE(_pMap);
 	SAFE_DELETE(_pCloud);
 	SAFE_DELETE(_pWave);

@@ -12,7 +12,15 @@ public:
 	UINT _spriteMaxIndex = 1;
 	float _spriteTimer = 0.0f;
 	float _spriteStep = 1.0f;
+	Vector2 _velocity = { 0.0f, 0.0f };
+	bool _isJump = false;
+	bool _isSpike = false;
+	bool _isDig = false;
 
 	virtual HRESULT Frame() override;
+
+	bool IsSpike();
+	bool IsJump();
+	bool IsDig();
 };
 

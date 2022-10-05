@@ -10,14 +10,17 @@ HRESULT Player::Frame()
     normal.Normalize();
 
     // 점프의 처음 속도
-    float jumpSpeed = -700.0f;
+    const float jumpSpeed = -800.0f;
 
     // 점프의 가속도
-    float jumpAccel = 1.0f;
+    const float jumpAccel = 1.0f;
 
     // 그라운드에 있을 때의 Y좌표
     // 착지 판정에 사용한다.
-    float groundY = 485.0f;
+    const float groundY = 485.0f;
+    
+    // 스파이크 판정에 사용하는 네트의 높이
+    const float netY = 400.0f;
 
     // 평상시 상태의 처리
     // isJump는 점프 상태를 표시하는 플래그
@@ -29,19 +32,29 @@ HRESULT Player::Frame()
         // VY는 캐릭터의 Y축 방향의 속도
         if (INPUT->GetKey('W') == KEY_STATE::DOWN)
         {
-            _isJump = true;
             _velocity.y = jumpSpeed;
             _pSprite = SPRITE->GetPtr(L"rtPlayerToss");
+            _isJump = true;
         }
     }
     // 점프 상태의 처리
     else
     {
+        if (_position.y <= netY && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+        {
+            _pSprite = SPRITE->GetPtr(L"rtPlayerSpike");
+            _isSpike = true;
+        }
+
         // Y축 방향의 속도에 가속도를 추가한다.
         _velocity.y += jumpAccel;
 
         // Y좌표 갱신
         _position.y += _velocity.y * DELTA_TIME;
+        if (_position.y <= 200.0f)
+        {
+            _position.y = 200.0f;
+        }
 
         // 착지 판정
         // 캐릭터가 낙하 중이며(Y축 방향의 속도가 양수)
@@ -52,11 +65,13 @@ HRESULT Player::Frame()
         if (_velocity.y > 0 && _position.y >= groundY)
         {
             _isJump = false;
+            _isSpike = false;
             _position.y = groundY;
             _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
         }
     }
 
+    // 좌
     if (INPUT->GetKey('A'))
     {
         _position.x -= normal.x * _speed * DELTA_TIME;
@@ -68,7 +83,7 @@ HRESULT Player::Frame()
 
     if (!_isDig)
     {
-        if (INPUT->GetKey('A') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+        if (_position.y >= groundY && INPUT->GetKey('A') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
         {
             _position.x -= normal.x * _speed * DELTA_TIME;
             if (_position.x - _rect.w <= 0)
@@ -76,19 +91,18 @@ HRESULT Player::Frame()
                 _position.x = _rect.w;
             }
 
-            _isDig = true;
             _pSprite = SPRITE->GetPtr(L"rtPlayerDig");
+            _isDig = true;
         }
-    }
-    else
-    {
+
         if (_spriteIndex >= _spriteMaxIndex)
         {
-            _isDig = false;
             _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
+            _isDig = false;
         }
     }
 
+    // 우
     if (INPUT->GetKey('D'))
     {
         _position.x += normal.x * _speed * DELTA_TIME;
@@ -98,7 +112,7 @@ HRESULT Player::Frame()
         }
     }
 
-    if (INPUT->GetKey('D') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+    if (_position.y >= groundY && INPUT->GetKey('D') && INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
     {
         _position.x += normal.x * _speed * DELTA_TIME;
         if (_position.x + _rect.w >= RESOLUTION_X / HALF)
@@ -107,15 +121,14 @@ HRESULT Player::Frame()
         }
 
         _pSprite = SPRITE->GetPtr(L"rtPlayerDig");
+        _isDig = true;
+
         if (_spriteIndex >= _spriteMaxIndex)
         {
+            _spriteIndex = 0;
             _pSprite = SPRITE->GetPtr(L"rtPlayerRun");
-        }   
-    }
-
-    if (INPUT->GetKey(VK_SPACE))
-    {
-
+            _isDig = false;
+        }
     }
 
     // 스프라이트
@@ -131,6 +144,11 @@ HRESULT Player::Frame()
 
     if (_spriteIndex >= _spriteMaxIndex)
     {
+        if (_pSprite->_name == L"rtPlayerDig")
+        {
+            return E_FAIL;
+        }
+
         _spriteIndex = 0;
     }
 
@@ -144,4 +162,19 @@ HRESULT Player::Frame()
     SetPosition(_position);
 
     return TRUE;
+}
+
+bool Player::IsSpike()
+{
+    return _isSpike;
+}
+
+bool Player::IsJump()
+{
+    return _isJump;
+}
+
+bool Player::IsDig()
+{
+    return _isDig;
 }

@@ -144,6 +144,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,6 +177,7 @@
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="PlayerScore.cpp" />
+    <ClCompile Include="SelectText.cpp" />
     <ClCompile Include="StaticText.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Wave.cpp" />
@@ -197,6 +200,7 @@
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="PlayerScore.h" />
+    <ClInclude Include="SelectText.h" />
     <ClInclude Include="StaticText.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Wave.h" />
