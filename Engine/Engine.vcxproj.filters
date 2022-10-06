@@ -113,6 +113,9 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>소스 파일\Precompiled</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -175,5 +178,21 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Resource\Pikachu\Icon\Icon1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\Resource\Pikachu\Icon\Icon2.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\Resource\Pikachu\Icon\Pikachu.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
