@@ -7,6 +7,8 @@ class Sprite;
 class Ball : public Object2D
 {
 public:
+	Vector2 _force = { 0.0f, 0.0f };
+
 	Sprite* _pSprite = nullptr;
 	UINT _spriteIndex = 0;
 	UINT _spriteMaxIndex = 1;
@@ -21,6 +23,7 @@ public:
 
 	virtual HRESULT Frame() override;
 	virtual bool CheckCollision(Object2D& object);
+	void AddForce(Vector2 force);
 	bool IsSpin();
 };
 

@@ -6,6 +6,8 @@
 #include "DynamicText.h"
 #include "StaticText.h"
 #include "SelectText.h"
+#include "GameStartText.h"
+#include "GameOverText.h"
 #include "Map.h"
 #include "Cloud.h"
 #include "Wave.h"
@@ -40,6 +42,8 @@ protected:
 	StaticText* _pCompanyText = nullptr;
 	SelectText* _pSinglePlayText = nullptr;
 	SelectText* _pMultiPlayText = nullptr;
+	GameStartText* _pGameStartText = nullptr;
+	GameOverText* _pGameOverText = nullptr;
 
 	Map* _pMap = nullptr;
 	Cloud* _pCloud = nullptr;
@@ -61,11 +65,11 @@ protected:
 	std::list<Effect*> _pEffects;
 
 public:
-	// 플레이 타입 플래그
-	bool _isSinglePlay = true;
-	bool _isMultiPlay = false;
+	// 플래그
+	bool _isSelect = false;
 
-	bool _isInGame = false;
+	bool _isGameStart = false;
+	bool _isGameOver = false;
 
 	// 초기화
 	virtual HRESULT Init();

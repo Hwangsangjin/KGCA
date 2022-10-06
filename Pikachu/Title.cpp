@@ -98,29 +98,22 @@ HRESULT Title::Frame()
 
 	for (auto& pObject : _pObjects)
 	{
-		_pImmediateContext->PSSetShaderResources(1, 1, &_pBattleText->_pMaskTexture->_pShaderResourceView);
-
 		if (INPUT->GetKey('W') == KEY_STATE::DOWN || INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
 		{
 			_pEffect2->PlayEffect();
 			_pSinglePlayText->SetScale(3.0f, 3.0f);
 			_pMultiPlayText->SetScale(2.0f, 2.0f);
-			_isSinglePlay = true;
-			_isMultiPlay = false;
-
 		}
 		else if (INPUT->GetKey('S') == KEY_STATE::DOWN || INPUT->GetKey(VK_DOWN) == KEY_STATE::DOWN)
 		{
 			_pEffect2->PlayEffect();
 			_pSinglePlayText->SetScale(2.0f, 2.0f);
 			_pMultiPlayText->SetScale(3.0f, 3.0f);
-			_isSinglePlay = false;
-			_isMultiPlay = true;
 		}
 		else if (INPUT->GetKey(VK_RETURN) == KEY_STATE::DOWN)
 		{
 			_pEffect1->PlayEffect();
-			_isInGame = true;
+			_isSelect = true;
 		}
 
 		pObject->Frame();
@@ -133,6 +126,13 @@ HRESULT Title::Render()
 {
 	for (auto& pObject : _pObjects)
 	{
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pBattleText->_pMaskTexture->_pShaderResourceView);
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pVolleyballText->_pMaskTexture->_pShaderResourceView);
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pPokeMonText->_pMaskTexture->_pShaderResourceView);
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pCompanyText->_pMaskTexture->_pShaderResourceView);
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pSinglePlayText->_pMaskTexture->_pShaderResourceView);
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pMultiPlayText->_pMaskTexture->_pShaderResourceView);
+
 		pObject->Render();
 	}
 

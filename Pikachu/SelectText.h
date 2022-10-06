@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Object2D.h"
 
 class SelectText : public Object2D

@@ -5,7 +5,7 @@
 
 HRESULT Ball::Frame()
 {
-    _direction.y += GRAVITY * DELTA_TIME;
+    _direction.y += GRAVITY * DELTA_TIME / HALF;
     _position += _direction * _speed * DELTA_TIME;
 
     // 상
@@ -23,7 +23,7 @@ HRESULT Ball::Frame()
     {
         _isEnemyBall = true;
 
-        _position = { RAND(500.0f, 700.0f), 100.0f };
+        _position = { RAND(500.0f, 700.0f), 50.0f };
         _direction = { 0.0f, 0.0f };
 
         //_position.y = 470.0f + _rect.h;
@@ -39,7 +39,7 @@ HRESULT Ball::Frame()
     {
         _isPlayerBall = true;
 
-        _position = { RAND(100.0f, 300.0f), 100.0f };
+        _position = { RAND(100.0f, 300.0f), 50.0f };
         _direction = { 0.0f, 0.0f };
 
         //_position.y = 470.0f + _rect.h;
@@ -70,12 +70,6 @@ HRESULT Ball::Frame()
         {
             _direction.x *= -1.0f * COEFFICIENT;
         }
-    }
-    else
-    {
-        _isSpin = false;
-        _isPlayerBall = false;
-        _isEnemyBall = false;
     }
     
     // 스프라이트
@@ -116,7 +110,7 @@ bool Ball::CheckCollision(Object2D& object)
         v1.Normalize();
         
         _direction.x = v1.x * 3.0f * COEFFICIENT;
-        _direction.y = v1.y * 6.0f * COEFFICIENT;
+        _direction.y = v1.y * 4.0f * COEFFICIENT;
 
         _isCollision = true;
         _isSpin = true;
@@ -126,9 +120,16 @@ bool Ball::CheckCollision(Object2D& object)
     else
     {
         _isCollision = false;
+        _isSpin = false;
     }
 
     return false;
+}
+
+void Ball::AddForce(Vector2 force)
+{
+    //_force = force;
+    _direction += force;
 }
 
 bool Ball::IsSpin()

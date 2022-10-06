@@ -168,8 +168,26 @@ HRESULT InGame::Init()
 	_pBall->SetRect({ 88.0f, 158.0f, 40.0f, 40.0f });
 	_pBall->SetSpeed(300.0f);
 	_pBall->SetScale(2.0f, 2.0f);
-	_pBall->SetPosition({ 400.0f, 100.0f });
+	_pBall->SetPosition({ 400.0f, 50.0f });
 	AddObject(_pBall);
+
+	// 게임 시작 텍스트
+	_pGameStartText = new GameStartText;
+	_pGameStartText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
+	_pGameStartText->SetMask(pMaskTexture);
+	_pGameStartText->SetRect({ 15.0f, 93.0f, 56.0f, 15.0f });
+	_pGameStartText->SetSpeed(5.0f);
+	_pGameStartText->SetScale(3.0f, 3.0f);
+	_pGameStartText->SetPosition({ 400.0f, 200.0f });
+
+	// 게임 종료 텍스트
+	_pGameOverText = new GameOverText;
+	_pGameOverText->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Mask.hlsl", L"../../../Resource/Pikachu/Image/Sprite1.png");
+	_pGameOverText->SetMask(pMaskTexture);
+	_pGameOverText->SetRect({ 126.0f, 67.0f, 93.0f, 17.0f });
+	_pGameOverText->SetSpeed(5.0f);
+	_pGameOverText->SetScale(10.0f, 10.0f);
+	_pGameOverText->SetPosition({ 400.0f, 200.0f });
 
 	return TRUE;
 }
@@ -178,121 +196,145 @@ HRESULT InGame::Frame()
 {
 	SOUND->Frame();
 
-	for (auto& pObject : _pObjects)
+	if (!_isGameStart)
 	{
-		// 그림자
-		_pPlayerShadow->_position.x = _pPlayer->_position.x;
-		_pEnemyShadow->_position.x = _pEnemy->_position.x;
-		_pBallShadow->_position.x = _pBall->_position.x;
-
-		// 인공지능
-		if (_isSinglePlay)
+		_pGameStartText->Frame();
+		if (_pGameStartText->_isFull)
 		{
-			if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+			_isGameStart = true;
+		}
+	}
+
+	if (_isGameStart)
+	{
+		for (auto& pObject : _pObjects)
+		{
+			// 그림자
+			_pPlayerShadow->_position.x = _pPlayer->_position.x;
+			_pEnemyShadow->_position.x = _pEnemy->_position.x;
+			_pBallShadow->_position.x = _pBall->_position.x;
+
+			// 인공지능
+			if (!_isGameOver)
 			{
-				_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+				if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+				{
+					_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+				}
 			}
+
+			// 효과음
+			if (INPUT->GetKey('W') == KEY_STATE::DOWN)
+			{
+				_pEffect3->PlayEffect();
+			}
+			else if (INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
+			{
+				_pEffect3->PlayEffect();
+			}
+
+			// 점수
+			if (_pBall->_isPlayerBall)
+			{
+				_pEffect6->PlayEffect();
+				_pPlayerScore->AddScore();
+				_pBall->_isPlayerBall = false;
+			}
+			else if (_pBall->_isEnemyBall)
+			{
+				_pEffect6->PlayEffect();
+				_pEnemyScore->AddScore();
+				_pBall->_isEnemyBall = false;
+			}
+
+			if (_pPlayerScore->_isPlayerWin)
+			{
+				_pPlayer->_isWin = true;
+				_pEnemy->_isLose = true;
+				_isGameOver = true;
+			}
+			else if (_pEnemyScore->_isEnemyWin)
+			{
+				_pEnemy->_isWin = true;
+				_pPlayer->_isLose = true;
+				_isGameOver = true;
+			}
+
+			// 네트 충돌
+			if (GetTickCount64() - _netTimer1 > 500 && _pBall->CheckCollision(*_pNet1))
+			{
+				_netTimer1 = GetTickCount64();
+			}
+
+			if (GetTickCount64() - _netTimer2 > 500 && _pBall->CheckCollision(*_pNet2))
+			{
+				_netTimer2 = GetTickCount64();
+			}
+
+			if (GetTickCount64() - _netTimer3 > 500 && _pBall->CheckCollision(*_pNet3))
+			{
+				_netTimer3 = GetTickCount64();
+			}
+
+			if (GetTickCount64() - _netTimer4 > 500 && _pBall->CheckCollision(*_pNet4))
+			{
+				_netTimer4 = GetTickCount64();
+			}
+
+			// 플레이어 충돌
+			if (GetTickCount64() - _playerTimer > 500 && _pBall->CheckCollision(*_pPlayer) && _pPlayer->IsSpike())
+			{
+				_playerTimer = GetTickCount64();
+				_pEffect4->PlayEffect();
+				_pEffect5->PlayEffect();
+				_pBall->AddForce({ 2.0f, 0.0f });
+				AddEffect(_pBall);
+			}
+
+			// 적 충돌
+			if (GetTickCount64() - _enemyTimer > 500 && _pBall->CheckCollision(*_pEnemy) && _pEnemy->IsSpike())
+			{
+				_enemyTimer = GetTickCount64();
+				_pEffect4->PlayEffect();
+				_pEffect5->PlayEffect();
+				_pBall->AddForce({ -2.0f, 0.0f });
+				AddEffect(_pBall);
+			}
+
+			// 그라운드 충돌
+			if (_pBall->_position.y >= 470.0f)
+			{
+				AddEffect(_pBall);
+			}
+
+			pObject->Frame();
 		}
 
-		// 효과음
-		if (INPUT->GetKey('W') == KEY_STATE::DOWN)
+		for (auto& pEffect : _pEffects)
 		{
-			_pEffect3->PlayEffect();
-		}
-		else if (INPUT->GetKey(VK_UP) == KEY_STATE::DOWN)
-		{
-			_pEffect3->PlayEffect();
+			pEffect->_pSprite->SetRect(pEffect->_rect);
+			pEffect->_pSprite->SetScale(2.0f, 2.0f);
+			pEffect->_pSprite->SetPosition(pEffect->_position);
 		}
 
-		// 점수
-		if (_pBall->_isPlayerBall)
+		for (auto iter = _pEffects.begin(); iter != _pEffects.end();)
 		{
-			_pPlayerScore->AddScore();
-			_pBall->_isPlayerBall = false;
-		}
-		else if (_pBall->_isEnemyBall)
-		{
-			_pEnemyScore->AddScore();
-			_pBall->_isEnemyBall = false;
-		}
+			Effect* pEffect = *iter;
+			if (FAILED(pEffect->Update()))
+			{
+				delete pEffect;
+				iter = _pEffects.erase(iter);
+				continue;
+			}
 
-		if (_pPlayerScore->_isPlayerWin)
-		{
-			_pBall->_position = { (-100.0f, -100.0f) };
-			_pPlayer->_isWin = true;
-			_pEnemy->_isLose = true;
+			iter++;
 		}
-		else if (_pEnemyScore->_isEnemyWin)
-		{
-			_pBall->_position = { (-100.0f, -100.0f) };
-			_pEnemy->_isWin = true;
-			_pPlayer->_isLose = true;
-		}
-
-		// 네트 충돌
-		if (GetTickCount64() - _netTimer1 > 500 && _pBall->CheckCollision(*_pNet1))
-		{
-			_netTimer1 = GetTickCount64();
-		}
-
-		if (GetTickCount64() - _netTimer2 > 500 && _pBall->CheckCollision(*_pNet2))
-		{
-			_netTimer2 = GetTickCount64();
-		}
-
-		if (GetTickCount64() - _netTimer3 > 500 && _pBall->CheckCollision(*_pNet3))
-		{
-			_netTimer3 = GetTickCount64();
-		}
-
-		if (GetTickCount64() - _netTimer4 > 500 && _pBall->CheckCollision(*_pNet4))
-		{
-			_netTimer4 = GetTickCount64();
-		}
-
-		// 플레이어 충돌
-		if (GetTickCount64() - _playerTimer > 500 && _pBall->CheckCollision(*_pPlayer) && _pPlayer->IsSpike())
-		{
-			_playerTimer = GetTickCount64();
-			_pEffect4->PlayEffect();
-			AddEffect(_pBall);
-		}
-
-		// 적 충돌
-		if (GetTickCount64() - _enemyTimer > 500 && _pBall->CheckCollision(*_pEnemy) && _pEnemy->IsSpike())
-		{
-			_enemyTimer = GetTickCount64();
-			_pEffect4->PlayEffect();
-			AddEffect(_pBall);
-		}
-
-		// 그라운드 충돌
-		if (_pBall->_position.y >= 470.0f)
-		{
-			AddEffect(_pBall);
-		}
-
-		pObject->Frame();
 	}
 
-	for (auto& pEffect : _pEffects)
+	if (_isGameOver)
 	{
-		pEffect->_pSprite->SetRect(pEffect->_rect);
-		pEffect->_pSprite->SetScale(2.0f, 2.0f);
-		pEffect->_pSprite->SetPosition(pEffect->_position);
-	}
-
-	for (auto iter = _pEffects.begin(); iter != _pEffects.end();)
-	{
-		Effect* pEffect = *iter;
-		if (FAILED(pEffect->Update()))
-		{
-			delete pEffect;
-			iter = _pEffects.erase(iter);
-			continue;
-		}
-
-		iter++;
+		_pGameOverText->Frame();
+		_pBall->_position = { (410.0f, -300.0f) };
 	}
 
 	return TRUE;
@@ -323,6 +365,18 @@ HRESULT InGame::Render()
 		pEffect->_pSprite->PostRender();
 	}
 
+	if (!_isGameStart)
+	{
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pGameStartText->_pMaskTexture->_pShaderResourceView);
+		_pGameStartText->Render();
+	}
+
+	if (_isGameOver)
+	{
+		_pImmediateContext->PSSetShaderResources(1, 1, &_pGameOverText->_pMaskTexture->_pShaderResourceView);
+		_pGameOverText->Render();
+	}
+
 	return TRUE;
 }
 
@@ -333,6 +387,8 @@ HRESULT InGame::Release()
 		SAFE_RELEASE(pObject);
 	}
 
+	SAFE_DELETE(_pGameStartText);
+	SAFE_DELETE(_pGameOverText);
 	SAFE_DELETE(_pNet1);
 	SAFE_DELETE(_pNet2);
 	SAFE_DELETE(_pNet3);

@@ -7,7 +7,7 @@ HRESULT EnemyScore::Frame()
     // 스프라이트
     _spriteMaxIndex = _pSprite->_uvs.size();
 
-    if (_spriteIndex >= _spriteMaxIndex)
+    if (_spriteIndex >= _spriteMaxIndex - 1)
     {
         _spriteIndex = _spriteMaxIndex - 1;
         _isEnemyWin = true;

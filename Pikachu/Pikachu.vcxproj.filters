@@ -83,6 +83,12 @@
     <ClCompile Include="SelectText.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameStartText.cpp">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverText.cpp">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -146,6 +152,12 @@
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="SelectText.h">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStartText.h">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverText.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>

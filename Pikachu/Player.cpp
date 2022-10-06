@@ -142,14 +142,10 @@ HRESULT Player::Frame()
         else if (_isWin)
         {
             _pSprite = SPRITE->GetPtr(L"rtPlayerWin");
-            _spriteIndex = _spriteMaxIndex - 1;
-            _spriteStep = 1.0f;
         }
         else if (_isLose)
         {
             _pSprite = SPRITE->GetPtr(L"rtPlayerLose");
-            _spriteIndex = _spriteMaxIndex - 1;
-            _spriteStep = 1.0f;
         }
 
         _spriteIndex = 0;

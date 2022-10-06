@@ -19,11 +19,7 @@ HRESULT Sample::Init()
 
 HRESULT Sample::Frame()
 {
-	if (_pScene->_isSinglePlay && _pScene->_isInGame)
-	{
-		_pScene = _pInGame;
-	}
-	else if (_pScene->_isMultiPlay && _pScene->_isInGame)
+	if (_pScene->_isSelect)
 	{
 		_pScene = _pInGame;
 	}

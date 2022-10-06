@@ -66,6 +66,7 @@ HRESULT Enemy::Frame()
         if (_velocity.y > 0 && _position.y >= groundY)
         {
             _isJump = false;
+            _isSpike = false;
             _position.y = groundY;
             _pSprite = SPRITE->GetPtr(L"rtEnemyRun");
         }
@@ -142,13 +143,10 @@ HRESULT Enemy::Frame()
         else if (_isWin)
         {
             _pSprite = SPRITE->GetPtr(L"rtEnemyWin");
-            _spriteIndex = _spriteMaxIndex - 1;
-
         }
         else if (_isLose)
         {
             _pSprite = SPRITE->GetPtr(L"rtEnemyLose");
-            _spriteIndex = _spriteMaxIndex - 1;
         }
 
         _spriteIndex = 0;
