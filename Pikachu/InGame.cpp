@@ -214,14 +214,14 @@ HRESULT InGame::Frame()
 			_pEnemyShadow->_position.x = _pEnemy->_position.x;
 			_pBallShadow->_position.x = _pBall->_position.x;
 
-			// 인공지능
-			if (!_isGameOver)
-			{
-				if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
-				{
-					_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
-				}
-			}
+			//// 인공지능
+			//if (!_isGameOver)
+			//{
+			//	if (_pBall->_position.x >= RESOLUTION_X / HALF + _pBall->_rect.w)
+			//	{
+			//		_pEnemy->_position.x = _pBall->_position.x + _pBall->_rect.w;
+			//	}
+			//}
 
 			// 효과음
 			if (INPUT->GetKey('W') == KEY_STATE::DOWN)
