@@ -79,6 +79,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pong", "Pong\Pong.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateEffect", "CreateEffect\CreateEffect.vcxproj", "{4FD4E317-27A0-475E-A7F8-A26013E8F454}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpaceShip", "SpaceShip\SpaceShip.vcxproj", "{678903C6-7D24-4B21-9704-BCA7C8C8715B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -359,6 +361,14 @@ Global
 		{4FD4E317-27A0-475E-A7F8-A26013E8F454}.Release|x64.Build.0 = Release|x64
 		{4FD4E317-27A0-475E-A7F8-A26013E8F454}.Release|x86.ActiveCfg = Release|Win32
 		{4FD4E317-27A0-475E-A7F8-A26013E8F454}.Release|x86.Build.0 = Release|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Debug|x64.ActiveCfg = Debug|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Debug|x64.Build.0 = Debug|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Debug|x86.ActiveCfg = Debug|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Debug|x86.Build.0 = Debug|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Release|x64.ActiveCfg = Release|x64
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Release|x64.Build.0 = Release|x64
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Release|x86.ActiveCfg = Release|Win32
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -398,6 +408,7 @@ Global
 		{DE0D55CE-2858-4DA8-AA69-4F7CBEA21710} = {8D1EF29E-75E5-4127-8844-36E70416DEDA}
 		{92BE0D1E-9668-4851-A726-1D6B613477C7} = {8D1EF29E-75E5-4127-8844-36E70416DEDA}
 		{4FD4E317-27A0-475E-A7F8-A26013E8F454} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
+		{678903C6-7D24-4B21-9704-BCA7C8C8715B} = {8D1EF29E-75E5-4127-8844-36E70416DEDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8687645-F4EE-4A93-BE97-7DD2357B4FDA}
