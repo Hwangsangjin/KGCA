@@ -28,8 +28,22 @@ public:
 	// 특정 액터에 특화된 업데이트 코드 (오버라이딩 가능)
 	virtual void UpdateActor(float deltaTime);
 
-	// 
+	// 게터와 세터
 	const Vector2& GetPosition() const { return _position; }
+	void SetPosition(const Vector2& position) { _position = position; }
+	float GetScale() const { return _scale; }
+	void SetScale(float scale) { _scale = scale; }
+	float GetRotation() const { return _rotation; }
+	void SetRotation(float rotation) { _rotation = rotation; }
+
+	State GetState() const { return _state; }
+	void SetState(State state) { _state = state; }
+
+	class Game* GetGame() { return _game; }
+
+	// 컴포넌트 추가, 제거
+	void AddComponent(class Component* component);
+	void RemoveComponent(class Component* component);
 
 private:
 	// 액터의 상태
