@@ -51,7 +51,7 @@ private:
 	// 지금 액터를 업데이트 중인지 추적
 	bool _updatingActors;
 
-	// 게임 특정
+	// 특정 게임
 	class SpaceShip* _spaceShip;	// 플레이어의 우주선
 };
 

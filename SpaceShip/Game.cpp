@@ -193,8 +193,8 @@ void Game::LoadData()
     BGSpriteComponent* bg = new BGSpriteComponent(temp);
     bg->SetScreenSize(Vector2(1024.0f, 768.0f));
     std::vector<SDL_Texture*> bgtexs = {
-        GetTexture("../../../Asset/SpaceShip/Farback01.png"),
-        GetTexture("../../../Asset/SpaceShip/Farback02.png")
+        GetTexture("../../../Assets/SpaceShip/Farback01.png"),
+        GetTexture("../../../Assets/SpaceShip/Farback02.png")
     };
     bg->SetBGTextures(bgtexs);
     bg->SetScrollSpeed(-100.0f);
@@ -203,8 +203,8 @@ void Game::LoadData()
     bg = new BGSpriteComponent(temp, 50);
     bg->SetScreenSize(Vector2(1024.0f, 768.0f));
     bgtexs = {
-        GetTexture("../../../Asset/SpaceShip/Stars.png"),
-        GetTexture("../../../Asset/SpaceShip/Stars.png")
+        GetTexture("../../../Assets/SpaceShip/Stars.png"),
+        GetTexture("../../../Assets/SpaceShip/Stars.png")
     };
     bg->SetBGTextures(bgtexs);
     bg->SetScrollSpeed(-200.0f);
