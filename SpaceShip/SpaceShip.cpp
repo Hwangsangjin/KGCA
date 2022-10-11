@@ -10,10 +10,10 @@ SpaceShip::SpaceShip(Game* game)
 	// 애니메이션 스프라이트 컴포넌트 만들기
 	AnimSpriteComponent* asc = new AnimSpriteComponent(this);
 	std::vector<SDL_Texture*> anims = {
-		game->GetTexture("../../../Assets/SpaceShip/Ship01.png"),
-		game->GetTexture("../../../Assets/SpaceShip/Ship02.png"),
-		game->GetTexture("../../../Assets/SpaceShip/Ship03.png"),
-		game->GetTexture("../../../Assets/SpaceShip/Ship04.png")
+		game->GetTexture("../../../Resource/SpaceShip/Ship01.png"),
+		game->GetTexture("../../../Resource/SpaceShip/Ship02.png"),
+		game->GetTexture("../../../Resource/SpaceShip/Ship03.png"),
+		game->GetTexture("../../../Resource/SpaceShip/Ship04.png")
 	};
 	asc->SetAnimTextures(anims);
 }
