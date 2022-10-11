@@ -12,23 +12,6 @@
 
 class Core : public Window
 {
-private:
-	// 실행 플래그
-	bool _isRun = true;
-
-	// 코어 함수
-	HRESULT CoreInit();
-	HRESULT CoreFrame();
-	HRESULT CorePreRender();
-	HRESULT CoreRender();
-	HRESULT CorePostRender();
-	HRESULT CoreRelease();
-
-protected:
-	// 폰트
-	Font _font;
-	IDXGISurface1* _pBackBuffer;
-
 public:
 	Core() = default;
 	virtual ~Core() = default;
@@ -43,5 +26,25 @@ public:
 	virtual HRESULT Release() override;
 	// 실행
 	virtual HRESULT Run() final;
+
+	// 리소스 생성, 삭제
+	virtual HRESULT CreateDXResource() override;
+	virtual HRESULT DeleteDXResource() override;
+
+protected:
+	// 폰트
+	Font _font;
+
+private:
+	// 코어 함수
+	HRESULT CoreInit();
+	HRESULT CoreFrame();
+	HRESULT CorePreRender();
+	HRESULT CoreRender();
+	HRESULT CorePostRender();
+	HRESULT CoreRelease();
+
+	// 실행 플래그
+	bool _isRun = true;
 };
 

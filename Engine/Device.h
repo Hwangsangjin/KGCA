@@ -2,15 +2,6 @@
 
 class Device
 {
-protected:
-	D3D_DRIVER_TYPE _driverType = D3D_DRIVER_TYPE_NULL;
-	D3D_FEATURE_LEVEL _featureLevel = D3D_FEATURE_LEVEL_11_1;
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
-	IDXGIFactory* _pFactory = nullptr;
-	IDXGISwapChain* _pSwapChain = nullptr;
-	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
-
 public:
 	Device() = default;
 	virtual ~Device() = default;
@@ -37,5 +28,20 @@ public:
 
 	// 화면 리사이즈
 	HRESULT ResizeDevice(UINT width, UINT height);
+
+	// 리소스 생성, 삭제
+	virtual HRESULT CreateDXResource();
+	virtual HRESULT DeleteDXResource();
+
+protected:
+	D3D_DRIVER_TYPE _driverType = D3D_DRIVER_TYPE_NULL;
+	D3D_FEATURE_LEVEL _featureLevel = D3D_FEATURE_LEVEL_11_1;
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+	IDXGIFactory* _pFactory = nullptr;
+	IDXGISwapChain* _pSwapChain = nullptr;
+	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
+	ID3D11Texture2D* _pBackBuffer = nullptr;
+	D3D11_VIEWPORT _viewport;
 };
 

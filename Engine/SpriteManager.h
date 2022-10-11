@@ -7,18 +7,6 @@ class SpriteManager
 	DECLARE_SINGLE(SpriteManager);
 
 public:
-    ID3D11Device* _pd3dDevice = nullptr;
-    ID3D11DeviceContext* _pImmediateContext = nullptr;
-    std::vector<W_STR>  filelist;
-    std::vector<UINT>  m_iSpriteTypeList;
-    std::vector<W_STR> m_rtNameList;
-    std::vector<W_STR> m_TextureNameList;
-    std::vector<W_STR> m_MaskTextureNameList;
-    std::vector<W_STR> m_ShaderNameList;
-    std::vector<std::vector<RECT>> m_rtSpriteList;
-    std::vector<TCHAR_STRING_VECTOR> m_szSpriteList;
-    std::map<std::wstring, Sprite*> m_List;
-
     // 초기화
     HRESULT Init();
     // 프레임 계산
@@ -37,5 +25,17 @@ public:
 
     Sprite& Get(W_STR str);
     Sprite* GetPtr(W_STR str);
+
+    ID3D11Device* _pd3dDevice = nullptr;
+    ID3D11DeviceContext* _pImmediateContext = nullptr;
+    std::vector<W_STR>  filelist;
+    std::vector<UINT>  m_iSpriteTypeList;
+    std::vector<W_STR> m_rtNameList;
+    std::vector<W_STR> m_TextureNameList;
+    std::vector<W_STR> m_MaskTextureNameList;
+    std::vector<W_STR> m_ShaderNameList;
+    std::vector<std::vector<RECT>> m_rtSpriteList;
+    std::vector<TCHAR_STRING_VECTOR> m_szSpriteList;
+    std::map<std::wstring, Sprite*> m_List;
 };
 

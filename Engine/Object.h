@@ -5,23 +5,6 @@
 
 class Object
 {
-protected:
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
-
-	std::vector<Vertex> _vertices;
-	std::vector<DWORD> _indices;
-	ID3D11Buffer* _pVertexBuffer = nullptr;
-	ID3D11Buffer* _pIndexBuffer = nullptr;
-	ID3D11InputLayout* _pInputLayout = nullptr;
-
-	Texture* _pTexture = nullptr;
-	Shader* _pShader = nullptr;
-	ID3D11VertexShader* _pVertexShader = nullptr;
-	ID3D11PixelShader* _pPixelShader = nullptr;
-	ID3DBlob* _pVertexShaderCode = nullptr;
-	ID3DBlob* _pPixelShaderCode = nullptr;
-
 public:
 	// 초기화
 	virtual HRESULT Init();
@@ -54,5 +37,22 @@ public:
 	HRESULT CreateInputLayout();
 	// 텍스처 생성
 	HRESULT CreateTexture(std::wstring textureFile);
+
+protected:
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+
+	std::vector<Vertex> _vertices;
+	std::vector<DWORD> _indices;
+	ID3D11Buffer* _pVertexBuffer = nullptr;
+	ID3D11Buffer* _pIndexBuffer = nullptr;
+	ID3D11InputLayout* _pInputLayout = nullptr;
+
+	Texture* _pTexture = nullptr;
+	Shader* _pShader = nullptr;
+	ID3D11VertexShader* _pVertexShader = nullptr;
+	ID3D11PixelShader* _pPixelShader = nullptr;
+	ID3DBlob* _pVertexShaderCode = nullptr;
+	ID3DBlob* _pPixelShaderCode = nullptr;
 };
 

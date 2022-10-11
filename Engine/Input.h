@@ -12,10 +12,6 @@ class Input
 {
     DECLARE_SINGLE(Input);
 
-private:
-    DWORD _keyState[256];
-    POINT _position;
-
 public:
     // 초기화
     HRESULT Init();
@@ -30,5 +26,9 @@ public:
     DWORD GetKey(DWORD key);
     // 위치
     POINT GetPos();
+
+private:
+    DWORD _keyState[256];
+    POINT _position;
 };
 

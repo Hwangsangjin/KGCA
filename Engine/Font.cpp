@@ -35,6 +35,21 @@ HRESULT Font::Release()
     return TRUE;
 }
 
+HRESULT Font::CreateDXResource()
+{
+    HR(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, &_pTextColor));
+
+    return TRUE;
+}
+
+HRESULT Font::DeleteDXResource()
+{
+    SAFE_RELEASE(_pTextColor);
+    SAFE_RELEASE(_pd2dRenderTarget);
+
+    return TRUE;
+}
+
 HRESULT Font::SetSurface(IDXGISurface1* pDXGISurface1)
 {
     D2D1_RENDER_TARGET_PROPERTIES props;
@@ -47,7 +62,8 @@ HRESULT Font::SetSurface(IDXGISurface1* pDXGISurface1)
     props.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
     HR(_pd2dFactory->CreateDxgiSurfaceRenderTarget(pDXGISurface1, &props, &_pd2dRenderTarget));
-    HR(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, &_pTextColor));
+    
+    CreateDXResource();
 
     return TRUE;
 }

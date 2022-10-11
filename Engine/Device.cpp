@@ -29,6 +29,7 @@ HRESULT Device::Render()
 HRESULT Device::Release()
 {
     SAFE_CLEARSTATE(_pImmediateContext);
+    SAFE_RELEASE(_pBackBuffer);
     SAFE_RELEASE(_pRenderTargetView);
     SAFE_RELEASE(_pSwapChain);
     SAFE_RELEASE(_pFactory);
@@ -120,14 +121,13 @@ HRESULT Device::CreateRenderTargetView()
 // 뷰포트
 HRESULT Device::CreateViewport()
 {
-    D3D11_VIEWPORT vp;
-    vp.Width = rtClient.right;
-    vp.Height = rtClient.bottom;
-    vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
-    vp.MinDepth = 0.0f;
-    vp.MaxDepth = 1.0f;
-    _pImmediateContext->RSSetViewports(1, &vp);
+    _viewport.Width = rtClient.right;
+    _viewport.Height = rtClient.bottom;
+    _viewport.TopLeftX = 0;
+    _viewport.TopLeftY = 0;
+    _viewport.MinDepth = 0.0f;
+    _viewport.MaxDepth = 1.0f;
+    _pImmediateContext->RSSetViewports(1, &_viewport);
 
     return TRUE;
 }
@@ -137,7 +137,10 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // 디바이스가 생성되지 않은 경우
     if (_pd3dDevice == nullptr) return TRUE;
 
-    // 렌더타겟과 렌더타겟뷰를 해제한다.
+    // 리소스를 삭제한다.
+    DeleteDXResource();
+
+    // 현재 설정된 렌더타겟과 렌더타겟뷰를 해제한다.
     _pImmediateContext->OMSetRenderTargets(0, nullptr, nullptr);
     SAFE_RELEASE(_pRenderTargetView);
 
@@ -158,5 +161,18 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // 뷰포트를 생성하고 적용한다.
     HR(CreateViewport());
 
+    // 리소스를 생성한다.
+    CreateDXResource();
+
+    return TRUE;
+}
+
+HRESULT Device::CreateDXResource()
+{
+    return TRUE;
+}
+
+HRESULT Device::DeleteDXResource()
+{
     return TRUE;
 }

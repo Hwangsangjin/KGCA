@@ -6,12 +6,6 @@ class TextureManager
 {
 	DECLARE_SINGLE(TextureManager);
 
-private:
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
-
-	std::map<std::wstring, Texture*> _textures;
-
 public:
 	// 초기화
 	HRESULT Init();
@@ -29,5 +23,11 @@ public:
 	Texture* Load(std::wstring texturefile);
 	// 텍스처 파일 검색
 	Texture* Find(std::wstring texturefile);
+
+private:
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+
+	std::map<std::wstring, Texture*> _textures;
 };
 

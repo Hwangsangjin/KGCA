@@ -5,11 +5,6 @@
 class Sprite : public Object2D
 {
 public:
-    std::vector<RECT> _uvs;
-    std::vector<W_STR> _textures;
-    std::vector<Texture*> _pTextures;
-    std::vector<Sprite*> _pSprites;
-
     // 초기화
     HRESULT Init();
     // 프레임 계산
@@ -21,6 +16,11 @@ public:
 
     // 스프라이트 생성
     virtual HRESULT Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name);
+
+    std::vector<RECT> _uvs;
+    std::vector<W_STR> _textures;
+    std::vector<Texture*> _pTextures;
+    std::vector<Sprite*> _pSprites;
 };
 
 class SpriteTexture : public Sprite

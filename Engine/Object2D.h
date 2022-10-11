@@ -6,6 +6,22 @@
 class Object2D : public Object
 {
 public:
+	virtual HRESULT Frame() override;
+	virtual bool CheckCollision(Object2D& object);
+
+	void SetMask(Texture* pMaskTexture);
+	void SetRect(Rect rect);
+	void SetSpeed(float speed);
+	void SetScale(float x, float y);
+	void SetDirection(Vector2 direction);
+	void SetPosition(Vector2 position);
+	void SetPosition(Vector2 position, Vector2 cameraPosition);
+	void SetCameraPosition(Vector2 cameraPosition);
+	void SetCameraViewSize(Vector2 cameraViewSize);
+	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
+	void SetScreenSpace();
+	void SetVertexBuffer();
+
 	W_STR _name;
 	UINT _index;
 	W_STR _texturePath;
@@ -28,22 +44,5 @@ public:
 	Texture* _pMaskTexture = nullptr;
 
 	bool _isCollision = false;
-
-	virtual HRESULT Frame() override;
-	virtual bool CheckCollision(Object2D& object);
-
-	void SetMask(Texture* pMaskTexture);
-	void SetRect(Rect rect);
-	void SetSpeed(float speed);
-	void SetScale(float x, float y);
-	void SetDirection(Vector2 direction);
-	void SetPosition(Vector2 position);
-	void SetPosition(Vector2 position, Vector2 cameraPosition);
-	void SetCameraPosition(Vector2 cameraPosition);
-	void SetCameraViewSize(Vector2 cameraViewSize);
-	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
-	void SetScreenSpace();
-	void SetVertexBuffer();
-
 };
 
