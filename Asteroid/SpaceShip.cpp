@@ -12,7 +12,7 @@ SpaceShip::SpaceShip(Game* game)
 {
 	// 스프라이트 컴포넌트 만들기
 	SpriteComponent* sc = new SpriteComponent(this, 150);
-	sc->SetTexture(game->GetTexture("../../../Assets/Asteroid/ShipWithThrust.png"));
+	sc->SetTexture(game->GetTexture("../../../Resource/Asteroid/ShipWithThrust.png"));
 
 	// 입력 컴포넌트 생성 및 키, 속도 설정
 	InputComponent* ic = new InputComponent(this);

@@ -11,7 +11,7 @@ Laser::Laser(Game* game)
 {
 	// 스프라이트 컴포넌트 생성
 	SpriteComponent* sc = new SpriteComponent(this);
-	sc->SetTexture(game->GetTexture("../../../Assets/Asteroid/Laser.png"));
+	sc->SetTexture(game->GetTexture("../../../Resource/Asteroid/Laser.png"));
 
 	// 이동 컴포넌트 생성과 전방 속도 설정
 	MoveComponent* mc = new MoveComponent(this);

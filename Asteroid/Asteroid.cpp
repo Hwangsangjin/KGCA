@@ -16,7 +16,7 @@ Asteroid::Asteroid(Game* game)
 
 	// 스프라이트 컴포넌트를 생성하고 텍스처를 설정한다.
 	SpriteComponent* sc = new SpriteComponent(this);
-	sc->SetTexture(game->GetTexture("../../../Assets/Asteroid/Asteroid.png"));
+	sc->SetTexture(game->GetTexture("../../../Resource/Asteroid/Asteroid.png"));
 
 	// 이동 컴포넌트를 생성하고 전방 속도를 설정한다.
 	MoveComponent* mc = new MoveComponent(this);
