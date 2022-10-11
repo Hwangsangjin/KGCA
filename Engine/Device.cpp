@@ -127,7 +127,6 @@ HRESULT Device::CreateViewport()
     _viewport.TopLeftY = 0;
     _viewport.MinDepth = 0.0f;
     _viewport.MaxDepth = 1.0f;
-    _pImmediateContext->RSSetViewports(1, &_viewport);
 
     return TRUE;
 }
