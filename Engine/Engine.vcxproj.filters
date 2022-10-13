@@ -51,6 +51,9 @@
     <Filter Include="소스 파일\Core\Object\Sprite">
       <UniqueIdentifier>{cf31510f-d1f1-4185-a142-5bbb3c44fd58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\Math">
+      <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -116,6 +119,9 @@
     <ClInclude Include="Resource.h">
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>소스 파일\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -177,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="SpriteManager.cpp">
       <Filter>소스 파일\Core\Object\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp">
+      <Filter>소스 파일\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
