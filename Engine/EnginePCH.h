@@ -22,6 +22,7 @@
 #include <codecvt>
 #include <tchar.h>
 #include <io.h>
+#include "MyMath.h"
 
 // lib
 #pragma comment (lib, "d3d11")
@@ -46,8 +47,8 @@ using uint16 = unsigned __int16;
 using uint32 = unsigned __int32;
 using uint64 = unsigned __int64;
 using Vector2 = DirectX::SimpleMath::Vector2;
-using Vector3 = DirectX::SimpleMath::Vector3;
 using Vector4 = DirectX::SimpleMath::Vector4;
+using Matrix = DirectX::SimpleMath::Matrix;
 
 // typedef
 typedef std::basic_string<TCHAR> T_STR;
@@ -59,9 +60,16 @@ typedef std::vector<DWORD> DWORD_VECTOR;
 // struct
 struct Vertex
 {
-	Vector3 position;
+	MyVector3 position;
 	Vector4 color;
-	Vector2 uv;
+	MyVector2 uv;
+};
+
+struct ConstantBuffer
+{
+	MyMatrix world;
+	MyMatrix view;
+	MyMatrix projection;
 };
 
 // String Convert

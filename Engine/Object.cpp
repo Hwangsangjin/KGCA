@@ -83,18 +83,20 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 void Object::CreateVertexData()
 {
     _vertices.resize(4);
-    _vertices[0].position = Vector3{ -1.0f, 1.0f, 0.0f };
+    _vertices[0].position = MyVector3{ -1.0f, 1.0f, 0.0f };
     _vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[0].uv = Vector2{ 0.0f, 0.0f };
-    _vertices[1].position = Vector3{ 1.0f, 1.0f , 0.0f };
+    _vertices[0].uv = MyVector2{ 0.0f, 0.0f };
+    _vertices[1].position = MyVector3{ 1.0f, 1.0f , 0.0f };
     _vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[1].uv = Vector2{ 1.0f, 0.0f };
-    _vertices[2].position = Vector3{ -1.0f, -1.0f, 0.0f };
+    _vertices[1].uv = MyVector2{ 1.0f, 0.0f };
+    _vertices[2].position = MyVector3{ -1.0f, -1.0f, 0.0f };
     _vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[2].uv = Vector2{ 0.0f, 1.0f };
-    _vertices[3].position = Vector3{ 1.0f, -1.0f, 0.0f };
+    _vertices[2].uv = MyVector2{ 0.0f, 1.0f };
+    _vertices[3].position = MyVector3{ 1.0f, -1.0f, 0.0f };
     _vertices[3].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[3].uv = Vector2{ 1.0f, 1.0f };
+    _vertices[3].uv = MyVector2{ 1.0f, 1.0f };
+
+    _init = _vertices;
 }
 
 HRESULT Object::CreateVertexBuffer()
@@ -158,6 +160,11 @@ HRESULT Object::CreateShader(std::wstring shaderFile)
     _pShader = SHADER->Load(shaderFile);
     if (_pShader)
     {
+        _pVertexShader = _pShader->_pVertexShader;
+        _pPixelShader = _pShader->_pPixelShader;
+        _pVertexShaderCode = _pShader->_pVertexShaderCode;
+        _pPixelShaderCode = _pShader->_pPixelShaderCode;
+
         return TRUE;
     }
 
@@ -191,4 +198,9 @@ HRESULT Object::CreateTexture(std::wstring textureFile)
     }
 
     return E_FAIL;
+}
+
+void Object::SetVertexBuffer()
+{
+    _pImmediateContext->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
 }

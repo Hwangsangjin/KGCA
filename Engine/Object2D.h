@@ -20,7 +20,7 @@ public:
 	void SetCameraViewSize(Vector2 cameraViewSize);
 	void SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize);
 	void SetScreenSpace();
-	void SetVertexBuffer();
+	virtual void SetVertexBuffer() override;
 
 	W_STR _name;
 	UINT _index;

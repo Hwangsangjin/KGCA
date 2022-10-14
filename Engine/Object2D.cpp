@@ -109,7 +109,7 @@ void Object2D::SetVertexBuffer()
     _vertices[0].position = { _drawPosition.x, _drawPosition.y, 0.0f };
     _vertices[0].uv = { _uv.x1, _uv.y1 };
 
-    _vertices[1].position = { _drawPosition.x + _drawSize.x, _drawPosition.y,  0.0f };
+    _vertices[1].position = { _drawPosition.x + _drawSize.x, _drawPosition.y, 0.0f };
     _vertices[1].uv = { _uv.x1 + _uv.w, _uv.y1 };
 
     _vertices[2].position = { _drawPosition.x, _drawPosition.y - _drawSize.y, 0.0f };

@@ -38,10 +38,13 @@ public:
 	// 텍스처 생성
 	HRESULT CreateTexture(std::wstring textureFile);
 
-protected:
+	// 정점 버퍼 설정
+	virtual void SetVertexBuffer();
+
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
+	std::vector<Vertex> _init;
 	std::vector<Vertex> _vertices;
 	std::vector<DWORD> _indices;
 	ID3D11Buffer* _pVertexBuffer = nullptr;
