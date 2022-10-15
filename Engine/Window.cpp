@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Window.h"
-#include "Resource.h"
 
 // 윈도우 프로시저
 HWND hWnd;
@@ -18,10 +17,6 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_CREATE:
-        SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hIconB);
-        SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)hIconS);
-        break;
     case WM_SIZE:
         if (SIZE_MINIMIZED != wParam)
         {
@@ -101,17 +96,12 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
     wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_WINDOW));
-    //wcex.hIcon = (HICON)LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON_WINDOW), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADTRANSPARENT);
+    wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszClassName = title;
-    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON_SMALL));
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
     if (!RegisterClassEx(&wcex)) return E_FAIL;
-
-    // 아이콘을 불러온다.
-    hIconB = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_BIG));
-    hIconS = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_SMALL));
 
     // 등록한 윈도우를 생성한다.
     RECT rect = { 0, 0, width, height };

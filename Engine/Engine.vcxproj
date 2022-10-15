@@ -175,7 +175,6 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object2D.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Sound.h" />
@@ -214,14 +213,6 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Engine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\Resource\Pikachu\Icon\Icon1.ico" />
-    <Image Include="..\..\Resource\Pikachu\Icon\Icon2.ico" />
-    <Image Include="..\..\Resource\Pikachu\Icon\Pikachu.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
