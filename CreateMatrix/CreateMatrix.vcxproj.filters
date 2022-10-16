@@ -15,9 +15,6 @@
     <Filter Include="소스 파일\Sample\Scene">
       <UniqueIdentifier>{95a62a2a-7464-4345-825b-479ae7b85094}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Sample\Scene\Object">
-      <UniqueIdentifier>{4fc24eec-12d4-4e3a-ba8a-584b269813f5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -26,9 +23,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Sample\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Ryan.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -36,9 +30,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Sample\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Ryan.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

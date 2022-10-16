@@ -7,18 +7,9 @@ HRESULT Scene::Init()
 	// 텍스처
 	TEXTURE->Load(L"../../../Resource/Ryan/Ryan.png");
 
-	// 테스트
-	_pTest = new Object;
-	_pTest->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Ryan/Ryan.png");
-
 	// 라이언
-	_pRyan = new Ryan;
+	_pRyan = new Object;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Ryan/Ryan.png");
-	_pRyan->SetRect({ 0.0f, 0.0f, 78.0f, 117.0f });
-	_pRyan->SetSpeed(500.0f);
-	_pRyan->SetScale(1.0f, 1.0f);
-	_pRyan->SetPosition({ 400.0f, 300.0f });
-	AddObject(_pRyan);
 
 	return TRUE;
 }
@@ -27,7 +18,7 @@ HRESULT Scene::Frame()
 {
 	// 카메라
 	MyMatrix matView;
-	static MyVector3 position = { 0.0f, 0.0f, -10.0f };
+	static MyVector3 position = { 0.0f, 0.0f, -5.0f };
 	static MyVector3 target = { 0.0f, 0.0f, 10.0f };
 
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
@@ -35,27 +26,32 @@ HRESULT Scene::Frame()
 		position._z += 10.0f * DELTA_TIME;
 		target._z += 10.0f * DELTA_TIME;
 	}
-	else if (INPUT->GetKey('S') == KEY_STATE::HOLD)
+
+	if (INPUT->GetKey('S') == KEY_STATE::HOLD)
 	{
 		position._z -= 10.0f * DELTA_TIME;
 		target._z -= 10.0f * DELTA_TIME;
 	}
-	else if (INPUT->GetKey('A') == KEY_STATE::HOLD)
+
+	if (INPUT->GetKey('A') == KEY_STATE::HOLD)
 	{
 		position._x -= 10.0f * DELTA_TIME;
 		target._x -= 10.0f * DELTA_TIME;
 	}
-	else if (INPUT->GetKey('D') == KEY_STATE::HOLD)
+
+	if (INPUT->GetKey('D') == KEY_STATE::HOLD)
 	{
 		position._x += 10.0f * DELTA_TIME;
 		target._x += 10.0f * DELTA_TIME;
 	}
-	else if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
+
+	if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
 	{
 		position._y += 10.0f * DELTA_TIME;
 		target._y += 10.0f * DELTA_TIME;
 	}
-	else if (INPUT->GetKey('E') == KEY_STATE::HOLD)
+
+	if (INPUT->GetKey('E') == KEY_STATE::HOLD)
 	{
 		position._y -= 10.0f * DELTA_TIME;
 		target._y -= 10.0f * DELTA_TIME;
@@ -74,17 +70,12 @@ HRESULT Scene::Frame()
 	timer += DELTA_TIME;
 	r = r.RotationY(timer);
 
-	if (INPUT->GetKey(VK_RBUTTON) == KEY_STATE::HOLD)
-	{
-		r = r.RotationY(90);
-	}
-
 	t = t.Translation(0.0f, 0.0f, 0.0f);
 	c = s * r * t;
 
-	for (size_t i = 0; i < _pTest->_init.size(); i++)
+	for (size_t i = 0; i < _pRyan->_init.size(); i++)
 	{
-		MyVector3 v = _pTest->_init[i].position;
+		MyVector3 v = _pRyan->_init[i].position;
 		MyVector3 world = v * c;
 		MyVector3 view = world * matView;
 		MyVector3 proj = view * matProj;
@@ -92,10 +83,10 @@ HRESULT Scene::Frame()
 		proj._x /= w;
 		proj._y /= w;
 		proj._z /= w;
-		_pTest->_vertices[i].position = proj;
+		_pRyan->_vertices[i].position = proj;
 	}
 
-	_pTest->SetVertexBuffer();
+	_pRyan->SetVertexBuffer();
 
 	//for (auto& pObject : _pObjects)
 	//{
@@ -107,7 +98,7 @@ HRESULT Scene::Frame()
 
 HRESULT Scene::Render()
 {
-	_pTest->Render();
+	_pRyan->Render();
 
 	/*for (auto& pObject : _pObjects)
 	{
@@ -119,12 +110,12 @@ HRESULT Scene::Render()
 
 HRESULT Scene::Release()
 {
-	for (auto& pObject : _pObjects)
-	{
-		SAFE_RELEASE(pObject);
-	}
-
 	SAFE_DELETE(_pRyan);
+
+	//for (auto& pObject : _pObjects)
+	//{
+	//	SAFE_RELEASE(pObject);
+	//}
 
 	return TRUE;
 }

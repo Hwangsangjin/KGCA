@@ -130,6 +130,9 @@
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreLinkEvent />
     <PreBuildEvent>
       <Command>
       </Command>
@@ -162,12 +165,10 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ryan.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ryan.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
   </ItemGroup>

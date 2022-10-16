@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Ryan.h"
-
 class Scene
 {
 public:
@@ -21,8 +19,7 @@ private:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	Object* _pTest = nullptr;
-	Ryan* _pRyan = nullptr;
+	Object* _pRyan = nullptr;
 	std::vector<Object*> _pObjects;
 };
 
