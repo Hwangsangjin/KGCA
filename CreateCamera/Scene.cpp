@@ -9,11 +9,8 @@ HRESULT Scene::Init()
 	TEXTURE->Load(L"../../../Resource/Box/Box.png");
 
 	// 라이언
-	_pRyan = new Object2D;
+	_pRyan = new Actor;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Ryan/Ryan.png");
-	_pRyan->SetRect({ 0.0f, 0.0f, 230.0f, 381.0f });
-	_pRyan->SetScale(1.0f, 1.0f);
-	_pRyan->SetPosition({ 400.0f, 300.0f });
 
 	// 박스
 	_pBox = new ShapeBox;
@@ -29,7 +26,7 @@ HRESULT Scene::Init()
 
 HRESULT Scene::Frame()
 {
-	//_pRyan->Frame();
+	_pRyan->Frame();
 	_pBox->Frame();
 	_pMainCamera->Frame();
 
@@ -43,13 +40,11 @@ HRESULT Scene::Frame()
 
 HRESULT Scene::Render()
 {
-	//_pRyan->SetMatrix(nullptr, &_pMainCamera->_View, &_pMainCamera->_Projection);
+	_pRyan->SetMatrix(nullptr, &_pMainCamera->_View, &_pMainCamera->_Projection);
 	//_pRyan->Render();
+
 	_pBox->SetMatrix(nullptr, &_pMainCamera->_View, &_pMainCamera->_Projection);
 	_pBox->Render();
-
-	//_pBox->SetMatrix(nullptr, &_pMainCamera->_View, &_pMainCamera->_Projection);
-	//_pBox->Render();
 
 	/*for (auto& pObject : _pObjects)
 	{

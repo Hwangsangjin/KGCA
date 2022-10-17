@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Shape.h"
 #include "Camera.h"
-#include "Object2D.h"
+#include "Actor.h"
+#include "Shape.h"
 
 class Scene
 {
@@ -26,7 +26,7 @@ private:
 	ShapeBox* _pBox = nullptr;
 	Camera* _pMainCamera = nullptr;
 
-	Object2D* _pRyan = nullptr;
+	Actor* _pRyan = nullptr;
 	std::vector<Object*> _pObjects;
 };
 
