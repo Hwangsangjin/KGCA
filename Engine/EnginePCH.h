@@ -147,13 +147,17 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 }
 
 // define
-#define RESOLUTION_X 800.0f
-#define RESOLUTION_Y 600.0f
-#define HALF         2.0f
+#define RESOLUTION_X		800.0f
+#define RESOLUTION_Y		600.0f
+#define HALF				2.0f
 
-#define GRAVITY		9.8f
-#define FRICTION	0.9f
-#define COEFFICIENT	0.9f
+#define GRAVITY				9.8f
+#define FRICTION			0.9f
+#define COEFFICIENT			0.9f
+
+#define PI					3.141592.0f
+#define DegreeToRadian(x)	(x *(PI / 180.0f))
+#define RadianToDegree(x)	(x *(180.0f / PI))
 
 #define CORE
 #define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
