@@ -1,16 +1,10 @@
 #pragma once
 
 #include "Core.h"
-#include "Title.h"
-#include "InGame.h"
+#include "Scene.h"
 
 class Sample : public Core
 {
-private:
-	Scene* _pScene = nullptr;
-	Title* _pTitle = nullptr;
-	InGame* _pInGame = nullptr;
-
 public:
 	Sample() = default;
 	virtual ~Sample() = default;
@@ -23,5 +17,9 @@ public:
 	virtual HRESULT Render() override;
 	// 메모리 해제
 	virtual HRESULT Release() override;
+
+private:
+	POINT _point = { 0, 0 };
+	Scene* _pScene = nullptr;
 };
 

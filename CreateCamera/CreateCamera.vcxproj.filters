@@ -15,90 +15,21 @@
     <Filter Include="소스 파일\Sample\Scene">
       <UniqueIdentifier>{95a62a2a-7464-4345-825b-479ae7b85094}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Sample\Scene\Object">
-      <UniqueIdentifier>{48c97aaa-ad3b-4e1b-87cd-c5ed8d822ca6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
       <Filter>소스 파일\Sample</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Cloud.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Wave.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="InGame.cpp">
-      <Filter>소스 파일\Sample\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>소스 파일\Sample\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Sample\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="BattleText.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
       <Filter>소스 파일\Sample</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Cloud.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Wave.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="InGame.h">
-      <Filter>소스 파일\Sample\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Title.h">
-      <Filter>소스 파일\Sample\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Sample\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleText.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

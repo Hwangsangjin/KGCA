@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{763e305b-c143-4299-9ae9-ba17189cad27}</ProjectGuid>
+    <ProjectGuid>{c49ba3e3-6f89-4b84-af4c-1520edb95a65}</ProjectGuid>
     <RootNamespace>CreateCamera</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -78,11 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../Output/</OutDir>
-    <IntDir>../../Output/Client</IntDir>
+    <OutDir>../../Output/$(Configuration)/$(ProjectName)</OutDir>
+    <IntDir>../../Output/$(Configuration)/$(ProjectName)/Intermediate</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../Output/$(Configuration)/$(ProjectName)</OutDir>
+    <IntDir>../../Output/$(Configuration)/$(ProjectName)/Intermediate</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,8 +128,15 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Library/Debug/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreLinkEvent />
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -137,43 +146,31 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Cloud.cpp" />
-    <ClCompile Include="BattleText.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="InGame.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="Title.cpp" />
-    <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="Cloud.h" />
-    <ClInclude Include="BattleText.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="InGame.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="Title.h" />
-    <ClInclude Include="Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
