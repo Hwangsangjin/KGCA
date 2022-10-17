@@ -149,13 +149,14 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 // define
 #define RESOLUTION_X		800.0f
 #define RESOLUTION_Y		600.0f
-#define HALF				2.0f
+#define RESOLUTION_RATIO    RESOLUTION_X / RESOLUTION_Y
 
 #define GRAVITY				9.8f
 #define FRICTION			0.9f
 #define COEFFICIENT			0.9f
 
-#define PI					3.141592.0f
+#define PI					3.141592654f
+#define PIDIV2				1.570796327f
 #define DegreeToRadian(x)	(x *(PI / 180.0f))
 #define RadianToDegree(x)	(x *(180.0f / PI))
 
