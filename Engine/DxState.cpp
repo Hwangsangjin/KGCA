@@ -64,7 +64,7 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
     ZeroMemory(&rd, sizeof(rd));
     rd.DepthClipEnable = TRUE;
     rd.FillMode = D3D11_FILL_WIREFRAME;
-    rd.CullMode = D3D11_CULL_NONE;
+    rd.CullMode = D3D11_CULL_BACK;
     HR(pd3dDevice->CreateRasterizerState(&rd, &_pDefaultRSWireFrame));
 
     rd.FillMode = D3D11_FILL_SOLID;

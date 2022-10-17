@@ -186,6 +186,7 @@ void MyMatrix::Identity()
 MyMatrix MyMatrix::Transpose()
 {
     MyMatrix m;
+
     m._11 = _11; m._12 = _21; m._13 = _31; m._14 = _41;
     m._21 = _12; m._22 = _22; m._23 = _32; m._24 = _42;
     m._31 = _13; m._32 = _23; m._33 = _33; m._34 = _43;
@@ -194,131 +195,56 @@ MyMatrix MyMatrix::Transpose()
     return m;
 }
 
-MyMatrix MyMatrix::Scale(float x, float y, float z)
+void MyMatrix::Scale(float x, float y, float z)
 {
-    MyMatrix m;
-    m._11 = x;
-    m._22 = y;
-    m._33 = z;
+    Identity();
 
-    return m;
+    _11 = x;
+    _22 = y;
+    _33 = z;
 }
 
-MyMatrix MyMatrix::RotationX(float radian)
+void MyMatrix::RotationX(float radian)
 {
+    Identity();
+
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
 
-    MyMatrix m;
-    m._22 = cosTheta; m._23 = sinTheta;
-    m._32 = -sinTheta; m._33 = cosTheta;
-
-    return m;
+    _22 = cosTheta; _23 = sinTheta;
+    _32 = -sinTheta; _33 = cosTheta;
 }
 
-MyMatrix MyMatrix::RotationY(float radian)
+void MyMatrix::RotationY(float radian)
 {
+    Identity();
+
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
 
-    MyMatrix m;
-    m._11 = cosTheta; m._13 = sinTheta;
-    m._31 = -sinTheta; m._33 = cosTheta;
-
-    return m;
+    _11 = cosTheta; _13 = sinTheta;
+    _31 = -sinTheta; _33 = cosTheta;
 }
 
-MyMatrix MyMatrix::RotationZ(float radian)
+void MyMatrix::RotationZ(float radian)
 {
+    Identity();
+
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
 
-    MyMatrix m;
-    m._11 = cosTheta; m._12 = sinTheta;
-    m._21 = -sinTheta; m._22 = cosTheta;
-
-    return m;
+    _11 = cosTheta; _12 = sinTheta;
+    _21 = -sinTheta; _22 = cosTheta;
 }
 
-MyMatrix MyMatrix::Translation(float x, float y, float z)
+void MyMatrix::Translation(float x, float y, float z)
 {
-    MyMatrix m;
-    m._41 = x;
-    m._42 = y;
-    m._43 = z;
+    Identity();
 
-    return m;
+    _41 = x;
+    _42 = y;
+    _43 = z;
 }
-
-//MyMatrix& MyMatrix::operator=(const MyMatrix& rhs)
-//{
-//    if (this == &rhs)
-//    {
-//        return *this;
-//    }
-//
-//    for (size_t i = 0; i < 16; i++)
-//    {
-//        _m[i] = rhs._m[i];
-//    }
-//
-//    return *this;
-//}
-
-//MyMatrix& MyMatrix::operator+()
-//{
-//    return *this;
-//}
-//
-//MyMatrix MyMatrix::operator-() const
-//{
-//    MyMatrix m(*this);
-//    m.Scale(-1.0f, -1.0f, -1.0f);
-//
-//    return m;
-//}
-//
-//MyMatrix MyMatrix::operator+(const MyMatrix& rhs) const
-//{
-//    MyMatrix m(*this);
-//    for (size_t i = 0; i < 16; i++)
-//    {
-//        m._m[i] += rhs._m[i];
-//    }
-//
-//    return m;
-//}
-//
-//MyMatrix& MyMatrix::operator+=(const MyMatrix& rhs)
-//{
-//    for (size_t i = 0; i < 16; i++)
-//    {
-//        _m[i] += rhs._m[i];
-//    }
-//
-//    return *this;
-//}
-//
-//MyMatrix MyMatrix::operator-(const MyMatrix& rhs) const
-//{
-//    MyMatrix m(*this);
-//    for (size_t i = 0; i < 16; i++)
-//    {
-//        m._m[i] -= rhs._m[i];
-//    }
-//
-//    return m;
-//}
-//
-//MyMatrix& MyMatrix::operator-=(const MyMatrix& rhs)
-//{
-//    for (size_t i = 0; i < 16; i++)
-//    {
-//        _m[i] -= rhs._m[i];
-//    }
-//
-//    return *this;
-//}
 
 MyMatrix MyMatrix::operator*(const MyMatrix& rhs) const
 {
@@ -339,18 +265,11 @@ MyMatrix MyMatrix::operator*(const MyMatrix& rhs) const
     return m;
 }
 
-//MyMatrix& MyMatrix::operator*=(const MyMatrix& rhs)
-//{
-//    return (*this = *this * rhs);
-//}
-
-// Dot Product
 float MyVector3::operator|(const MyVector3 & v0)
 {
     return _x * v0._x + _y * v0._y + _z * v0._z;
 }
 
-// Cross Product
 MyVector3 MyVector3::operator^(const MyVector3& v0)
 {
     return MyVector3((_y * v0._z - _z * v0._y), (_z * v0._x - _x * v0._z), (_x * v0._y - _y * v0._x));
@@ -390,31 +309,55 @@ MyMatrix MyMatrix::ViewLookAt(MyVector3& vPosition, MyVector3& vTarget, MyVector
     _42 = -(vPosition._x * _12 + vPosition._y * _22 + vPosition._z * _32);
     _43 = -(vPosition._x * _13 + vPosition._y * _23 + vPosition._z * _33);
 
-    _14 = _24 = _34 = 0.0f;
-    _44 = 1.0f;
-
     memcpy(&matrix, this, 16 * sizeof(float));
     return matrix;
 }
 
-MyMatrix MyMatrix::PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect)
+MyMatrix MyMatrix::OrthoLH(float w, float h, float n, float f)
 {
-    float    h, w, Q;
+    Identity();
 
-    h = 1 / tan(fovy * 0.5f);  // 1/tans(x) = cot(x)
-    w = h / Aspect;
+    _11 = 2.0f / w;
+    _22 = 2.0f / h;
+    _33 = 1.0f / (f - n);
+    _43 = -n / (f - n);
 
-    Q = fFarPlane / (fFarPlane - fNearPlane);
+    return *this;
+}
 
-    MyMatrix ret;
+MyMatrix MyMatrix::OrthoOffCenterLH(float l, float r, float b, float t, float n, float f)
+{
+    Identity();
+
+    _11 = 2.0f / (r - l);
+    _22 = 2.0f / (t - b);
+    _33 = 1.0f / (f - n);
+    _43 = -n / (f - n);
+    _41 - (l + r) / (l - r);
+    _42 - (t + b) / (b - t);
+
+    return *this;
+}
+
+MyMatrix MyMatrix::PerspectiveFovLH(float NearPlane, float FarPlane, float FovY, float AspectRatio)
+{
+    float h, w, Q;
+
+    h = 1 / tan(FovY * 0.5f);  // 1/tans(x) = cot(x)
+    w = h / AspectRatio;
+
+    Q = FarPlane / (FarPlane - NearPlane);
+
+    MyMatrix temp;
     ZeroMemory(this, sizeof(MyMatrix));
 
     _11 = w;
     _22 = h;
     _33 = Q;
-    _43 = -Q * fNearPlane;
+    _43 = -Q * NearPlane;
     _34 = 1;
+    _44 = 0.0f;
 
-    memcpy((void*)&ret, this, 16 * sizeof(float));
-    return ret;
+    memcpy((void*)&temp, this, 16 * sizeof(float));
+    return temp;
 }

@@ -45,7 +45,7 @@ void Object2D::SetPosition(Vector2 position)
     _position = position;
 
     SetScreenSpace();
-    SetVertexBuffer();
+    UpdateVertexBuffer();
 }
 
 void Object2D::SetPosition(Vector2 position, Vector2 cameraPosition)
@@ -53,7 +53,7 @@ void Object2D::SetPosition(Vector2 position, Vector2 cameraPosition)
     _position = position;
 
     SetViewSpace(cameraPosition, _cameraViewSize);
-    SetVertexBuffer();
+    UpdateVertexBuffer();
 }
 
 void Object2D::SetCameraPosition(Vector2 cameraPosition)
@@ -104,7 +104,7 @@ void Object2D::SetScreenSpace()
     _drawSize.y = (_rect.h / rtClient.bottom) * 2.0f * _scale.y;
 }
 
-void Object2D::SetVertexBuffer()
+void Object2D::UpdateVertexBuffer()
 {
     _vertices[0].position = { _drawPosition.x, _drawPosition.y, 0.0f };
     _vertices[0].uv = { _uv.x1, _uv.y1 };

@@ -122,30 +122,25 @@ public:
 	MyMatrix Transpose();
 
 	// 신축
-	MyMatrix Scale(float x, float y, float z);
+	void Scale(float x, float y, float z);
 	// 회전
-	MyMatrix RotationX(float radian);
-	MyMatrix RotationY(float radian);
-	MyMatrix RotationZ(float radian);
+	void RotationX(float radian);
+	void RotationY(float radian);
+	void RotationZ(float radian);
 	// 이동
-	MyMatrix Translation(float x, float y, float z);
+	void Translation(float x, float y, float z);
 
-	//// 대입 연산자
-	//MyMatrix& operator=(const MyMatrix& rhs);
-	//// + 단항 연산자
-	//MyMatrix& operator+();
-	//// - 단항 연산자
-	//MyMatrix operator-() const;
-
-	//// 행렬의 덧셈
-	//MyMatrix operator+(const MyMatrix& rhs) const;
-	//MyMatrix& operator+=(const MyMatrix& rhs);
-	//// 행렬의 뺄셈
-	//MyMatrix operator-(const MyMatrix& rhs) const;
-	//MyMatrix& operator-=(const MyMatrix& rhs);
 	// 행렬의 곱셈
 	MyMatrix operator*(const MyMatrix& rhs) const;
-	/*MyMatrix& operator*=(const MyMatrix& rhs);*/
+
+	// 뷰
+	void ObjectLookAt(MyVector3& vPosition, MyVector3& vTarget, MyVector3& vUp);
+	MyMatrix ViewLookAt(MyVector3& vPosition, MyVector3& vTarget, MyVector3& vUp);
+
+	// 투영
+	MyMatrix OrthoLH(float w, float h, float n, float f);
+	MyMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f);
+	MyMatrix PerspectiveFovLH(float NearPlane, float FarPlane, float FovY, float AspectRatio);
 
 	// 행렬의 원소
 	union
@@ -160,10 +155,140 @@ public:
 
 		float _m[4][4];
 	};
-
-	// 카메라 관련
-	void ObjectLookAt(MyVector3& vPosition, MyVector3& vTarget, MyVector3& vUp);
-	MyMatrix ViewLookAt(MyVector3& vPosition, MyVector3& vTarget, MyVector3& vUp);
-	MyMatrix PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect);
 };
+
+namespace StaticMatrix
+{
+	// 신축
+	static MyMatrix Scale(float x, float y, float z)
+	{
+		MyMatrix m;
+		m._11 = x;
+		m._22 = y;
+		m._33 = z;
+
+		return m;
+	}
+
+	// 회전
+	static MyMatrix RotationX(float radian)
+	{
+		float cosTheta = cos(radian);
+		float sinTheta = sin(radian);
+
+		MyMatrix m;
+		m._22 = cosTheta; m._23 = sinTheta;
+		m._32 = -sinTheta; m._33 = cosTheta;
+
+		return m;
+	}
+
+	static MyMatrix RotationY(float radian)
+	{
+		float cosTheta = cos(radian);
+		float sinTheta = sin(radian);
+
+		MyMatrix m;
+		m._11 = cosTheta; m._13 = sinTheta;
+		m._31 = -sinTheta; m._33 = cosTheta;
+
+		return m;
+	}
+
+	static MyMatrix RotationZ(float radian)
+	{
+		float cosTheta = cos(radian);
+		float sinTheta = sin(radian);
+
+		MyMatrix m;
+		m._11 = cosTheta; m._12 = sinTheta;
+		m._21 = -sinTheta; m._22 = cosTheta;
+
+		return m;
+	}
+
+	// 이동
+	static MyMatrix Translation(float x, float y, float z)
+	{
+		MyMatrix m;
+		m._41 = x;
+		m._42 = y;
+		m._43 = z;
+
+		return m;
+	}
+
+	// 투영
+	static MyMatrix OrthoLH(float w, float h, float n, float f)
+	{
+		MyMatrix m;
+
+		m._11 = 2.0f / w;
+		m._22 = 2.0f / h;
+		m._33 = 1.0f / (f - n);
+		m._43 = -n / (f - n);
+
+		return m;
+	}
+
+	static MyMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f)
+	{
+		MyMatrix m;
+
+		m._11 = 2.0f / (r - l);
+		m._22 = 2.0f / (t - b);
+		m._33 = 1.0f / (f - n);
+		m._43 = -n / (f - n);
+		m._41 - (l + r) / (l - r);
+		m._42 - (t + b) / (b - t);
+
+		return m;
+	}
+
+	// 투영
+	static MyMatrix OrthoLH(MyMatrix m, float w, float h, float n, float f)
+	{
+		m.Identity();
+
+		m._11 = 2.0f / w;
+		m._22 = 2.0f / h;
+		m._33 = 1.0f / (f - n);
+		m._43 = -n / (f - n);
+
+		return m;
+	}
+
+	static MyMatrix OrthoOffCenterLH(MyMatrix m, float l, float r, float b, float t, float n, float f)
+	{
+		m.Identity();
+
+		m._11 = 2.0f / (r - l);
+		m._22 = 2.0f / (t - b);
+		m._33 = 1.0f / (f - n);
+		m._43 = -n / (f - n);
+		m._41 - (l + r) / (l - r);
+		m._42 - (t + b) / (b - t);
+
+		return m;
+	}
+
+	static MyMatrix PerspectiveFovLH(MyMatrix m, float NearPlane, float FarPlane, float FovY, float AspectRatio)
+	{
+		float h, w, Q;
+
+		h = 1 / tan(FovY * 0.5f);  // 1/tans(x) = cot(x)
+		w = h / AspectRatio;
+
+		Q = FarPlane / (FarPlane - NearPlane);
+
+		m._11 = w;
+		m._22 = h;
+		m._33 = Q;
+		m._43 = -Q * NearPlane;
+		m._34 = 1;
+		m._44 = 0.0f;
+
+		return m;
+	}
+}
 
