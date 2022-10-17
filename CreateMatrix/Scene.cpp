@@ -64,13 +64,13 @@ HRESULT Scene::Frame()
 	matProj.PerspectiveFovLH(1.0f, 100.0f, 3.141592f * 0.5f, 800.0f / 600.0f);
 
  	MyMatrix s, r, t, c;
-	s = s.Scale(1.0f, 1.0f, 1.0f);
+	s = StaticMatrix::Scale(1.0f, 1.0f, 1.0f);
 
 	static float timer = 0.0f;
 	timer += DELTA_TIME;
-	r = r.RotationY(timer);
+	r = StaticMatrix::RotationY(timer);
 
-	t = t.Translation(0.0f, 0.0f, 0.0f);
+	t = StaticMatrix::Translation(0.0f, 0.0f, 0.0f);
 	c = s * r * t;
 
 	for (size_t i = 0; i < _pRyan->_init.size(); i++)
@@ -86,7 +86,7 @@ HRESULT Scene::Frame()
 		_pRyan->_vertices[i].position = proj;
 	}
 
-	_pRyan->SetVertexBuffer();
+	_pRyan->UpdateVertexBuffer();
 
 	//for (auto& pObject : _pObjects)
 	//{
