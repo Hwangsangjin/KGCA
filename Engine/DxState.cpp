@@ -58,7 +58,7 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
 
     HR(pd3dDevice->CreateSamplerState(&sd, &_pDefaultSSWrap));
 
-    sd.Filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
+    sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     sd.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;

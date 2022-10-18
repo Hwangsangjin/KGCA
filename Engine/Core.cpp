@@ -100,7 +100,7 @@ HRESULT Core::CorePreRender()
 	_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	_pImmediateContext->RSSetViewports(1, &_viewport);
 	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
-	_pImmediateContext->PSSetSamplers(0, 1, &DxState::_pDefaultSSWrap);
+	_pImmediateContext->PSSetSamplers(0, 1, &DxState::_pDefaultSSMirror);
 	_pImmediateContext->OMSetBlendState(DxState::_pAlphaBlend, 0, -1);
 	_pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, _pDepthStencilView);
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);

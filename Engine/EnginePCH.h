@@ -158,6 +158,7 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 
 #define PI					3.141592654f
 #define PIDIV2				1.570796327f
+#define	PIDIV4				0.785398163f
 #define DegreeToRadian(x)	(x *(PI / 180.0f))
 #define RadianToDegree(x)	(x *(180.0f / PI))
 
