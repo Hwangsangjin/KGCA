@@ -166,14 +166,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="Map.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shape.h" />

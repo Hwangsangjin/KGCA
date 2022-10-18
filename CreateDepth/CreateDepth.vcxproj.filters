@@ -32,9 +32,6 @@
     <ClCompile Include="Shape.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -47,9 +44,6 @@
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="Shape.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>
