@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core.h"
-#include "Scene.h"
 
 class Sample : public Core
 {
@@ -20,6 +19,6 @@ public:
 
 private:
 	POINT _point = { 0, 0 };
-	Scene* _pScene = nullptr;
+	class Scene* _pScene = nullptr;
 };
 

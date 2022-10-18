@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Sample.h"
+#include "Scene.h"
 
 GAME_RUN(Client, 800, 600)
 
@@ -66,9 +67,8 @@ HRESULT Sample::Render()
 		_pImmediateContext->RSSetState(DxState::_pDefaultRSWireFrame);
 	}
 
-	_pScene->Render();
-
 	_font.Render();
+	_pScene->Render();
 
 	return TRUE;
 }
@@ -78,7 +78,6 @@ HRESULT Sample::Release()
 	_pScene->Release();
 
 	SAFE_DELETE(_pScene);
-	_pScene = nullptr;
 
 	return TRUE;
 }
