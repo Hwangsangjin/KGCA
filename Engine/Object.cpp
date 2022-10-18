@@ -61,21 +61,21 @@ HRESULT Object::Release()
     return TRUE;
 }
 
-void Object::SetMatrix(MyMatrix* World, MyMatrix* View, MyMatrix* Projection)
+void Object::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 {
-    if (World)
+    if (pWorld)
     {
-        _World = *World;
+        _world = *pWorld;
     }
 
-    if (View)
+    if (pView)
     {
-        _View = *View;
+        _view = *pView;
     }
 
-    if (Projection)
+    if (pProjection)
     {
-        _Projection = *Projection;
+        _projection = *pProjection;
     }
 
     UpdateConstantBuffer();
@@ -110,6 +110,13 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 
 void Object::CreateVertexData()
 {
+    if (_vertices.size() > 0)
+    {
+        _init = _vertices;
+
+        return;
+    }
+
     _vertices.resize(4);
 
     _vertices[0].position = MyVector3{ -1.0f, 1.0f, 0.0f };
@@ -152,6 +159,11 @@ HRESULT Object::CreateVertexBuffer()
 
 void Object::CreateIndexData()
 {
+    if (_indices.size() > 0)
+    {
+        return;
+    }
+
     _indices.resize(6);
 
     _indices[0] = 0; _indices[1] = 2; _indices[2] = 3;
@@ -270,9 +282,9 @@ void Object::UpdateVertexBuffer()
 
 void Object::UpdateConstantBuffer()
 {
-    _constantBuffer.world = _World.Transpose();
-    _constantBuffer.view = _View.Transpose();
-    _constantBuffer.projection = _Projection.Transpose();
+    _constantBuffer.world = _world.Transpose();
+    _constantBuffer.view = _view.Transpose();
+    _constantBuffer.projection = _projection.Transpose();
 
     _pImmediateContext->UpdateSubresource(_pConstantBuffer, NULL, NULL, &_constantBuffer, 0, 0);
 }

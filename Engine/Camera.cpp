@@ -3,58 +3,58 @@
 #include "Input.h"
 #include "Timer.h"
 
-void Camera::CreateView(MyVector3 Eye, MyVector3 At, MyVector3 Up)
+void Camera::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
 {
-	_Position = Eye;
-	_Target = At;
-	_Up = Up;
+	_position = eye;
+	_target = at;
+	_up = up;
 
-	_View.ViewLookAt(Eye, At, Up);
+	_view.ViewLookAt(eye, at, up);
 }
 
-void Camera::CreateProjection(float Near, float Far, float FovY, float AspectRatio)
+void Camera::CreateProjection(float fNear, float fFar, float fovY, float aspectRatio)
 {
-	_Near = Near;
-	_Far = Far;
-	_FovY = FovY;
-	_AspectRatio = AspectRatio;
+	_near = fNear;
+	_far = fFar;
+	_fovY = fovY;
+	_aspectRatio = aspectRatio;
 
-	_Projection.PerspectiveFovLH(1.0f, 100.0f, 3.141592f * 0.5f, 800.0f / 600.0f);
+	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
 }
 
 HRESULT Camera::Frame()
 {
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
 	{
-		_Position._z += 10.0f * DELTA_TIME;
+		_position._z += 10.0f * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('S') == KEY_STATE::HOLD)
 	{
-		_Position._z -= 10.0f * DELTA_TIME;
+		_position._z -= 10.0f * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('A') == KEY_STATE::HOLD)
 	{
-		_Position._x -= 10.0f * DELTA_TIME;
+		_position._x -= 10.0f * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('D') == KEY_STATE::HOLD)
 	{
-		_Position._x += 10.0f * DELTA_TIME;
+		_position._x += 10.0f * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
 	{
-		_Position._y += 10.0f * DELTA_TIME;
+		_position._y += 10.0f * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('E') == KEY_STATE::HOLD)
 	{
-		_Position._y -= 10.0f * DELTA_TIME;
+		_position._y -= 10.0f * DELTA_TIME;
 	}
 
-	_View.ViewLookAt(_Position, _Target, _Up);
+	_view.ViewLookAt(_position, _target, _up);
 
     return TRUE;
 }

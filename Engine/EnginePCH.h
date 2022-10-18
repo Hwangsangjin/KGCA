@@ -22,6 +22,7 @@
 #include <codecvt>
 #include <tchar.h>
 #include <io.h>
+#include <wrl.h>
 #include "MyMath.h"
 
 // lib

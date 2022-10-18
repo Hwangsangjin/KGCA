@@ -18,7 +18,7 @@ public:
 	virtual HRESULT Release();
 
 	// 공간 설정
-	virtual void SetMatrix(MyMatrix* world, MyMatrix* view, MyMatrix* projection);
+	virtual void SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection);
 
 	// 디바이스 설정
 	virtual HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
@@ -70,8 +70,8 @@ public:
 	ID3DBlob* _pPixelShaderCode = nullptr;
 	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
 
-	MyMatrix _World;
-	MyMatrix _View;
-	MyMatrix _Projection;
+	MyMatrix _world;
+	MyMatrix _view;
+	MyMatrix _projection;
 };
 

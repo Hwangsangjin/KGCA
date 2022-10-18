@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "DxState.h"
 
+ID3D11BlendState* DxState::_pAlphaBlend = nullptr;
 ID3D11SamplerState* DxState::_pDefaultSSWrap = nullptr;
 ID3D11SamplerState* DxState::_pDefaultSSMirror = nullptr;
-ID3D11BlendState* DxState::_pAlphaBlend = nullptr;
-ID3D11RasterizerState* DxState::_pDefaultRSWireFrame = nullptr;
 ID3D11RasterizerState* DxState::_pDefaultRSSolid = nullptr;
+ID3D11RasterizerState* DxState::_pDefaultRSWireFrame = nullptr;
+ID3D11DepthStencilState* DxState::_pDefaultDepthStencil = nullptr;
+ID3D11DepthStencilState* DxState::_pGreaterDepthStencil = nullptr;
 
 HRESULT DxState::Init()
 {
@@ -29,6 +31,8 @@ HRESULT DxState::Release()
     SAFE_RELEASE(_pDefaultSSMirror);
     SAFE_RELEASE(_pDefaultRSSolid);
     SAFE_RELEASE(_pDefaultRSWireFrame);
+    SAFE_RELEASE(_pDefaultDepthStencil);
+    SAFE_RELEASE(_pGreaterDepthStencil);
 
     return TRUE;
 }
@@ -96,6 +100,16 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
 
     bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
     HR(pd3dDevice->CreateBlendState(&bd, &_pAlphaBlend));
+
+    D3D11_DEPTH_STENCIL_DESC dsd;
+    ZeroMemory(&dsd, sizeof(dsd));
+    dsd.DepthEnable = true;
+    dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsd.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+    HR(pd3dDevice->CreateDepthStencilState(&dsd, &_pDefaultDepthStencil));
+
+    dsd.DepthFunc = D3D11_COMPARISON_GREATER;
+    HR(pd3dDevice->CreateDepthStencilState(&dsd, &_pGreaterDepthStencil));
     
     return TRUE;
 }

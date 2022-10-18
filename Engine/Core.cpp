@@ -102,11 +102,13 @@ HRESULT Core::CorePreRender()
 	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
 	_pImmediateContext->PSSetSamplers(0, 1, &DxState::_pDefaultSSWrap);
 	_pImmediateContext->OMSetBlendState(DxState::_pAlphaBlend, 0, -1);
-	_pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, NULL);
+	_pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, _pDepthStencilView);
+	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
 
 	// 후면 버퍼 클리어
 	float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
 	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
+	_pImmediateContext->ClearDepthStencilView(_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	return TRUE;
 }

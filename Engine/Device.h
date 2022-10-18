@@ -23,6 +23,8 @@ public:
 	HRESULT CreateSwapChain();
 	// ·»´õÅ¸°Ùºä »ý¼º
 	HRESULT CreateRenderTargetView();
+	// µª½º½ºÅÙ½Çºä »ý¼º
+	HRESULT CreateDepthStencilView();
 	// ºäÆ÷Æ® »ý¼º
 	HRESULT CreateViewport();
 
@@ -41,6 +43,7 @@ protected:
 	IDXGIFactory* _pFactory = nullptr;
 	IDXGISwapChain* _pSwapChain = nullptr;
 	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
+	ID3D11DepthStencilView* _pDepthStencilView = nullptr;
 	ID3D11Texture2D* _pBackBuffer = nullptr;
 	D3D11_VIEWPORT _viewport;
 };

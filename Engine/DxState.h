@@ -15,10 +15,12 @@ public:
 	// »ùÇÃ·¯ ¼³Á¤
 	static HRESULT SetSamplerState(ID3D11Device* pd3dDevice);
 
+	static ID3D11BlendState* _pAlphaBlend;
 	static ID3D11SamplerState* _pDefaultSSWrap;
 	static ID3D11SamplerState* _pDefaultSSMirror;
-	static ID3D11RasterizerState* _pDefaultRSWireFrame;
 	static ID3D11RasterizerState* _pDefaultRSSolid;
-	static ID3D11BlendState* _pAlphaBlend;
+	static ID3D11RasterizerState* _pDefaultRSWireFrame;
+	static ID3D11DepthStencilState* _pDefaultDepthStencil;
+	static ID3D11DepthStencilState* _pGreaterDepthStencil;
 };
 
