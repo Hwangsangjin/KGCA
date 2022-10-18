@@ -1,9 +1,5 @@
 #pragma once
 
-#include "Camera.h"
-#include "Actor.h"
-#include "Shape.h"
-
 class Scene
 {
 public:
@@ -23,10 +19,10 @@ private:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	ShapeBox* _pBox = nullptr;
-	Camera* _pMainCamera = nullptr;
+	class ShapeBox* _pBox = nullptr;
+	class Camera* _pMainCamera = nullptr;
+	class Actor* _pRyan = nullptr;
 
-	Actor* _pRyan = nullptr;
 	std::vector<Object*> _pObjects;
 };
 

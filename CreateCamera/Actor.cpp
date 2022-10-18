@@ -41,7 +41,7 @@ HRESULT Actor::Frame()
 	r = StaticMatrix::RotationY(timer);
 	//t = StaticMatrix::Translation(0.0f, 0.0f, 0.0f);
 
-	_World = s * r * t;
+	_world = s * r * t;
 
 	return TRUE;
 }
