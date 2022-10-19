@@ -17,7 +17,7 @@ public:
 
 	virtual void CreateVertexData() override;
 	virtual void CreateIndexData() override;
-	virtual HRESULT Frame();
-	virtual HRESULT Render();
+	virtual HRESULT Frame() override;
+	virtual HRESULT Render() override;
 };
 
