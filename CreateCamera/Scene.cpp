@@ -10,7 +10,7 @@ HRESULT Scene::Init()
 	// 카메라
 	_pMainCamera = new Camera;
 	_pMainCamera->CreateView(MyVector3(0.0f, 0.0f, -5.0f), MyVector3(0.0f, 0.0f, 0.0f), MyVector3(0.0f, 1.0f, 0.0f));
-	_pMainCamera->CreateProjection(1.0f, 100.0f, PIDIV2, RESOLUTION_RATIO);
+	_pMainCamera->CreateProjection(1.0f, 100.0f, PI_DIVISION_2, RESOLUTION_RATIO);
 
 	// 라이언
 	_pRyan = new Actor;
