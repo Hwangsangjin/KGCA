@@ -11,7 +11,7 @@ HRESULT Scene::Init()
 	// Ä«¸Þ¶ó
 	_pMainCamera = new Camera;
 	_pMainCamera->CreateView(MyVector3(0.0f, 30.0f, -50.0f), MyVector3(0.0f, 0.0f, 0.0f), MyVector3(0.0f, 1.0f, 0.0f));
-	_pMainCamera->CreateProjection(1.0f, 1000.0f, PIDIV4, RESOLUTION_RATIO);
+	_pMainCamera->CreateProjection(1.0f, 1000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 
 	// ¸Ê
 	_pMap = new Map;
