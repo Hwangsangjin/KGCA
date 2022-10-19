@@ -19,7 +19,7 @@ public:
 	// 설정
 	HRESULT SetSurface(IDXGISurface1* pDXGISurface1);
 	// 그리기
-	HRESULT Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = { 0, 0, 0, 1 });
+	HRESULT Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = { 0.0f, 0.0f, 0.0f, 1.0f });
 	// 텍스트
 	void SetText(std::wstring text);
 
