@@ -3,9 +3,9 @@
 
 HRESULT Map::Customize(UINT width, UINT height)
 {
+	// 전체 정점 갯수 = width * height
 	// 전체 셀 갯수 = (width - 1) * (height - 1)
 	// 전체 페이스 갯수 = (width - 1) * (height - 1) * 2
-	// 전체 정점 갯수 = width * height
 	_vertices.resize(width * height);
 
 	const int centerX = width * 0.5f;
@@ -17,7 +17,7 @@ HRESULT Map::Customize(UINT width, UINT height)
 		for (int x = 0; x < width; x++)
 		{
 			_vertices[x + width * y].position = { (float)(x - centerX) * distance, 0.0f, (float)(centerY - y) * distance };
-			//_vertices[x + width * y].position = { (float)(x - centerX) * distance, cosf(DegreeToRadian(x)) * 20.0f + sinf(DegreeToRadian(y)) * 20.0f, (float)(centerY - y) * distance };
+			//_vertices[x + width * y].position = { (float)(x - centerX) * distance, cosf(DEGREE_TO_RADIAN(x)) * 20.0f + sinf(DEGREE_TO_RADIAN(y)) * 20.0f, (float)(centerY - y) * distance };
 			_vertices[x + width * y].color = { 1.0f, 1.0f, 1.0f, 1.0f };
 			_vertices[x + width * y].uv = { ((float)x / (float)(width - 1)) * 10.0f, ((float)y / (float)(height - 1)) * 10.0f };
 		}
@@ -33,9 +33,9 @@ HRESULT Map::Customize(UINT width, UINT height)
 			UINT nextX = x + 1;
 			UINT nextY = y + 1;
 
-			_indices[index + 0] = y + width * x;
+			_indices[index + 0] = x + width * y;
 			_indices[index + 1] = _indices[index + 0] + 1;
-			_indices[index + 2] = y + width * nextX;
+			_indices[index + 2] = x + width * nextY;
 
 			_indices[index + 3] = _indices[index + 2];
 			_indices[index + 4] = _indices[index + 1];
@@ -45,5 +45,5 @@ HRESULT Map::Customize(UINT width, UINT height)
 		}
 	}
 
-    return TRUE;
+	return TRUE;
 }
