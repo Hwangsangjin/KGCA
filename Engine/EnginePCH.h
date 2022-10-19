@@ -157,10 +157,11 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 #define COEFFICIENT			0.9f
 
 #define PI					3.141592654f
-#define PIDIV2				1.570796327f
-#define	PIDIV4				0.785398163f
-#define DegreeToRadian(x)	(x *(PI / 180.0f))
-#define RadianToDegree(x)	(x *(180.0f / PI))
+#define PI_DIVISION_2		1.570796327f
+#define	PI_DIVISION_4		0.785398163f
+
+#define DEGREE_TO_RADIAN(x)	(x *(PI / 180.0f))
+#define RADIAN_TO_DEGREE(x)	(x *(180.0f / PI))
 
 #define CORE
 #define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
