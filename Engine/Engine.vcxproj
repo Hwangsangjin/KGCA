@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../Library/$(ProjectName)/$(Configuration)</OutDir>
-    <IntDir>../../Library/$(ProjectName)/$(Configuration)/Intermediate</IntDir>
+    <OutDir>../../Library/$(ProjectName)/$(Configuration)/</OutDir>
+    <IntDir>../../Library/$(ProjectName)/$(Configuration)/Intermediate/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
