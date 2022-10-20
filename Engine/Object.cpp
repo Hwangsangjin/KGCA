@@ -97,12 +97,16 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     HR(CreateConstantBuffer());
     HR(CreateShader(shaderFile));
     HR(CreateInputLayout());
-    HR(CreateTexture(textureFile));
 
     _pTexture = TEXTURE->Load(textureFile);
     if (_pTexture)
     {
         _pShaderResourceView = _pTexture->_pShaderResourceView;
+    }
+
+    if (!Init())
+    {
+        return E_FAIL;
     }
 
     return TRUE;

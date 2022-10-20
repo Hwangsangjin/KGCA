@@ -179,6 +179,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TMath.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +211,7 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -216,6 +219,9 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TMath.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

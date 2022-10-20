@@ -57,6 +57,9 @@
     <Filter Include="소스 파일\Core\Object\Camera">
       <UniqueIdentifier>{7521b2fc-383d-440b-a78f-bc6a9b3520ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\Object\Shape">
+      <UniqueIdentifier>{2e82e5b3-a206-45f9-82ba-320a0f1a04e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -128,6 +131,12 @@
     <ClInclude Include="Camera.h">
       <Filter>소스 파일\Core\Object\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>소스 파일\Core\Object\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="TMath.h">
+      <Filter>소스 파일\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -198,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일\Core\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>소스 파일\Core\Object\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="TMath.cpp">
+      <Filter>소스 파일\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

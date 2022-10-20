@@ -36,9 +36,17 @@ HRESULT Texture::CreateTexture(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pI
     SetDevice(pd3dDevice, pImmediateContext);
 
     // 텍스처 생성
-    HR(DirectX::CreateWICTextureFromFile(pd3dDevice, pImmediateContext, texturefile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView));
+    HRESULT hr = DirectX::CreateWICTextureFromFile(pd3dDevice, pImmediateContext, texturefile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView);
 
-    _pTexture2D->GetDesc(&_desc);
+    if (FAILED(hr))
+    {
+        hr = DirectX::CreateDDSTextureFromFile(pd3dDevice, pImmediateContext, texturefile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView);
+    }
+
+    if (_pTexture2D)
+    {
+        _pTexture2D->GetDesc(&_desc);
+    }
 
     return TRUE;
 }

@@ -147,6 +147,24 @@ MyVector3 MyVector3::operator-(const MyVector3& rhs)
     return MyVector3(_x - rhs._x, _y - rhs._y, _z - rhs._z);
 }
 
+const MyVector3& MyVector3::operator+=(const MyVector3& rhs)
+{
+    _x += rhs._x;
+    _y += rhs._y;
+    _z += rhs._z;
+
+    return *this;
+}
+
+const MyVector3& MyVector3::operator-=(const MyVector3& rhs)
+{
+    _x -= rhs._x;
+    _y -= rhs._y;
+    _z -= rhs._z;
+
+    return *this;
+}
+
 MyVector3 MyVector3::operator*(float scala)
 {
     return MyVector3(_x * scala, _y * scala, _z * scala);

@@ -27,8 +27,9 @@ public:
     // À§Ä¡
     POINT GetPos();
 
-private:
     DWORD _keyState[256];
     POINT _position;
+    POINT _init;
+    POINT _offset;
 };
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <math.h>
-
 class MyVector2
 {
 public:
@@ -83,7 +81,10 @@ public:
 	// ÇöÀç º¤ÅÍ¿Í rhs º¤ÅÍÀÇ »¬¼ÀÇÑ °á°ú º¤ÅÍ ¸®ÅÏ
 	MyVector3 operator-(const MyVector3& rhs);
 
-	//
+	// operator
+	const MyVector3& operator+=(const MyVector3& rhs);
+	const MyVector3& operator-=(const MyVector3& rhs);
+
 	MyVector3 operator*(float scala);
 	MyVector3 operator*=(float scala);
 	MyVector3 operator*(class MyMatrix& m);
@@ -291,4 +292,3 @@ namespace StaticMatrix
 		return m;
 	}
 }
-
