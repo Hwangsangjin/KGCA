@@ -163,8 +163,8 @@ HRESULT Device::CreateViewport()
 {
     _viewport.Width = rtClient.right;
     _viewport.Height = rtClient.bottom;
-    _viewport.TopLeftX = 0;
-    _viewport.TopLeftY = 0;
+    _viewport.TopLeftX = 0.0f;
+    _viewport.TopLeftY = 0.0f;
     _viewport.MinDepth = 0.0f;
     _viewport.MaxDepth = 1.0f;
 

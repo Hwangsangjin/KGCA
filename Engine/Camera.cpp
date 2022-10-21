@@ -43,6 +43,23 @@ void Camera::CreateProjection(float fNear, float fFar, float fovY, float aspectR
 	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
 }
 
+MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
+{
+	MyMatrix view;
+	MyVector3 center = (min + max) * 0.5f;
+	float radius = (max.Length() - min.Length()) * 0.5f;
+
+	MyVector3 target = { center._x, center._y, center._z };
+	MyVector3 position = target - (_look * (radius * 2));
+
+	view.ObjectLookAt(position, target, _up);
+
+	_position = position;
+	_target = target;
+
+	return MyMatrix();
+}
+
 void Camera::UpdateView()
 {
 	_right._x = _view._11;

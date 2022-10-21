@@ -215,7 +215,7 @@ MyMatrix MyMatrix::Transpose()
 
 void MyMatrix::Scale(float x, float y, float z)
 {
-    Identity();
+    //Identity();
 
     _11 = x;
     _22 = y;
@@ -224,7 +224,7 @@ void MyMatrix::Scale(float x, float y, float z)
 
 void MyMatrix::RotationX(float radian)
 {
-    Identity();
+    //Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -235,7 +235,7 @@ void MyMatrix::RotationX(float radian)
 
 void MyMatrix::RotationY(float radian)
 {
-    Identity();
+    //Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -246,7 +246,7 @@ void MyMatrix::RotationY(float radian)
 
 void MyMatrix::RotationZ(float radian)
 {
-    Identity();
+    //Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -257,7 +257,7 @@ void MyMatrix::RotationZ(float radian)
 
 void MyMatrix::Translation(float x, float y, float z)
 {
-    Identity();
+    //Identity();
 
     _41 = x;
     _42 = y;

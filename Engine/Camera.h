@@ -12,6 +12,8 @@ public:
 
 	virtual void CreateView(MyVector3 eye, MyVector3 at, MyVector3 up);
 	virtual void CreateProjection(float fNear, float fFar, float fovY, float aspectRatio);
+	
+	MyMatrix SetObjectView(MyVector3 min, MyVector3 max);
 
 	void UpdateView();
 

@@ -66,7 +66,7 @@ DWORD Input::GetKey(DWORD key)
 	return _keyState[key];
 }
 
-POINT Input::GetPos()
+POINT Input::GetPosition()
 {
 	return _position;
 }

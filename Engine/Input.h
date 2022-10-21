@@ -25,7 +25,7 @@ public:
     // Å°
     DWORD GetKey(DWORD key);
     // À§Ä¡
-    POINT GetPos();
+    POINT GetPosition();
 
     DWORD _keyState[256];
     POINT _position;
