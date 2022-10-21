@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />

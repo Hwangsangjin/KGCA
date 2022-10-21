@@ -35,6 +35,9 @@
     <ClCompile Include="Box.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -50,6 +53,9 @@
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
+      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>

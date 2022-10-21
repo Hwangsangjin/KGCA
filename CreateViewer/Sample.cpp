@@ -15,7 +15,7 @@ HRESULT Sample::Init()
 
 HRESULT Sample::Frame()
 {
-	_point = INPUT->GetPos();
+	_point = INPUT->GetPosition();
 
 	_pScene->Frame();
 
