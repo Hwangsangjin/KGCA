@@ -67,7 +67,7 @@ void Actor::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 	rotation.RotationY(timer);
 
 	MyMatrix translation;
-	translation.Translation(-4.0f, 2.0f, 0.0f);
+	translation.Translation(-10.0f, 2.0f, 0.0f);
 	_world = scale * rotation * translation;
 
 	if (_pDirectionLine)

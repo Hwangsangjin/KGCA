@@ -189,6 +189,6 @@ void Cube::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 	rotation.RotationY(timer * 0.1f);
 
 	MyMatrix translation;
-	//translation.Translation(-4.0f, 2.0f, 0.0f);
+	//translation.Translation(0.0f, 2.0f, 0.0f);
 	_world = rotation * translation;
 }

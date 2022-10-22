@@ -47,24 +47,22 @@ HRESULT Scene::Init()
 	// 라이언
 	_pRyan = new Actor;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Ryan/Ryan.png");
-	_pRyan->_world.Translation(-4.0f, 2.0f, 0.0f);
 	AddObject(_pRyan);
 
 	// 박스
 	_pBox = new Box;
 	_pBox->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Box/Box.png");
-	_pBox->_world.Translation(0.0f, 1.0f, 0.0f);
+	_pBox->_world.Translation(9.0f, 1.0f, 0.0f);
 	AddObject(_pBox);
 
 	_pBox2 = new Box;
 	_pBox2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Box/Box.png");
-	_pBox2->_world.Translation(1.0f, 1.0f, 2.0f);
+	_pBox2->_world.Translation(10.0f, 1.0f, 2.0f);
 	AddObject(_pBox2);
 
 	// 큐브
 	_pCube = new Cube;
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
-	_pCube->_world.Translation(0.0f, 0.0f, 0.0f);
 	AddObject(_pCube);
 
 	// 카메라
@@ -136,6 +134,7 @@ HRESULT Scene::Render()
 	_pRyan->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 	_pBox->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 	_pBox2->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
+	_pCube->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 
 	for (auto& pObject : _pObjects)
 	{
