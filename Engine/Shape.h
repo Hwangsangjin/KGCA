@@ -31,6 +31,16 @@ public:
 	virtual void CreateIndexData() override;
 };
 
+class ShapePlane : public Shape
+{
+public:
+	ShapePlane() {}
+	~ShapePlane() {}
+
+	virtual void CreateVertexData() override;
+	virtual void CreateIndexData() override;
+};
+
 class ShapeBox : public Shape
 {
 public:

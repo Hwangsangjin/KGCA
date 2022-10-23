@@ -76,6 +76,14 @@ void ShapeDirectionLine::CreateIndexData()
 	_indices[4] = 4;	_indices[5] = 5;
 }
 
+void ShapePlane::CreateVertexData()
+{
+}
+
+void ShapePlane::CreateIndexData()
+{
+}
+
 void ShapeBox::CreateVertexData()
 {
 	_vertices.resize(24);

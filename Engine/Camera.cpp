@@ -57,7 +57,7 @@ MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
 	_position = position;
 	_target = target;
 
-	return MyMatrix();
+	return view;
 }
 
 void Camera::UpdateView()
