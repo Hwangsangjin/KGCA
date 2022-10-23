@@ -40,7 +40,7 @@ HRESULT Scene::Init()
 
 	// 맵
 	_pMap = new Map;
-	_pMap->Customize(128 + 1, 128 + 1);
+	_pMap->Customize(64 + 1, 64 + 1);
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Map/Map.png");
 	AddObject(_pMap);
 
@@ -65,26 +65,31 @@ HRESULT Scene::Init()
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
 	AddObject(_pCube);
 
+	// 메인 카메라
+	_pMainCamera = new CamerDebug;
+	_pMainCamera->CreateView(MyVector3(0.0f, 5.0f, -30.0f), MyVector3(0.0f, 0.0f, 0.0f), MyVector3(0.0f, 1.0f, 0.0f));
+	_pMainCamera->CreateProjection(1.0f, 1000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
+
 	// 카메라
-	MyVector3 position = MyVector3(0.0f, 10.0f, -1.0f);
+	MyVector3 position = MyVector3(0.0f, 10.0f, 0.1f);
 	MyVector3 up(0.0f, 1.0f, 0.0f);
 
 	// 탑 뷰
 	_pCamera[0] = new Camera;
 	_pCamera[0]->CreateView(position, _pCube->_position, up);
 	// 프론트 뷰
-	position = MyVector3(10.0f, 0.0f, -1.0f);
+	position = MyVector3(0.0f, 1.0f, -10.0f);
 	_pCamera[1] = new Camera;
 	_pCamera[1]->CreateView(position, _pCube->_position, up);
 	// 사이드 뷰
-	position = MyVector3(-10.0f, 0.0f, -1.0f);
+	position = MyVector3(10.0f, 1.0f, 0.0f);
 	_pCamera[2] = new Camera;
 	_pCamera[2]->CreateView(position, _pCube->_position, up);
 	// 유저 뷰
-	position = MyVector3(0.0f, 10.0f, -1.0f);
+	position = MyVector3(8.0f, 8.0f, 0.1f);
 	_pCamera[3] = new Camera;
 	_pCamera[3]->CreateView(position, _pCube->_position, up);
-
+	
 	// 뷰포트에 맞게 카메라 조정
 	for (size_t i = 0; i < 4; i++)
 	{
@@ -95,11 +100,6 @@ HRESULT Scene::Init()
 	{
 		_pCamera[i]->CreateProjection(1.0f, 100.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 	}
-
-	// 메인 카메라
-	_pMainCamera = new CamerDebug;
-	_pMainCamera->CreateView(MyVector3(0.0f, 5.0f, -30.0f), MyVector3(0.0f, 0.0f, 0.0f), MyVector3(0.0f, 1.0f, 0.0f));
-	_pMainCamera->CreateProjection(1.0f, 1000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 
 	return TRUE;
 }
@@ -114,6 +114,11 @@ HRESULT Scene::Frame()
 
 	_pMainCamera->Frame();
 
+	for (size_t i = 0; i < 4; i++)
+	{
+		_pCamera[i]->Frame();
+	}
+
 	for (auto& pObject : _pObjects)
 	{
 		pObject->Frame();
@@ -124,9 +129,6 @@ HRESULT Scene::Frame()
 
 HRESULT Scene::Render()
 {
-	D3D11_VIEWPORT oldViewport[D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX];
-	UINT viewports = 1;
-	_pImmediateContext->RSGetViewports(&viewports, oldViewport);
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
 
 	// 오브젝트 
@@ -142,6 +144,10 @@ HRESULT Scene::Render()
 	}
 
 	// 뷰포트
+	D3D11_VIEWPORT oldViewport[D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX];
+	UINT viewports = 1;
+	_pImmediateContext->RSGetViewports(&viewports, oldViewport);
+
 	for (size_t i = 0; i < 4; i++)
 	{
 		_pImmediateContext->RSSetViewports(1, &_viewport[i]);

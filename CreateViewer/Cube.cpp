@@ -37,16 +37,16 @@ void Cube::CreateVertexData()
 
 	// 앞
 	_vertices[0].position = MyVector3{ -1.0f, 1.0f, -1.0f };
-	_vertices[0].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[0].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[1].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[1].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
 	_vertices[1].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[2].position = MyVector3{ 1.0f, -1.0f, -1.0f };
-	_vertices[2].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[2].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
 	_vertices[2].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[3].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[3].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[3].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[3].uv = MyVector2{ 0.0f, 1.0f };
 
 	// 뒤
@@ -54,38 +54,38 @@ void Cube::CreateVertexData()
 	_vertices[4].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[4].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[5].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[5].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
+	_vertices[5].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
 	_vertices[5].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[6].position = MyVector3{ -1.0f, -1.0f, 1.0f };
-	_vertices[6].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
+	_vertices[6].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
 	_vertices[6].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[7].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[7].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
+	_vertices[7].color = Vector4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[7].uv = MyVector2{ 0.0f, 1.0f };
 
 	// 상
 	_vertices[8].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[8].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[8].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
 	_vertices[8].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[9].position = MyVector3{ 1.0f, 1.0f , 1.0f };
-	_vertices[9].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[9].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[9].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[10].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[10].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[10].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
 	_vertices[10].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[11].position = MyVector3{ -1.0f, 1.0f, -1.0f };
-	_vertices[11].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[11].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[11].uv = MyVector2{ 0.0f, 1.0f };
 
 	// 하
 	_vertices[12].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[12].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[12].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[12].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[13].position = MyVector3{ 1.0f, -1.0f , -1.0f };
-	_vertices[13].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[13].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
 	_vertices[13].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[14].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[14].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
+	_vertices[14].color = Vector4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[14].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[15].position = MyVector3{ -1.0f, -1.0f, 1.0f };
 	_vertices[15].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
@@ -93,27 +93,27 @@ void Cube::CreateVertexData()
 
 	// 좌
 	_vertices[16].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[16].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[16].color = Vector4{ 1.0f, 0.0f, 0.0f, 1.0f };
 	_vertices[16].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[17].position = MyVector3{ -1.0f, 1.0f , -1.0f };
-	_vertices[17].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[17].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[17].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[18].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[18].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[18].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
 	_vertices[18].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[19].position = MyVector3{ -1.0f, -1.0f, 1.0f };
-	_vertices[19].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[19].color = Vector4{ 0.0f, 0.0f, 0.0f, 1.0f };
 	_vertices[19].uv = MyVector2{ 0.0f, 1.0f };
 
 	// 우
 	_vertices[20].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[20].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[20].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
 	_vertices[20].uv = MyVector2{ 0.0f, 0.0f };
 	_vertices[21].position = MyVector3{ 1.0f, 1.0f , 1.0f };
-	_vertices[21].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[21].color = Vector4{ 0.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[21].uv = MyVector2{ 1.0f, 0.0f };
 	_vertices[22].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[22].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[22].color = Vector4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	_vertices[22].uv = MyVector2{ 1.0f, 1.0f };
 	_vertices[23].position = MyVector3{ 1.0f, -1.0f, -1.0f };
 	_vertices[23].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
@@ -183,12 +183,15 @@ void Cube::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 		_pDirectionLine->SetMatrix(&lineWorld, pView, pProjection);
 	}
 
+	MyMatrix scale;
+	//scale.Scale(2.0f, 2.0f, 2.0f);
+
 	static float timer = 0.0f;
 	timer += DELTA_TIME;
 	MyMatrix rotation;
 	rotation.RotationY(timer * 0.1f);
 
 	MyMatrix translation;
-	//translation.Translation(0.0f, 2.0f, 0.0f);
-	_world = rotation * translation;
+	translation.Translation(0.0f, 1.0f, 0.0f);
+	_world = scale * rotation * translation;
 }
