@@ -69,14 +69,14 @@ void Camera::UpdateView()
 MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
 {
 	MyMatrix view;
-	TBASIS_EX::TVector3 vector;
+	TBASIS_EX::TVector3 vector{ 0.0f, 1.0f, 0.0f };
 	MyVector3 center = (min + max) * 0.5f;
 	float radius = MyVector3(max - min).Length() * 0.5f;
 
 	MyVector3 target = { center._x, center._y, center._z };
 	MyVector3 position = target + (-_look * (radius * 2));
 
-	//TBASIS_EX::D3DXMatrixLookAtLH((TBASIS_EX::TMatrix*)&_view, (TBASIS_EX::TVector3*)&position, (TBASIS_EX::TVector3*)&target, &vector(0.0f, 1.0f, 0.0f));
+	TBASIS_EX::D3DXMatrixLookAtLH((TBASIS_EX::TMatrix*)&_view, (TBASIS_EX::TVector3*)&position, (TBASIS_EX::TVector3*)&target, &vector);
 
 	_position = position;
 	_target = target;
