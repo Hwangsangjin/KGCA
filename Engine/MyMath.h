@@ -82,6 +82,9 @@ public:
 	MyVector3 operator-(const MyVector3& rhs);
 
 	// operator
+	MyVector3 operator+() const;
+	MyVector3 operator-() const;
+
 	const MyVector3& operator+=(const MyVector3& rhs);
 	const MyVector3& operator-=(const MyVector3& rhs);
 

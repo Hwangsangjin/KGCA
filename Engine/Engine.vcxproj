@@ -165,6 +165,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DxObject.h" />
+    <ClInclude Include="DxRenderTarget.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
@@ -192,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DxObject.cpp" />
+    <ClCompile Include="DxRenderTarget.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />

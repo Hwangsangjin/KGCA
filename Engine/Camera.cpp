@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Timer.h"
 #include "TMath.h"
+#include "Frustum.h"
 
 HRESULT Camera::Init()
 {
@@ -31,6 +32,7 @@ void Camera::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
 	_up = up;
 
 	_view.ViewLookAt(eye, at, up);
+	UpdateView();
 }
 
 void Camera::CreateProjection(float fNear, float fFar, float fovY, float aspectRatio)
@@ -41,23 +43,6 @@ void Camera::CreateProjection(float fNear, float fFar, float fovY, float aspectR
 	_aspectRatio = aspectRatio;
 
 	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
-}
-
-MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
-{
-	MyMatrix view;
-	MyVector3 center = (min + max) * 0.5f;
-	float radius = (max.Length() - min.Length()) * 0.5f;
-
-	MyVector3 target = { center._x, center._y, center._z };
-	MyVector3 position = target - (_look * (radius * 2));
-
-	view.ObjectLookAt(position, target, _up);
-
-	_position = position;
-	_target = target;
-
-	return view;
 }
 
 void Camera::UpdateView()
@@ -74,9 +59,29 @@ void Camera::UpdateView()
 	_look._y = _view._23;
 	_look._z = _view._33;
 
-	_right.Normalize();
-	_up.Normalize();
-	_look.Normalize();
+	_right = _right.Normalize();
+	_up = _up.Normalize();
+	_look = _look.Normalize();
+
+	_frustum.CreateFrustum(&_view, &_projection);
+}
+
+MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
+{
+	MyMatrix view;
+	TBASIS_EX::TVector3 vector;
+	MyVector3 center = (min + max) * 0.5f;
+	float radius = MyVector3(max - min).Length() * 0.5f;
+
+	MyVector3 target = { center._x, center._y, center._z };
+	MyVector3 position = target + (-_look * (radius * 2));
+
+	//TBASIS_EX::D3DXMatrixLookAtLH((TBASIS_EX::TMatrix*)&_view, (TBASIS_EX::TVector3*)&position, (TBASIS_EX::TVector3*)&target, &vector(0.0f, 1.0f, 0.0f));
+
+	_position = position;
+	_target = target;
+
+	return _view;
 }
 
 HRESULT CamerDebug::Init()
@@ -127,8 +132,8 @@ HRESULT CamerDebug::Frame()
 	TBASIS_EX::TMatrix rotation;
 	TBASIS_EX::TQuaternion quaternion;
 	TBASIS_EX::D3DXQuaternionRotationYawPitchRoll(&quaternion, _yaw, _pitch, _roll);
-	TBASIS_EX::D3DXMatrixAffineTransformation(&world, 1.0f, NULL, &quaternion, &position);
-	TBASIS_EX::D3DXMatrixInverse(&view, NULL, &world);
+	TBASIS_EX::D3DXMatrixAffineTransformation(&world, 1.0f, nullptr, &quaternion, &position);
+	TBASIS_EX::D3DXMatrixInverse(&view, nullptr, &world);
 
 	_view = *((MyMatrix*)&view);
 
@@ -164,4 +169,25 @@ void CamerDebug::CreateProjection(float fNear, float fFar, float fovY, float asp
 	_aspectRatio = aspectRatio;
 
 	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
+}
+
+void CamerDebug::UpdateView()
+{
+	_right._x = _view._11;
+	_right._y = _view._21;
+	_right._z = _view._31;
+
+	_up._x = _view._12;
+	_up._y = _view._22;
+	_up._z = _view._32;
+
+	_look._x = _view._13;
+	_look._y = _view._23;
+	_look._z = _view._33;
+
+	_right = _right.Normalize();
+	_up = _up.Normalize();
+	_look = _look.Normalize();
+
+	_frustum.CreateFrustum(&_view, &_projection);
 }

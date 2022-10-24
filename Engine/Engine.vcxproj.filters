@@ -60,6 +60,15 @@
     <Filter Include="소스 파일\Core\Object\Shape">
       <UniqueIdentifier>{2e82e5b3-a206-45f9-82ba-320a0f1a04e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\Object\Frustum">
+      <UniqueIdentifier>{8b7d17ef-22be-47eb-8113-22e075768cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxObject">
+      <UniqueIdentifier>{6926185b-e511-4b6e-96cb-3de72ef43b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxRenderTarget">
+      <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -137,6 +146,15 @@
     <ClInclude Include="TMath.h">
       <Filter>소스 파일\Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Frustum.h">
+      <Filter>소스 파일\Core\Object\Frustum</Filter>
+    </ClInclude>
+    <ClInclude Include="DxObject.h">
+      <Filter>소스 파일\Core\DxObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DxRenderTarget.h">
+      <Filter>소스 파일\Core\DxRenderTarget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -213,6 +231,15 @@
     </ClCompile>
     <ClCompile Include="TMath.cpp">
       <Filter>소스 파일\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Frustum.cpp">
+      <Filter>소스 파일\Core\Object\Frustum</Filter>
+    </ClCompile>
+    <ClCompile Include="DxObject.cpp">
+      <Filter>소스 파일\Core\DxObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DxRenderTarget.cpp">
+      <Filter>소스 파일\Core\DxRenderTarget</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

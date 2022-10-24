@@ -13,7 +13,6 @@ public:
 	virtual HRESULT Render() override;
 	virtual HRESULT Release() override;
 
-	MyVector3 _position;
 	MyVector3 _look;
 	MyVector3 _up;
 	MyVector3 _right;

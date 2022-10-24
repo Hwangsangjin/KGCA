@@ -102,8 +102,7 @@ float MyVector3::Length()
 MyVector3 MyVector3::Normalize()
 {
     // 현재 벡터에 대한 단위 벡터를 리턴한다.
-    float length = 0.0f;
-    length = Length();
+    float length = Length();
     return (MyVector3(_x / length, _y / length, _z / length));
 }
 
@@ -145,6 +144,16 @@ MyVector3 MyVector3::operator-(const MyVector3& rhs)
 {
     // 현재 벡터와 rhs 벡터의 뺄셈한 결과 벡터를 리턴한다.
     return MyVector3(_x - rhs._x, _y - rhs._y, _z - rhs._z);
+}
+
+MyVector3 MyVector3::operator+() const
+{
+    return *this;
+}
+
+MyVector3 MyVector3::operator-() const
+{
+    return MyVector3(-_x, -_y, -_z);
 }
 
 const MyVector3& MyVector3::operator+=(const MyVector3& rhs)
@@ -215,7 +224,7 @@ MyMatrix MyMatrix::Transpose()
 
 void MyMatrix::Scale(float x, float y, float z)
 {
-    //Identity();
+    Identity();
 
     _11 = x;
     _22 = y;
@@ -224,7 +233,7 @@ void MyMatrix::Scale(float x, float y, float z)
 
 void MyMatrix::RotationX(float radian)
 {
-    //Identity();
+    Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -235,7 +244,7 @@ void MyMatrix::RotationX(float radian)
 
 void MyMatrix::RotationY(float radian)
 {
-    //Identity();
+    Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -246,7 +255,7 @@ void MyMatrix::RotationY(float radian)
 
 void MyMatrix::RotationZ(float radian)
 {
-    //Identity();
+    Identity();
 
     float cosTheta = cos(radian);
     float sinTheta = sin(radian);
@@ -257,7 +266,7 @@ void MyMatrix::RotationZ(float radian)
 
 void MyMatrix::Translation(float x, float y, float z)
 {
-    //Identity();
+    Identity();
 
     _41 = x;
     _42 = y;

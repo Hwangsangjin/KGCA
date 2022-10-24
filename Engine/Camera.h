@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Frustum.h"
 
 class Camera : public Object
 {
@@ -12,10 +13,9 @@ public:
 
 	virtual void CreateView(MyVector3 eye, MyVector3 at, MyVector3 up);
 	virtual void CreateProjection(float fNear, float fFar, float fovY, float aspectRatio);
+	virtual void UpdateView();
 	
 	MyMatrix SetObjectView(MyVector3 min, MyVector3 max);
-
-	void UpdateView();
 
 	MyVector3 _position;
 	MyVector3 _target;
@@ -33,6 +33,8 @@ public:
 	float _roll = 0.0f;
 
 	float _speed = 10.0f;
+
+	Frustum _frustum;
 };
 
 class CamerDebug : public Camera
@@ -45,4 +47,5 @@ public:
 
 	virtual void CreateView(MyVector3 eye, MyVector3 at, MyVector3 up) override;
 	virtual void CreateProjection(float fNear, float fFar, float fovY, float aspectRatio) override;
+	virtual void UpdateView() override;
 };

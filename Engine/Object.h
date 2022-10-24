@@ -73,5 +73,7 @@ public:
 	MyMatrix _world;
 	MyMatrix _view;
 	MyMatrix _projection;
+
+	MyVector3 _position;
 };
 
