@@ -73,10 +73,10 @@ HRESULT Sample::Render()
 		_font.Draw(30, 280, L"SPACE", { 1, 1, 1, 1 });
 	}
 
-	_font.Draw(650.0f, 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
-	_font.Draw(650.0f, 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
-	_font.Draw(650.0f, 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
-	_font.Draw(650.0f, 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
+	_font.Draw(680.0f, 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
+	_font.Draw(680.0f, 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
+	_font.Draw(680.0f, 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
+	_font.Draw(680.0f, 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	_font.Render();
 

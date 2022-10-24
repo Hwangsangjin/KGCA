@@ -10,30 +10,30 @@
 HRESULT Scene::Init()
 {
 	// ºäÆ÷Æ®
-	_viewport[0].TopLeftX = 600.0f;
+	_viewport[0].TopLeftX = 650.0f;
 	_viewport[0].TopLeftY = 0.0f;
-	_viewport[0].Width = 200.0f;
+	_viewport[0].Width = 150.0f;
 	_viewport[0].Height = 150.0f;
 	_viewport[0].MinDepth = 0.0f;
 	_viewport[0].MaxDepth = 1.0f;
 
-	_viewport[1].TopLeftX = 600.0f;
-	_viewport[1].TopLeftY = 150.0f;
-	_viewport[1].Width = 200.0f;
+	_viewport[1].TopLeftX = 650.0f;
+	_viewport[1].TopLeftY = 180.0f;
+	_viewport[1].Width = 150.0f;
 	_viewport[1].Height = 150.0f;
 	_viewport[1].MinDepth = 0.0f;
 	_viewport[1].MaxDepth = 1.0f;
 
-	_viewport[2].TopLeftX = 600.0f;
-	_viewport[2].TopLeftY = 300.0f;
-	_viewport[2].Width = 200.0f;
+	_viewport[2].TopLeftX = 650.0f;
+	_viewport[2].TopLeftY = 330.0f;
+	_viewport[2].Width = 150.0f;
 	_viewport[2].Height = 150.0f;
 	_viewport[2].MinDepth = 0.0f;
 	_viewport[2].MaxDepth = 1.0f;
 
-	_viewport[3].TopLeftX = 600.0f;
-	_viewport[3].TopLeftY = 450.0f;
-	_viewport[3].Width = 200.0f;
+	_viewport[3].TopLeftX = 650.0f;
+	_viewport[3].TopLeftY = 480.0f;
+	_viewport[3].Width = 150.0f;
 	_viewport[3].Height = 150.0f;
 	_viewport[3].MinDepth = 0.0f;
 	_viewport[3].MaxDepth = 1.0f;
@@ -71,7 +71,7 @@ HRESULT Scene::Init()
 	_pMainCamera->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 
 	// Ä«¸Þ¶ó
-	MyVector3 position = MyVector3(0.0f, 10.0f, 0.1f);
+	MyVector3 position = MyVector3(0.0f, 10.0f, -0.1f);
 	MyVector3 up(0.0f, 1.0f, 0.0f);
 
 	// Å¾ ºä
@@ -86,7 +86,7 @@ HRESULT Scene::Init()
 	_pCamera[2] = new Camera;
 	_pCamera[2]->CreateView(position, _pCube->_position, up);
 	// À¯Àú ºä
-	position = MyVector3(8.0f, 8.0f, 0.1f);
+	position = MyVector3(10.0f, 10.0f, -10.0f);
 	_pCamera[3] = new Camera;
 	_pCamera[3]->CreateView(position, _pCube->_position, up);
 	
@@ -98,7 +98,7 @@ HRESULT Scene::Init()
 
 	for (size_t i = 0; i < 4; i++)
 	{
-		_pCamera[i]->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
+		_pCamera[i]->CreateProjection(1.0f, 100.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 	}
 
 	return TRUE;
