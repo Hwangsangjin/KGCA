@@ -2,6 +2,16 @@
 
 class Font
 {
+private:
+	ID2D1Factory* _pd2dFactory = nullptr;
+	IDWriteFactory* _pWriteFactory = nullptr;
+	ID2D1RenderTarget* _pd2dRenderTarget = nullptr;
+	IDWriteTextFormat* _pTextFormat = nullptr;
+	IDWriteTextLayout* _pTextLayout = nullptr;
+	ID2D1SolidColorBrush* _pTextColor = nullptr;
+
+	std::wstring _text = L"KGCA Game Academy";
+
 public:
 	// 초기화
 	virtual HRESULT Init();
@@ -22,15 +32,5 @@ public:
 	HRESULT Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = { 0.0f, 0.0f, 0.0f, 1.0f });
 	// 텍스트
 	void SetText(std::wstring text);
-
-private:
-	ID2D1Factory* _pd2dFactory = nullptr;
-	IDWriteFactory* _pWriteFactory = nullptr;
-	ID2D1RenderTarget* _pd2dRenderTarget = nullptr;
-	IDWriteTextFormat* _pTextFormat = nullptr;
-	IDWriteTextLayout* _pTextLayout = nullptr;
-	ID2D1SolidColorBrush* _pTextColor = nullptr;
-
-	std::wstring _text = L"KGCA Game Academy";
 };
 

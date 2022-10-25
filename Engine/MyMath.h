@@ -3,6 +3,19 @@
 class MyVector2
 {
 public:
+	// 2차원 벡터의 멤버 변수 x, y
+	// 벡터 성분을 직접 액세스할 수 있도록 public 설정
+	union
+	{
+		struct
+		{
+			float _x;
+			float _y;
+		};
+
+		float _v[2];
+	};
+
 	// 생성자 - 멤버 변수를 초기화
 	MyVector2();
 	// x, y, z의 초기값을 입력으로 하는 생성자
@@ -31,8 +44,12 @@ public:
 	MyVector2 operator+(const MyVector2& rhs);
 	// 현재 벡터와 rhs 벡터의 뺄셈한 결과 벡터 리턴
 	MyVector2 operator-(const MyVector2& rhs);
+};
 
-	// 2차원 벡터의 멤버 변수 x, y
+class MyVector3
+{
+public:
+	// 3차원 벡터의 멤버 변수 x, y, z
 	// 벡터 성분을 직접 액세스할 수 있도록 public 설정
 	union
 	{
@@ -40,15 +57,12 @@ public:
 		{
 			float _x;
 			float _y;
+			float _z;
 		};
 
-		float _v[2];
+		float _v[3];
 	};
-};
 
-class MyVector3
-{
-public:
 	// 생성자 - 멤버 변수를 초기화
 	MyVector3();
 	// x, y, z의 초기값을 입력으로 하는 생성자
@@ -96,25 +110,25 @@ public:
 	float operator|(const MyVector3& v0);
 	// Cross Product
 	MyVector3 operator^(const MyVector3& v0);
-
-	// 3차원 벡터의 멤버 변수 x, y, z
-	// 벡터 성분을 직접 액세스할 수 있도록 public 설정
-	union
-	{
-		struct
-		{
-			float _x;
-			float _y;
-			float _z;
-		};
-
-		float _v[3];
-	};
 };
 
 class MyMatrix
 {
 public:
+	// 행렬의 원소
+	union
+	{
+		struct
+		{
+			float _11, _12, _13, _14;
+			float _21, _22, _23, _24;
+			float _31, _32, _33, _34;
+			float _41, _42, _43, _44;
+		};
+
+		float _m[4][4];
+	};
+
 	// 생성자
 	MyMatrix();
 	// 소멸자
@@ -145,20 +159,6 @@ public:
 	MyMatrix OrthoLH(float w, float h, float n, float f);
 	MyMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f);
 	MyMatrix PerspectiveFovLH(float NearPlane, float FarPlane, float FovY, float AspectRatio);
-
-	// 행렬의 원소
-	union
-	{
-		struct
-		{
-			float _11, _12, _13, _14;
-			float _21, _22, _23, _24;
-			float _31, _32, _33, _34;
-			float _41, _42, _43, _44;
-		};
-
-		float _m[4][4];
-	};
 };
 
 namespace StaticMatrix

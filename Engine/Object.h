@@ -6,6 +6,32 @@
 class Object
 {
 public:
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+
+	std::vector<Vertex> _init;
+	std::vector<Vertex> _vertices;
+	std::vector<DWORD> _indices;
+	ID3D11Buffer* _pVertexBuffer = nullptr;
+	ID3D11Buffer* _pIndexBuffer = nullptr;
+	ConstantBuffer _constantBuffer;
+	ID3D11Buffer* _pConstantBuffer = nullptr;
+	ID3D11InputLayout* _pInputLayout = nullptr;
+
+	Texture* _pTexture = nullptr;
+	Shader* _pShader = nullptr;
+	ID3D11VertexShader* _pVertexShader = nullptr;
+	ID3D11PixelShader* _pPixelShader = nullptr;
+	ID3DBlob* _pVertexShaderCode = nullptr;
+	ID3DBlob* _pPixelShaderCode = nullptr;
+	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
+
+	MyMatrix _world;
+	MyMatrix _view;
+	MyMatrix _projection;
+
+	MyVector3 _position;
+
 	// 초기화
 	virtual HRESULT Init();
 	// 프레임 계산
@@ -49,31 +75,5 @@ public:
 	virtual void UpdateVertexBuffer();
 	// 상수 버퍼 설정
 	virtual void UpdateConstantBuffer();
-
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
-
-	std::vector<Vertex> _init;
-	std::vector<Vertex> _vertices;
-	std::vector<DWORD> _indices;
-	ID3D11Buffer* _pVertexBuffer = nullptr;
-	ID3D11Buffer* _pIndexBuffer = nullptr;
-	ConstantBuffer _constantBuffer;
-	ID3D11Buffer* _pConstantBuffer = nullptr;
-	ID3D11InputLayout* _pInputLayout = nullptr;
-
-	Texture* _pTexture = nullptr;
-	Shader* _pShader = nullptr;
-	ID3D11VertexShader* _pVertexShader = nullptr;
-	ID3D11PixelShader* _pPixelShader = nullptr;
-	ID3DBlob* _pVertexShaderCode = nullptr;
-	ID3DBlob* _pPixelShaderCode = nullptr;
-	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
-
-	MyMatrix _world;
-	MyMatrix _view;
-	MyMatrix _projection;
-
-	MyVector3 _position;
 };
 

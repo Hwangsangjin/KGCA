@@ -13,6 +13,11 @@ class Input
     DECLARE_SINGLE(Input);
 
 public:
+    DWORD _keyState[256];
+    POINT _position;
+    POINT _init;
+    POINT _offset;
+
     // 초기화
     HRESULT Init();
     // 프레임 계산
@@ -26,10 +31,5 @@ public:
     DWORD GetKey(DWORD key);
     // 위치
     POINT GetPosition();
-
-    DWORD _keyState[256];
-    POINT _position;
-    POINT _init;
-    POINT _offset;
 };
 

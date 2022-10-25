@@ -4,6 +4,11 @@
 
 class Window : public Device
 {
+protected:
+	HWND _hWnd;		// 윈도우 핸들
+	RECT _rtWindow;	// 윈도우 영역
+	RECT _rtClient;	// 클라이언트 영역
+
 public:
 	Window();
 	virtual ~Window() = default;
@@ -27,10 +32,5 @@ public:
 
 	// 메시지 프로시저
 	LRESULT MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-protected:
-	HWND _hWnd;		// 윈도우 핸들
-	RECT _rtWindow;	// 윈도우 영역
-	RECT _rtClient;	// 클라이언트 영역
 };
 

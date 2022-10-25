@@ -7,6 +7,10 @@ class SoundManager
     DECLARE_SINGLE(SoundManager);
 
 public:
+    FMOD::System* _pSystem = nullptr;
+    std::list<std::wstring> _files;
+    std::map<std::wstring, Sound*> _sounds;
+
     // 초기화
     HRESULT Init();
     // 프레임 계산
@@ -22,9 +26,5 @@ public:
 
     Sound* GetPtr(W_STR name);
     T_STR GetSplitName(std::wstring filename);
-
-    FMOD::System* _pSystem = nullptr;
-    std::list<std::wstring> _files;
-    std::map<std::wstring, Sound*> _sounds;
 };
 

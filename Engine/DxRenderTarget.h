@@ -3,11 +3,6 @@
 class DxRenderTarget
 {
 public:
-	DxRenderTarget();
-	~DxRenderTarget() {}
-
-	//HRESULT Create(ID3D11Device* pd3dDevice, float Width = 800, float height = 600);
-
 	//Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _pRenderTargetView;
 	//Microsoft::WRL::ComPtr<ID3D11DepthStencilState> _pDepthStencilView;
 	//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> _pShaderResourceView;
@@ -22,5 +17,13 @@ public:
 	UINT _viewports;
 	ID3D11RenderTargetView* _pOldRenderTargetView;
 	ID3D11DepthStencilView* _pOldDepthStencilView;
+
+	DxRenderTarget();
+	~DxRenderTarget() {}
+
+	HRESULT Create(ID3D11Device* pd3dDevice);
+	void Begin(ID3D11DeviceContext* pDeviceContext);
+	void End();
+	HRESULT Release();
 };
 

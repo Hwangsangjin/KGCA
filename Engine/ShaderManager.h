@@ -5,7 +5,13 @@
 class ShaderManager
 {
 	DECLARE_SINGLE(ShaderManager);
-	
+
+private:
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+
+	std::map<std::wstring, Shader*> _shaders;
+
 public:
 	// 초기화
 	HRESULT Init();
@@ -21,11 +27,5 @@ public:
 
 	// 셰이더 파일 로드
 	Shader* Load(std::wstring shaderFile);
-
-private:
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
-
-	std::map<std::wstring, Shader*> _shaders;
 };
 

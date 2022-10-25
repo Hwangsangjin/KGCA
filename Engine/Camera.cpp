@@ -84,12 +84,12 @@ MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
 	return _view;
 }
 
-HRESULT CamerDebug::Init()
+HRESULT CameraDebug::Init()
 {
 	return TRUE;
 }
 
-HRESULT CamerDebug::Frame()
+HRESULT CameraDebug::Frame()
 {
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
 	{
@@ -142,17 +142,17 @@ HRESULT CamerDebug::Frame()
 	return TRUE;
 }
 
-HRESULT CamerDebug::Render()
+HRESULT CameraDebug::Render()
 {
 	return TRUE;
 }
 
-HRESULT CamerDebug::Release()
+HRESULT CameraDebug::Release()
 {
 	return TRUE;
 }
 
-void CamerDebug::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
+void CameraDebug::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
 {
 	_position = eye;
 	_target = at;
@@ -161,7 +161,7 @@ void CamerDebug::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
 	_view.ViewLookAt(eye, at, up);
 }
 
-void CamerDebug::CreateProjection(float fNear, float fFar, float fovY, float aspectRatio)
+void CameraDebug::CreateProjection(float fNear, float fFar, float fovY, float aspectRatio)
 {
 	_near = fNear;
 	_far = fFar;
@@ -171,7 +171,7 @@ void CamerDebug::CreateProjection(float fNear, float fFar, float fovY, float asp
 	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
 }
 
-void CamerDebug::UpdateView()
+void CameraDebug::UpdateView()
 {
 	_right._x = _view._11;
 	_right._y = _view._21;

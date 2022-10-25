@@ -230,6 +230,17 @@
     </ClCompile>
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Mask.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Shape.hlsl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

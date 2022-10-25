@@ -69,6 +69,9 @@
     <Filter Include="소스 파일\Core\DxRenderTarget">
       <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\HLSL">
+      <UniqueIdentifier>{9deeb270-a387-412a-947b-2c8ab07e7b10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -241,5 +244,16 @@
     <ClCompile Include="DxRenderTarget.cpp">
       <Filter>소스 파일\Core\DxRenderTarget</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
+    <None Include="Mask.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
+    <None Include="Shape.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
   </ItemGroup>
 </Project>
