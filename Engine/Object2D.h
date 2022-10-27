@@ -13,10 +13,10 @@ public:
 	W_STR _shaderPath;
 
 	float _speed;
-	Circle _circle;
-	Rect _collision;
-	Rect _rect;
-	Rect _uv;
+	MyCircle _circle;
+	MyRect _collision;
+	MyRect _rect;
+	MyRect _uv;
 	Vector2 _scale = { 1.0f, 1.0f };
 	Vector2 _direction = { 0.0f, 0.0f };
 	Vector2 _position;
@@ -33,7 +33,7 @@ public:
 	virtual bool CheckCollision(Object2D& object);
 
 	void SetMask(Texture* pMaskTexture);
-	void SetRect(Rect rect);
+	void SetRect(MyRect rect);
 	void SetSpeed(float speed);
 	void SetScale(float x, float y);
 	void SetDirection(Vector2 direction);

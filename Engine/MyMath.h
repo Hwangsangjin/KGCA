@@ -96,6 +96,8 @@ public:
 	MyVector3 operator-(const MyVector3& rhs);
 
 	// operator
+	bool operator==(MyVector3& rhs);
+
 	MyVector3 operator+() const;
 	MyVector3 operator-() const;
 

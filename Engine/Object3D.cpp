@@ -18,5 +18,7 @@ HRESULT Object3D::Render()
 
 HRESULT Object3D::Release()
 {
+	Object::Release();
+
 	return TRUE;
 }

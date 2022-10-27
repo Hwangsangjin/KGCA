@@ -146,6 +146,22 @@ MyVector3 MyVector3::operator-(const MyVector3& rhs)
     return MyVector3(_x - rhs._x, _y - rhs._y, _z - rhs._z);
 }
 
+bool MyVector3::operator==(MyVector3& rhs)
+{
+    if (fabs(_x - rhs._x) < FLT_EPSILON)
+    {
+        if (fabs(_y - rhs._y) < FLT_EPSILON)
+        {
+            if (fabs(_z - rhs._z) < FLT_EPSILON)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 MyVector3 MyVector3::operator+() const
 {
     return *this;

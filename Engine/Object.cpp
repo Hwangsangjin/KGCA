@@ -56,8 +56,7 @@ HRESULT Object::Release()
     SAFE_RELEASE(_pIndexBuffer);
     SAFE_RELEASE(_pConstantBuffer);
     SAFE_RELEASE(_pInputLayout);
-    SAFE_RELEASE(_pShader);
-    SAFE_RELEASE(_pTexture);
+
     return TRUE;
 }
 

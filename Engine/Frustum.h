@@ -3,32 +3,20 @@
 #include "Object.h"
 #include "TMath.h"
 
+enum CULLING_POSITION
+{
+	BACK,
+	FRONT,
+	ONPLANE,
+	SPANNING
+};
+
 struct Plane
 {
 	float _a, _b, _c, _d;
 
 	void CreatePlane(MyVector3 v0, MyVector3 v1, MyVector3 v2);
 	void CreatePlane(MyVector3 normal, MyVector3 v0);
-};
-
-struct Sphere
-{
-	MyVector3 _center;
-	float _radius;
-};
-
-struct Box
-{
-	MyVector3 _center;
-	MyVector3 _position[8];
-
-	// AABB
-	MyVector3 _min;
-	MyVector3 _max;
-
-	// OBB
-	MyVector3 _axis[3];
-	float _extent[3];
 };
 
 class Frustum : public Object
@@ -40,7 +28,10 @@ public:
 	Plane _plane[6];
 
 	void CreateFrustum(MyMatrix* pView, MyMatrix* pProjection);
-	HRESULT ClassifyPoint(MyVector3 vector);
-	HRESULT ClassifySphere(Sphere* pSphere);
+	CULLING_POSITION ClassifyPoint(MyVector3 vector);
+	CULLING_POSITION ClassifySphere(MySphere* pSphere);
+	CULLING_POSITION ClassifyAABB(CollisionAABB aabb);
+	CULLING_POSITION ClassifyOBB(CollisionOBB obb);
+	CULLING_POSITION ClassifyBOX(CollisionBOX box);
 };
 

@@ -21,6 +21,7 @@ public:
 	float _pitch = 0.0f;
 	float _roll = 0.0f;
 
+	float _distance = 0.0f;
 	float _speed = 10.0f;
 
 	Frustum _frustum;

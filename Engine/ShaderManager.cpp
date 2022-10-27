@@ -20,7 +20,11 @@ HRESULT ShaderManager::Release()
 {
 	for (auto& shader : _shaders)
 	{
-		SAFE_RELEASE(shader.second);
+		if (shader.second)
+		{
+			shader.second->Release();
+			delete shader.second;
+		}
 	}
 
 	_shaders.clear();

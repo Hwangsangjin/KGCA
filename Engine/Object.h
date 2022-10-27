@@ -2,6 +2,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include "Collision.h"
 
 class Object
 {
@@ -33,6 +34,8 @@ public:
 	MyVector3 _position;
 
 	DWORD _face;
+
+	virtual ~Object() {};
 
 	// √ ±‚»≠
 	virtual HRESULT Init();

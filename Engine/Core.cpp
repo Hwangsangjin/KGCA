@@ -63,6 +63,7 @@ HRESULT Core::DeleteDXResource()
 
 HRESULT Core::CoreInit()
 {
+
 	HR(Device::Init());
 	HR(DxState::SetSamplerState(_pd3dDevice));
 	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
@@ -76,10 +77,10 @@ HRESULT Core::CoreInit()
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer));
 	HR(_font.SetSurface(pBackBuffer));
 	pBackBuffer->Release();
-
-	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultRT.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
+	
+	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultRT.hlsl", L"../../Resource////RainbowRainbow.bmp"));
 	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, RESOLUTION_X, RESOLUTION_Y));
-
+	
 	HR(Init());
 
 	return TRUE;
@@ -119,24 +120,24 @@ HRESULT Core::CorePreRender()
 HRESULT Core::CoreRender()
 {
 	CorePreRender();
-
+	
 	// ·»´õÅ¸°Ù ÁöÁ¤
 	_rendertarget._pOldRenderTargetView = _pRenderTargetView;
 	_rendertarget._pOldDepthStencilView = _pDepthStencilView;
 	_rendertarget._oldViewport[0] = _viewport;
-
+	
 	if (SUCCEEDED(_rendertarget.Begin(_pImmediateContext)))
 	{
 		Render();
-
+	
 		_rendertarget.End(_pImmediateContext);
 	}
-
+	
 	if (_rendertarget._pShaderResourceView)
 	{
 		_background._pShaderResourceView = _rendertarget._pShaderResourceView.Get();
 	}
-
+	
 	CorePostRender();
 
 	return TRUE;
@@ -163,6 +164,9 @@ HRESULT Core::CoreRelease()
 	_background.Release();
 	Release();
 	_font.Release();
+	SHADER->Release();
+	SPRITE->Release();
+	TEXTURE->Release();
 	TIMER->Release();
 	INPUT->Release();
 	SOUND->Release();
