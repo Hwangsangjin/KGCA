@@ -165,8 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="DxObject.h" />
-    <ClInclude Include="DxRenderTarget.h" />
+    <ClInclude Include="DxRT.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Object.h" />
@@ -195,8 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DxObject.cpp" />
-    <ClCompile Include="DxRenderTarget.cpp" />
+    <ClCompile Include="DxRT.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -238,6 +236,11 @@
       <FileType>Document</FileType>
     </None>
     <None Include="Shape.hlsl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resource\Shader\DefaultRT.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

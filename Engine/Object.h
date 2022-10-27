@@ -32,6 +32,8 @@ public:
 
 	MyVector3 _position;
 
+	DWORD _face;
+
 	// 초기화
 	virtual HRESULT Init();
 	// 프레임 계산

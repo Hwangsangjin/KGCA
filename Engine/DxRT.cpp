@@ -21,7 +21,7 @@ HRESULT DxRT::Release()
 	return TRUE;
 }
 
-HRESULT DxRT::CreateRenderTarget(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pDeviceContext, float width, float height)
+HRESULT DxRT::CreateRenderTarget(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, float width, float height)
 {
 	_viewport.Width = width;
 	_viewport.Height = height;
@@ -80,24 +80,57 @@ HRESULT DxRT::CreateRenderTarget(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 	return TRUE;
 }
 
-HRESULT DxRT::Begin(ID3D11DeviceContext* pDeviceContext)
+HRESULT DxRT::Apply(ID3D11DeviceContext* pImmediateContext, ID3D11RenderTargetView* pRenderTargetView, ID3D11DepthStencilView* pDepthStencilView)
 {
-	pDeviceContext->RSSetViewports(1, &_viewport);
-	ID3D11RenderTargetView* pRenderTargetView = nullptr;
-	pDeviceContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
-	pDeviceContext->OMSetRenderTargets(1, _pRenderTargetView.GetAddressOf(), _pDepthStencilView.Get());
+	ID3D11RenderTargetView* pNullptrRTV = nullptr;
+	pImmediateContext->OMSetRenderTargets(1, &pNullptrRTV, nullptr);
 
-	const float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
-	pDeviceContext->ClearRenderTargetView(_pRenderTargetView.Get(), color);
-	pDeviceContext->ClearDepthStencilView(_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	if (pRenderTargetView)
+	{
+		if (pDepthStencilView)
+		{
+			pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
+		}
+		else
+		{
+			pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, _pDepthStencilView.Get());
+		}
+	}
+	else
+	{
+		if (pDepthStencilView)
+		{
+			pImmediateContext->OMSetRenderTargets(1, _pRenderTargetView.GetAddressOf(), pDepthStencilView);
+		}
+		else
+		{
+			pImmediateContext->OMSetRenderTargets(1, _pRenderTargetView.GetAddressOf(), _pDepthStencilView.Get());
+		}
+	}
+
+	pImmediateContext->RSSetViewports(1, &_viewport);
 
 	return TRUE;
 }
 
-HRESULT DxRT::End(ID3D11DeviceContext* pDeviceContext)
+HRESULT DxRT::Begin(ID3D11DeviceContext* pImmediateContext)
 {
-	pDeviceContext->RSSetViewports(1, _oldViewport);
-	pDeviceContext->OMSetRenderTargets(1, &_pOldRenderTargetView, _pOldDepthStencilView);
+	pImmediateContext->RSSetViewports(1, &_viewport);
+	ID3D11RenderTargetView* pRenderTargetView = nullptr;
+	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
+	pImmediateContext->OMSetRenderTargets(1, _pRenderTargetView.GetAddressOf(), _pDepthStencilView.Get());
+	
+	const float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
+	pImmediateContext->ClearRenderTargetView(_pRenderTargetView.Get(), color);
+	pImmediateContext->ClearDepthStencilView(_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	return TRUE;
+}
+
+HRESULT DxRT::End(ID3D11DeviceContext* pImmediateContext)
+{
+	pImmediateContext->RSSetViewports(1, _oldViewport);
+	pImmediateContext->OMSetRenderTargets(1, &_pOldRenderTargetView, _pOldDepthStencilView);
 
 	return TRUE;
 }

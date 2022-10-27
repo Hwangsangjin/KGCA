@@ -63,14 +63,11 @@
     <Filter Include="소스 파일\Core\Object\Frustum">
       <UniqueIdentifier>{8b7d17ef-22be-47eb-8113-22e075768cc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\DxObject">
-      <UniqueIdentifier>{6926185b-e511-4b6e-96cb-3de72ef43b63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\DxRenderTarget">
-      <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\HLSL">
       <UniqueIdentifier>{9deeb270-a387-412a-947b-2c8ab07e7b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxRT">
+      <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,11 +149,8 @@
     <ClInclude Include="Frustum.h">
       <Filter>소스 파일\Core\Object\Frustum</Filter>
     </ClInclude>
-    <ClInclude Include="DxObject.h">
-      <Filter>소스 파일\Core\DxObject</Filter>
-    </ClInclude>
-    <ClInclude Include="DxRenderTarget.h">
-      <Filter>소스 파일\Core\DxRenderTarget</Filter>
+    <ClInclude Include="DxRT.h">
+      <Filter>소스 파일\Core\DxRT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -238,11 +232,8 @@
     <ClCompile Include="Frustum.cpp">
       <Filter>소스 파일\Core\Object\Frustum</Filter>
     </ClCompile>
-    <ClCompile Include="DxObject.cpp">
-      <Filter>소스 파일\Core\DxObject</Filter>
-    </ClCompile>
-    <ClCompile Include="DxRenderTarget.cpp">
-      <Filter>소스 파일\Core\DxRenderTarget</Filter>
+    <ClCompile Include="DxRT.cpp">
+      <Filter>소스 파일\Core\DxRT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +244,9 @@
       <Filter>소스 파일\HLSL</Filter>
     </None>
     <None Include="Shape.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
+    <None Include="..\..\Resource\Shader\DefaultRT.hlsl">
       <Filter>소스 파일\HLSL</Filter>
     </None>
   </ItemGroup>

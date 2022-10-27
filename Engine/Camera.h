@@ -49,3 +49,4 @@ public:
 	virtual void CreateProjection(float fNear, float fFar, float fovY, float aspectRatio) override;
 	virtual void UpdateView() override;
 };
+

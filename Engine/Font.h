@@ -12,6 +12,8 @@ private:
 
 	std::wstring _text = L"KGCA Game Academy";
 
+	POINT _point = { 0, 0 };
+
 public:
 	// √ ±‚»≠
 	virtual HRESULT Init();

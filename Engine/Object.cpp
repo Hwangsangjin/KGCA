@@ -23,7 +23,7 @@ HRESULT Object::PreRender()
     _pImmediateContext->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
     _pImmediateContext->VSSetShader(_pVertexShader, NULL, 0);
     _pImmediateContext->PSSetShader(_pPixelShader, NULL, 0);
-    _pImmediateContext->PSSetShaderResources(0, 1, &_pTexture->_pShaderResourceView);
+    _pImmediateContext->PSSetShaderResources(0, 1, &_pShaderResourceView);
 
     return TRUE;
 }
@@ -44,7 +44,7 @@ HRESULT Object::PostRender()
     }
     else
     {
-        _pImmediateContext->DrawIndexed(_indices.size(), 0, 0);
+        _pImmediateContext->DrawIndexed(_face * 3, 0, 0);
     }
 
     return TRUE;
@@ -104,7 +104,7 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
         _pShaderResourceView = _pTexture->_pShaderResourceView;
     }
 
-    if (!Init())
+    if (FAILED(Init()))
     {
         return E_FAIL;
     }
@@ -129,12 +129,12 @@ void Object::CreateVertexData()
     _vertices[1].position = MyVector3{ 1.0f, 1.0f , 0.0f };
     _vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
     _vertices[1].uv = MyVector2{ 1.0f, 0.0f };
-    _vertices[2].position = MyVector3{ 1.0f, -1.0f, 0.0f };
+    _vertices[2].position = MyVector3{ -1.0f, -1.0f, 0.0f };
     _vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[2].uv = MyVector2{ 1.0f, 1.0f };
-    _vertices[3].position = MyVector3{ -1.0f, -1.0f, 0.0f };
+    _vertices[2].uv = MyVector2{ 0.0f, 1.0f };
+    _vertices[3].position = MyVector3{ 1.0f, -1.0f, 0.0f };
     _vertices[3].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[3].uv = MyVector2{ 0.0f, 1.0f };
+    _vertices[3].uv = MyVector2{ 1.0f, 1.0f };
 
     _init = _vertices;
 }
@@ -170,8 +170,10 @@ void Object::CreateIndexData()
 
     _indices.resize(6);
 
-    _indices[0] = 0; _indices[1] = 2; _indices[2] = 3;
-    _indices[3] = 0; _indices[4] = 1; _indices[5] = 3;
+    _indices[0] = 0; _indices[1] = 1; _indices[2] = 2;
+    _indices[3] = 2; _indices[4] = 1; _indices[5] = 3;
+
+    _face = _indices.size() / 3;
 }
 
 HRESULT Object::CreateIndexBuffer()

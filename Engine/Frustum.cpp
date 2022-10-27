@@ -51,7 +51,7 @@ void Frustum::CreateFrustum(MyMatrix* pView, MyMatrix* pProjection)
 	_plane[1].CreatePlane(*((MyVector3*)&_frustum[3]), *((MyVector3*)&_frustum[6]), *((MyVector3*)&_frustum[2]));
 	_plane[2].CreatePlane(*((MyVector3*)&_frustum[5]), *((MyVector3*)&_frustum[2]), *((MyVector3*)&_frustum[6]));
 	_plane[3].CreatePlane(*((MyVector3*)&_frustum[0]), *((MyVector3*)&_frustum[7]), *((MyVector3*)&_frustum[3]));
-	_plane[4].CreatePlane(*((MyVector3*)&_frustum[0]), *((MyVector3*)&_frustum[2]), *((MyVector3*)&_frustum[1]));
+	_plane[4].CreatePlane(*((MyVector3*)&_frustum[2]), *((MyVector3*)&_frustum[1]), *((MyVector3*)&_frustum[0]));
 	_plane[5].CreatePlane(*((MyVector3*)&_frustum[5]), *((MyVector3*)&_frustum[6]), *((MyVector3*)&_frustum[4]));
 }
 

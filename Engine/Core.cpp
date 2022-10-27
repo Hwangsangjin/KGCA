@@ -77,6 +77,9 @@ HRESULT Core::CoreInit()
 	HR(_font.SetSurface(pBackBuffer));
 	pBackBuffer->Release();
 
+	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultRT.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
+	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, RESOLUTION_X, RESOLUTION_Y));
+
 	HR(Init());
 
 	return TRUE;
@@ -106,7 +109,7 @@ HRESULT Core::CorePreRender()
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
 
 	// 후면 버퍼 클리어
-	float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
+	const float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
 	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
 	_pImmediateContext->ClearDepthStencilView(_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
@@ -117,7 +120,22 @@ HRESULT Core::CoreRender()
 {
 	CorePreRender();
 
-	Render();
+	// 렌더타겟 지정
+	_rendertarget._pOldRenderTargetView = _pRenderTargetView;
+	_rendertarget._pOldDepthStencilView = _pDepthStencilView;
+	_rendertarget._oldViewport[0] = _viewport;
+
+	if (SUCCEEDED(_rendertarget.Begin(_pImmediateContext)))
+	{
+		Render();
+
+		_rendertarget.End(_pImmediateContext);
+	}
+
+	if (_rendertarget._pShaderResourceView)
+	{
+		_background._pShaderResourceView = _rendertarget._pShaderResourceView.Get();
+	}
 
 	CorePostRender();
 
@@ -126,6 +144,13 @@ HRESULT Core::CoreRender()
 
 HRESULT Core::CorePostRender()
 {
+	// 배경
+	_background.SetMatrix(nullptr, nullptr, nullptr);
+	_background.Render();
+	
+	// 폰트
+	_font.Render();
+
 	// 플리핑
 	_pSwapChain->Present(0, 0);
 
@@ -134,6 +159,8 @@ HRESULT Core::CorePostRender()
 
 HRESULT Core::CoreRelease()
 {
+	_rendertarget.Release();
+	_background.Release();
 	Release();
 	_font.Release();
 	TIMER->Release();

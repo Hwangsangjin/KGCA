@@ -22,8 +22,9 @@ public:
 	HRESULT Render();
 	HRESULT Release();
 
-	HRESULT CreateRenderTarget(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pDeviceContext, float width, float height);
-	HRESULT Begin(ID3D11DeviceContext* pDeviceContext);
-	HRESULT End(ID3D11DeviceContext* pDeviceContext);
+	HRESULT CreateRenderTarget(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, float width, float height);
+	HRESULT Apply(ID3D11DeviceContext* pImmediateContext, ID3D11RenderTargetView* pRenderTargetView, ID3D11DepthStencilView* pDepthStencilView);
+	HRESULT Begin(ID3D11DeviceContext* pImmediateContext);
+	HRESULT End(ID3D11DeviceContext* pImmediateContext);
 };
 

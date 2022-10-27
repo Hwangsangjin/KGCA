@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Timer.h"
 #include "Font.h"
+#include "DxRT.h"
 #include "DxState.h"
 #include "SoundManager.h"
 #include "ShaderManager.h"
@@ -27,6 +28,12 @@ private:
 protected:
 	// ÆùÆ®
 	Font _font;
+
+	// ¹è°æ
+	Object _background;
+
+	// ·»´õÅ¸°Ù
+	DxRT _rendertarget;
 
 public:
 	Core() = default;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Font.h"
+#include "Input.h"
 
 HRESULT Font::Init()
 {
@@ -13,12 +14,61 @@ HRESULT Font::Init()
 
 HRESULT Font::Frame()
 {
+    _point = INPUT->GetPosition();
+
     return TRUE;
 }
 
 HRESULT Font::Render()
 {
     Draw(0, 0, _text, { 1, 1, 1, 1 });
+
+    std::wstring point = L"(" + std::to_wstring(_point.x) + L", " + std::to_wstring(_point.y) + L")";
+
+    if (INPUT->GetKey(VK_LBUTTON) == KEY_STATE::HOLD || KEY_STATE::NONE)
+    {
+        Draw(_point.x, _point.y - 20, L"MOUSE" + point, { 1, 1, 1, 1 });
+    }
+
+    if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
+    {
+        Draw(30, 140, L"Q", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
+    if (INPUT->GetKey('W') == KEY_STATE::HOLD)
+    {
+        Draw(50, 140, L"W", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
+    if (INPUT->GetKey('E') == KEY_STATE::HOLD)
+    {
+        Draw(70, 140, L"E", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
+    if (INPUT->GetKey('A') == KEY_STATE::HOLD)
+    {
+        Draw(30, 160, L"A", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
+    if (INPUT->GetKey('S') == KEY_STATE::HOLD)
+    {
+        Draw(50, 160, L"S", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
+    if (INPUT->GetKey('D') == KEY_STATE::HOLD)
+    {
+        Draw(70, 160, L"D", { 1, 1, 1, 1 });
+    }
+
+    if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
+    {
+        Draw(30, 280, L"SPACE", { 1, 1, 1, 1 });
+    }
+
+    Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(rtClient.right - 120.0f, rtClient.top + 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(rtClient.right - 120.0f, rtClient.top + 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
 
     return TRUE;
 }
