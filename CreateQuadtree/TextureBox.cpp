@@ -25,6 +25,7 @@ HRESULT TextureBox::Render()
 
 HRESULT TextureBox::Release()
 {
+	_pDirectionLine->Release();
 	SAFE_DELETE(_pDirectionLine);
 
 	return TRUE;

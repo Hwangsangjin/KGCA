@@ -45,23 +45,23 @@ HRESULT Scene::Init()
 	_pMap = new Map;
 	_pMap->Customize(256 + 1, 256 + 1);
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Map/Map.png");
-
-	// 라이언
+	
+	//// 라이언
 	_pRyan = new Actor;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Ryan/Ryan.png");
 	AddObject(_pRyan);
-
+	
 	// 박스
 	_pBox = new TextureBox;
 	_pBox->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Box/Box.png");
 	_pBox->_world.Translation(9.0f, 1.0f, 0.0f);
 	AddObject(_pBox);
-
+	
 	_pBox2 = new TextureBox;
 	_pBox2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Default.hlsl", L"../../../Resource/Box/Box.png");
 	_pBox2->_world.Translation(10.0f, 1.0f, 2.0f);
 	AddObject(_pBox2);
-
+	
 	// 큐브
 	_pCube = new Cube;
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
@@ -71,11 +71,11 @@ HRESULT Scene::Init()
 	_pMainCamera = new CameraDebug;
 	_pMainCamera->CreateView(MyVector3(0.0f, 5.0f, -30.0f), MyVector3(0.0f, 0.0f, 0.0f), MyVector3(0.0f, 1.0f, 0.0f));
 	_pMainCamera->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
-
+	
 	// 카메라
 	MyVector3 position = MyVector3(0.0f, 10.0f, -0.1f);
 	MyVector3 up(0.0f, 1.0f, 0.0f);
-
+	
 	// 탑 뷰
 	_pCamera[0] = new Camera;
 	_pCamera[0]->CreateView(position, _pCube->_position, up);
@@ -91,7 +91,7 @@ HRESULT Scene::Init()
 	position = MyVector3(10.0f, 10.0f, -10.0f);
 	_pCamera[3] = new Camera;
 	_pCamera[3]->CreateView(position, _pCube->_position, up);
-
+	
 	for (size_t i = 0; i < 4; i++)
 	{
 		_pCamera[i]->CreateProjection(1.0f, 100.0f, PI_DIVISION_4, (float)_viewport[i].Width / (float)_viewport[i].Height);
@@ -131,13 +131,6 @@ HRESULT Scene::Frame()
 
 HRESULT Scene::Render()
 {
-	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
-
-	// 맵
-	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	_pMap->UpdateBuffer((CameraDebug*)_pMainCamera);
-	_pMap->Render();
-
 	// 오브젝트
 	for (auto& pObject : _pObjects)
 	{
@@ -145,11 +138,7 @@ HRESULT Scene::Render()
 		HRESULT isRender = _pMainCamera->_frustum.ClassifyPoint(pObject->_position);
 		if (SUCCEEDED(isRender))
 		{
-			_pRyan->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			_pBox->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			_pBox2->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			_pCube->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-
+			pObject->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 			pObject->Render();
 		}
 	}
@@ -175,7 +164,15 @@ HRESULT Scene::Release()
 {
 	for (auto& pObject : _pObjects)
 	{
-		SAFE_DELETE(pObject);
+		pObject->Release();
+		delete pObject;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		_pCamera[i]->Release();
+		delete _pCamera[i];
+		_pCamera[i] = nullptr;
 	}
 
 	return TRUE;

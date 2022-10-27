@@ -26,7 +26,14 @@ HRESULT Cube::Render()
 
 HRESULT Cube::Release()
 {
-	SAFE_DELETE(_pDirectionLine);
+	if (_pDirectionLine)
+	{
+		_pDirectionLine->Release();
+		delete _pDirectionLine;
+		_pDirectionLine = nullptr;
+	}
+
+	Object3D::Release();
 
 	return TRUE;
 }
