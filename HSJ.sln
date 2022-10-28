@@ -101,6 +101,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateFrustum", "CreateFrus
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateQuadtree", "CreateQuadtree\CreateQuadtree.vcxproj", "{F9190F5E-7FD9-4EE8-ABE5-0C1480F683F3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateLoader", "CreateLoader\CreateLoader.vcxproj", "{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -461,6 +463,14 @@ Global
 		{F9190F5E-7FD9-4EE8-ABE5-0C1480F683F3}.Release|x64.Build.0 = Release|x64
 		{F9190F5E-7FD9-4EE8-ABE5-0C1480F683F3}.Release|x86.ActiveCfg = Release|Win32
 		{F9190F5E-7FD9-4EE8-ABE5-0C1480F683F3}.Release|x86.Build.0 = Release|Win32
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Debug|x64.ActiveCfg = Debug|x64
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Debug|x64.Build.0 = Debug|x64
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Debug|x86.ActiveCfg = Debug|Win32
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Debug|x86.Build.0 = Debug|Win32
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Release|x64.ActiveCfg = Release|x64
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Release|x64.Build.0 = Release|x64
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Release|x86.ActiveCfg = Release|Win32
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -510,6 +520,7 @@ Global
 		{3E0A1396-5789-4480-9632-27B3A9A6CC8B} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 		{F53C13C3-050B-49CE-9422-2CA09EF283B8} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 		{F9190F5E-7FD9-4EE8-ABE5-0C1480F683F3} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
+		{7430AEDA-D3D2-4819-B5EB-BEF20A6C9837} = {7CE1FD25-A5F9-4A80-A8FC-637CFBFFDC04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8687645-F4EE-4A93-BE97-7DD2357B4FDA}
