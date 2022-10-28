@@ -33,6 +33,9 @@
 #pragma comment(lib, "d3dcompiler")
 #pragma comment(lib, "DirectXTK")
 #pragma comment(lib, "fmod_vc")
+#pragma comment(lib, "libfbxsdk-md")
+#pragma comment(lib, "libxml2-md")
+#pragma comment(lib, "zlib-md")
 
 // extern
 extern HWND hWnd;

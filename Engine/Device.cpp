@@ -136,8 +136,8 @@ HRESULT Device::CreateDepthStencilView()
     DXGI_SWAP_CHAIN_DESC scd;
     _pSwapChain->GetDesc(&scd);
 
-    //Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthSencilTexture;
-    ID3D11Texture2D* pDepthSencilTexture = nullptr;
+    //Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
+    ID3D11Texture2D* pDepthStencilTexture = nullptr;
     D3D11_TEXTURE2D_DESC td;
     ZeroMemory(&td, sizeof(td));
     td.Width = scd.BufferDesc.Width;
@@ -152,7 +152,7 @@ HRESULT Device::CreateDepthStencilView()
     td.MiscFlags = 0;
 
     //HR(_pd3dDevice->CreateTexture2D(&td, nullptr, pDepthSencilTexture.GetAddressOf()));
-    HR(_pd3dDevice->CreateTexture2D(&td, nullptr, &pDepthSencilTexture));
+    HR(_pd3dDevice->CreateTexture2D(&td, nullptr, &pDepthStencilTexture));
 
     D3D11_DEPTH_STENCIL_VIEW_DESC dtvd;
     ZeroMemory(&dtvd, sizeof(dtvd));
@@ -160,7 +160,7 @@ HRESULT Device::CreateDepthStencilView()
     dtvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
     //_pd3dDevice->CreateDepthStencilView(pDepthSencilTexture.Get(), &dtvd, &_pDepthStencilView);
-    HR(_pd3dDevice->CreateDepthStencilView(pDepthSencilTexture, &dtvd, &_pDepthStencilView));
+    HR(_pd3dDevice->CreateDepthStencilView(pDepthStencilTexture, &dtvd, &_pDepthStencilView));
 
     return TRUE;
 }

@@ -25,7 +25,7 @@ HRESULT Font::Render()
 
     std::wstring point = L"(" + std::to_wstring(_point.x) + L", " + std::to_wstring(_point.y) + L")";
 
-    if (INPUT->GetKey(VK_LBUTTON) == KEY_STATE::HOLD || KEY_STATE::NONE)
+    if (INPUT->GetKey(VK_LBUTTON) == KEY_STATE::NONE)
     {
         Draw(_point.x, _point.y - 20, L"MOUSE" + point, { 1, 1, 1, 1 });
     }
@@ -65,10 +65,10 @@ HRESULT Font::Render()
         Draw(30, 280, L"SPACE", { 1, 1, 1, 1 });
     }
 
-    Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    /*Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
     Draw(rtClient.right - 120.0f, rtClient.top + 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
     Draw(rtClient.right - 120.0f, rtClient.top + 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
-    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });*/
 
     return TRUE;
 }

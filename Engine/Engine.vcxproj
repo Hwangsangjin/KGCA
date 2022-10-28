@@ -128,7 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/MAXSDK;../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -150,7 +150,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/MAXSDK;../../Include/FMOD;../../Include/DirectXTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -229,18 +229,16 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Default.hlsl">
+    <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
       <FileType>Document</FileType>
     </None>
-    <None Include="Mask.hlsl">
+    <None Include="..\..\Resource\Shader\Mask.hlsl">
       <FileType>Document</FileType>
     </None>
-    <None Include="Shape.hlsl">
+    <None Include="..\..\Resource\Shader\RenderTarget.hlsl">
       <FileType>Document</FileType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Resource\Shader\DefaultRT.hlsl">
+    <None Include="..\..\Resource\Shader\Shape.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
