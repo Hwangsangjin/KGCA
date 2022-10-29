@@ -64,9 +64,7 @@ HRESULT Scene::Init()
 	_pCamera[0] = new Camera;
 	_pCamera[0]->CreateView(position, _pRyan->_position, up);
 	// ÇÁ·ÐÆ® ºä
-	position = MyVector3(0.0f, 10.0f, -10.0f);
-	MyVector3 v = _pRyan->_position;
-	v._y += 5.0f;
+	position = MyVector3(0.0f, 0.0f, -10.0f);
 	_pCamera[1] = new Camera;
 	_pCamera[1]->CreateView(position, _pRyan->_position, up);
 	// »çÀÌµå ºä
@@ -133,9 +131,7 @@ HRESULT Scene::Render()
 		HRESULT isRender = _pMainCamera->_frustum.ClassifyPoint(pObject->_position);
 		if (SUCCEEDED(isRender))
 		{
-			MyMatrix m;
-			m._41 = 1 * 100;
-			pObject->SetMatrix(&m, &_pMainCamera->_view, &_pMainCamera->_projection);
+			pObject->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 			pObject->Render();
 		}
 	}
@@ -147,10 +143,8 @@ HRESULT Scene::Render()
 
 	for (size_t i = 0; i < 4; i++)
 	{
-		MyMatrix m;
-		m._41 = i * 10;
 		_pImmediateContext->RSSetViewports(1, &_viewport[i]);
-		_pRyan->SetMatrix(&m, &_pCamera[i]->_view, &_pCamera[i]->_projection);
+		_pRyan->SetMatrix(nullptr, &_pCamera[i]->_view, &_pCamera[i]->_projection);
 		_pRyan->Render();
 	}
 	

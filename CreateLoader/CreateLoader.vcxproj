@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../Include/MAXSDK;../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FBXSDK;../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -128,7 +128,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Library/MAXSDK/$(Configuration);../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Library/FBXSDK/$(Configuration);../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent />
     <PostBuildEvent />
@@ -146,7 +146,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../Include/MAXSDK;../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include/FBXSDK;../../Include/FMOD;../../Include/DirectXTK;../../Include/Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -156,7 +156,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Library/MAXSDK/$(Configuration);../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Library/FBXSDK/$(Configuration);../../Library/FMOD/$(Configuration);../../Library/DirectXTK/$(Configuration);../../Library/Engine/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>

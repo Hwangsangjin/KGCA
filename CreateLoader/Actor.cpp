@@ -110,9 +110,7 @@ HRESULT Actor::Render()
 {
 	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
 	{
-		MyMatrix m;
-		m._41 = i * 10;
-		_fbxLoader._pDrawObjects[i]->SetMatrix(&m, &_view, &_projection);
+		_fbxLoader._pDrawObjects[i]->SetMatrix(nullptr, &_view, &_projection);
 		_fbxLoader._pDrawObjects[i]->Render();
 	}
 
