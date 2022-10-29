@@ -21,13 +21,13 @@ HRESULT Font::Frame()
 
 HRESULT Font::Render()
 {
-    Draw(0, 0, _text, { 1, 1, 1, 1 });
+    Draw(0, 0, _text, { 1.0f, 1.0f, 1.0f, 1.0f });
 
     std::wstring point = L"(" + std::to_wstring(_point.x) + L", " + std::to_wstring(_point.y) + L")";
 
     if (INPUT->GetKey(VK_LBUTTON) == KEY_STATE::NONE)
     {
-        Draw(_point.x, _point.y - 20, L"MOUSE" + point, { 1, 1, 1, 1 });
+        Draw(_point.x, _point.y - 20, L"MOUSE" + point, { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
@@ -57,18 +57,18 @@ HRESULT Font::Render()
 
     if (INPUT->GetKey('D') == KEY_STATE::HOLD)
     {
-        Draw(70, 160, L"D", { 1, 1, 1, 1 });
+        Draw(70, 160, L"D", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
     {
-        Draw(30, 280, L"SPACE", { 1, 1, 1, 1 });
+        Draw(30, 280, L"SPACE", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
-    /*Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
     Draw(rtClient.right - 120.0f, rtClient.top + 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
     Draw(rtClient.right - 120.0f, rtClient.top + 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
-    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });*/
+    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
 
     return TRUE;
 }

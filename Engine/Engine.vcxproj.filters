@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Precompiled">
-      <UniqueIdentifier>{a704c924-11c1-46f2-83e6-6faadc5321c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core">
       <UniqueIdentifier>{9c9c780e-4355-43fe-b2dd-b9105e81d60e}</UniqueIdentifier>
     </Filter>
@@ -66,8 +63,11 @@
     <Filter Include="소스 파일\Core\DxRT">
       <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Shader">
-      <UniqueIdentifier>{9deeb270-a387-412a-947b-2c8ab07e7b10}</UniqueIdentifier>
+    <Filter Include="소스 파일\Precompiled">
+      <UniqueIdentifier>{a704c924-11c1-46f2-83e6-6faadc5321c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object\Shader\HLSL">
+      <UniqueIdentifier>{f56e4a8c-7824-4ce4-a8a7-887d91d594d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -237,17 +237,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
-      <Filter>소스 파일\Shader</Filter>
-    </None>
-    <None Include="..\..\Resource\Shader\Mask.hlsl">
-      <Filter>소스 파일\Shader</Filter>
+    <None Include="..\..\Resource\Shader\Shape.hlsl">
+      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\RenderTarget.hlsl">
-      <Filter>소스 파일\Shader</Filter>
+      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
     </None>
-    <None Include="..\..\Resource\Shader\Shape.hlsl">
-      <Filter>소스 파일\Shader</Filter>
+    <None Include="..\..\Resource\Shader\Mask.hlsl">
+      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+    </None>
+    <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
+      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
     </None>
   </ItemGroup>
 </Project>
