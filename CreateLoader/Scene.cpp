@@ -12,6 +12,18 @@
 
 HRESULT Scene::Init()
 {
+	// FBX
+	if (SUCCEEDED(_fbxLoader.Init()))
+	{
+		_fbxLoader.Load("../../Resource/Box/Box.fbx");
+	}
+
+	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
+	{
+		Object* pObject = _fbxLoader._pDrawObjects[i];
+		pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Box/Box.png");
+	}
+
 	// 뷰포트
 	int width = rtClient.right / 5;
 	int height = rtClient.bottom / 4;
@@ -50,7 +62,7 @@ HRESULT Scene::Init()
 	// 큐브
 	_pCube = new Cube;
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
-	_pCube->_world.Translation(-10.0f, 1.0f, 2.0f);
+	_pCube->_world.Translation(-10.0f, 1.0f, 0.0f);
 	AddObject(_pCube);
 
 	// 메인 카메라
@@ -115,6 +127,8 @@ HRESULT Scene::Frame()
 		pObject->Frame();
 	}
 
+	_fbxLoader.Frame();
+
 	return TRUE;
 }
 
@@ -136,6 +150,15 @@ HRESULT Scene::Render()
 		}
 	}
 
+	// FBX
+	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
+	{
+		MyMatrix m;
+		m.Translation(-30.0f, 0.0f, 0.0f);
+		_fbxLoader._pDrawObjects[i]->SetMatrix(&m, &_pMainCamera->_view, &_pMainCamera->_projection);
+		_fbxLoader._pDrawObjects[i]->Render();
+	}
+
 	// 뷰포트
 	D3D11_VIEWPORT oldViewport[D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX];
 	UINT viewports = 1;
@@ -148,7 +171,6 @@ HRESULT Scene::Render()
 		_pRyan->Render();
 	}
 	
-	
 	_pImmediateContext->RSSetViewports(viewports, oldViewport);
 
 	return TRUE;
@@ -157,6 +179,7 @@ HRESULT Scene::Render()
 HRESULT Scene::Release()
 {
 	_quadtree.Release();
+	_fbxLoader.Release();
 
 	for (auto& pObject : _pObjects)
 	{

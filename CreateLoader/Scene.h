@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Quadtree.h"
-//#include "FbxLoader.h"
+#include "FbxLoader.h"
 
 class Scene
 {
@@ -9,7 +9,7 @@ public:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	//FbxLoader _fbxLoader;
+	FbxLoader _fbxLoader;
 	Quadtree _quadtree;
 	D3D11_VIEWPORT _viewport[4];
 

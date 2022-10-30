@@ -53,15 +53,12 @@ void Actor::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 	_look._y = _world._32;
 	_look._z = _world._33;
 
-	MyVector3 up;
-	MyVector3 right;
-
 	MyMatrix lineWorld;
 	lineWorld.Scale(2.0f, 2.0f, 2.0f);
 	lineWorld = lineWorld * _world;
 
 	MyMatrix scale;
-	scale.Scale(2.0f, 2.0f, 2.0f);
+	//scale.Scale(2.0f, 2.0f, 2.0f);
 
 	static float timer = 0.0f;
 	timer += DELTA_TIME;
@@ -69,11 +66,11 @@ void Actor::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
 	rotation.RotationY(timer * 0.1f);
 
 	MyMatrix translation;
-	//translation.Translation(-10.0f, 2.0f, 0.0f);
+	translation.Translation(0.0f, 0.0f, 0.0f);
 	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
 	{
 		Object* pObject = _fbxLoader._pDrawObjects[i];
-		//pObject->_world = scale * rotation * translation;
+		pObject->_world = scale * rotation * translation;
 	}
 
 	if (_pDirectionLine)
