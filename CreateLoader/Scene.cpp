@@ -13,15 +13,51 @@
 HRESULT Scene::Init()
 {
 	// FBX
-	if (SUCCEEDED(_fbxLoader.Init()))
+	//FbxLoader* pTest = new FbxLoader;
+	//if (SUCCEEDED(pTest->Init()))
+	//{
+	//	pTest->Load("../../Resource/FBX/MultiCameras.fbx");
+	//}
+
+	//_pFbxObjects.push_back(pTest);
+
+
+	FbxLoader* pRyan = new FbxLoader;
+	if (SUCCEEDED(pRyan->Init()))
 	{
-		_fbxLoader.Load("../../Resource/Box/Box.fbx");
+		pRyan->Load("../../Resource/Ryan/Ryan.fbx");
 	}
 
-	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
+	_pFbxObjects.push_back(pRyan);
+
+	W_STR defaultDir = L"../../Resource/FBX/";
+	std::wstring shaderfilename = L"../../Resource/Shader/DefaultObject.hlsl";
+
+	for (auto& fbx : _pFbxObjects)
 	{
-		Object* pObject = _fbxLoader._pDrawObjects[i];
-		pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Box/Box.png");
+		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
+		{
+			MyObject* pObject = fbx->_pDrawObjects[i];
+			std::wstring load = defaultDir + pObject->_textureName;
+			if (pObject->_dataList.size() == 0)
+			{
+				pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
+			}
+			else
+			{
+				for (int j = 0; j < pObject->_dataList.size(); j++)
+				{
+					MyObject* pSubObject = new MyObject;
+					std::wstring subLoad = defaultDir + pObject->_textureList[j];
+					if (pObject->_dataList[j].size() != 0)
+					{
+						pSubObject->_vertices = pObject->_dataList[j];
+						pSubObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, subLoad);
+						pObject->_pDrawChild.push_back(pSubObject);
+					}
+				}
+			}
+		}
 	}
 
 	// ºäÆ÷Æ®
@@ -109,12 +145,6 @@ HRESULT Scene::Frame()
 {
 	_quadtree.Frame();
 
-	if (INPUT->GetKey(VK_RBUTTON) == KEY_STATE::HOLD)
-	{
-		_pMainCamera->_yaw += INPUT->_offset.x * 0.002f;
-		_pMainCamera->_pitch += INPUT->_offset.y * 0.002f;
-	}
-
 	_pMainCamera->Frame();
 
 	for (size_t i = 0; i < 4; i++)
@@ -127,7 +157,10 @@ HRESULT Scene::Frame()
 		pObject->Frame();
 	}
 
-	_fbxLoader.Frame();
+	for (auto& pObject : _pFbxObjects)
+	{
+		pObject->Frame();
+	}
 
 	return TRUE;
 }
@@ -146,17 +179,41 @@ HRESULT Scene::Render()
 		if (SUCCEEDED(isRender))
 		{
 			pObject->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			pObject->Render();
+			//pObject->Render();
 		}
 	}
 
 	// FBX
-	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
+	for (int iModel = 0; iModel < _pFbxObjects.size(); iModel++)
 	{
-		MyMatrix m;
-		m.Translation(-30.0f, 0.0f, 0.0f);
-		_fbxLoader._pDrawObjects[i]->SetMatrix(&m, &_pMainCamera->_view, &_pMainCamera->_projection);
-		_fbxLoader._pDrawObjects[i]->Render();
+		for (int iObj = 0; iObj < _pFbxObjects[iModel]->_pDrawObjects.size(); iObj++)
+		{
+			MyObject* pObject = _pFbxObjects[iModel]->_pDrawObjects[iObj];
+			if (pObject->_pDrawChild.size() == 0)
+			{
+				MyMatrix world;
+				world._41 = 100.0f * iModel;
+				pObject->SetMatrix(nullptr,
+					&_pMainCamera->_view,
+					&_pMainCamera->_projection);
+				pObject->Render();
+			}
+			else
+			{
+				for (int iSubObj = 0; iSubObj <
+					pObject->_pDrawChild.size(); iSubObj++)
+				{
+					MyObject* pSubObj = pObject->_pDrawChild[iSubObj];
+					MyMatrix world;
+					world._41 = 100.0f * iModel;
+					pSubObj->SetMatrix(nullptr,
+						&_pMainCamera->_view,
+						&_pMainCamera->_projection);
+					pSubObj->Render();
+				}
+			}
+
+		}
 	}
 
 	// ºäÆ÷Æ®
@@ -172,6 +229,7 @@ HRESULT Scene::Render()
 	}
 	
 	_pImmediateContext->RSSetViewports(viewports, oldViewport);
+	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
 
 	return TRUE;
 }
@@ -179,9 +237,14 @@ HRESULT Scene::Render()
 HRESULT Scene::Release()
 {
 	_quadtree.Release();
-	_fbxLoader.Release();
 
 	for (auto& pObject : _pObjects)
+	{
+		pObject->Release();
+		delete pObject;
+	}
+
+	for (auto& pObject : _pFbxObjects)
 	{
 		pObject->Release();
 		delete pObject;

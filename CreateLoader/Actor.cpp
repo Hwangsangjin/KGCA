@@ -84,7 +84,7 @@ HRESULT Actor::Init()
 	_pDirectionLine = new ShapeDirectionLine;
 	_pDirectionLine->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
 
-	if (SUCCEEDED(_fbxLoader.Init()))
+	/*if (SUCCEEDED(_fbxLoader.Init()))
 	{
 		_fbxLoader.Load("../../Resource/Ryan/Ryan.fbx");
 	}
@@ -93,7 +93,7 @@ HRESULT Actor::Init()
 	{
 		Object* pObject = _fbxLoader._pDrawObjects[i];
 		pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Ryan/Ryan_All.png");
-	}
+	}*/
 
 	return TRUE;
 }
@@ -105,11 +105,11 @@ HRESULT Actor::Frame()
 
 HRESULT Actor::Render()
 {
-	for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
+	/*for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
 	{
 		_fbxLoader._pDrawObjects[i]->SetMatrix(nullptr, &_view, &_projection);
 		_fbxLoader._pDrawObjects[i]->Render();
-	}
+	}*/
 
 	_pDirectionLine->Render();
 

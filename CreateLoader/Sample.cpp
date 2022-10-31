@@ -44,29 +44,11 @@ HRESULT Sample::Init()
 	_pScene->CreateScene(_pd3dDevice, _pImmediateContext);
 	_pScene->Init();
 
-	//// FBX
-	//if (SUCCEEDED(_fbxLoader.Init()))
-	//{
-	//	_fbxLoader.Load("../../Resource/Ryan/Ryan.fbx");
-	//}
-
-	//for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
-	//{
-	//	Object* pObject = _fbxLoader._pDrawObjects[i];
-	//	pObject->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Ryan/Ryan_All.png");
-	//}
-
-	//_pMainCamera = new CameraDebug;
-	//_pMainCamera->CreateView(MyVector3(50, 6, -50), MyVector3(0, 6, 0), MyVector3(0, 1, 0));
-	//_pMainCamera->CreateProjection(1.0f, 1000.0f, PI * 0.25f,
-	//	(float)rtClient.right / (float)rtClient.bottom);
-
 	return TRUE;
 }
 
 HRESULT Sample::Frame()
 {
-	//_fbxLoader.Frame();
 	_pScene->Frame();
 
 	return TRUE;
@@ -74,19 +56,6 @@ HRESULT Sample::Frame()
 
 HRESULT Sample::Render()
 {
-	//if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
-	//{
-	//	_pImmediateContext->RSSetState(DxState::_pDefaultRSWireFrame);
-	//}
-
-	//for (size_t i = 0; i < _fbxLoader._pDrawObjects.size(); i++)
-	//{
-	//	_fbxLoader._pDrawObjects[i]->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	//	_fbxLoader._pDrawObjects[i]->Render();
-	//}
-
-	//_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
-
 	if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
 	{
 		_pImmediateContext->RSSetState(DxState::_pDefaultRSWireFrame);
@@ -102,8 +71,6 @@ HRESULT Sample::Render()
 
 HRESULT Sample::Release()
 {
-	//_fbxLoader.Release();
-
 	if (_pScene)
 	{
 		_pScene->Release();

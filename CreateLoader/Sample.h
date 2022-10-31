@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core.h"
-//#include "FbxLoader.h"
 
 class Sample : public Core
 {
@@ -20,7 +19,5 @@ public:
 
 private:
 	class Scene* _pScene = nullptr;
-	//FbxLoader _fbxLoader;
-	//class Camera* _pMainCamera;
 };
 

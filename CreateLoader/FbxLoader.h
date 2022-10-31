@@ -10,6 +10,10 @@
 class MyObject : public Object
 {
 public:
+	std::vector<MyObject*> _pDrawChild;
+	std::vector<std::vector<Vertex>> _dataList;
+	std::vector<W_STR> _textureList;
+
 	void  CreateVertexData()
 	{
 	}
@@ -40,6 +44,8 @@ public:
 
 	void PreProcess(FbxNode* pFbxNode);
 	void ParseMesh(FbxMesh* pFbxMesh);
-	FbxVector2 ReadUVs(FbxMesh* pFbxMesh, FbxLayerElementUV* pVertexUVs);
+	FbxColor ReadColors(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* pVertexColors, int posIndex, int colorIndex);
+	FbxVector2 ReadUVs(FbxMesh* pFbxMesh, FbxLayerElementUV* pVertexUVs, int posIndex, int uvIndex);
+	int GetSubMaterialIndex(int polygon, FbxLayerElementMaterial* pMaterials);
 };
 

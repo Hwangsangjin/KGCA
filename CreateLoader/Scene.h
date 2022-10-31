@@ -9,7 +9,7 @@ public:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	FbxLoader _fbxLoader;
+	std::vector<FbxLoader*> _pFbxObjects;
 	Quadtree _quadtree;
 	D3D11_VIEWPORT _viewport[4];
 
