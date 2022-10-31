@@ -91,6 +91,12 @@ HRESULT CameraDebug::Init()
 
 HRESULT CameraDebug::Frame()
 {
+	if (INPUT->GetKey(VK_RBUTTON) == KEY_STATE::HOLD)
+	{
+		_yaw += INPUT->_offset.x * 0.002f;
+		_pitch += INPUT->_offset.y * 0.002f;
+	}
+
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
 	{
 		_position += _look * 10.0f * DELTA_TIME;

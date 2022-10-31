@@ -19,6 +19,8 @@ public:
 	ID3D11Buffer* _pConstantBuffer = nullptr;
 	ID3D11InputLayout* _pInputLayout = nullptr;
 
+	std::wstring _textureName;
+	std::wstring _shaderName;
 	Texture* _pTexture = nullptr;
 	Shader* _pShader = nullptr;
 	ID3D11VertexShader* _pVertexShader = nullptr;
@@ -76,9 +78,12 @@ public:
 	// 텍스처 생성
 	virtual HRESULT CreateTexture(std::wstring textureFile);
 
-	// 정점 버퍼 설정
+	// 정점 버퍼 설정 
 	virtual void UpdateVertexBuffer();
 	// 상수 버퍼 설정
 	virtual void UpdateConstantBuffer();
+
+	// 텍스처 로드
+	virtual HRESULT LoadTexture(W_STR filename);
 };
 

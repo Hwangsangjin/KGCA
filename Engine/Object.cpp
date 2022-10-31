@@ -97,8 +97,7 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     HR(CreateShader(shaderFile));
     HR(CreateInputLayout());
 
-    _pTexture = TEXTURE->Load(textureFile);
-    if (_pTexture)
+    if (SUCCEEDED(LoadTexture(textureFile)))
     {
         _pShaderResourceView = _pTexture->_pShaderResourceView;
     }
@@ -292,4 +291,17 @@ void Object::UpdateConstantBuffer()
     _constantBuffer.projection = _projection.Transpose();
 
     _pImmediateContext->UpdateSubresource(_pConstantBuffer, NULL, NULL, &_constantBuffer, 0, 0);
+}
+
+HRESULT Object::LoadTexture(W_STR filename)
+{
+    _pTexture = TEXTURE->Load(filename);
+    if (_pTexture)
+    {
+        _pShaderResourceView = _pTexture->_pShaderResourceView;
+
+        return TRUE;
+    }
+
+    return E_FAIL;
 }

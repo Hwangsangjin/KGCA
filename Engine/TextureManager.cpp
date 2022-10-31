@@ -51,10 +51,13 @@ Texture* TextureManager::Load(std::wstring textureFile)
 		if (SUCCEEDED(hr))
 		{
 			_textures.insert(std::make_pair(textureFile, pNewTexture));
+
+			return pNewTexture;
 		}
 	}
 
-	return pNewTexture;
+	delete pNewTexture;
+	return nullptr;
 }
 
 Texture* TextureManager::Find(std::wstring texturefile)
@@ -68,4 +71,35 @@ Texture* TextureManager::Find(std::wstring texturefile)
 	}
 
 	return nullptr;
+}
+
+T_STR TextureManager::GetSplitName(std::wstring filename)
+{
+	W_STR splitName;
+	TCHAR dirve[MAX_PATH] = { 0 };
+	TCHAR dir[MAX_PATH] = { 0 };
+	TCHAR file[MAX_PATH] = { 0 };
+	TCHAR ext[MAX_PATH] = { 0 };
+
+	_tsplitpath_s(filename.c_str(), dirve, dir, file, ext);
+	splitName = file;
+	splitName += ext;
+
+	return splitName;
+}
+
+T_STR TextureManager::GetSplitName(std::string filename)
+{
+	W_STR unicode = to_mw(filename);
+	W_STR splitName;
+	TCHAR dirve[MAX_PATH] = { 0 };
+	TCHAR dir[MAX_PATH] = { 0 };
+	TCHAR file[MAX_PATH] = { 0 };
+	TCHAR ext[MAX_PATH] = { 0 };
+
+	_tsplitpath_s(unicode.c_str(), dirve, dir, file, ext);
+	splitName = file;
+	splitName += ext;
+
+	return splitName;
 }

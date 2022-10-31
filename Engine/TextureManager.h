@@ -29,5 +29,8 @@ public:
 	Texture* Load(std::wstring texturefile);
 	// 텍스처 파일 검색
 	Texture* Find(std::wstring texturefile);
+	// 파일명 분할
+	T_STR GetSplitName(std::wstring filename);
+	T_STR GetSplitName(std::string filename);
 };
 
