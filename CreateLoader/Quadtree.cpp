@@ -114,7 +114,7 @@ void Node::CreateIndexData(Map* pMap, DWORD x, DWORD y)
 HRESULT Node::CreateIndexBuffer(Map* pMap, DWORD x, DWORD y)
 {
     CreateIndexData(pMap, x, y);
-    D3D11_BUFFER_DESC       bd;
+    D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
     bd.ByteWidth = sizeof(DWORD) * _indices.size();
     bd.Usage = D3D11_USAGE_DEFAULT;

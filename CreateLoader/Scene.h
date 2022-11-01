@@ -34,5 +34,6 @@ public:
 
 	void CreateScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmedtateContext);
 	void AddObject(Object* pObject);
+	void ClearDeviceContext(ID3D11DeviceContext* pd3dDeviceContext);
 };
 

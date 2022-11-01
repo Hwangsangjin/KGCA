@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "FbxLoader.h"
-#include "Object3D.h"
 #include "TextureManager.h"
 
 HRESULT FbxLoader::Init()
@@ -8,6 +7,12 @@ HRESULT FbxLoader::Init()
     _pFbxManager = FbxManager::Create();
     _pFbxImporter = FbxImporter::Create(_pFbxManager, "");
     _pFbxScene = FbxScene::Create(_pFbxManager, "");
+
+    // 단위
+    FbxSystemUnit::cm.ConvertScene(_pFbxScene);
+
+    // 기저
+    FbxAxisSystem::MayaZUp.ConvertScene(_pFbxScene);
 
     return TRUE;
 }
@@ -60,6 +65,9 @@ HRESULT FbxLoader::Load(C_STR filename)
 {
     _pFbxImporter->Initialize(filename.c_str());
     _pFbxImporter->Import(_pFbxScene);
+    //FbxGeometryConverter converter(_pFbxManager);
+    //converter.Triangulate(_pFbxScene, true);
+
     _pRootNode = _pFbxScene->GetRootNode();
     PreProcess(_pRootNode);
 
@@ -84,8 +92,8 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
         _pFbxMeshs.push_back(pFbxMesh);
     }
 
-    int count = pFbxNode->GetChildCount();
-    for (size_t i = 0; i < count; i++)
+    int childCount = pFbxNode->GetChildCount();
+    for (size_t i = 0; i < childCount; i++)
     {
         FbxNode* pChild = pFbxNode->GetChild(i);
         PreProcess(pChild);
@@ -95,40 +103,75 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
 void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 {
     FbxNode* pNode = pFbxMesh->GetNode();
-    MyObject* pObject = new MyObject;
+    FbxObject3D* pObject = new FbxObject3D;
+
+    FbxAMatrix geometry; // 기하(로컬)행렬(초기 정점 위치를 변환할 때 사용)
+    FbxVector4 translation = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+    FbxVector4 rotation = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
+    FbxVector4 scale = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
+    geometry.SetT(translation);
+    geometry.SetR(rotation);
+    geometry.SetS(scale);
+
+    FbxAMatrix localMatrix = geometry;
+    localMatrix = localMatrix.Inverse();
+    localMatrix = localMatrix.Transpose();
+
+    // 월드 행렬
+    FbxVector4 t;
+    if (pNode->LclTranslation.IsValid())
+    {
+        t = pNode->LclTranslation.Get();
+    }
+
+    FbxVector4 r;
+    if (pNode->LclRotation.IsValid())
+    {
+        r = pNode->LclRotation.Get();
+    }
+
+    FbxVector4 s;
+    if (pNode->LclScaling.IsValid())
+    {
+        s = pNode->LclScaling.Get();
+    }
+
+    FbxAMatrix worldTransform(t, r, s);
+    FbxAMatrix worldMatrix = worldTransform;
+    worldMatrix = worldMatrix.Inverse();
+    worldMatrix = worldMatrix.Transpose();
 
     // 레이어
-    FbxLayerElementUV* pVertexUVs = nullptr;
+    FbxLayerElementUV* pUVs = nullptr;
     FbxLayerElementVertexColor* pVertexColors = nullptr;
+    FbxLayerElementNormal* pNormals = nullptr;
     FbxLayerElementMaterial* pMaterials = nullptr;
-
-    //for (size_t i = 0; i < length; i++)
-    //{
-
-    //}
-
-    int num = pFbxMesh->GetLayerCount();
-    for (int i = 0; i < num; ++i)
-    {
-        FbxLayer* pFbxLayer = pFbxMesh->GetLayer(i);
-        FbxLayerElementVertexColor* temp = pFbxLayer->GetVertexColors();
-        if (temp != nullptr)
-        {
-            pVertexColors = temp;
-            //break;
-        }
-    }
-    
     FbxLayer* pFbxLayer = pFbxMesh->GetLayer(0);
     if (pFbxLayer->GetUVs())
     {
-        pVertexUVs = pFbxLayer->GetUVs();
+        pUVs = pFbxLayer->GetUVs();
     }
 
-    /*if (pFbxLayer->GetUVs())
+    if (pFbxLayer->GetVertexColors())
     {
         pVertexColors = pFbxLayer->GetVertexColors();
-    }*/
+    }
+
+    //int count = pFbxMesh->GetLayerCount();
+    //for (int i = 0; i < count; ++i)
+    //{
+    //    FbxLayer* pFbxLayer = pFbxMesh->GetLayer(i);
+    //    FbxLayerElementVertexColor* temp = pFbxLayer->GetVertexColors();
+    //    if (temp != nullptr)
+    //    {
+    //        pVertexColors = temp;
+    //    }
+    //}
+
+    if (pFbxLayer->GetNormals())
+    {
+        pNormals = pFbxLayer->GetNormals();
+    }
 
     if (pFbxLayer->GetMaterials())
     {
@@ -142,7 +185,6 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
     for (size_t i = 0; i < materialCount; i++)
     {
-        // 24 이상의 정보가 있다.
         FbxSurfaceMaterial* pSurface = pNode->GetMaterial(i);
         if (pSurface)
         {
@@ -167,12 +209,12 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
     if (materialCount > 1)
     {
-        pObject->_dataList.resize(materialCount);
-        pObject->_textureList.resize(materialCount);
+        pObject->_vbDataList.resize(materialCount);
+        pObject->_vbTextureList.resize(materialCount);
 
         for (size_t i = 0; i < materialCount; i++)
         {
-            pObject->_textureList[i] = TEXTURE->GetSplitName(textures[i]);
+            pObject->_vbTextureList[i] = TEXTURE->GetSplitName(textures[i]);
         }
     }
 
@@ -180,15 +222,14 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
     int polygonCount = pFbxMesh->GetPolygonCount();
     int polygonIndex = 0;
 
-    // 머티리얼
+    // 서브 머티리얼
     int subMaterial = 0;
 
-    // 3정점 -> 1폴리곤(삼각형)
-    // 4정점 -> 1폴리곤(쿼드)
+    // 페이스
     int faceCount = 0;
 
     // 제어점
-    FbxVector4* pVertexPosition = pFbxMesh->GetControlPoints();
+    FbxVector4* pControlPoints = pFbxMesh->GetControlPoints();
 
     for (size_t polygon = 0; polygon < polygonCount; polygon++)
     {
@@ -203,7 +244,7 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
         for (size_t face = 0; face < faceCount; face++)
         {
             // 정점 컬러 인덱스
-            int vertexColor[3] = { 0.0f, face + 2, face + 1 };
+            int vertexColor[3] = { 0, face + 2, face + 1 };
 
             // 정점 인덱스
             int cornerIndex[3];
@@ -220,12 +261,21 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
             for (size_t index = 0; index < 3; index++)
             {
                 int vertexIndex = cornerIndex[index];
-                FbxVector4 v = pVertexPosition[vertexIndex];
-                Vertex vertex;
+                FbxVector4 v2 = pControlPoints[vertexIndex];
+                DefaultVertex vertex;
+                FbxVector4 v = geometry.MultT(v2);
+                v = worldTransform.MultT(v);
                 vertex.position._x = v.mData[0];
                 vertex.position._y = v.mData[2];
                 vertex.position._z = v.mData[1];
                 vertex.color = Vector4{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+                if (pUVs)
+                {
+                    FbxVector2 uv = ReadUVs(pFbxMesh, pUVs, cornerIndex[index], uvIndex[index]);
+                    vertex.uv._x = uv.mData[0];
+                    vertex.uv._y = 1.0f - uv.mData[1];
+                }
 
                 if (pVertexColors)
                 {
@@ -236,11 +286,14 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
                     vertex.color.w = 1.0f;
                 }
 
-                if (pVertexUVs)
+                if (pNormals)
                 {
-                    FbxVector2 uv = ReadUVs(pFbxMesh, pVertexUVs, cornerIndex[index], uvIndex[index]);
-                    vertex.uv._x = uv.mData[0];
-                    vertex.uv._y = 1.0f - uv.mData[1];
+                    FbxVector4 normal = ReadNormals(pFbxMesh, pNormals, cornerIndex[index], polygonIndex + vertexColor[index]);
+                    normal = localMatrix.MultT(normal);
+                    normal = worldMatrix.MultT(normal);
+                    vertex.normal._x = normal.mData[0];
+                    vertex.normal._y = normal.mData[2];
+                    vertex.normal._z = normal.mData[1];
                 }
 
                 if (materialCount <= 1)
@@ -249,7 +302,7 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
                 }
                 else
                 {
-                    pObject->_dataList[subMaterial].push_back(vertex);
+                    pObject->_vbDataList[subMaterial].push_back(vertex);
                 }
             }
         }
@@ -260,98 +313,127 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
     _pDrawObjects.push_back(pObject);
 }
 
-FbxColor FbxLoader::ReadColors(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* pVertexColors, int posIndex, int colorIndex)
+FbxVector2 FbxLoader::ReadUVs(FbxMesh* pFbxMesh, FbxLayerElementUV* pUV, int posIndex, int uvIndex)
+{
+    FbxVector2 uv;
+    FbxLayerElement::EMappingMode mode = pUV->GetMappingMode();
+    switch (mode)
+    {
+    case FbxLayerElementUV::eByControlPoint:
+        switch (pUV->GetReferenceMode())
+        {
+        case FbxLayerElementUV::eDirect:
+            uv = pUV->GetDirectArray().GetAt(posIndex);
+            break;
+        case FbxLayerElementUV::eIndexToDirect:
+            int index = pUV->GetIndexArray().GetAt(posIndex);
+            uv = pUV->GetDirectArray().GetAt(index);
+            break;
+        }
+        break;
+    case FbxLayerElementUV::eByPolygonVertex:
+        switch (pUV->GetReferenceMode())
+        {
+        case FbxLayerElementUV::eDirect:
+        case FbxLayerElementUV::eIndexToDirect:
+            uv = pUV->GetDirectArray().GetAt(uvIndex);
+            break;
+        }
+        break;
+    }
+
+    return uv;
+}
+
+FbxVector4 FbxLoader::ReadNormals(FbxMesh* pFbxMesh, FbxLayerElementNormal* pNormal, int posIndex, int colorIndex)
+{
+    FbxVector4 normal(1.0f, 1.0f, 1.0f, 1.0f);
+    FbxLayerElement::EMappingMode mode = pNormal->GetMappingMode();
+    switch (mode)
+    {
+    case FbxLayerElementUV::eByControlPoint:
+        switch (pNormal->GetReferenceMode())
+        {
+        case FbxLayerElementUV::eDirect:
+            normal = pNormal->GetDirectArray().GetAt(posIndex);
+            break;
+        case FbxLayerElementUV::eIndexToDirect:
+            int index = pNormal->GetIndexArray().GetAt(posIndex);
+            normal = pNormal->GetDirectArray().GetAt(index);
+            break;
+        }
+        break;
+    case FbxLayerElementUV::eByPolygonVertex:
+        switch (pNormal->GetReferenceMode())
+        {
+        case FbxLayerElementUV::eDirect:
+            normal = pNormal->GetDirectArray().GetAt(colorIndex);
+            break;
+        case FbxLayerElementUV::eIndexToDirect:
+            int index = pNormal->GetIndexArray().GetAt(colorIndex);
+            normal = pNormal->GetDirectArray().GetAt(index);
+            break;
+        }
+        break;
+    }
+
+    return normal;
+}
+
+FbxColor FbxLoader::ReadColors(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* pVertexColor, int posIndex, int colorIndex)
 {
     FbxColor color(1.0f, 1.0f, 1.0f, 1.0f);
-    FbxLayerElement::EMappingMode mode = pVertexColors->GetMappingMode();
+    FbxLayerElement::EMappingMode mode = pVertexColor->GetMappingMode();
     switch (mode)
     {
     case FbxLayerElement::eByControlPoint:
-    {
-        switch (pVertexColors->GetReferenceMode())
+        switch (pVertexColor->GetReferenceMode())
         {
         case FbxLayerElementUV::eDirect:
-            color = pVertexColors->GetDirectArray().GetAt(posIndex);
+            color = pVertexColor->GetDirectArray().GetAt(posIndex);
             break;
         case FbxLayerElementUV::eIndexToDirect:
-            int index = pVertexColors->GetIndexArray().GetAt(posIndex);
-            color = pVertexColors->GetDirectArray().GetAt(index);
+            int index = pVertexColor->GetIndexArray().GetAt(posIndex);
+            color = pVertexColor->GetDirectArray().GetAt(index);
             break;
         }
-    }
-    break;
+        break;
     case FbxLayerElement::eByPolygonVertex:
-    {
-        switch (pVertexColors->GetReferenceMode())
+        switch (pVertexColor->GetReferenceMode())
         {
         case FbxLayerElementUV::eDirect:
-            color = pVertexColors->GetDirectArray().GetAt(colorIndex);
+            color = pVertexColor->GetDirectArray().GetAt(colorIndex);
             break;
         case FbxLayerElementUV::eIndexToDirect:
-            int index = pVertexColors->GetIndexArray().GetAt(colorIndex);
-            color = pVertexColors->GetDirectArray().GetAt(index);
+            int index = pVertexColor->GetIndexArray().GetAt(colorIndex);
+            color = pVertexColor->GetDirectArray().GetAt(index);
             break;
         }
-    }
-    break;
+        break;
     }
 
     return color;
 }
 
-FbxVector2 FbxLoader::ReadUVs(FbxMesh* pFbxMesh, FbxLayerElementUV* pVertexUVs, int posIndex, int uvIndex)
-{
-    FbxVector2 uv;
-    FbxLayerElement::EMappingMode mode = pVertexUVs->GetMappingMode();
-    switch (mode)
-    {
-    case FbxLayerElementUV::eByControlPoint:
-    {
-        switch (pVertexUVs->GetReferenceMode())
-        {
-        case FbxLayerElementUV::eDirect:
-            uv = pVertexUVs->GetDirectArray().GetAt(posIndex);
-            break;
-        case FbxLayerElementUV::eIndexToDirect:
-            int index = pVertexUVs->GetIndexArray().GetAt(posIndex);
-            uv = pVertexUVs->GetDirectArray().GetAt(index);
-            break;
-        }
-    }
-    case FbxLayerElementUV::eByPolygonVertex:
-    {
-        switch (pVertexUVs->GetReferenceMode())
-        {
-        case FbxLayerElementUV::eDirect:
-        case FbxLayerElementUV::eIndexToDirect:
-            uv = pVertexUVs->GetDirectArray().GetAt(uvIndex);
-            break;
-        }
-    }
-    }
-    return uv;
-}
-
-int FbxLoader::GetSubMaterialIndex(int polygon, FbxLayerElementMaterial* pMaterials)
+int FbxLoader::GetSubMaterialIndex(int polygon, FbxLayerElementMaterial* pMaterial)
 {
     int subMaterial = 0;
-    if (pMaterials)
+    if (pMaterial)
     {
-        switch (pMaterials->GetMappingMode())
+        switch (pMaterial->GetMappingMode())
         {
         case FbxLayerElement::eByPolygon:
-        {
             // 매핑 정보가 배열에 저장되는 방식
-            switch (pMaterials->GetReferenceMode())
+            switch (pMaterial->GetReferenceMode())
             {
             case FbxLayerElement::eIndex:
                 subMaterial = polygon;
                 break;
             case FbxLayerElement::eIndexToDirect:
-                subMaterial = pMaterials->GetIndexArray().GetAt(polygon);
+                subMaterial = pMaterial->GetIndexArray().GetAt(polygon);
                 break;
             }
-        }
+            break;
         }
     }
 

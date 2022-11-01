@@ -9,23 +9,24 @@
 #include "Actor.h"
 #include "TextureBox.h"
 #include "Cube.h"
+#include "Timer.h"
 
 HRESULT Scene::Init()
 {
 	// FBX
-	//FbxLoader* pTest = new FbxLoader;
-	//if (SUCCEEDED(pTest->Init()))
-	//{
-	//	pTest->Load("../../Resource/FBX/MultiCameras.fbx");
-	//}
+	FbxLoader* pTest = new FbxLoader;
+	if (SUCCEEDED(pTest->Init()))
+	{
+		pTest->Load("../../Resource/FBX/MultiCameras.fbx");
+	}
 
-	//_pFbxObjects.push_back(pTest);
+	_pFbxObjects.push_back(pTest);
 
 
 	FbxLoader* pRyan = new FbxLoader;
 	if (SUCCEEDED(pRyan->Init()))
 	{
-		pRyan->Load("../../Resource/Ryan/Ryan.fbx");
+		pRyan->Load("../../Resource/FBX/Ryan.fbx");
 	}
 
 	_pFbxObjects.push_back(pRyan);
@@ -33,30 +34,13 @@ HRESULT Scene::Init()
 	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/DefaultObject.hlsl";
 
-	for (auto& fbx : _pFbxObjects)
+	for (auto& object : _pFbxObjects)
 	{
-		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
+		for (size_t i = 0; i < object->_pDrawObjects.size(); i++)
 		{
-			MyObject* pObject = fbx->_pDrawObjects[i];
+			FbxObject3D* pObject = object->_pDrawObjects[i];
 			std::wstring load = defaultDir + pObject->_textureName;
-			if (pObject->_dataList.size() == 0)
-			{
-				pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
-			}
-			else
-			{
-				for (int j = 0; j < pObject->_dataList.size(); j++)
-				{
-					MyObject* pSubObject = new MyObject;
-					std::wstring subLoad = defaultDir + pObject->_textureList[j];
-					if (pObject->_dataList[j].size() != 0)
-					{
-						pSubObject->_vertices = pObject->_dataList[j];
-						pSubObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, subLoad);
-						pObject->_pDrawChild.push_back(pSubObject);
-					}
-				}
-			}
+			pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
 		}
 	}
 
@@ -143,6 +127,8 @@ HRESULT Scene::Init()
 
 HRESULT Scene::Frame()
 {
+	ClearDeviceContext(_pImmediateContext);
+	
 	_quadtree.Frame();
 
 	_pMainCamera->Frame();
@@ -152,12 +138,12 @@ HRESULT Scene::Frame()
 		_pCamera[i]->Frame();
 	}
 
-	for (auto& pObject : _pObjects)
+	for (auto& pObject : _pFbxObjects)
 	{
 		pObject->Frame();
 	}
 
-	for (auto& pObject : _pFbxObjects)
+	for (auto& pObject : _pObjects)
 	{
 		pObject->Frame();
 	}
@@ -168,8 +154,8 @@ HRESULT Scene::Frame()
 HRESULT Scene::Render()
 {
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
-	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	_quadtree.Render();
+	//_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
+	//_quadtree.Render();
 
 	// 오브젝트
 	for (auto& pObject : _pObjects)
@@ -179,40 +165,32 @@ HRESULT Scene::Render()
 		if (SUCCEEDED(isRender))
 		{
 			pObject->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			//pObject->Render();
+			pObject->Render();
 		}
 	}
 
-	// FBX
-	for (int iModel = 0; iModel < _pFbxObjects.size(); iModel++)
-	{
-		for (int iObj = 0; iObj < _pFbxObjects[iModel]->_pDrawObjects.size(); iObj++)
-		{
-			MyObject* pObject = _pFbxObjects[iModel]->_pDrawObjects[iObj];
-			if (pObject->_pDrawChild.size() == 0)
-			{
-				MyMatrix world;
-				world._41 = 100.0f * iModel;
-				pObject->SetMatrix(nullptr,
-					&_pMainCamera->_view,
-					&_pMainCamera->_projection);
-				pObject->Render();
-			}
-			else
-			{
-				for (int iSubObj = 0; iSubObj <
-					pObject->_pDrawChild.size(); iSubObj++)
-				{
-					MyObject* pSubObj = pObject->_pDrawChild[iSubObj];
-					MyMatrix world;
-					world._41 = 100.0f * iModel;
-					pSubObj->SetMatrix(nullptr,
-						&_pMainCamera->_view,
-						&_pMainCamera->_projection);
-					pSubObj->Render();
-				}
-			}
+	// 조명
+	//static float timer = 0.0f;
+	//timer += DELTA_TIME;
+	//MyVector3 light(0.0f, 0.0f, 1.0f);
+	//MyMatrix rotation;
+	//rotation.RotationY(timer);
+	//light = light * rotation;
+	//light.Normalize();
 
+	// FBX
+	for (int i = 0; i < _pFbxObjects.size(); i++)
+	{
+		for (int j = 0; j < _pFbxObjects[i]->_pDrawObjects.size(); j++)
+		{
+			FbxObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
+			MyMatrix world;
+			world._41 = 100.0f * i;
+			//pObject->_constantBuffer.x = light._x;
+			//pObject->_constantBuffer.y = light._y;
+			//pObject->_constantBuffer.z = light._z;
+			pObject->SetMatrix(&world, &_pMainCamera->_view, &_pMainCamera->_projection);
+			pObject->Render();
 		}
 	}
 
@@ -269,4 +247,62 @@ void Scene::CreateScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmedtat
 void Scene::AddObject(Object* pObject)
 {
 	_pObjects.push_back(pObject);
+}
+
+void Scene::ClearDeviceContext(ID3D11DeviceContext* pd3dDeviceContext)
+{
+	// Unbind all objects from the immediate context
+	if (!pd3dDeviceContext)
+	{
+		return;
+	}
+
+	ID3D11ShaderResourceView* pSRVs[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	ID3D11RenderTargetView* pRTVs[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	ID3D11DepthStencilView* pDSV = nullptr;
+	ID3D11Buffer* pBuffers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	ID3D11SamplerState* pSamplers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	UINT StrideOffset[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+	// Shaders
+	//pd3dDeviceContext->VSSetShader(NULL, NULL, 0);
+	//pd3dDeviceContext->HSSetShader(NULL, NULL, 0);
+	//pd3dDeviceContext->DSSetShader(NULL, NULL, 0);
+	//pd3dDeviceContext->GSSetShader(NULL, NULL, 0);
+	//pd3dDeviceContext->PSSetShader(NULL, NULL, 0);
+
+	// IA clear
+	//pd3dDeviceContext->IASetVertexBuffers(0, 16, pBuffers, StrideOffset, StrideOffset);
+	//pd3dDeviceContext->IASetIndexBuffer(NULL, DXGI_FORMAT_R16_UINT, 0);
+	//pd3dDeviceContext->IASetInputLayout(NULL);
+
+	// Constant buffers
+	//pd3dDeviceContext->VSSetConstantBuffers(0, 14, pBuffers);
+	//pd3dDeviceContext->HSSetConstantBuffers(0, 14, pBuffers);
+	//pd3dDeviceContext->DSSetConstantBuffers(0, 14, pBuffers);
+	//pd3dDeviceContext->GSSetConstantBuffers(0, 14, pBuffers);
+	//pd3dDeviceContext->PSSetConstantBuffers(0, 14, pBuffers);
+
+	// Resources
+	pd3dDeviceContext->VSSetShaderResources(0, 16, pSRVs);
+	//pd3dDeviceContext->HSSetShaderResources(0, 16, pSRVs);
+	//pd3dDeviceContext->DSSetShaderResources(0, 16, pSRVs);
+	//pd3dDeviceContext->GSSetShaderResources(0, 16, pSRVs);
+	pd3dDeviceContext->PSSetShaderResources(0, 16, pSRVs);
+
+	// Samplers
+	//pd3dDeviceContext->VSSetSamplers(0, 16, pSamplers);
+	//pd3dDeviceContext->HSSetSamplers(0, 16, pSamplers);
+	//pd3dDeviceContext->DSSetSamplers(0, 16, pSamplers);
+	//pd3dDeviceContext->GSSetSamplers(0, 16, pSamplers);
+	//pd3dDeviceContext->PSSetSamplers(0, 16, pSamplers);
+
+	// Render targets
+	//pd3dDeviceContext->OMSetRenderTargets(8, pRTVs, pDSV);
+
+	// States
+	//FLOAT blendFactor[4] = { 0,0,0,0 };
+	//pd3dDeviceContext->OMSetBlendState(NULL, blendFactor, 0xFFFFFFFF);
+	//pd3dDeviceContext->OMSetDepthStencilState(NULL, 0);
+	//pd3dDeviceContext->RSSetState(NULL);
 }

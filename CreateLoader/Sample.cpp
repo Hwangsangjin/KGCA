@@ -61,9 +61,6 @@ HRESULT Sample::Render()
 		_pImmediateContext->RSSetState(DxState::_pDefaultRSWireFrame);
 	}
 
-	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
-	_pScene->_pMap->SetMatrix(nullptr, &_pScene->_pMainCamera->_view, &_pScene->_pMainCamera->_projection);
-
 	_pScene->Render();
 
 	return TRUE;
