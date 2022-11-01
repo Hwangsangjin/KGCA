@@ -62,7 +62,15 @@ typedef std::vector<std::basic_string<TCHAR>> TCHAR_STRING_VECTOR;
 typedef std::vector<DWORD> DWORD_VECTOR;
 
 // struct
-struct Vertex
+struct DefaultVertex
+{
+	MyVector3 position;
+	MyVector3 normal;
+	Vector4 color;
+	MyVector2 uv;
+};
+
+struct SimpleVertex
 {
 	MyVector3 position;
 	Vector4 color;
@@ -74,6 +82,10 @@ struct ConstantBuffer
 	MyMatrix world;
 	MyMatrix view;
 	MyMatrix projection;
+	//float x;
+	//float y;
+	//float z;
+	//float timer;
 };
 
 // String Convert

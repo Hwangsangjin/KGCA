@@ -3,16 +3,22 @@
 
 HRESULT Object3D::Init()
 {
+	Object::Init();
+
 	return TRUE;
 }
 
 HRESULT Object3D::Frame()
 {
+	Object::Frame();
+
 	return TRUE;
 }
 
 HRESULT Object3D::Render()
 {
+	Object::Render();
+
 	return TRUE;
 }
 

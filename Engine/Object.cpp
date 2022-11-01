@@ -15,7 +15,7 @@ HRESULT Object::Frame()
 
 HRESULT Object::PreRender()
 {
-    UINT stride = sizeof(Vertex);
+    UINT stride = sizeof(DefaultVertex);
     UINT offset = 0;
     _pImmediateContext->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
     _pImmediateContext->IASetIndexBuffer(_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
@@ -143,7 +143,7 @@ HRESULT Object::CreateVertexBuffer()
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(Vertex) * _vertices.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(DefaultVertex) * _vertices.size(); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -201,7 +201,7 @@ void Object::CreateConstantData()
     _constantBuffer.world.Identity();
     _constantBuffer.view.Identity();
     _constantBuffer.projection.Identity();
-
+    //_constantBuffer.timer = 0.0f;
     _constantBuffer.world.Transpose();
     _constantBuffer.view.Transpose();
     _constantBuffer.projection.Transpose();
@@ -256,8 +256,9 @@ HRESULT Object::CreateInputLayout()
     D3D11_INPUT_ELEMENT_DESC ied[] =
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 40, D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     UINT numElements = ARRAYSIZE(ied);
 
@@ -304,4 +305,25 @@ HRESULT Object::LoadTexture(W_STR filename)
     }
 
     return E_FAIL;
+}
+
+ID3D11Buffer* DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, void* pDataAddress, UINT vertexCount, UINT vertexSize)
+{
+    ID3D11Buffer* pVertexBuffer = nullptr;
+    D3D11_BUFFER_DESC bd;
+    ZeroMemory(&bd, sizeof(bd));
+    bd.ByteWidth = vertexCount * vertexSize; // 바이트 용량
+    // GPU 메모리에 할당
+    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼 용도
+    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA  sd;
+    ZeroMemory(&sd, sizeof(sd));
+    sd.pSysMem = pDataAddress;
+    HR(pd3dDevice->CreateBuffer(
+        &bd, // 버퍼 할당
+        &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
+        &pVertexBuffer));
+
+    return pVertexBuffer;
 }

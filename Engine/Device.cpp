@@ -11,13 +11,6 @@ HRESULT Device::Init()
     HR(CreateDepthStencilView());
     HR(CreateViewport());
 
-    _pd3dDevice->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pd3dDevice") - 1, L"Device::_pd3dDevice");
-    _pImmediateContext->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pImmediateContext") - 1, L"Device::_pImmediateContext");
-    _pFactory->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pFactory") - 1, L"Device::_pFactory");
-    _pSwapChain->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pSwapChain") - 1, L"Device::_pSwapChain");
-    _pRenderTargetView->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pRenderTargetView") - 1, L"Device::_pRenderTargetView");
-    _pDepthStencilView->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof("Device::_pDepthStencilView") - 1, L"Device::_pDepthStencilView");
-
     return TRUE;
 }
 

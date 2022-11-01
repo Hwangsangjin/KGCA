@@ -10,8 +10,8 @@ public:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	std::vector<Vertex> _init;
-	std::vector<Vertex> _vertices;
+	std::vector<DefaultVertex> _init;
+	std::vector<DefaultVertex> _vertices;
 	std::vector<DWORD> _indices;
 	ID3D11Buffer* _pVertexBuffer = nullptr;
 	ID3D11Buffer* _pIndexBuffer = nullptr;
@@ -87,3 +87,7 @@ public:
 	virtual HRESULT LoadTexture(W_STR filename);
 };
 
+namespace DX
+{
+	ID3D11Buffer* CreateVertexBuffer(ID3D11Device* pd3dDevice, void* pDataAddress, UINT vertexCount, UINT vertexSize);
+}
