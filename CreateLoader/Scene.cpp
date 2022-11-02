@@ -154,8 +154,8 @@ HRESULT Scene::Frame()
 HRESULT Scene::Render()
 {
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
-	//_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	//_quadtree.Render();
+	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
+	_quadtree.Render();
 
 	// 오브젝트
 	for (auto& pObject : _pObjects)
