@@ -14,31 +14,35 @@
 HRESULT Scene::Init()
 {
 	// FBX
-	FbxLoader* pTest = new FbxLoader;
-	if (SUCCEEDED(pTest->Init()))
+	//FbxLoader* pMultiCameras = new FbxLoader;
+	//if (SUCCEEDED(pMultiCameras->Init()))
+	//{
+	//	pMultiCameras->Load("../../Resource/FBX/MultiCameras.fbx");
+	//}
+	//_pFbxObjects.push_back(pMultiCameras);
+
+	FbxLoader* pTurret = new FbxLoader;
+	if (SUCCEEDED(pTurret->Init()))
 	{
-		pTest->Load("../../Resource/FBX/MultiCameras.fbx");
+		pTurret->Load("../../Resource/FBX/Turret_Deploy1.fbx");
 	}
+	_pFbxObjects.push_back(pTurret);
 
-	_pFbxObjects.push_back(pTest);
-
-
-	FbxLoader* pRyan = new FbxLoader;
-	if (SUCCEEDED(pRyan->Init()))
-	{
-		pRyan->Load("../../Resource/FBX/Ryan.fbx");
-	}
-
-	_pFbxObjects.push_back(pRyan);
+	//FbxLoader* pRyan = new FbxLoader;
+	//if (SUCCEEDED(pRyan->Init()))
+	//{
+	//	pRyan->Load("../../Resource/FBX/Ryan.fbx");
+	//}
+	//_pFbxObjects.push_back(pRyan);
 
 	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/DefaultObject.hlsl";
 
-	for (auto& object : _pFbxObjects)
+	for (auto& fbx : _pFbxObjects)
 	{
-		for (size_t i = 0; i < object->_pDrawObjects.size(); i++)
+		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
 		{
-			FbxObject3D* pObject = object->_pDrawObjects[i];
+			FbxObject3D* pObject = fbx->_pDrawObjects[i];
 			std::wstring load = defaultDir + pObject->_textureName;
 			pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
 		}
@@ -138,9 +142,9 @@ HRESULT Scene::Frame()
 		_pCamera[i]->Frame();
 	}
 
-	for (auto& pObject : _pFbxObjects)
+	for (auto& fbx : _pFbxObjects)
 	{
-		pObject->Frame();
+		fbx->Frame();
 	}
 
 	for (auto& pObject : _pObjects)
@@ -155,7 +159,7 @@ HRESULT Scene::Render()
 {
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
 	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	_quadtree.Render();
+	//_quadtree.Render();
 
 	// 오브젝트
 	for (auto& pObject : _pObjects)
@@ -165,7 +169,7 @@ HRESULT Scene::Render()
 		if (SUCCEEDED(isRender))
 		{
 			pObject->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-			pObject->Render();
+			//pObject->Render();
 		}
 	}
 
@@ -186,6 +190,7 @@ HRESULT Scene::Render()
 			FbxObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
 			MyMatrix world;
 			world._41 = 100.0f * i;
+			world._42 = 25.0f;
 			//pObject->_constantBuffer.x = light._x;
 			//pObject->_constantBuffer.y = light._y;
 			//pObject->_constantBuffer.z = light._z;
@@ -203,7 +208,7 @@ HRESULT Scene::Render()
 	{
 		_pImmediateContext->RSSetViewports(1, &_viewport[i]);
 		_pRyan->SetMatrix(nullptr, &_pCamera[i]->_view, &_pCamera[i]->_projection);
-		_pRyan->Render();
+		//_pRyan->Render();
 	}
 	
 	_pImmediateContext->RSSetViewports(viewports, oldViewport);
@@ -222,10 +227,10 @@ HRESULT Scene::Release()
 		delete pObject;
 	}
 
-	for (auto& pObject : _pFbxObjects)
+	for (auto& fbx : _pFbxObjects)
 	{
-		pObject->Release();
-		delete pObject;
+		fbx->Release();
+		delete fbx;
 	}
 
 	for (int i = 0; i < 4; i++)

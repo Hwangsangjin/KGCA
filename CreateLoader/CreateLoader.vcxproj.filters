@@ -47,6 +47,9 @@
     <ClCompile Include="FbxLoader.cpp">
       <Filter>소스 파일\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="FbxObject3D.cpp">
+      <Filter>소스 파일\Sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
@@ -74,6 +77,9 @@
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="FbxLoader.h">
+      <Filter>소스 파일\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxObject3D.h">
       <Filter>소스 파일\Sample</Filter>
     </ClInclude>
   </ItemGroup>

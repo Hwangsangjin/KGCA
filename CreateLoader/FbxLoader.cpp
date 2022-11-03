@@ -71,9 +71,20 @@ HRESULT FbxLoader::Load(C_STR filename)
     _pRootNode = _pFbxScene->GetRootNode();
     PreProcess(_pRootNode);
 
-    for (auto& mesh : _pFbxMeshs)
+    for (auto& object : _pObjects)
     {
-        ParseMesh(mesh);
+        if (object->_pFbxParentNode)
+        {
+            auto data = _pObjectMap.find(object->_pFbxParentNode);
+            object->SetParent(data->second);
+        }
+
+        FbxMesh* pFbxMesh = object->_pFbxNode->GetMesh();
+        if (pFbxMesh)
+        {
+            _pFbxMeshs.push_back(pFbxMesh);
+            ParseMesh(pFbxMesh, object);
+        }
     }
 
     return TRUE;
@@ -81,29 +92,40 @@ HRESULT FbxLoader::Load(C_STR filename)
 
 void FbxLoader::PreProcess(FbxNode* pFbxNode)
 {
+    //if (pFbxNode && (pFbxNode->GetCamera() || pFbxNode->GetLight()))
     if (!pFbxNode)
     {
         return;
     }
 
-    FbxMesh* pFbxMesh = pFbxNode->GetMesh();
-    if (pFbxMesh)
-    {
-        _pFbxMeshs.push_back(pFbxMesh);
-    }
+    FbxObject3D* pObject = new FbxObject3D;
+    std::string name = pFbxNode->GetName();
+    pObject->_name = to_mw(name);
+    pObject->_pFbxNode = pFbxNode;
+    pObject->_pFbxParentNode = pFbxNode->GetParent();
+
+    _pObjects.push_back(pObject);
+    _pObjectMap.insert(std::make_pair(pFbxNode, pObject));
 
     int childCount = pFbxNode->GetChildCount();
     for (size_t i = 0; i < childCount; i++)
     {
         FbxNode* pChild = pFbxNode->GetChild(i);
-        PreProcess(pChild);
+
+        // 헬퍼 오브젝트 + 지오메트리 오브젝트
+        FbxNodeAttribute::EType type = pChild->GetNodeAttribute()->GetAttributeType();
+        if (type == FbxNodeAttribute::eMesh ||
+            type == FbxNodeAttribute::eSkeleton ||
+            type == FbxNodeAttribute::eNull)
+        {
+            PreProcess(pChild);
+        }
     }
 }
 
-void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
+void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject)
 {
     FbxNode* pNode = pFbxMesh->GetNode();
-    FbxObject3D* pObject = new FbxObject3D;
 
     FbxAMatrix geometry; // 기하(로컬)행렬(초기 정점 위치를 변환할 때 사용)
     FbxVector4 translation = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
@@ -178,10 +200,10 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
         pMaterials = pFbxLayer->GetMaterials();
     }
 
-    std::string filename;
+    std::string fileName;
     int materialCount = pNode->GetMaterialCount();
-    std::vector<C_STR> textures;
-    textures.resize(materialCount);
+    std::vector<C_STR> textureNames;
+    textureNames.resize(materialCount);
 
     for (size_t i = 0; i < materialCount; i++)
     {
@@ -195,8 +217,11 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
                 for (size_t j = 0; j < textureCount; j++)
                 {
                     const FbxFileTexture* texture = property.GetSrcObject<FbxFileTexture>(j);
-                    filename = texture->GetFileName();
-                    textures[i] = filename;
+                    if (texture)
+                    {
+                        fileName = texture->GetFileName();
+                        textureNames[i] = fileName;
+                    }
                 }
             }
         }
@@ -204,7 +229,7 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
     if (materialCount == 1)
     {
-        pObject->_textureName = TEXTURE->GetSplitName(filename);
+        pObject->_textureName = TEXTURE->GetSplitName(fileName);
     }
 
     if (materialCount > 1)
@@ -214,7 +239,7 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
         for (size_t i = 0; i < materialCount; i++)
         {
-            pObject->_vbTextureList[i] = TEXTURE->GetSplitName(textures[i]);
+            pObject->_vbTextureList[i] = TEXTURE->GetSplitName(textureNames[i]);
         }
     }
 
