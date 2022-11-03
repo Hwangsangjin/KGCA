@@ -19,7 +19,7 @@ public:
 	void SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
 
 	// 셰이더 생성
-	HRESULT CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring filename);
+	HRESULT CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile);
 
 	ID3D11VertexShader* _pVertexShader = nullptr;
 	ID3D11PixelShader* _pPixelShader = nullptr;

@@ -5,6 +5,8 @@
 class Object3D : public Object
 {
 public:
+	W_STR _name;
+
 	MyVector3 _look;
 	MyVector3 _up;
 	MyVector3 _right;

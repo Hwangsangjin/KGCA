@@ -60,11 +60,11 @@ Texture* TextureManager::Load(std::wstring textureFile)
 	return nullptr;
 }
 
-Texture* TextureManager::Find(std::wstring texturefile)
+Texture* TextureManager::Find(std::wstring textureFile)
 {
 	for (auto& texture : _textures)
 	{
-		if (texture.first == texturefile)
+		if (texture.first == textureFile)
 		{
 			return texture.second;
 		}
@@ -73,33 +73,37 @@ Texture* TextureManager::Find(std::wstring texturefile)
 	return nullptr;
 }
 
-T_STR TextureManager::GetSplitName(std::wstring filename)
+T_STR TextureManager::GetSplitName(std::wstring fullPath)
 {
-	W_STR splitName;
+	W_STR name;
 	TCHAR dirve[MAX_PATH] = { 0 };
 	TCHAR dir[MAX_PATH] = { 0 };
-	TCHAR file[MAX_PATH] = { 0 };
+	TCHAR filename[MAX_PATH] = { 0 };
 	TCHAR ext[MAX_PATH] = { 0 };
 
-	_tsplitpath_s(filename.c_str(), dirve, dir, file, ext);
-	splitName = file;
-	splitName += ext;
+	_tsplitpath_s(fullPath.c_str(), dirve, dir, filename, ext);
+	name = filename;
+	name += ext;
 
-	return splitName;
+	return name;
 }
 
-T_STR TextureManager::GetSplitName(std::string filename)
+T_STR TextureManager::GetSplitName(std::string fullPath)
 {
-	W_STR unicode = to_mw(filename);
-	W_STR splitName;
+	W_STR unicode = to_mw(fullPath);
 	TCHAR dirve[MAX_PATH] = { 0 };
 	TCHAR dir[MAX_PATH] = { 0 };
-	TCHAR file[MAX_PATH] = { 0 };
+	TCHAR filename[MAX_PATH] = { 0 };
 	TCHAR ext[MAX_PATH] = { 0 };
 
-	_tsplitpath_s(unicode.c_str(), dirve, dir, file, ext);
-	splitName = file;
-	splitName += ext;
+	_tsplitpath_s(unicode.c_str(), dirve, dir, filename, ext);
+	W_STR name = filename;
+	W_STR fileExt = ext;
+	if (fileExt == L".tga" || fileExt == L".TGA")
+	{
+		fileExt = L".dds";
+	}
+	name += fileExt;
 
-	return splitName;
+	return name;
 }

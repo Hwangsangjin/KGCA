@@ -32,7 +32,7 @@ void Shader::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediate
     _pImmediateContext = pImmediateContext;
 }
 
-HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring filename)
+HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile)
 {
     // 디바이스 설정
     SetDevice(pd3dDevice, pImmediateContext);
@@ -41,7 +41,7 @@ HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     ID3DBlob* pErrorCode = nullptr;
 
     // 정점 셰이더 컴파일 
-    hr = D3DCompileFromFile(filename.c_str(), NULL, NULL, "VS", "vs_5_0", 0, 0, &_pVertexShaderCode, &pErrorCode);
+    hr = D3DCompileFromFile(shaderFile.c_str(), NULL, NULL, "VS", "vs_5_0", 0, 0, &_pVertexShaderCode, &pErrorCode);
     if (FAILED(hr))
     {
         if (pErrorCode)
@@ -67,7 +67,7 @@ HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     }
 
     // 픽셀 셰이더 컴파일  
-    hr = D3DCompileFromFile(filename.c_str(), NULL, NULL, "PS", "ps_5_0", 0, 0, &_pPixelShaderCode, &pErrorCode);
+    hr = D3DCompileFromFile(shaderFile.c_str(), NULL, NULL, "PS", "ps_5_0", 0, 0, &_pPixelShaderCode, &pErrorCode);
     if (FAILED(hr))
     {
         if (pErrorCode)

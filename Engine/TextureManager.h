@@ -26,11 +26,11 @@ public:
 	HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
 
 	// 텍스처 파일 로드
-	Texture* Load(std::wstring texturefile);
+	Texture* Load(std::wstring textureFile);
 	// 텍스처 파일 검색
-	Texture* Find(std::wstring texturefile);
+	Texture* Find(std::wstring textureFile);
 	// 파일명 분할
-	T_STR GetSplitName(std::wstring filename);
-	T_STR GetSplitName(std::string filename);
+	T_STR GetSplitName(std::wstring fullPath);
+	T_STR GetSplitName(std::string fullPath);
 };
 
