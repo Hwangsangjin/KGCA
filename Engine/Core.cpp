@@ -110,7 +110,7 @@ HRESULT Core::CorePreRender()
 	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
 
 	// 후면 버퍼 클리어
-	const float color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
+	const float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; // Red, Green, Blue, Alpha
 	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
 	_pImmediateContext->ClearDepthStencilView(_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 

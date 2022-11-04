@@ -53,6 +53,7 @@ using uint64 = unsigned __int64;
 using Vector2 = DirectX::SimpleMath::Vector2;
 using Vector4 = DirectX::SimpleMath::Vector4;
 using Matrix = DirectX::SimpleMath::Matrix;
+using Quaternion = DirectX::SimpleMath::Quaternion;
 
 // typedef
 typedef std::basic_string<TCHAR> T_STR;
