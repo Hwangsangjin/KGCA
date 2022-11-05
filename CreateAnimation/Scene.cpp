@@ -35,7 +35,7 @@ HRESULT Scene::Init()
 	//}
 	//_pFbxObjects.push_back(pRyan);
 
-	W_STR defaultDir = L"../../Resource/FBX/Turret_Deploy1/";
+	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/DefaultObject.hlsl";
 
 	for (auto& fbx : _pFbxObjects)
@@ -185,13 +185,6 @@ HRESULT Scene::Render()
 	// FBX
 	for (int i = 0; i < _pFbxObjects.size(); i++)
 	{
-		//static int j = 0;
-		//if (INPUT->GetKey('P') == KEY_STATE::DOWN)
-		//{
-		//	j++;
-		//	if (j >= _pFbxObjects[i]->_pDrawObjects.size())
-		//		j = 0;
-		//}
 		for (int j = 0; j < _pFbxObjects[i]->_pDrawObjects.size(); j++)
 		{
 			FbxObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
