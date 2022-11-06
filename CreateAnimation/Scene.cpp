@@ -66,7 +66,7 @@ HRESULT Scene::Init()
 	_pMap->Customize(4 + 1, 4 + 1);
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Map/Map.png");
 	
-	//// 라이언
+	// 라이언
 	_pRyan = new Actor;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Ryan/Ryan.png");
 	_pRyan->_world.Translation(0.0f, 0.0f, 0.0f);
