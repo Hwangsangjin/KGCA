@@ -65,12 +65,12 @@ void Node::CreateIndexData(Map* pMap, DWORD x, DWORD y)
     _indices.resize(cells * 2 * 3);
     int index = 0;
 
-    _box._min._x = pMap->_vertices[leftTop].position._x;
-    _box._min._y = 100000.0f;
-    _box._min._z = pMap->_vertices[leftBottom].position._z;
-    _box._max._x = pMap->_vertices[rightTop].position._x;
-    _box._max._y = -100000.0f;
-    _box._max._z = pMap->_vertices[leftTop].position._z;
+    _box._min.x = pMap->_vertices[leftTop].position.x;
+    _box._min.y = 100000.0f;
+    _box._min.z = pMap->_vertices[leftBottom].position.z;
+    _box._max.x = pMap->_vertices[rightTop].position.x;
+    _box._max.y = -100000.0f;
+    _box._max.z = pMap->_vertices[leftTop].position.z;
 
     for (size_t i = 0; i < height; i++)
     {
@@ -86,14 +86,14 @@ void Node::CreateIndexData(Map* pMap, DWORD x, DWORD y)
 
             for (DWORD dwVertex = 0; dwVertex < 6; dwVertex++)
             {
-                if (_box._min._y > pMap->_vertices[_indices[index + dwVertex]].position._y)
+                if (_box._min.y > pMap->_vertices[_indices[index + dwVertex]].position.y)
                 {
-                    _box._min._y = pMap->_vertices[_indices[index + dwVertex]].position._y;
+                    _box._min.y = pMap->_vertices[_indices[index + dwVertex]].position.y;
                 }
 
-                if (_box._max._y < pMap->_vertices[_indices[index + dwVertex]].position._y)
+                if (_box._max.y < pMap->_vertices[_indices[index + dwVertex]].position.y)
                 {
-                    _box._max._y = pMap->_vertices[_indices[index + dwVertex]].position._y;
+                    _box._max.y = pMap->_vertices[_indices[index + dwVertex]].position.y;
                 }
             }
 
@@ -106,9 +106,9 @@ void Node::CreateIndexData(Map* pMap, DWORD x, DWORD y)
     _box._axis[0] = { 1.0f, 0.0f, 0.0f };
     _box._axis[1] = { 0.0f, 1.0f, 0.0f };
     _box._axis[2] = { 0.0f, 0.0f, 1.0f };
-    _box._extent[0] = _box._max._x - _box._center._x;
-    _box._extent[1] = _box._max._y - _box._center._y;
-    _box._extent[2] = _box._max._z - _box._center._z;
+    _box._extent[0] = _box._max.x - _box._center.x;
+    _box._extent[1] = _box._max.y - _box._center.y;
+    _box._extent[2] = _box._max.z - _box._center.z;
 }
 
 HRESULT Node::CreateIndexBuffer(Map* pMap, DWORD x, DWORD y)
@@ -163,8 +163,8 @@ HRESULT Quadtree::Render()
 
 HRESULT Quadtree::Release()
 {
-    SAFE_RELEASE(_pCamera);
-    SAFE_RELEASE(_pMap);
+    //SAFE_RELEASE(_pCamera);
+    //SAFE_RELEASE(_pMap);
 
     return TRUE;
 }

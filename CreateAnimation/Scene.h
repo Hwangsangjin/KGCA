@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Quadtree.h"
-#include "FbxLoader.h"
 
 class Scene
 {
@@ -9,7 +8,7 @@ public:
 	ID3D11Device* _pd3dDevice = nullptr;
 	ID3D11DeviceContext* _pImmediateContext = nullptr;
 
-	std::vector<FbxLoader*> _pFbxObjects;
+	std::vector<class FbxLoader*> _pFbxObjects;
 	Quadtree _quadtree;
 	D3D11_VIEWPORT _viewport[4];
 
@@ -22,6 +21,8 @@ public:
 	class Cube* _pCube = nullptr;
 
 	std::vector<class Object*> _pObjects;
+
+	FbxLoader* pRyan;
 
 	// √ ±‚»≠
 	virtual HRESULT Init();

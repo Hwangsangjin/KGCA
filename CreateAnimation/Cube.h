@@ -16,7 +16,7 @@ public:
 	virtual void CreateVertexData() override;
 	virtual void CreateIndexData() override;
 
-	virtual void SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection);
+	virtual void SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection);
 
 	class Shape* _pDirectionLine = nullptr;
 };

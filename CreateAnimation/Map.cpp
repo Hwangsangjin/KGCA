@@ -58,7 +58,7 @@ HRESULT Map::UpdateBuffer(class CameraDebug* pMainCamera)
 {
 	_face = 0;
 	DWORD index = 0;
-	MyVector3 vector[3];
+	DxVector3 vector[3];
 
 	for (size_t i = 0; i < _indices.size() / 3; i++)
 	{

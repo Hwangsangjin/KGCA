@@ -32,7 +32,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	sample.Run();
 
 #ifdef DEBUG
-	MemoryLeakCheck();
+	//MemoryLeakCheck();
 #endif
 
 	return 0;
@@ -56,7 +56,7 @@ HRESULT Sample::Frame()
 
 HRESULT Sample::Render()
 {
-	if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
+	if (INPUT->GetKey(VK_SHIFT) == KEY_STATE::HOLD)
 	{
 		_pImmediateContext->RSSetState(DxState::_pDefaultRSWireFrame);
 	}

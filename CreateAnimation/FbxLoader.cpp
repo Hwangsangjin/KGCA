@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FbxLoader.h"
 #include "TextureManager.h"
+#include "Timer.h"
 
 HRESULT FbxLoader::Init()
 {
@@ -33,9 +34,13 @@ HRESULT FbxLoader::Render()
 
 HRESULT FbxLoader::Release()
 {
+    SAFE_RELEASE(_pConstantBufferBone);
+
     for (auto& object : _pDrawObjects)
     {
         object->Release();
+        delete object;
+        object = nullptr;
     }
 
     _pFbxScene->Destroy();
@@ -60,6 +65,8 @@ HRESULT FbxLoader::Load(C_STR filename)
     _pFbxImporter->Initialize(filename.c_str());
     _pFbxImporter->Import(_pFbxScene);
 
+    FbxAxisSystem SceneAxisSystem = _pFbxScene->GetGlobalSettings().GetAxisSystem();
+
     // 단위
     FbxSystemUnit::m.ConvertScene(_pFbxScene);
     // 기저(행렬)
@@ -67,6 +74,8 @@ HRESULT FbxLoader::Load(C_STR filename)
 
     //FbxGeometryConverter converter(_pFbxManager);
     //converter.Triangulate(_pFbxScene, true);
+
+    InitAnimation();
 
     _pRootNode = _pFbxScene->GetRootNode();
     PreProcess(_pRootNode);
@@ -92,6 +101,31 @@ HRESULT FbxLoader::Load(C_STR filename)
     return TRUE;
 }
 
+HRESULT FbxLoader::CreateConstantBuffer(ID3D11Device* pd3dDevice)
+{
+    for (size_t i = 0; i < 255; i++)
+    {
+        D3DXMatrixIdentity(&_cbDataBone.boneMatrix[i]);
+    }
+
+    D3D11_BUFFER_DESC bd;
+    ZeroMemory(&bd, sizeof(bd));
+    bd.ByteWidth = sizeof(BoneBuffer) * 1; // 바이트 용량
+    // GPU 메모리에 할당
+    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
+    bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA sd;
+    ZeroMemory(&sd, sizeof(sd));
+    sd.pSysMem = &_cbDataBone;
+    HR(pd3dDevice->CreateBuffer(
+        &bd, // 버퍼 할당
+        &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
+        &_pConstantBufferBone))
+
+        return TRUE;
+}
+
 void FbxLoader::PreProcess(FbxNode* pFbxNode)
 {
     if (pFbxNode && (pFbxNode->GetCamera() || pFbxNode->GetLight()))
@@ -99,7 +133,7 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
         return;
     }
 
-    FbxObject3D* pObject = new FbxObject3D;
+    FbxSkinningObject3D* pObject = new FbxSkinningObject3D;
     std::string name = pFbxNode->GetName();
     pObject->_name = to_mw(name);
     pObject->_pFbxNode = pFbxNode;
@@ -107,6 +141,7 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
 
     _pObjects.push_back(pObject);
     _pObjectMap.insert(std::make_pair(pFbxNode, pObject));
+    _pObjectIndexMap.insert(std::make_pair(pFbxNode, _pObjects.size() - 1));
 
     int childCount = pFbxNode->GetChildCount();
     for (size_t i = 0; i < childCount; i++)
@@ -124,7 +159,7 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
     }
 }
 
-void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject)
+void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObject)
 {
     FbxNode* pNode = pFbxMesh->GetNode();
 
@@ -222,6 +257,7 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject)
     if (materialCount > 1)
     {
         pObject->_vbDataList.resize(materialCount);
+        pObject->_vbDataListIW.resize(materialCount);
         pObject->_vbTextureList.resize(materialCount);
 
         for (size_t i = 0; i < materialCount; i++)
@@ -275,17 +311,18 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject)
                 int vertexIndex = cornerIndex[index];
                 FbxVector4 v2 = pControlPoints[vertexIndex];
                 DefaultVertex vertex;
+                IndexWeightVertex IWVertex;
                 FbxVector4 v = geometry.MultT(v2);
-                vertex.position._x = v.mData[0];
-                vertex.position._y = v.mData[2];
-                vertex.position._z = v.mData[1];
-                vertex.color = Vector4{ 1.0f, 1.0f, 1.0f, 1.0f };
+                vertex.position.x = v.mData[0];
+                vertex.position.y = v.mData[2];
+                vertex.position.z = v.mData[1];
+                vertex.color = DxVector4{ 1.0f, 1.0f, 1.0f, 1.0f };
 
                 if (pUVs)
                 {
                     FbxVector2 uv = ReadUVs(pFbxMesh, pUVs, cornerIndex[index], uvIndex[index]);
-                    vertex.uv._x = uv.mData[0];
-                    vertex.uv._y = 1.0f - uv.mData[1];
+                    vertex.uv.x = uv.mData[0];
+                    vertex.uv.y = 1.0f - uv.mData[1];
                 }
 
                 if (pVertexColors)
@@ -301,18 +338,30 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject)
                 {
                     FbxVector4 normal = ReadNormals(pFbxMesh, pNormals, cornerIndex[index], polygonIndex + vertexColor[index]);
                     normal = localMatrix.MultT(normal);
-                    vertex.normal._x = normal.mData[0];
-                    vertex.normal._y = normal.mData[2];
-                    vertex.normal._z = normal.mData[1];
+                    vertex.normal.x = normal.mData[0];
+                    vertex.normal.y = normal.mData[2];
+                    vertex.normal.z = normal.mData[1];
                 }
+
+                IWVertex.index.x = _pObjectIndexMap.find(pNode)->second;
+                IWVertex.index.y = 0;
+                IWVertex.index.z = 0;
+                IWVertex.index.w = 0;
+
+                IWVertex.weight.x = 1.0f;
+                IWVertex.weight.y = 0.0f;
+                IWVertex.weight.z = 0.0f;
+                IWVertex.weight.w = 0.0f;
 
                 if (materialCount <= 1)
                 {
                     pObject->_vertices.push_back(vertex);
+                    pObject->_vertexListIW.push_back(IWVertex);
                 }
                 else
                 {
                     pObject->_vbDataList[subMaterial].push_back(vertex);
+                    pObject->_vbDataListIW[subMaterial].push_back(IWVertex);
                 }
             }
         }
@@ -450,9 +499,8 @@ int FbxLoader::GetSubMaterialIndex(int polygon, FbxLayerElementMaterial* pMateri
     return subMaterial;
 }
 
-void FbxLoader::LoadAnimation(FbxObject3D* pObject)
+void FbxLoader::InitAnimation()
 {
-    FbxNode* pNode = pObject->_pFbxNode;
     FbxAnimStack* stackAnim = _pFbxScene->GetSrcObject<FbxAnimStack>(0);
     FbxLongLong s = 0;
     FbxLongLong n = 0;
@@ -472,25 +520,52 @@ void FbxLoader::LoadAnimation(FbxObject3D* pObject)
         n = end.GetFrameCount(timeMode);
     }
 
-    pObject->_animScene.startFrame = s;
-    pObject->_animScene.endFrame = n;
-    pObject->_animScene.frameSpeed = 30.0f;
-    pObject->_animScene.tickPerFrame = 160.0f;
+    _animScene.startFrame = s;
+    _animScene.endFrame = n;
+    _animScene.frameSpeed = 30.0f;
+    _animScene.tickPerFrame = 160.0f;
+}
+
+void FbxLoader::LoadAnimation(FbxSkinningObject3D* pObject)
+{
+    FbxNode* pNode = pObject->_pFbxNode;
     FbxTime time;
-    for (FbxLongLong t = s; t <= n; t++)
+    for (FbxLongLong t = _animScene.startFrame; t <= _animScene.endFrame; t++)
     {
-        time.SetFrame(t, timeMode);
-        AnimTrack animTrack;
-        animTrack.frame = t;
+        time.SetFrame(t, _animScene.timeMode);
+        AnimTrack animtrack;
+        animtrack.frame = t;
         FbxAMatrix fbxMatrix = pNode->EvaluateGlobalTransform(time);
-        animTrack.animMatrix = DXConvertMatrix(fbxMatrix);
-        pObject->_animTracks.push_back(animTrack);
+        animtrack.animMatrix = DXConvertMatrix(fbxMatrix);
+        D3DXMatrixDecompose(&animtrack.s, &animtrack.r, &animtrack.t, &animtrack.animMatrix);
+        pObject->_animTracks.push_back(animtrack);
     }
 }
 
-MyMatrix FbxLoader::ConvertMatrix(FbxAMatrix& fbxMatrix)
+HRESULT FbxLoader::UpdateAnimation(ID3D11DeviceContext* pImmediateContext)
 {
-    MyMatrix matrix;
+    _animFrame = _animFrame + _animSpeed * _animScene.frameSpeed * _animInverse * DELTA_TIME;
+    if (_animFrame > _animScene.endFrame || _animFrame < _animScene.startFrame)
+    {
+        _animFrame = min(_animFrame, _animScene.endFrame);
+        _animFrame = max(_animFrame, _animScene.startFrame);
+        _animInverse *= -1.0f;
+    }
+
+    for (size_t i = 0; i < _pObjects.size(); i++)
+    {
+        DxMatrix animMatrix = _pObjects[i]->Interplate(_animFrame, _animScene);
+        D3DXMatrixTranspose(&_cbDataBone.boneMatrix[i], &animMatrix);
+    }
+
+    pImmediateContext->UpdateSubresource(_pConstantBufferBone, 0, nullptr, &_cbDataBone, 0, 0);
+
+    return TRUE;
+}
+
+DxMatrix FbxLoader::ConvertMatrix(FbxAMatrix& fbxMatrix)
+{
+    DxMatrix matrix;
     float* tArray = (float*)(&matrix);
     double* fbxArray = (double*)(&fbxMatrix);
 
@@ -502,10 +577,10 @@ MyMatrix FbxLoader::ConvertMatrix(FbxAMatrix& fbxMatrix)
     return matrix;
 }
 
-MyMatrix FbxLoader::DXConvertMatrix(FbxAMatrix& fbxMatrix)
+DxMatrix FbxLoader::DXConvertMatrix(FbxAMatrix& fbxMatrix)
 {
-    MyMatrix temp = ConvertMatrix(fbxMatrix);
-    MyMatrix matrix;
+    DxMatrix temp = ConvertMatrix(fbxMatrix);
+    DxMatrix matrix;
 
     matrix._11 = temp._11; matrix._12 = temp._13; matrix._13 = temp._12;
     matrix._21 = temp._31; matrix._22 = temp._33; matrix._23 = temp._32;

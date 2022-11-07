@@ -45,6 +45,37 @@ void FbxObject3D::SetParent(FbxObject3D* pParentNode)
 	_pParent = pParentNode;
 }
 
+DxMatrix FbxObject3D::Interplate(float frame, AnimScene animScene)
+{
+	AnimTrack a, b;
+	a = _animTracks[max(animScene.startFrame, frame + 0)];
+	b = _animTracks[min(animScene.endFrame, frame + 1)];
+	if (a.frame == b.frame)
+	{
+		return _animTracks[frame].animMatrix;
+	}
+
+	float t = (frame - a.frame) * (b.frame - a.frame);
+	DxVector3 position;
+	D3DXVec3Lerp(&position, &a.t, &b.t, t);
+	DxVector3 scale;
+	D3DXVec3Lerp(&scale, &a.s, &b.s, t);
+	DxQuaternion rotation;
+	D3DXQuaternionSlerp(&rotation, &a.r, &b.r, t);
+
+	DxMatrix scaleMatrix;
+	D3DXMatrixScaling(&scaleMatrix, scale.x, scale.y, scale.z);
+	DxMatrix rotationMatrix;
+	D3DXMatrixRotationQuaternion(&rotationMatrix, &rotation);
+
+	DxMatrix currentMatrix = rotationMatrix;
+	currentMatrix._41 = position.x;
+	currentMatrix._42 = position.y;
+	currentMatrix._43 = position.z;
+
+	return currentMatrix;
+}
+
 void FbxObject3D::CreateVertexData()
 {
 }

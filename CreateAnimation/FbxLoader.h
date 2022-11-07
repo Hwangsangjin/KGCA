@@ -6,17 +6,28 @@
 
 class FbxLoader
 {
-private:
+public:
 	FbxManager* _pFbxManager = nullptr;
 	FbxImporter* _pFbxImporter = nullptr;
 	FbxScene* _pFbxScene = nullptr;
 	FbxNode* _pRootNode = nullptr;
 	std::vector<FbxMesh*> _pFbxMeshs;
 
-public:
-	std::vector<FbxObject3D*> _pObjects;
-	std::vector<FbxObject3D*> _pDrawObjects;
-	std::map<FbxNode*, FbxObject3D*> _pObjectMap;
+	AnimScene _animScene;
+	float _animFrame = 0.0f;
+	float _animInverse = 1.0f;
+	float _animSpeed = 1.0f;
+
+	BoneBuffer _cbDataBone;
+	ID3D11Buffer* _pConstantBufferBone;
+
+	//std::vector<FbxObject3D*> _pObjects;
+	std::vector<FbxSkinningObject3D*> _pObjects;
+	//std::vector<FbxObject3D*> _pDrawObjects;
+	std::vector<FbxSkinningObject3D*> _pDrawObjects;
+	//std::map<FbxNode*, FbxObject3D*> _pObjectMap;
+	std::map<FbxNode*, FbxSkinningObject3D*> _pObjectMap;
+	std::map<FbxNode*, UINT> _pObjectIndexMap;
 
 	HRESULT Init();
 	HRESULT Frame();
@@ -24,15 +35,20 @@ public:
 	HRESULT Release();
 
 	HRESULT Load(C_STR filename);
+	HRESULT CreateConstantBuffer(ID3D11Device* pd3dDevice);
 
 	void PreProcess(FbxNode* pFbxNode);
-	void ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject);
+	//void ParseMesh(FbxMesh* pFbxMesh, FbxObject3D* pObject);
+	void ParseMesh(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObject);
 	FbxVector2 ReadUVs(FbxMesh* pFbxMesh, FbxLayerElementUV* pUV, int posIndex, int uvIndex);
 	FbxVector4 ReadNormals(FbxMesh* pFbxMesh, FbxLayerElementNormal* pNormal, int posIndex, int colorIndex);
 	FbxColor ReadColors(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* pVertexColor, int posIndex, int colorIndex);
 	int GetSubMaterialIndex(int polygon, FbxLayerElementMaterial* pMaterial);
-	void LoadAnimation(FbxObject3D* pObject);
-	MyMatrix ConvertMatrix(FbxAMatrix& fbxMatrix);
-	MyMatrix DXConvertMatrix(FbxAMatrix& fbxMatrix);
+	//void LoadAnimation(FbxObject3D* pObject);
+	void InitAnimation();
+	void LoadAnimation(FbxSkinningObject3D* pObject);
+	HRESULT UpdateAnimation(ID3D11DeviceContext* pImmediateContext);
+	DxMatrix ConvertMatrix(FbxAMatrix& fbxMatrix);
+	DxMatrix DXConvertMatrix(FbxAMatrix& fbxMatrix);
 };
 

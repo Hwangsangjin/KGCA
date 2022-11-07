@@ -25,8 +25,12 @@ HRESULT TextureBox::Render()
 
 HRESULT TextureBox::Release()
 {
-	_pDirectionLine->Release();
-	SAFE_DELETE(_pDirectionLine);
+	if (_pDirectionLine)
+	{
+		_pDirectionLine->Release();
+		delete _pDirectionLine;
+		_pDirectionLine = nullptr;
+	}
 
 	return TRUE;
 }
@@ -36,88 +40,88 @@ void TextureBox::CreateVertexData()
 	_vertices.resize(24);
 
 	// 앞
-	_vertices[0].position = MyVector3{ -1.0f, 1.0f, -1.0f };
-	_vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[0].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[1].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[1].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[2].position = MyVector3{ 1.0f, -1.0f, -1.0f };
-	_vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[2].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[3].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[3].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[3].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[0].position = DxVector3{ -1.0f, 1.0f, -1.0f };
+	_vertices[0].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[0].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[1].position = DxVector3{ 1.0f, 1.0f, -1.0f };
+	_vertices[1].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[1].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[2].position = DxVector3{ 1.0f, -1.0f, -1.0f };
+	_vertices[2].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[2].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[3].position = DxVector3{ -1.0f, -1.0f, -1.0f };
+	_vertices[3].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[3].uv = DxVector2{ 0.0f, 1.0f };
 
 	// 뒤
-	_vertices[4].position = MyVector3{ 1.0f, 1.0f, 1.0f };
-	_vertices[4].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[4].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[5].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[5].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[5].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[6].position = MyVector3{ -1.0f, -1.0f, 1.0f };
-	_vertices[6].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[6].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[7].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[7].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[7].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[4].position = DxVector3{ 1.0f, 1.0f, 1.0f };
+	_vertices[4].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[4].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[5].position = DxVector3{ -1.0f, 1.0f, 1.0f };
+	_vertices[5].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[5].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[6].position = DxVector3{ -1.0f, -1.0f, 1.0f };
+	_vertices[6].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[6].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[7].position = DxVector3{ 1.0f, -1.0f, 1.0f };
+	_vertices[7].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[7].uv = DxVector2{ 0.0f, 1.0f };
 
 	// 상
-	_vertices[8].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[8].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[8].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[9].position = MyVector3{ 1.0f, 1.0f , 1.0f };
-	_vertices[9].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[9].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[10].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[10].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[10].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[11].position = MyVector3{ -1.0f, 1.0f, -1.0f };
-	_vertices[11].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[11].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[8].position = DxVector3{ -1.0f, 1.0f, 1.0f };
+	_vertices[8].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[8].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[9].position = DxVector3{ 1.0f, 1.0f , 1.0f };
+	_vertices[9].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[9].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[10].position = DxVector3{ 1.0f, 1.0f, -1.0f };
+	_vertices[10].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[10].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[11].position = DxVector3{ -1.0f, 1.0f, -1.0f };
+	_vertices[11].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[11].uv = DxVector2{ 0.0f, 1.0f };
 
 	// 하
-	_vertices[12].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[12].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[12].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[13].position = MyVector3{ 1.0f, -1.0f , -1.0f };
-	_vertices[13].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[13].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[14].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[14].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[14].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[15].position = MyVector3{ -1.0f, -1.0f, 1.0f };
-	_vertices[15].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[15].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[12].position = DxVector3{ -1.0f, -1.0f, -1.0f };
+	_vertices[12].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[12].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[13].position = DxVector3{ 1.0f, -1.0f , -1.0f };
+	_vertices[13].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[13].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[14].position = DxVector3{ 1.0f, -1.0f, 1.0f };
+	_vertices[14].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[14].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[15].position = DxVector3{ -1.0f, -1.0f, 1.0f };
+	_vertices[15].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[15].uv = DxVector2{ 0.0f, 1.0f };
 
 	// 좌
-	_vertices[16].position = MyVector3{ -1.0f, 1.0f, 1.0f };
-	_vertices[16].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[16].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[17].position = MyVector3{ -1.0f, 1.0f , -1.0f };
-	_vertices[17].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[17].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[18].position = MyVector3{ -1.0f, -1.0f, -1.0f };
-	_vertices[18].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[18].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[19].position = MyVector3{ -1.0f, -1.0f, 1.0f };
-	_vertices[19].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[19].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[16].position = DxVector3{ -1.0f, 1.0f, 1.0f };
+	_vertices[16].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[16].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[17].position = DxVector3{ -1.0f, 1.0f , -1.0f };
+	_vertices[17].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[17].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[18].position = DxVector3{ -1.0f, -1.0f, -1.0f };
+	_vertices[18].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[18].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[19].position = DxVector3{ -1.0f, -1.0f, 1.0f };
+	_vertices[19].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[19].uv = DxVector2{ 0.0f, 1.0f };
 
 	// 우
-	_vertices[20].position = MyVector3{ 1.0f, 1.0f, -1.0f };
-	_vertices[20].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[20].uv = MyVector2{ 0.0f, 0.0f };
-	_vertices[21].position = MyVector3{ 1.0f, 1.0f , 1.0f };
-	_vertices[21].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[21].uv = MyVector2{ 1.0f, 0.0f };
-	_vertices[22].position = MyVector3{ 1.0f, -1.0f, 1.0f };
-	_vertices[22].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-	_vertices[22].uv = MyVector2{ 1.0f, 1.0f };
-	_vertices[23].position = MyVector3{ 1.0f, -1.0f, -1.0f };
-	_vertices[23].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-	_vertices[23].uv = MyVector2{ 0.0f, 1.0f };
+	_vertices[20].position = DxVector3{ 1.0f, 1.0f, -1.0f };
+	_vertices[20].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[20].uv = DxVector2{ 0.0f, 0.0f };
+	_vertices[21].position = DxVector3{ 1.0f, 1.0f , 1.0f };
+	_vertices[21].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[21].uv = DxVector2{ 1.0f, 0.0f };
+	_vertices[22].position = DxVector3{ 1.0f, -1.0f, 1.0f };
+	_vertices[22].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+	_vertices[22].uv = DxVector2{ 1.0f, 1.0f };
+	_vertices[23].position = DxVector3{ 1.0f, -1.0f, -1.0f };
+	_vertices[23].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+	_vertices[23].uv = DxVector2{ 0.0f, 1.0f };
 
 	_init = _vertices;
 }
@@ -154,31 +158,28 @@ void TextureBox::CreateIndexData()
 
 }
 
-void TextureBox::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
+void TextureBox::SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection)
 {
 	Object::SetMatrix(pWorld, pView, pProjection);
 
-	_position._x = _world._41;
-	_position._y = _world._42;
-	_position._z = _world._43;
+	_position.x = _world._41;
+	_position.y = _world._42;
+	_position.z = _world._43;
 
-	_right._x = _world._11;
-	_right._y = _world._12;
-	_right._z = _world._13;
+	_right.x = _world._11;
+	_right.y = _world._12;
+	_right.z = _world._13;
 
-	_up._x = _world._21;
-	_up._y = _world._22;
-	_up._z = _world._23;
+	_up.x = _world._21;
+	_up.y = _world._22;
+	_up.z = _world._23;
 
-	_look._x = _world._31;
-	_look._y = _world._32;
-	_look._z = _world._33;
+	_look.x = _world._31;
+	_look.y = _world._32;
+	_look.z = _world._33;
 
-	MyVector3 up;
-	MyVector3 right;
-
-	MyMatrix lineWorld;
-	lineWorld.Scale(2.0f, 2.0f, 2.0f);
+	DxMatrix lineWorld;
+	D3DXMatrixScaling(&lineWorld, 2.0f, 2.0f, 2.0f);
 	lineWorld = lineWorld * _world;
 
 	if (_pDirectionLine)
