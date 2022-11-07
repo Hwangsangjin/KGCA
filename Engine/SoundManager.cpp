@@ -33,7 +33,12 @@ HRESULT SoundManager::Release()
 {
     for (auto& sound : _sounds)
     {
-        SAFE_DELETE(sound.second);
+        if (sound.second)
+        {
+            sound.second->Release();
+        }
+
+        delete sound.second;
     }
 
     _pSystem->close();

@@ -60,6 +60,11 @@ HRESULT Font::Render()
         Draw(70, 160, L"D", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
+    if (INPUT->GetKey(VK_SHIFT) == KEY_STATE::HOLD)
+    {
+        Draw(30, 220, L"SHIFT", { 1.0f, 1.0f, 1.0f, 1.0f });
+    }
+
     if (INPUT->GetKey(VK_SPACE) == KEY_STATE::HOLD)
     {
         Draw(30, 280, L"SPACE", { 1.0f, 1.0f, 1.0f, 1.0f });

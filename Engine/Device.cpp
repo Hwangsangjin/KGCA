@@ -154,7 +154,7 @@ HRESULT Device::CreateDepthStencilView()
 
     //_pd3dDevice->CreateDepthStencilView(pDepthSencilTexture.Get(), &dtvd, &_pDepthStencilView);
     HR(_pd3dDevice->CreateDepthStencilView(pDepthStencilTexture, &dtvd, &_pDepthStencilView));
-
+    pDepthStencilTexture->Release();
     return TRUE;
 }
 

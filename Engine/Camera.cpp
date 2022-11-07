@@ -2,7 +2,6 @@
 #include "Camera.h"
 #include "Input.h"
 #include "Timer.h"
-#include "TMath.h"
 #include "Frustum.h"
 
 HRESULT Camera::Init()
@@ -25,13 +24,13 @@ HRESULT Camera::Release()
 	return TRUE;
 }
 
-void Camera::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
+void Camera::CreateView(DxVector3 eye, DxVector3 at, DxVector3 up)
 {
 	_position = eye;
 	_target = at;
 	_up = up;
 
-	_view.ViewLookAt(eye, at, up);
+	D3DXMatrixLookAtLH(&_view, &eye, &at, &up);
 	UpdateView();
 }
 
@@ -42,41 +41,41 @@ void Camera::CreateProjection(float fNear, float fFar, float fovY, float aspectR
 	_fovY = fovY;
 	_aspectRatio = aspectRatio;
 
-	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
+	D3DXMatrixPerspectiveFovLH(&_projection, _fovY, _aspectRatio, _near, _far);
 }
 
 void Camera::UpdateView()
 {
-	_right._x = _view._11;
-	_right._y = _view._21;
-	_right._z = _view._31;
+	_right.x = _view._11;
+	_right.y = _view._21;
+	_right.z = _view._31;
 
-	_up._x = _view._12;
-	_up._y = _view._22;
-	_up._z = _view._32;
+	_up.x = _view._12;
+	_up.y = _view._22;
+	_up.z = _view._32;
 
-	_look._x = _view._13;
-	_look._y = _view._23;
-	_look._z = _view._33;
+	_look.x = _view._13;
+	_look.y = _view._23;
+	_look.z = _view._33;
 
-	_right = _right.Normalize();
-	_up = _up.Normalize();
-	_look = _look.Normalize();
+	D3DXVec3Normalize(&_right, &_right);
+	D3DXVec3Normalize(&_up, &_up);
+	D3DXVec3Normalize(&_look, &_look);
 
 	_frustum.CreateFrustum(&_view, &_projection);
 }
 
-MyMatrix Camera::SetObjectView(MyVector3 min, MyVector3 max)
+DxMatrix Camera::SetObjectView(DxVector3 min, DxVector3 max)
 {
-	MyMatrix view;
-	TBASIS_EX::TVector3 vector{ 0.0f, 1.0f, 0.0f };
-	MyVector3 center = (min + max) * 0.5f;
-	float radius = MyVector3(max - min).Length() * 0.5f;
+	DxMatrix view;
+	DxVector3 vector{ 0.0f, 1.0f, 0.0f };
+	DxVector3 center = (min + max) * 0.5f;
+	float radius = DxVector3(max - min).Length() * 0.5f;
 
-	MyVector3 target = { center._x, center._y, center._z };
-	MyVector3 position = target + (-_look * (radius * 2));
+	DxVector3 target = { center.x, center.y, center.z };
+	DxVector3 position = target + (-_look * (radius * 2));
 
-	TBASIS_EX::D3DXMatrixLookAtLH((TBASIS_EX::TMatrix*)&_view, (TBASIS_EX::TVector3*)&position, (TBASIS_EX::TVector3*)&target, &vector);
+	D3DXMatrixLookAtLH((DxMatrix*)&_view, (DxVector3*)&position, (DxVector3*)&target, &vector);
 
 	_position = position;
 	_target = target;
@@ -97,51 +96,60 @@ HRESULT CameraDebug::Frame()
 		_pitch += INPUT->_offset.y * 0.002f;
 	}
 
+	if (INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
+	{
+		_speed = 100.0f;
+	}
+	else if (INPUT->GetKey(VK_SPACE) == KEY_STATE::UP)
+	{
+		_speed = 50.0f;
+	}
+
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)
 	{
-		_position += _look * 10.0f * DELTA_TIME;
+		_position += _look * _speed * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('S') == KEY_STATE::HOLD)
 	{
-		_position -= _look * 10.0f * DELTA_TIME;
+		_position -= _look * _speed * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('A') == KEY_STATE::HOLD)
 	{
-		_position -= _right * 10.0f * DELTA_TIME;
+		_position -= _right * _speed * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('D') == KEY_STATE::HOLD)
 	{
-		_position += _right * 10.0f * DELTA_TIME;
+		_position += _right * _speed * DELTA_TIME;
 
 	}
 
 	if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
 	{
-		_position += _up * 10.0f * DELTA_TIME;
+		_position += _up * _speed * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('E') == KEY_STATE::HOLD)
 	{
-		_position -= _up * 10.0f * DELTA_TIME;
+		_position -= _up * _speed * DELTA_TIME;
 	}
 
-	TBASIS_EX::TVector3 position;
-	position.x = _position._x;
-	position.y = _position._y;
-	position.z = _position._z;
+	DxVector3 position;
+	position.x = _position.x;
+	position.y = _position.y;
+	position.z = _position.z;
 
-	TBASIS_EX::TMatrix world;
-	TBASIS_EX::TMatrix view;
-	TBASIS_EX::TMatrix rotation;
-	TBASIS_EX::TQuaternion quaternion;
-	TBASIS_EX::D3DXQuaternionRotationYawPitchRoll(&quaternion, _yaw, _pitch, _roll);
-	TBASIS_EX::D3DXMatrixAffineTransformation(&world, 1.0f, nullptr, &quaternion, &position);
-	TBASIS_EX::D3DXMatrixInverse(&view, nullptr, &world);
+	DxMatrix world;
+	DxMatrix view;
+	DxMatrix rotation;
+	DxQuaternion quaternion;
+	D3DXQuaternionRotationYawPitchRoll(&quaternion, _yaw, _pitch, _roll);
+	D3DXMatrixAffineTransformation(&world, 1.0f, nullptr, &quaternion, &position);
+	D3DXMatrixInverse(&view, nullptr, &world);
 
-	_view = *((MyMatrix*)&view);
+	_view = *((DxMatrix*)&view);
 
 	UpdateView();
 
@@ -158,13 +166,13 @@ HRESULT CameraDebug::Release()
 	return TRUE;
 }
 
-void CameraDebug::CreateView(MyVector3 eye, MyVector3 at, MyVector3 up)
+void CameraDebug::CreateView(DxVector3 eye, DxVector3 at, DxVector3 up)
 {
 	_position = eye;
 	_target = at;
 	_up = up;
 
-	_view.ViewLookAt(eye, at, up);
+	D3DXMatrixLookAtLH(&_view, &eye, &at, &up);
 }
 
 void CameraDebug::CreateProjection(float fNear, float fFar, float fovY, float aspectRatio)
@@ -174,26 +182,26 @@ void CameraDebug::CreateProjection(float fNear, float fFar, float fovY, float as
 	_fovY = fovY;
 	_aspectRatio = aspectRatio;
 
-	_projection.PerspectiveFovLH(_near, _far, _fovY, _aspectRatio);
+	D3DXMatrixPerspectiveFovLH(&_projection, _fovY, _aspectRatio, _near, _far);
 }
 
 void CameraDebug::UpdateView()
 {
-	_right._x = _view._11;
-	_right._y = _view._21;
-	_right._z = _view._31;
+	_right.x = _view._11;
+	_right.y = _view._21;
+	_right.z = _view._31;
 
-	_up._x = _view._12;
-	_up._y = _view._22;
-	_up._z = _view._32;
+	_up.x = _view._12;
+	_up.y = _view._22;
+	_up.z = _view._32;
 
-	_look._x = _view._13;
-	_look._y = _view._23;
-	_look._z = _view._33;
+	_look.x = _view._13;
+	_look.y = _view._23;
+	_look.z = _view._33;
 
-	_right = _right.Normalize();
-	_up = _up.Normalize();
-	_look = _look.Normalize();
+	D3DXVec3Normalize(&_right, &_right);
+	D3DXVec3Normalize(&_up, &_up);
+	D3DXVec3Normalize(&_look, &_look);
 
 	_frustum.CreateFrustum(&_view, &_projection);
 }

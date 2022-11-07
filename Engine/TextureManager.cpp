@@ -20,7 +20,12 @@ HRESULT TextureManager::Release()
 {
 	for (auto& texture : _textures)
 	{
-		SAFE_RELEASE(texture.second);
+		if (texture.second)
+		{
+			texture.second->Release();
+		}
+
+		delete texture.second;
 	}
 
 	_textures.clear();

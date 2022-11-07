@@ -7,9 +7,9 @@ class Object3D : public Object
 public:
 	W_STR _name;
 
-	MyVector3 _look;
-	MyVector3 _up;
-	MyVector3 _right;
+	DxVector3 _look;
+	DxVector3 _up;
+	DxVector3 _right;
 
 	Object3D() {}
 	virtual ~Object3D() {}

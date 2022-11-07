@@ -1,56 +1,57 @@
-#include "TMath.h"
+#include "pch.h"
+#include "DxMath.h"
 
 //https://docs.microsoft.com/en-us/windows/win32/dxmath/pg-xnamath-migration-d3dx
-namespace TBASIS_EX
+namespace DX_MATH
 {
-		const TVector2 TVector2::Zero = { 0.f, 0.f };
-		const TVector2 TVector2::One = { 1.f, 1.f };
-		const TVector2 TVector2::UnitX = { 1.f, 0.f };
-		const TVector2 TVector2::UnitY = { 0.f, 1.f };
+	const DxVector2 DxVector2::Zero = { 0.f, 0.f };
+	const DxVector2 DxVector2::One = { 1.f, 1.f };
+	const DxVector2 DxVector2::UnitX = { 1.f, 0.f };
+	const DxVector2 DxVector2::UnitY = { 0.f, 1.f };
 
-		const TVector3 TVector3::Zero = { 0.f, 0.f, 0.f };
-		const TVector3 TVector3::One = { 1.f, 1.f, 1.f };
-		const TVector3 TVector3::UnitX = { 1.f, 0.f, 0.f };
-		const TVector3 TVector3::UnitY = { 0.f, 1.f, 0.f };
-		const TVector3 TVector3::UnitZ = { 0.f, 0.f, 1.f };
-		const TVector3 TVector3::Up = { 0.f, 1.f, 0.f };
-		const TVector3 TVector3::Down = { 0.f, -1.f, 0.f };
-		const TVector3 TVector3::Right = { 1.f, 0.f, 0.f };
-		const TVector3 TVector3::Left = { -1.f, 0.f, 0.f };
-		const TVector3 TVector3::Forward = { 0.f, 0.f, -1.f };
-		const TVector3 TVector3::Backward = { 0.f, 0.f, 1.f };
+	const DxVector3 DxVector3::Zero = { 0.f, 0.f, 0.f };
+	const DxVector3 DxVector3::One = { 1.f, 1.f, 1.f };
+	const DxVector3 DxVector3::UnitX = { 1.f, 0.f, 0.f };
+	const DxVector3 DxVector3::UnitY = { 0.f, 1.f, 0.f };
+	const DxVector3 DxVector3::UnitZ = { 0.f, 0.f, 1.f };
+	const DxVector3 DxVector3::Up = { 0.f, 1.f, 0.f };
+	const DxVector3 DxVector3::Down = { 0.f, -1.f, 0.f };
+	const DxVector3 DxVector3::Right = { 1.f, 0.f, 0.f };
+	const DxVector3 DxVector3::Left = { -1.f, 0.f, 0.f };
+	const DxVector3 DxVector3::Forward = { 0.f, 0.f, -1.f };
+	const DxVector3 DxVector3::Backward = { 0.f, 0.f, 1.f };
 
-		const TVector4 TVector4::Zero = { 0.f, 0.f, 0.f, 0.f };
-		const TVector4 TVector4::One = { 1.f, 1.f, 1.f, 1.f };
-		const TVector4 TVector4::UnitX = { 1.f, 0.f, 0.f, 0.f };
-		const TVector4 TVector4::UnitY = { 0.f, 1.f, 0.f, 0.f };
-		const TVector4 TVector4::UnitZ = { 0.f, 0.f, 1.f, 0.f };
-		const TVector4 TVector4::UnitW = { 0.f, 0.f, 0.f, 1.f };
+	const DxVector4 DxVector4::Zero = { 0.f, 0.f, 0.f, 0.f };
+	const DxVector4 DxVector4::One = { 1.f, 1.f, 1.f, 1.f };
+	const DxVector4 DxVector4::UnitX = { 1.f, 0.f, 0.f, 0.f };
+	const DxVector4 DxVector4::UnitY = { 0.f, 1.f, 0.f, 0.f };
+	const DxVector4 DxVector4::UnitZ = { 0.f, 0.f, 1.f, 0.f };
+	const DxVector4 DxVector4::UnitW = { 0.f, 0.f, 0.f, 1.f };
 
-		const TMatrix TMatrix::Identity = { 1.f, 0.f, 0.f, 0.f,
-										  0.f, 1.f, 0.f, 0.f,
-										  0.f, 0.f, 1.f, 0.f,
-										  0.f, 0.f, 0.f, 1.f };
+	const DxMatrix DxMatrix::Identity = { 1.f, 0.f, 0.f, 0.f,
+									  0.f, 1.f, 0.f, 0.f,
+									  0.f, 0.f, 1.f, 0.f,
+									  0.f, 0.f, 0.f, 1.f };
 
-		const TQuaternion TQuaternion::Identity = { 0.f, 0.f, 0.f, 1.f };
-	
+	const DxQuaternion DxQuaternion::Identity = { 0.f, 0.f, 0.f, 1.f };
 
-	TVector2 TRectangle::Location() const
+
+	DxVector2 DxRectangle::Location() const
 	{
-		return TVector2(float(x), float(y));
+		return DxVector2(float(x), float(y));
 	}
 
-	TVector2 TRectangle::Center() const
+	DxVector2 DxRectangle::Center() const
 	{
-		return TVector2(float(x) + float(width / 2.f), float(y) + float(height / 2.f));
+		return DxVector2(float(x) + float(width / 2.f), float(y) + float(height / 2.f));
 	}
 
-	bool TRectangle::Contains(const TVector2& point) const
+	bool DxRectangle::Contains(const DxVector2& point) const
 	{
 		return (float(x) <= point.x) && (point.x < float(x + width)) && (float(y) <= point.y) && (point.y < float(y + height));
 	}
 
-	void TRectangle::Inflate(long horizAmount, long vertAmount)
+	void DxRectangle::Inflate(long horizAmount, long vertAmount)
 	{
 		x -= horizAmount;
 		y -= vertAmount;
@@ -62,7 +63,7 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	TRectangle TRectangle::Intersect(const TRectangle& ra, const TRectangle& rb)
+	DxRectangle DxRectangle::Intersect(const DxRectangle& ra, const DxRectangle& rb)
 	{
 		long righta = ra.x + ra.width;
 		long rightb = rb.x + rb.width;
@@ -76,7 +77,7 @@ namespace TBASIS_EX
 		long minRight = righta < rightb ? righta : rightb;
 		long minBottom = bottoma < bottomb ? bottoma : bottomb;
 
-		TRectangle result;
+		DxRectangle result;
 
 		if ((minRight > maxX) && (minBottom > maxY))
 		{
@@ -96,7 +97,7 @@ namespace TBASIS_EX
 		return result;
 	}
 
-	RECT TRectangle::Intersect(const RECT& rcta, const RECT& rctb)
+	RECT DxRectangle::Intersect(const RECT& rcta, const RECT& rctb)
 	{
 		long maxX = rcta.left > rctb.left ? rcta.left : rctb.left;
 		long maxY = rcta.top > rctb.top ? rcta.top : rctb.top;
@@ -124,7 +125,7 @@ namespace TBASIS_EX
 		return result;
 	}
 
-	TRectangle TRectangle::Union(const TRectangle& ra, const TRectangle& rb)
+	DxRectangle DxRectangle::Union(const DxRectangle& ra, const DxRectangle& rb)
 	{
 		long righta = ra.x + ra.width;
 		long rightb = rb.x + rb.width;
@@ -138,7 +139,7 @@ namespace TBASIS_EX
 		int maxRight = righta > rightb ? righta : rightb;
 		int maxBottom = bottoma > bottomb ? bottoma : bottomb;
 
-		TRectangle result;
+		DxRectangle result;
 		result.x = minX;
 		result.y = minY;
 		result.width = maxRight - minX;
@@ -146,7 +147,7 @@ namespace TBASIS_EX
 		return result;
 	}
 
-	RECT TRectangle::Union(const RECT& rcta, const RECT& rctb)
+	RECT DxRectangle::Union(const RECT& rcta, const RECT& rctb)
 	{
 		RECT result;
 		result.left = rcta.left < rctb.left ? rcta.left : rctb.left;
@@ -159,7 +160,7 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TVector2
+	* DxVector2
 	*
 	****************************************************************************/
 
@@ -167,7 +168,7 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TVector2::operator == (const TVector2& V) const
+	bool DxVector2::operator == (const DxVector2& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -175,7 +176,7 @@ namespace TBASIS_EX
 		return XMVector2Equal(v1, v2);
 	}
 
-	bool TVector2::operator != (const TVector2& V) const
+	bool DxVector2::operator != (const DxVector2& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -187,7 +188,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TVector2& TVector2::operator+= (const TVector2& V)
+	DxVector2& DxVector2::operator+= (const DxVector2& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -197,7 +198,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector2& TVector2::operator-= (const TVector2& V)
+	DxVector2& DxVector2::operator-= (const DxVector2& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -207,7 +208,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector2& TVector2::operator*= (const TVector2& V)
+	DxVector2& DxVector2::operator*= (const DxVector2& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -217,7 +218,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector2& TVector2::operator*= (float S)
+	DxVector2& DxVector2::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -226,7 +227,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector2& TVector2::operator/= (float S)
+	DxVector2& DxVector2::operator/= (float S)
 	{
 		using namespace DirectX;
 		assert(S != 0.0f);
@@ -240,66 +241,66 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TVector2 operator+ (const TVector2& V1, const TVector2& V2)
+	DxVector2 operator+ (const DxVector2& V1, const DxVector2& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V1);
 		XMVECTOR v2 = XMLoadFloat2(&V2);
 		XMVECTOR X = XMVectorAdd(v1, v2);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
 
-	TVector2 operator- (const TVector2& V1, const TVector2& V2)
+	DxVector2 operator- (const DxVector2& V1, const DxVector2& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V1);
 		XMVECTOR v2 = XMLoadFloat2(&V2);
 		XMVECTOR X = XMVectorSubtract(v1, v2);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
 
-	TVector2 operator* (const TVector2& V1, const TVector2& V2)
+	DxVector2 operator* (const DxVector2& V1, const DxVector2& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V1);
 		XMVECTOR v2 = XMLoadFloat2(&V2);
 		XMVECTOR X = XMVectorMultiply(v1, v2);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
 
-	TVector2 operator* (const TVector2& V, float S)
+	DxVector2 operator* (const DxVector2& V, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
 
-	TVector2 operator/ (const TVector2& V1, const TVector2& V2)
+	DxVector2 operator/ (const DxVector2& V1, const DxVector2& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V1);
 		XMVECTOR v2 = XMLoadFloat2(&V2);
 		XMVECTOR X = XMVectorDivide(v1, v2);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
 
-	TVector2 operator* (float S, const TVector2& V)
+	DxVector2 operator* (float S, const DxVector2& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector2 R;
+		DxVector2 R;
 		XMStoreFloat2(&R, X);
 		return R;
 	}
@@ -308,7 +309,7 @@ namespace TBASIS_EX
 	// Vector operations
 	//------------------------------------------------------------------------------
 
-	bool TVector2::InBounds(const TVector2& Bounds) const
+	bool DxVector2::InBounds(const DxVector2& Bounds) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -316,7 +317,7 @@ namespace TBASIS_EX
 		return XMVector2InBounds(v1, v2);
 	}
 
-	float TVector2::Length() const
+	float DxVector2::Length() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -324,7 +325,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector2::LengthSquared() const
+	float DxVector2::LengthSquared() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -332,7 +333,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector2::Dot(const TVector2& V) const
+	float DxVector2::Dot(const DxVector2& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -341,7 +342,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector2::Cross(const TVector2& V, TVector2& result) const
+	void DxVector2::Cross(const DxVector2& V, DxVector2& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -350,19 +351,19 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, R);
 	}
 
-	TVector2 TVector2::Cross(const TVector2& V) const
+	DxVector2 DxVector2::Cross(const DxVector2& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
 		XMVECTOR v2 = XMLoadFloat2(&V);
 		XMVECTOR R = XMVector2Cross(v1, v2);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, R);
 		return result;
 	}
 
-	void TVector2::Normalize()
+	void DxVector2::Normalize()
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -370,7 +371,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(this, X);
 	}
 
-	void TVector2::Normalize(TVector2& result) const
+	void DxVector2::Normalize(DxVector2& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -378,7 +379,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	void TVector2::Clamp(const TVector2& vmin, const TVector2& vmax)
+	void DxVector2::Clamp(const DxVector2& vmin, const DxVector2& vmax)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -388,7 +389,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(this, X);
 	}
 
-	void TVector2::Clamp(const TVector2& vmin, const TVector2& vmax, TVector2& result) const
+	void DxVector2::Clamp(const DxVector2& vmin, const DxVector2& vmax, DxVector2& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(this);
@@ -402,7 +403,7 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	float TVector2::Distance(const TVector2& v1, const TVector2& v2)
+	float DxVector2::Distance(const DxVector2& v1, const DxVector2& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -412,7 +413,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector2::DistanceSquared(const TVector2& v1, const TVector2& v2)
+	float DxVector2::DistanceSquared(const DxVector2& v1, const DxVector2& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -422,7 +423,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector2::Min(const TVector2& v1, const TVector2& v2, TVector2& result)
+	void DxVector2::Min(const DxVector2& v1, const DxVector2& v2, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -431,19 +432,19 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Min(const TVector2& v1, const TVector2& v2)
+	DxVector2 DxVector2::Min(const DxVector2& v1, const DxVector2& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
 		XMVECTOR x2 = XMLoadFloat2(&v2);
 		XMVECTOR X = XMVectorMin(x1, x2);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Max(const TVector2& v1, const TVector2& v2, TVector2& result)
+	void DxVector2::Max(const DxVector2& v1, const DxVector2& v2, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -452,19 +453,19 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Max(const TVector2& v1, const TVector2& v2)
+	DxVector2 DxVector2::Max(const DxVector2& v1, const DxVector2& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
 		XMVECTOR x2 = XMLoadFloat2(&v2);
 		XMVECTOR X = XMVectorMax(x1, x2);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Lerp(const TVector2& v1, const TVector2& v2, float t, TVector2& result)
+	void DxVector2::Lerp(const DxVector2& v1, const DxVector2& v2, float t, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -473,44 +474,44 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Lerp(const TVector2& v1, const TVector2& v2, float t)
+	DxVector2 DxVector2::Lerp(const DxVector2& v1, const DxVector2& v2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
 		XMVECTOR x2 = XMLoadFloat2(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::SmoothStep(const TVector2& v1, const TVector2& v2, float t, TVector2& result)
+	void DxVector2::SmoothStep(const DxVector2& v1, const DxVector2& v2, float t, DxVector2& result)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat2(&v1);
 		XMVECTOR x2 = XMLoadFloat2(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::SmoothStep(const TVector2& v1, const TVector2& v2, float t)
+	DxVector2 DxVector2::SmoothStep(const DxVector2& v1, const DxVector2& v2, float t)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat2(&v1);
 		XMVECTOR x2 = XMLoadFloat2(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Barycentric(const TVector2& v1, const TVector2& v2, const TVector2& v3, float f, float g, TVector2& result)
+	void DxVector2::Barycentric(const DxVector2& v1, const DxVector2& v2, const DxVector2& v3, float f, float g, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -520,7 +521,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Barycentric(const TVector2& v1, const TVector2& v2, const TVector2& v3, float f, float g)
+	DxVector2 DxVector2::Barycentric(const DxVector2& v1, const DxVector2& v2, const DxVector2& v3, float f, float g)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -528,12 +529,12 @@ namespace TBASIS_EX
 		XMVECTOR x3 = XMLoadFloat2(&v3);
 		XMVECTOR X = XMVectorBaryCentric(x1, x2, x3, f, g);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::CatmullRom(const TVector2& v1, const TVector2& v2, const TVector2& v3, const TVector2& v4, float t, TVector2& result)
+	void DxVector2::CatmullRom(const DxVector2& v1, const DxVector2& v2, const DxVector2& v3, const DxVector2& v4, float t, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -544,7 +545,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::CatmullRom(const TVector2& v1, const TVector2& v2, const TVector2& v3, const TVector2& v4, float t)
+	DxVector2 DxVector2::CatmullRom(const DxVector2& v1, const DxVector2& v2, const DxVector2& v3, const DxVector2& v4, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -553,12 +554,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat2(&v4);
 		XMVECTOR X = XMVectorCatmullRom(x1, x2, x3, x4, t);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Hermite(const TVector2& v1, const TVector2& t1, const TVector2& v2, const TVector2& t2, float t, TVector2& result)
+	void DxVector2::Hermite(const DxVector2& v1, const DxVector2& t1, const DxVector2& v2, const DxVector2& t2, float t, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -569,7 +570,7 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Hermite(const TVector2& v1, const TVector2& t1, const TVector2& v2, const TVector2& t2, float t)
+	DxVector2 DxVector2::Hermite(const DxVector2& v1, const DxVector2& t1, const DxVector2& v2, const DxVector2& t2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat2(&v1);
@@ -578,12 +579,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat2(&t2);
 		XMVECTOR X = XMVectorHermite(x1, x2, x3, x4, t);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Reflect(const TVector2& ivec, const TVector2& nvec, TVector2& result)
+	void DxVector2::Reflect(const DxVector2& ivec, const DxVector2& nvec, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat2(&ivec);
@@ -592,19 +593,19 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Reflect(const TVector2& ivec, const TVector2& nvec)
+	DxVector2 DxVector2::Reflect(const DxVector2& ivec, const DxVector2& nvec)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat2(&ivec);
 		XMVECTOR n = XMLoadFloat2(&nvec);
 		XMVECTOR X = XMVector2Reflect(i, n);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Refract(const TVector2& ivec, const TVector2& nvec, float refractionIndex, TVector2& result)
+	void DxVector2::Refract(const DxVector2& ivec, const DxVector2& nvec, float refractionIndex, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat2(&ivec);
@@ -613,19 +614,19 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Refract(const TVector2& ivec, const TVector2& nvec, float refractionIndex)
+	DxVector2 DxVector2::Refract(const DxVector2& ivec, const DxVector2& nvec, float refractionIndex)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat2(&ivec);
 		XMVECTOR n = XMLoadFloat2(&nvec);
 		XMVECTOR X = XMVector2Refract(i, n, refractionIndex);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Transform(const TVector2& v, const TQuaternion& quat, TVector2& result)
+	void DxVector2::Transform(const DxVector2& v, const DxQuaternion& quat, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
@@ -634,65 +635,65 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Transform(const TVector2& v, const TQuaternion& quat)
+	DxVector2 DxVector2::Transform(const DxVector2& v, const DxQuaternion& quat)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
 		XMVECTOR q = XMLoadFloat4((DirectX::XMFLOAT4*)&quat);
 		XMVECTOR X = XMVector3Rotate(v1, q);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
-	void TVector2::Transform(const TVector2& v, const TMatrix& m, TVector2& result)
+	void DxVector2::Transform(const DxVector2& v, const DxMatrix& m, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
-		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4 *)&m);
+		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector2TransformCoord(v1, M);
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::Transform(const TVector2& v, const TMatrix& m)
+	DxVector2 DxVector2::Transform(const DxVector2& v, const DxMatrix& m)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
-		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4 *)&m);
+		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector2TransformCoord(v1, M);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
 	_Use_decl_annotations_
-		void TVector2::Transform(const TVector2* varray, size_t count, const TMatrix& m, TVector2* resultArray)
+		void DxVector2::Transform(const DxVector2* varray, size_t count, const DxMatrix& m, DxVector2* resultArray)
 	{
 		using namespace DirectX;
-		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4 *)&m);
+		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVector2TransformCoordStream(resultArray, sizeof(XMFLOAT2), varray, sizeof(XMFLOAT2), count, M);
 	}
 
-	void TVector2::Transform(const TVector2& v, const TMatrix& m, TVector4& result)
+	void DxVector2::Transform(const DxVector2& v, const DxMatrix& m, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
-		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4 *)&m);
+		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector2Transform(v1, M);
-		XMStoreFloat4((DirectX::XMFLOAT4  *)&result, X);
+		XMStoreFloat4((DirectX::XMFLOAT4*)&result, X);
 	}
 
 	_Use_decl_annotations_
-		void TVector2::Transform(const TVector2* varray, size_t count, const TMatrix& m, TVector4* resultArray)
+		void DxVector2::Transform(const DxVector2* varray, size_t count, const DxMatrix& m, DxVector4* resultArray)
 	{
 		using namespace DirectX;
-		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4  *)&m);
+		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVector2TransformStream((DirectX::XMFLOAT4*)resultArray, sizeof(XMFLOAT4), varray, sizeof(XMFLOAT2), count, M);
 	}
 
-	void TVector2::TransformNormal(const TVector2& v, const TMatrix& m, TVector2& result)
+	void DxVector2::TransformNormal(const DxVector2& v, const DxMatrix& m, DxVector2& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
@@ -701,20 +702,20 @@ namespace TBASIS_EX
 		XMStoreFloat2(&result, X);
 	}
 
-	TVector2 TVector2::TransformNormal(const TVector2& v, const TMatrix& m)
+	DxVector2 DxVector2::TransformNormal(const DxVector2& v, const DxMatrix& m)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
 		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector2TransformNormal(v1, M);
 
-		TVector2 result;
+		DxVector2 result;
 		XMStoreFloat2(&result, X);
 		return result;
 	}
 
 	_Use_decl_annotations_
-		void TVector2::TransformNormal(const TVector2* varray, size_t count, const TMatrix& m, TVector2* resultArray)
+		void DxVector2::TransformNormal(const DxVector2* varray, size_t count, const DxMatrix& m, DxVector2* resultArray)
 	{
 		using namespace DirectX;
 		XMMATRIX M = XMLoadFloat4x4((DirectX::XMFLOAT4X4*)&m);
@@ -724,21 +725,21 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TVector3
+	* DxVector3
 	*
 	****************************************************************************/
 
 	//------------------------------------------------------------------------------
 	// Comparision operators
 	//------------------------------------------------------------------------------
-	bool TVector3::operator == (const TVector3& V) const
+	bool DxVector3::operator == (const DxVector3& V) const
 	{
 		DirectX::XMVECTOR v1 = XMLoadFloat3(this);
 		DirectX::XMVECTOR v2 = XMLoadFloat3(&V);
 		return DirectX::XMVector3Equal(v1, v2);
 	}
 
-	bool TVector3::operator != (const TVector3& V) const
+	bool DxVector3::operator != (const DxVector3& V) const
 	{
 		XMVECTOR v1 = XMLoadFloat3(this);
 		XMVECTOR v2 = XMLoadFloat3(&V);
@@ -749,7 +750,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TVector3& TVector3::operator+= (const TVector3& V)
+	DxVector3& DxVector3::operator+= (const DxVector3& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -759,7 +760,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector3& TVector3::operator-= (const TVector3& V)
+	DxVector3& DxVector3::operator-= (const DxVector3& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -769,7 +770,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector3& TVector3::operator*= (const TVector3& V)
+	DxVector3& DxVector3::operator*= (const DxVector3& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -779,7 +780,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector3& TVector3::operator*= (float S)
+	DxVector3& DxVector3::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -788,7 +789,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector3& TVector3::operator/= (float S)
+	DxVector3& DxVector3::operator/= (float S)
 	{
 		using namespace DirectX;
 		assert(S != 0.0f);
@@ -802,12 +803,12 @@ namespace TBASIS_EX
 	// Urnary operators
 	//------------------------------------------------------------------------------
 
-	TVector3 TVector3::operator- () const
+	DxVector3 DxVector3::operator- () const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
 		XMVECTOR X = XMVectorNegate(v1);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
@@ -816,66 +817,66 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TVector3 operator+ (const TVector3& V1, const TVector3& V2)
+	DxVector3 operator+ (const DxVector3& V1, const DxVector3& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V1);
 		XMVECTOR v2 = XMLoadFloat3(&V2);
 		XMVECTOR X = XMVectorAdd(v1, v2);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
 
-	TVector3 operator- (const TVector3& V1, const TVector3& V2)
+	DxVector3 operator- (const DxVector3& V1, const DxVector3& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V1);
 		XMVECTOR v2 = XMLoadFloat3(&V2);
 		XMVECTOR X = XMVectorSubtract(v1, v2);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
 
-	TVector3 operator* (const TVector3& V1, const TVector3& V2)
+	DxVector3 operator* (const DxVector3& V1, const DxVector3& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V1);
 		XMVECTOR v2 = XMLoadFloat3(&V2);
 		XMVECTOR X = XMVectorMultiply(v1, v2);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
 
-	TVector3 operator* (const TVector3& V, float S)
+	DxVector3 operator* (const DxVector3& V, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
 
-	TVector3 operator/ (const TVector3& V1, const TVector3& V2)
+	DxVector3 operator/ (const DxVector3& V1, const DxVector3& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V1);
 		XMVECTOR v2 = XMLoadFloat3(&V2);
 		XMVECTOR X = XMVectorDivide(v1, v2);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
 
-	TVector3 operator* (float S, const TVector3& V)
+	DxVector3 operator* (float S, const DxVector3& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector3 R;
+		DxVector3 R;
 		XMStoreFloat3(&R, X);
 		return R;
 	}
@@ -884,7 +885,7 @@ namespace TBASIS_EX
 	// Vector operations
 	//------------------------------------------------------------------------------
 
-	bool TVector3::InBounds(const TVector3& Bounds) const
+	bool DxVector3::InBounds(const DxVector3& Bounds) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -892,7 +893,7 @@ namespace TBASIS_EX
 		return XMVector3InBounds(v1, v2);
 	}
 
-	float TVector3::Length() const
+	float DxVector3::Length() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -900,7 +901,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector3::LengthSquared() const
+	float DxVector3::LengthSquared() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -908,7 +909,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector3::Dot(const TVector3& V) const
+	float DxVector3::Dot(const DxVector3& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -917,7 +918,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector3::Cross(const TVector3& V, TVector3& result) const
+	void DxVector3::Cross(const DxVector3& V, DxVector3& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -926,19 +927,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, R);
 	}
 
-	TVector3 TVector3::Cross(const TVector3& V) const
+	DxVector3 DxVector3::Cross(const DxVector3& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
 		XMVECTOR v2 = XMLoadFloat3(&V);
 		XMVECTOR R = XMVector3Cross(v1, v2);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, R);
 		return result;
 	}
 
-	void TVector3::Normalize()
+	void DxVector3::Normalize()
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -946,7 +947,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(this, X);
 	}
 
-	void TVector3::Normalize(TVector3& result) const
+	void DxVector3::Normalize(DxVector3& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -954,7 +955,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	void TVector3::Clamp(const TVector3& vmin, const TVector3& vmax)
+	void DxVector3::Clamp(const DxVector3& vmin, const DxVector3& vmax)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -964,7 +965,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(this, X);
 	}
 
-	void TVector3::Clamp(const TVector3& vmin, const TVector3& vmax, TVector3& result) const
+	void DxVector3::Clamp(const DxVector3& vmin, const DxVector3& vmax, DxVector3& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(this);
@@ -977,7 +978,7 @@ namespace TBASIS_EX
 	//------------------------------------------------------------------------------
 	// Static functions
 	//------------------------------------------------------------------------------
-	float TVector3::Distance(const TVector3& v1, const TVector3& v2)
+	float DxVector3::Distance(const DxVector3& v1, const DxVector3& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -987,7 +988,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector3::DistanceSquared(const TVector3& v1, const TVector3& v2)
+	float DxVector3::DistanceSquared(const DxVector3& v1, const DxVector3& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -997,7 +998,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector3::Min(const TVector3& v1, const TVector3& v2, TVector3& result)
+	void DxVector3::Min(const DxVector3& v1, const DxVector3& v2, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1006,19 +1007,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Min(const TVector3& v1, const TVector3& v2)
+	DxVector3 DxVector3::Min(const DxVector3& v1, const DxVector3& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
 		XMVECTOR x2 = XMLoadFloat3(&v2);
 		XMVECTOR X = XMVectorMin(x1, x2);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Max(const TVector3& v1, const TVector3& v2, TVector3& result)
+	void DxVector3::Max(const DxVector3& v1, const DxVector3& v2, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1027,19 +1028,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Max(const TVector3& v1, const TVector3& v2)
+	DxVector3 DxVector3::Max(const DxVector3& v1, const DxVector3& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
 		XMVECTOR x2 = XMLoadFloat3(&v2);
 		XMVECTOR X = XMVectorMax(x1, x2);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Lerp(const TVector3& v1, const TVector3& v2, float t, TVector3& result)
+	void DxVector3::Lerp(const DxVector3& v1, const DxVector3& v2, float t, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1048,44 +1049,44 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Lerp(const TVector3& v1, const TVector3& v2, float t)
+	DxVector3 DxVector3::Lerp(const DxVector3& v1, const DxVector3& v2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
 		XMVECTOR x2 = XMLoadFloat3(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::SmoothStep(const TVector3& v1, const TVector3& v2, float t, TVector3& result)
+	void DxVector3::SmoothStep(const DxVector3& v1, const DxVector3& v2, float t, DxVector3& result)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat3(&v1);
 		XMVECTOR x2 = XMLoadFloat3(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::SmoothStep(const TVector3& v1, const TVector3& v2, float t)
+	DxVector3 DxVector3::SmoothStep(const DxVector3& v1, const DxVector3& v2, float t)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat3(&v1);
 		XMVECTOR x2 = XMLoadFloat3(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Barycentric(const TVector3& v1, const TVector3& v2, const TVector3& v3, float f, float g, TVector3& result)
+	void DxVector3::Barycentric(const DxVector3& v1, const DxVector3& v2, const DxVector3& v3, float f, float g, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1095,7 +1096,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Barycentric(const TVector3& v1, const TVector3& v2, const TVector3& v3, float f, float g)
+	DxVector3 DxVector3::Barycentric(const DxVector3& v1, const DxVector3& v2, const DxVector3& v3, float f, float g)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1103,12 +1104,12 @@ namespace TBASIS_EX
 		XMVECTOR x3 = XMLoadFloat3(&v3);
 		XMVECTOR X = XMVectorBaryCentric(x1, x2, x3, f, g);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::CatmullRom(const TVector3& v1, const TVector3& v2, const TVector3& v3, const TVector3& v4, float t, TVector3& result)
+	void DxVector3::CatmullRom(const DxVector3& v1, const DxVector3& v2, const DxVector3& v3, const DxVector3& v4, float t, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1119,7 +1120,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::CatmullRom(const TVector3& v1, const TVector3& v2, const TVector3& v3, const TVector3& v4, float t)
+	DxVector3 DxVector3::CatmullRom(const DxVector3& v1, const DxVector3& v2, const DxVector3& v3, const DxVector3& v4, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1128,12 +1129,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat3(&v4);
 		XMVECTOR X = XMVectorCatmullRom(x1, x2, x3, x4, t);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Hermite(const TVector3& v1, const TVector3& t1, const TVector3& v2, const TVector3& t2, float t, TVector3& result)
+	void DxVector3::Hermite(const DxVector3& v1, const DxVector3& t1, const DxVector3& v2, const DxVector3& t2, float t, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1144,7 +1145,7 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Hermite(const TVector3& v1, const TVector3& t1, const TVector3& v2, const TVector3& t2, float t)
+	DxVector3 DxVector3::Hermite(const DxVector3& v1, const DxVector3& t1, const DxVector3& v2, const DxVector3& t2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat3(&v1);
@@ -1153,12 +1154,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat3(&t2);
 		XMVECTOR X = XMVectorHermite(x1, x2, x3, x4, t);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Reflect(const TVector3& ivec, const TVector3& nvec, TVector3& result)
+	void DxVector3::Reflect(const DxVector3& ivec, const DxVector3& nvec, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat3(&ivec);
@@ -1167,19 +1168,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Reflect(const TVector3& ivec, const TVector3& nvec)
+	DxVector3 DxVector3::Reflect(const DxVector3& ivec, const DxVector3& nvec)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat3(&ivec);
 		XMVECTOR n = XMLoadFloat3(&nvec);
 		XMVECTOR X = XMVector3Reflect(i, n);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Refract(const TVector3& ivec, const TVector3& nvec, float refractionIndex, TVector3& result)
+	void DxVector3::Refract(const DxVector3& ivec, const DxVector3& nvec, float refractionIndex, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat3(&ivec);
@@ -1188,19 +1189,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Refract(const TVector3& ivec, const TVector3& nvec, float refractionIndex)
+	DxVector3 DxVector3::Refract(const DxVector3& ivec, const DxVector3& nvec, float refractionIndex)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat3(&ivec);
 		XMVECTOR n = XMLoadFloat3(&nvec);
 		XMVECTOR X = XMVector3Refract(i, n, refractionIndex);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Transform(const TVector3& v, const TQuaternion& quat, TVector3& result)
+	void DxVector3::Transform(const DxVector3& v, const DxQuaternion& quat, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1209,19 +1210,19 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Transform(const TVector3& v, const TQuaternion& quat)
+	DxVector3 DxVector3::Transform(const DxVector3& v, const DxQuaternion& quat)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
 		XMVECTOR q = XMLoadFloat4((XMFLOAT4*)&quat);
 		XMVECTOR X = XMVector3Rotate(v1, q);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
-	void TVector3::Transform(const TVector3& v, const TMatrix& m, TVector3& result)
+	void DxVector3::Transform(const DxVector3& v, const DxMatrix& m, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1230,27 +1231,27 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::Transform(const TVector3& v, const TMatrix& m)
+	DxVector3 DxVector3::Transform(const DxVector3& v, const DxMatrix& m)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector3TransformCoord(v1, M);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
 	_Use_decl_annotations_
-		void TVector3::Transform(const TVector3* varray, size_t count, const TMatrix& m, TVector3* resultArray)
+		void DxVector3::Transform(const DxVector3* varray, size_t count, const DxMatrix& m, DxVector3* resultArray)
 	{
 		using namespace DirectX;
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
 		XMVector3TransformCoordStream(resultArray, sizeof(XMFLOAT3), varray, sizeof(XMFLOAT3), count, M);
 	}
 
-	void TVector3::Transform(const TVector3& v, const TMatrix& m, TVector4& result)
+	void DxVector3::Transform(const DxVector3& v, const DxMatrix& m, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1260,14 +1261,14 @@ namespace TBASIS_EX
 	}
 
 	_Use_decl_annotations_
-		void TVector3::Transform(const TVector3* varray, size_t count, const TMatrix& m, TVector4* resultArray)
+		void DxVector3::Transform(const DxVector3* varray, size_t count, const DxMatrix& m, DxVector4* resultArray)
 	{
 		using namespace DirectX;
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
 		XMVector3TransformStream((XMFLOAT4*)resultArray, sizeof(XMFLOAT4), varray, sizeof(XMFLOAT3), count, M);
 	}
 
-	void TVector3::TransformNormal(const TVector3& v, const TMatrix& m, TVector3& result)
+	void DxVector3::TransformNormal(const DxVector3& v, const DxMatrix& m, DxVector3& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1276,20 +1277,20 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, X);
 	}
 
-	TVector3 TVector3::TransformNormal(const TVector3& v, const TMatrix& m)
+	DxVector3 DxVector3::TransformNormal(const DxVector3& v, const DxMatrix& m)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector3TransformNormal(v1, M);
 
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, X);
 		return result;
 	}
 
 	_Use_decl_annotations_
-		void TVector3::TransformNormal(const TVector3* varray, size_t count, const TMatrix& m, TVector3* resultArray)
+		void DxVector3::TransformNormal(const DxVector3* varray, size_t count, const DxMatrix& m, DxVector3* resultArray)
 	{
 		using namespace DirectX;
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
@@ -1299,7 +1300,7 @@ namespace TBASIS_EX
 
 	///****************************************************************************
 	//*
-	//* TVector4
+	//* DxVector4
 	//*
 	//****************************************************************************/
 
@@ -1307,7 +1308,7 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TVector4::operator == (const TVector4& V) const
+	bool DxVector4::operator == (const DxVector4& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1315,7 +1316,7 @@ namespace TBASIS_EX
 		return XMVector4Equal(v1, v2);
 	}
 
-	bool TVector4::operator != (const TVector4& V) const
+	bool DxVector4::operator != (const DxVector4& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1327,7 +1328,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TVector4& TVector4::operator+= (const TVector4& V)
+	DxVector4& DxVector4::operator+= (const DxVector4& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1337,7 +1338,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector4& TVector4::operator-= (const TVector4& V)
+	DxVector4& DxVector4::operator-= (const DxVector4& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1347,7 +1348,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector4& TVector4::operator*= (const TVector4& V)
+	DxVector4& DxVector4::operator*= (const DxVector4& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1357,7 +1358,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector4& TVector4::operator*= (float S)
+	DxVector4& DxVector4::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1366,7 +1367,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TVector4& TVector4::operator/= (float S)
+	DxVector4& DxVector4::operator/= (float S)
 	{
 		using namespace DirectX;
 		assert(S != 0.0f);
@@ -1380,12 +1381,12 @@ namespace TBASIS_EX
 	// Urnary operators
 	//------------------------------------------------------------------------------
 
-	TVector4 TVector4::operator- () const
+	DxVector4 DxVector4::operator- () const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
 		XMVECTOR X = XMVectorNegate(v1);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
@@ -1394,66 +1395,66 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TVector4 operator+ (const TVector4& V1, const TVector4& V2)
+	DxVector4 operator+ (const DxVector4& V1, const DxVector4& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V1);
 		XMVECTOR v2 = XMLoadFloat4(&V2);
 		XMVECTOR X = XMVectorAdd(v1, v2);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
 
-	TVector4 operator- (const TVector4& V1, const TVector4& V2)
+	DxVector4 operator- (const DxVector4& V1, const DxVector4& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V1);
 		XMVECTOR v2 = XMLoadFloat4(&V2);
 		XMVECTOR X = XMVectorSubtract(v1, v2);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
 
-	TVector4 operator* (const TVector4& V1, const TVector4& V2)
+	DxVector4 operator* (const DxVector4& V1, const DxVector4& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V1);
 		XMVECTOR v2 = XMLoadFloat4(&V2);
 		XMVECTOR X = XMVectorMultiply(v1, v2);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
 
-	TVector4 operator* (const TVector4& V, float S)
+	DxVector4 operator* (const DxVector4& V, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
 
-	TVector4 operator/ (const TVector4& V1, const TVector4& V2)
+	DxVector4 operator/ (const DxVector4& V1, const DxVector4& V2)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V1);
 		XMVECTOR v2 = XMLoadFloat4(&V2);
 		XMVECTOR X = XMVectorDivide(v1, v2);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
 
-	TVector4 operator* (float S, const TVector4& V)
+	DxVector4 operator* (float S, const DxVector4& V)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&V);
 		XMVECTOR X = XMVectorScale(v1, S);
-		TVector4 R;
+		DxVector4 R;
 		XMStoreFloat4(&R, X);
 		return R;
 	}
@@ -1462,7 +1463,7 @@ namespace TBASIS_EX
 	// Vector operations
 	//------------------------------------------------------------------------------
 
-	bool TVector4::InBounds(const TVector4& Bounds) const
+	bool DxVector4::InBounds(const DxVector4& Bounds) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1470,7 +1471,7 @@ namespace TBASIS_EX
 		return XMVector4InBounds(v1, v2);
 	}
 
-	float TVector4::Length() const
+	float DxVector4::Length() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1478,7 +1479,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector4::LengthSquared() const
+	float DxVector4::LengthSquared() const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1486,7 +1487,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector4::Dot(const TVector4& V) const
+	float DxVector4::Dot(const DxVector4& V) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1495,7 +1496,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector4::Cross(const TVector4& v1, const TVector4& v2, TVector4& result) const
+	void DxVector4::Cross(const DxVector4& v1, const DxVector4& v2, DxVector4& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(this);
@@ -1505,7 +1506,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, R);
 	}
 
-	TVector4 TVector4::Cross(const TVector4& v1, const TVector4& v2) const
+	DxVector4 DxVector4::Cross(const DxVector4& v1, const DxVector4& v2) const
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(this);
@@ -1513,12 +1514,12 @@ namespace TBASIS_EX
 		XMVECTOR x3 = XMLoadFloat4(&v2);
 		XMVECTOR R = XMVector4Cross(x1, x2, x3);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, R);
 		return result;
 	}
 
-	void TVector4::Normalize()
+	void DxVector4::Normalize()
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1526,7 +1527,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(this, X);
 	}
 
-	void TVector4::Normalize(TVector4& result) const
+	void DxVector4::Normalize(DxVector4& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1534,7 +1535,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	void TVector4::Clamp(const TVector4& vmin, const TVector4& vmax)
+	void DxVector4::Clamp(const DxVector4& vmin, const DxVector4& vmax)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1544,7 +1545,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(this, X);
 	}
 
-	void TVector4::Clamp(const TVector4& vmin, const TVector4& vmax, TVector4& result) const
+	void DxVector4::Clamp(const DxVector4& vmin, const DxVector4& vmax, DxVector4& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(this);
@@ -1558,7 +1559,7 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	float TVector4::Distance(const TVector4& v1, const TVector4& v2)
+	float DxVector4::Distance(const DxVector4& v1, const DxVector4& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1568,7 +1569,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	float TVector4::DistanceSquared(const TVector4& v1, const TVector4& v2)
+	float DxVector4::DistanceSquared(const DxVector4& v1, const DxVector4& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1578,7 +1579,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(X);
 	}
 
-	void TVector4::Min(const TVector4& v1, const TVector4& v2, TVector4& result)
+	void DxVector4::Min(const DxVector4& v1, const DxVector4& v2, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1587,19 +1588,19 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Min(const TVector4& v1, const TVector4& v2)
+	DxVector4 DxVector4::Min(const DxVector4& v1, const DxVector4& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
 		XMVECTOR x2 = XMLoadFloat4(&v2);
 		XMVECTOR X = XMVectorMin(x1, x2);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Max(const TVector4& v1, const TVector4& v2, TVector4& result)
+	void DxVector4::Max(const DxVector4& v1, const DxVector4& v2, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1608,19 +1609,19 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Max(const TVector4& v1, const TVector4& v2)
+	DxVector4 DxVector4::Max(const DxVector4& v1, const DxVector4& v2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
 		XMVECTOR x2 = XMLoadFloat4(&v2);
 		XMVECTOR X = XMVectorMax(x1, x2);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Lerp(const TVector4& v1, const TVector4& v2, float t, TVector4& result)
+	void DxVector4::Lerp(const DxVector4& v1, const DxVector4& v2, float t, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1629,44 +1630,44 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Lerp(const TVector4& v1, const TVector4& v2, float t)
+	DxVector4 DxVector4::Lerp(const DxVector4& v1, const DxVector4& v2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
 		XMVECTOR x2 = XMLoadFloat4(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::SmoothStep(const TVector4& v1, const TVector4& v2, float t, TVector4& result)
+	void DxVector4::SmoothStep(const DxVector4& v1, const DxVector4& v2, float t, DxVector4& result)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat4(&v1);
 		XMVECTOR x2 = XMLoadFloat4(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::SmoothStep(const TVector4& v1, const TVector4& v2, float t)
+	DxVector4 DxVector4::SmoothStep(const DxVector4& v1, const DxVector4& v2, float t)
 	{
 		using namespace DirectX;
 		t = (t > 1.0f) ? 1.0f : ((t < 0.0f) ? 0.0f : t);  // Clamp value to 0 to 1
-		t = t * t*(3.f - 2.f*t);
+		t = t * t * (3.f - 2.f * t);
 		XMVECTOR x1 = XMLoadFloat4(&v1);
 		XMVECTOR x2 = XMLoadFloat4(&v2);
 		XMVECTOR X = XMVectorLerp(x1, x2, t);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Barycentric(const TVector4& v1, const TVector4& v2, const TVector4& v3, float f, float g, TVector4& result)
+	void DxVector4::Barycentric(const DxVector4& v1, const DxVector4& v2, const DxVector4& v3, float f, float g, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1676,7 +1677,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Barycentric(const TVector4& v1, const TVector4& v2, const TVector4& v3, float f, float g)
+	DxVector4 DxVector4::Barycentric(const DxVector4& v1, const DxVector4& v2, const DxVector4& v3, float f, float g)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1684,12 +1685,12 @@ namespace TBASIS_EX
 		XMVECTOR x3 = XMLoadFloat4(&v3);
 		XMVECTOR X = XMVectorBaryCentric(x1, x2, x3, f, g);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::CatmullRom(const TVector4& v1, const TVector4& v2, const TVector4& v3, const TVector4& v4, float t, TVector4& result)
+	void DxVector4::CatmullRom(const DxVector4& v1, const DxVector4& v2, const DxVector4& v3, const DxVector4& v4, float t, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1700,7 +1701,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::CatmullRom(const TVector4& v1, const TVector4& v2, const TVector4& v3, const TVector4& v4, float t)
+	DxVector4 DxVector4::CatmullRom(const DxVector4& v1, const DxVector4& v2, const DxVector4& v3, const DxVector4& v4, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1709,12 +1710,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat4(&v4);
 		XMVECTOR X = XMVectorCatmullRom(x1, x2, x3, x4, t);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Hermite(const TVector4& v1, const TVector4& t1, const TVector4& v2, const TVector4& t2, float t, TVector4& result)
+	void DxVector4::Hermite(const DxVector4& v1, const DxVector4& t1, const DxVector4& v2, const DxVector4& t2, float t, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1725,7 +1726,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Hermite(const TVector4& v1, const TVector4& t1, const TVector4& v2, const TVector4& t2, float t)
+	DxVector4 DxVector4::Hermite(const DxVector4& v1, const DxVector4& t1, const DxVector4& v2, const DxVector4& t2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(&v1);
@@ -1734,12 +1735,12 @@ namespace TBASIS_EX
 		XMVECTOR x4 = XMLoadFloat4(&t2);
 		XMVECTOR X = XMVectorHermite(x1, x2, x3, x4, t);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Reflect(const TVector4& ivec, const TVector4& nvec, TVector4& result)
+	void DxVector4::Reflect(const DxVector4& ivec, const DxVector4& nvec, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat4(&ivec);
@@ -1748,19 +1749,19 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Reflect(const TVector4& ivec, const TVector4& nvec)
+	DxVector4 DxVector4::Reflect(const DxVector4& ivec, const DxVector4& nvec)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat4(&ivec);
 		XMVECTOR n = XMLoadFloat4(&nvec);
 		XMVECTOR X = XMVector4Reflect(i, n);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Refract(const TVector4& ivec, const TVector4& nvec, float refractionIndex, TVector4& result)
+	void DxVector4::Refract(const DxVector4& ivec, const DxVector4& nvec, float refractionIndex, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat4(&ivec);
@@ -1769,19 +1770,19 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Refract(const TVector4& ivec, const TVector4& nvec, float refractionIndex)
+	DxVector4 DxVector4::Refract(const DxVector4& ivec, const DxVector4& nvec, float refractionIndex)
 	{
 		using namespace DirectX;
 		XMVECTOR i = XMLoadFloat4(&ivec);
 		XMVECTOR n = XMLoadFloat4(&nvec);
 		XMVECTOR X = XMVector4Refract(i, n, refractionIndex);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Transform(const TVector2& v, const TQuaternion& quat, TVector4& result)
+	void DxVector4::Transform(const DxVector2& v, const DxQuaternion& quat, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
@@ -1791,7 +1792,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Transform(const TVector2& v, const TQuaternion& quat)
+	DxVector4 DxVector4::Transform(const DxVector2& v, const DxQuaternion& quat)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat2(&v);
@@ -1799,12 +1800,12 @@ namespace TBASIS_EX
 		XMVECTOR X = XMVector3Rotate(v1, q);
 		X = XMVectorSelect(g_XMIdentityR3, X, g_XMSelect1110); // result.w = 1.f
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Transform(const TVector3& v, const TQuaternion& quat, TVector4& result)
+	void DxVector4::Transform(const DxVector3& v, const DxQuaternion& quat, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1814,7 +1815,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Transform(const TVector3& v, const TQuaternion& quat)
+	DxVector4 DxVector4::Transform(const DxVector3& v, const DxQuaternion& quat)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1822,12 +1823,12 @@ namespace TBASIS_EX
 		XMVECTOR X = XMVector3Rotate(v1, q);
 		X = XMVectorSelect(g_XMIdentityR3, X, g_XMSelect1110); // result.w = 1.f
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Transform(const TVector4& v, const TQuaternion& quat, TVector4& result)
+	void DxVector4::Transform(const DxVector4& v, const DxQuaternion& quat, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1837,7 +1838,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Transform(const TVector4& v, const TQuaternion& quat)
+	DxVector4 DxVector4::Transform(const DxVector4& v, const DxQuaternion& quat)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1845,12 +1846,12 @@ namespace TBASIS_EX
 		XMVECTOR X = XMVector3Rotate(v1, q);
 		X = XMVectorSelect(v1, X, g_XMSelect1110); // result.w = v.w
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
-	void TVector4::Transform(const TVector4& v, const TMatrix& m, TVector4& result)
+	void DxVector4::Transform(const DxVector4& v, const DxMatrix& m, DxVector4& result)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1859,20 +1860,20 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TVector4 TVector4::Transform(const TVector4& v, const TMatrix& m)
+	DxVector4 DxVector4::Transform(const DxVector4& v, const DxMatrix& m)
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(&v);
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
 		XMVECTOR X = XMVector4Transform(v1, M);
 
-		TVector4 result;
+		DxVector4 result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
 
 	_Use_decl_annotations_
-		void TVector4::Transform(const TVector4* varray, size_t count, const TMatrix& m, TVector4* resultArray)
+		void DxVector4::Transform(const DxVector4* varray, size_t count, const DxMatrix& m, DxVector4* resultArray)
 	{
 		using namespace DirectX;
 		XMMATRIX M = XMLoadFloat4x4((XMFLOAT4X4*)&m);
@@ -1882,7 +1883,7 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TMatrix
+	* DxMatrix
 	*
 	****************************************************************************/
 
@@ -1890,7 +1891,7 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TMatrix::operator == (const TMatrix& M) const
+	bool DxMatrix::operator == (const DxMatrix& M) const
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -1909,7 +1910,7 @@ namespace TBASIS_EX
 			&& XMVector4Equal(x4, y4)) != 0;
 	}
 
-	bool TMatrix::operator != (const TMatrix& M) const
+	bool DxMatrix::operator != (const DxMatrix& M) const
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -1932,7 +1933,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TMatrix::TMatrix(const XMFLOAT3X3& M)
+	DxMatrix::DxMatrix(const XMFLOAT3X3& M)
 	{
 		_11 = M._11; _12 = M._12; _13 = M._13; _14 = 0.f;
 		_21 = M._21; _22 = M._22; _23 = M._23; _24 = 0.f;
@@ -1940,7 +1941,7 @@ namespace TBASIS_EX
 		_41 = 0.f;   _42 = 0.f;   _43 = 0.f;   _44 = 1.f;
 	}
 
-	TMatrix::TMatrix(const XMFLOAT4X3& M)
+	DxMatrix::DxMatrix(const XMFLOAT4X3& M)
 	{
 		_11 = M._11; _12 = M._12; _13 = M._13; _14 = 0.f;
 		_21 = M._21; _22 = M._22; _23 = M._23; _24 = 0.f;
@@ -1948,7 +1949,7 @@ namespace TBASIS_EX
 		_41 = M._41; _42 = M._42; _43 = M._43; _44 = 1.f;
 	}
 
-	TMatrix& TMatrix::operator= (const XMFLOAT3X3& M)
+	DxMatrix& DxMatrix::operator= (const XMFLOAT3X3& M)
 	{
 		_11 = M._11; _12 = M._12; _13 = M._13; _14 = 0.f;
 		_21 = M._21; _22 = M._22; _23 = M._23; _24 = 0.f;
@@ -1957,7 +1958,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator= (const XMFLOAT4X3& M)
+	DxMatrix& DxMatrix::operator= (const XMFLOAT4X3& M)
 	{
 		_11 = M._11; _12 = M._12; _13 = M._13; _14 = 0.f;
 		_21 = M._21; _22 = M._22; _23 = M._23; _24 = 0.f;
@@ -1966,7 +1967,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator+= (const TMatrix& M)
+	DxMatrix& DxMatrix::operator+= (const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -1991,7 +1992,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator-= (const TMatrix& M)
+	DxMatrix& DxMatrix::operator-= (const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -2016,7 +2017,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator*= (const TMatrix& M)
+	DxMatrix& DxMatrix::operator*= (const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMMATRIX M1 = XMLoadFloat4x4(this);
@@ -2026,7 +2027,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator*= (float S)
+	DxMatrix& DxMatrix::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -2046,7 +2047,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator/= (float S)
+	DxMatrix& DxMatrix::operator/= (float S)
 	{
 		using namespace DirectX;
 		assert(S != 0.f);
@@ -2069,7 +2070,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TMatrix& TMatrix::operator/= (const TMatrix& M)
+	DxMatrix& DxMatrix::operator/= (const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -2098,7 +2099,7 @@ namespace TBASIS_EX
 	// Urnary operators
 	//------------------------------------------------------------------------------
 
-	TMatrix TMatrix::operator- () const
+	DxMatrix DxMatrix::operator- () const
 	{
 		using namespace DirectX;
 		XMVECTOR v1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&_11));
@@ -2111,7 +2112,7 @@ namespace TBASIS_EX
 		v3 = XMVectorNegate(v3);
 		v4 = XMVectorNegate(v4);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), v1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), v2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), v3);
@@ -2123,7 +2124,7 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TMatrix operator+ (const TMatrix& M1, const TMatrix& M2)
+	DxMatrix operator+ (const DxMatrix& M1, const DxMatrix& M2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M1._11));
@@ -2141,7 +2142,7 @@ namespace TBASIS_EX
 		x3 = XMVectorAdd(x3, y3);
 		x4 = XMVectorAdd(x4, y4);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2149,7 +2150,7 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix operator- (const TMatrix& M1, const TMatrix& M2)
+	DxMatrix operator- (const DxMatrix& M1, const DxMatrix& M2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M1._11));
@@ -2167,7 +2168,7 @@ namespace TBASIS_EX
 		x3 = XMVectorSubtract(x3, y3);
 		x4 = XMVectorSubtract(x4, y4);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2175,19 +2176,19 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix operator* (const TMatrix& M1, const TMatrix& M2)
+	DxMatrix operator* (const DxMatrix& M1, const DxMatrix& M2)
 	{
 		using namespace DirectX;
 		XMMATRIX m1 = XMLoadFloat4x4(&M1);
 		XMMATRIX m2 = XMLoadFloat4x4((XMFLOAT4X4*)&M2);
 		XMMATRIX X = XMMatrixMultiply(m1, m2);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, X);
 		return R;
 	}
 
-	TMatrix operator* (const TMatrix& M, float S)
+	DxMatrix operator* (const DxMatrix& M, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M._11));
@@ -2200,7 +2201,7 @@ namespace TBASIS_EX
 		x3 = XMVectorScale(x3, S);
 		x4 = XMVectorScale(x4, S);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2208,7 +2209,7 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix operator/ (const TMatrix& M, float S)
+	DxMatrix operator/ (const DxMatrix& M, float S)
 	{
 		using namespace DirectX;
 		assert(S != 0.f);
@@ -2225,7 +2226,7 @@ namespace TBASIS_EX
 		x3 = XMVectorScale(x3, rs);
 		x4 = XMVectorScale(x4, rs);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2233,7 +2234,7 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix operator/ (const TMatrix& M1, const TMatrix& M2)
+	DxMatrix operator/ (const DxMatrix& M1, const DxMatrix& M2)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M1._11));
@@ -2251,7 +2252,7 @@ namespace TBASIS_EX
 		x3 = XMVectorDivide(x3, y3);
 		x4 = XMVectorDivide(x4, y4);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2259,7 +2260,7 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix operator* (float S, const TMatrix& M)
+	DxMatrix operator* (float S, const DxMatrix& M)
 	{
 		using namespace DirectX;
 
@@ -2273,7 +2274,7 @@ namespace TBASIS_EX
 		x3 = XMVectorScale(x3, S);
 		x4 = XMVectorScale(x4, S);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R._31), x3);
@@ -2282,10 +2283,10 @@ namespace TBASIS_EX
 	}
 
 	//------------------------------------------------------------------------------
-	// TMatrix operations
+	// DxMatrix operations
 	//------------------------------------------------------------------------------
 
-	bool TMatrix::Decompose(TVector3& scale, TQuaternion& rotation, TVector3& translation)
+	bool DxMatrix::Decompose(DxVector3& scale, DxQuaternion& rotation, DxVector3& translation)
 	{
 		using namespace DirectX;
 
@@ -2301,33 +2302,33 @@ namespace TBASIS_EX
 		return true;
 	}
 
-	TMatrix TMatrix::Transpose() const
+	DxMatrix DxMatrix::Transpose() const
 	{
 		using namespace DirectX;
 		FXMMATRIX M = XMLoadFloat4x4(this);
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixTranspose(M));
 		return R;
 	}
 
-	void TMatrix::Transpose(TMatrix& result) const
+	void DxMatrix::Transpose(DxMatrix& result) const
 	{
 		using namespace DirectX;
 		FXMMATRIX M = XMLoadFloat4x4(this);
 		XMStoreFloat4x4(&result, XMMatrixTranspose(M));
 	}
 
-	TMatrix TMatrix::Invert() const
+	DxMatrix DxMatrix::Invert() const
 	{
 		using namespace DirectX;
 		FXMMATRIX M = XMLoadFloat4x4(this);
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR det;
 		XMStoreFloat4x4(&R, XMMatrixInverse(&det, M));
 		return R;
 	}
 
-	void TMatrix::Invert(TMatrix& result) const
+	void DxMatrix::Invert(DxMatrix& result) const
 	{
 		using namespace DirectX;
 		FXMMATRIX M = XMLoadFloat4x4(this);
@@ -2335,7 +2336,7 @@ namespace TBASIS_EX
 		XMStoreFloat4x4(&result, XMMatrixInverse(&det, M));
 	}
 
-	float TMatrix::Determinant() const
+	float DxMatrix::Determinant() const
 	{
 		using namespace DirectX;
 		FXMMATRIX M = XMLoadFloat4x4(this);
@@ -2347,7 +2348,7 @@ namespace TBASIS_EX
 	//------------------------------------------------------------------------------
 
 	_Use_decl_annotations_
-		TMatrix TMatrix::CreateBillboard(const TVector3& object, const TVector3& cameraPosition, const TVector3& cameraUp, const TVector3* cameraForward)
+		DxMatrix DxMatrix::CreateBillboard(const DxVector3& object, const DxVector3& cameraPosition, const DxVector3& cameraUp, const DxVector3* cameraForward)
 	{
 		using namespace DirectX;
 		XMVECTOR O = XMLoadFloat3(&object);
@@ -2382,14 +2383,14 @@ namespace TBASIS_EX
 		M.r[2] = Z;
 		M.r[3] = XMVectorSetW(O, 1.f);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, M);
 		return R;
 	}
 
 	_Use_decl_annotations_
-		TMatrix TMatrix::CreateConstrainedBillboard(const TVector3& object, const TVector3& cameraPosition, const TVector3& rotateAxis,
-			const TVector3* cameraForward, const TVector3* objectForward)
+		DxMatrix DxMatrix::CreateConstrainedBillboard(const DxVector3& object, const DxVector3& cameraPosition, const DxVector3& rotateAxis,
+			const DxVector3* cameraForward, const DxVector3* objectForward)
 	{
 		using namespace DirectX;
 
@@ -2458,128 +2459,128 @@ namespace TBASIS_EX
 		M.r[2] = Z;
 		M.r[3] = XMVectorSetW(O, 1.f);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, M);
 		return R;
 	}
 
-	TMatrix TMatrix::CreateTranslation(const TVector3& position)
+	DxMatrix DxMatrix::CreateTranslation(const DxVector3& position)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixTranslation(position.x, position.y, position.z));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateTranslation(float x, float y, float z)
+	DxMatrix DxMatrix::CreateTranslation(float x, float y, float z)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixTranslation(x, y, z));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateScale(const TVector3& scales)
+	DxMatrix DxMatrix::CreateScale(const DxVector3& scales)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixScaling(scales.x, scales.y, scales.z));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateScale(float xs, float ys, float zs)
+	DxMatrix DxMatrix::CreateScale(float xs, float ys, float zs)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixScaling(xs, ys, zs));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateScale(float scale)
+	DxMatrix DxMatrix::CreateScale(float scale)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixScaling(scale, scale, scale));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateRotationX(float radians)
+	DxMatrix DxMatrix::CreateRotationX(float radians)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixRotationX(radians));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateRotationY(float radians)
+	DxMatrix DxMatrix::CreateRotationY(float radians)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixRotationY(radians));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateRotationZ(float radians)
+	DxMatrix DxMatrix::CreateRotationZ(float radians)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixRotationZ(radians));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateFromAxisAngle(const TVector3& axis, float angle)
+	DxMatrix DxMatrix::CreateFromAxisAngle(const DxVector3& axis, float angle)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR a = XMLoadFloat3(&axis);
 		XMStoreFloat4x4(&R, XMMatrixRotationAxis(a, angle));
 		return R;
 	}
 
-	TMatrix TMatrix::CreatePerspectiveFieldOfView(float fov, float aspectRatio, float nearPlane, float farPlane)
+	DxMatrix DxMatrix::CreatePerspectiveFieldOfView(float fov, float aspectRatio, float nearPlane, float farPlane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixPerspectiveFovLH(fov, aspectRatio, nearPlane, farPlane));
 		return R;
 	}
 
-	TMatrix TMatrix::CreatePerspective(float width, float height, float nearPlane, float farPlane)
+	DxMatrix DxMatrix::CreatePerspective(float width, float height, float nearPlane, float farPlane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixPerspectiveLH(width, height, nearPlane, farPlane));
 		return R;
 	}
 
-	TMatrix TMatrix::CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlane, float farPlane)
+	DxMatrix DxMatrix::CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlane, float farPlane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixPerspectiveOffCenterLH(left, right, bottom, top, nearPlane, farPlane));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane)
+	DxMatrix DxMatrix::CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixOrthographicLH(width, height, zNearPlane, zFarPlane));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
+	DxMatrix DxMatrix::CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixOrthographicOffCenterLH(left, right, bottom, top, zNearPlane, zFarPlane));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateLookAt(const TVector3& eye, const TVector3& target, const TVector3& up)
+	DxMatrix DxMatrix::CreateLookAt(const DxVector3& eye, const DxVector3& target, const DxVector3& up)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR eyev = XMLoadFloat3(&eye);
 		XMVECTOR targetv = XMLoadFloat3(&target);
 		XMVECTOR upv = XMLoadFloat3(&up);
@@ -2587,7 +2588,7 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix TMatrix::CreateWorld(const TVector3& position, const TVector3& forward, const TVector3& up)
+	DxMatrix DxMatrix::CreateWorld(const DxVector3& position, const DxVector3& forward, const DxVector3& up)
 	{
 		using namespace DirectX;
 		XMVECTOR zaxis = XMVector3Normalize(XMVectorNegate(XMLoadFloat3(&forward)));
@@ -2595,7 +2596,7 @@ namespace TBASIS_EX
 		XMVECTOR xaxis = XMVector3Normalize(XMVector3Cross(yaxis, zaxis));
 		yaxis = XMVector3Cross(zaxis, xaxis);
 
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat3(reinterpret_cast<XMFLOAT3*>(&R._11), xaxis);
 		XMStoreFloat3(reinterpret_cast<XMFLOAT3*>(&R._21), yaxis);
 		XMStoreFloat3(reinterpret_cast<XMFLOAT3*>(&R._31), zaxis);
@@ -2605,43 +2606,43 @@ namespace TBASIS_EX
 		return R;
 	}
 
-	TMatrix TMatrix::CreateFromQuaternion(const TQuaternion& rotation)
+	DxMatrix DxMatrix::CreateFromQuaternion(const DxQuaternion& rotation)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR quatv = XMLoadFloat4(&rotation);
 		XMStoreFloat4x4(&R, XMMatrixRotationQuaternion(quatv));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+	DxMatrix DxMatrix::CreateFromYawPitchRoll(float yaw, float pitch, float roll)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMStoreFloat4x4(&R, XMMatrixRotationRollPitchYaw(pitch, yaw, roll));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateShadow(const TVector3& lightDir, const TPlane& plane)
+	DxMatrix DxMatrix::CreateShadow(const DxVector3& lightDir, const DxPlane& plane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR light = XMLoadFloat3(&lightDir);
 		XMVECTOR planev = XMLoadFloat4(&plane);
 		XMStoreFloat4x4(&R, XMMatrixShadow(planev, light));
 		return R;
 	}
 
-	TMatrix TMatrix::CreateReflection(const TPlane& plane)
+	DxMatrix DxMatrix::CreateReflection(const DxPlane& plane)
 	{
 		using namespace DirectX;
-		TMatrix R;
+		DxMatrix R;
 		XMVECTOR planev = XMLoadFloat4(&plane);
 		XMStoreFloat4x4(&R, XMMatrixReflect(planev));
 		return R;
 	}
 
-	void TMatrix::Lerp(const TMatrix& M1, const TMatrix& M2, float t, TMatrix& result)
+	void DxMatrix::Lerp(const DxMatrix& M1, const DxMatrix& M2, float t, DxMatrix& result)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M1._11));
@@ -2665,7 +2666,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&result._41), x4);
 	}
 
-	TMatrix TMatrix::Lerp(const TMatrix& M1, const TMatrix& M2, float t)
+	DxMatrix DxMatrix::Lerp(const DxMatrix& M1, const DxMatrix& M2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR x1 = XMLoadFloat4(reinterpret_cast<const XMFLOAT4*>(&M1._11));
@@ -2683,7 +2684,7 @@ namespace TBASIS_EX
 		x3 = XMVectorLerp(x3, y3, t);
 		x4 = XMVectorLerp(x4, y4, t);
 
-		TMatrix result;
+		DxMatrix result;
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&result._11), x1);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&result._21), x2);
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&result._31), x3);
@@ -2691,7 +2692,7 @@ namespace TBASIS_EX
 		return result;
 	}
 
-	void TMatrix::Transform(const TMatrix& M, const TQuaternion& rotation, TMatrix& result)
+	void DxMatrix::Transform(const DxMatrix& M, const DxQuaternion& rotation, DxMatrix& result)
 	{
 		using namespace DirectX;
 		XMVECTOR quatv = XMLoadFloat4(&rotation);
@@ -2702,7 +2703,7 @@ namespace TBASIS_EX
 		XMStoreFloat4x4(&result, XMMatrixMultiply(M0, M1));
 	}
 
-	TMatrix TMatrix::Transform(const TMatrix& M, const TQuaternion& rotation)
+	DxMatrix DxMatrix::Transform(const DxMatrix& M, const DxQuaternion& rotation)
 	{
 		using namespace DirectX;
 		XMVECTOR quatv = XMLoadFloat4(&rotation);
@@ -2710,7 +2711,7 @@ namespace TBASIS_EX
 		XMMATRIX M0 = XMLoadFloat4x4(&M);
 		XMMATRIX M1 = XMMatrixRotationQuaternion(quatv);
 
-		TMatrix result;
+		DxMatrix result;
 		XMStoreFloat4x4(&result, XMMatrixMultiply(M0, M1));
 		return result;
 	}
@@ -2718,11 +2719,11 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TPlane
+	* DxPlane
 	*
 	****************************************************************************/
 
-	TPlane::TPlane(const TVector3& point1, const TVector3& point2, const TVector3& point3)
+	DxPlane::DxPlane(const DxVector3& point1, const DxVector3& point2, const DxVector3& point3)
 	{
 		using namespace DirectX;
 		XMVECTOR P0 = XMLoadFloat3(&point1);
@@ -2731,7 +2732,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(this, XMPlaneFromPoints(P0, P1, P2));
 	}
 
-	TPlane::TPlane(const TVector3& point, const TVector3& normal)
+	DxPlane::DxPlane(const DxVector3& point, const DxVector3& normal)
 	{
 		using namespace DirectX;
 		XMVECTOR P = XMLoadFloat3(&point);
@@ -2743,7 +2744,7 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TPlane::operator == (const TPlane& p) const
+	bool DxPlane::operator == (const DxPlane& p) const
 	{
 		using namespace DirectX;
 		XMVECTOR p1 = XMLoadFloat4(this);
@@ -2751,7 +2752,7 @@ namespace TBASIS_EX
 		return XMPlaneEqual(p1, p2);
 	}
 
-	bool TPlane::operator != (const TPlane& p) const
+	bool DxPlane::operator != (const DxPlane& p) const
 	{
 		using namespace DirectX;
 		XMVECTOR p1 = XMLoadFloat4(this);
@@ -2760,24 +2761,24 @@ namespace TBASIS_EX
 	}
 
 	//------------------------------------------------------------------------------
-	// TPlane operations
+	// DxPlane operations
 	//------------------------------------------------------------------------------
 
-	void TPlane::Normalize()
+	void DxPlane::Normalize()
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMPlaneNormalize(p));
 	}
 
-	void TPlane::Normalize(TPlane& result) const
+	void DxPlane::Normalize(DxPlane& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMPlaneNormalize(p));
 	}
 
-	float TPlane::Dot(const TVector4& v) const
+	float DxPlane::Dot(const DxVector4& v) const
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(this);
@@ -2785,7 +2786,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(XMPlaneDot(p, v0));
 	}
 
-	float TPlane::DotCoordinate(const TVector3& position) const
+	float DxPlane::DotCoordinate(const DxVector3& position) const
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(this);
@@ -2793,7 +2794,7 @@ namespace TBASIS_EX
 		return XMVectorGetX(XMPlaneDotCoord(p, v0));
 	}
 
-	float TPlane::DotNormal(const TVector3& normal) const
+	float DxPlane::DotNormal(const DxVector3& normal) const
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(this);
@@ -2805,7 +2806,7 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	void TPlane::Transform(const TPlane& plane, const TMatrix& M, TPlane& result)
+	void DxPlane::Transform(const DxPlane& plane, const DxMatrix& M, DxPlane& result)
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(&plane);
@@ -2813,18 +2814,18 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMPlaneTransform(p, m0));
 	}
 
-	TPlane TPlane::Transform(const TPlane& plane, const TMatrix& M)
+	DxPlane DxPlane::Transform(const DxPlane& plane, const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(&plane);
 		XMMATRIX m0 = XMLoadFloat4x4(&M);
 
-		TPlane result;
+		DxPlane result;
 		XMStoreFloat4(&result, XMPlaneTransform(p, m0));
 		return result;
 	}
 
-	void TPlane::Transform(const TPlane& plane, const TQuaternion& rotation, TPlane& result)
+	void DxPlane::Transform(const DxPlane& plane, const DxQuaternion& rotation, DxPlane& result)
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(&plane);
@@ -2834,7 +2835,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, X);
 	}
 
-	TPlane TPlane::Transform(const TPlane& plane, const TQuaternion& rotation)
+	DxPlane DxPlane::Transform(const DxPlane& plane, const DxQuaternion& rotation)
 	{
 		using namespace DirectX;
 		XMVECTOR p = XMLoadFloat4(&plane);
@@ -2842,7 +2843,7 @@ namespace TBASIS_EX
 		XMVECTOR X = XMVector3Rotate(p, q);
 		X = XMVectorSelect(p, X, g_XMSelect1110); // result.d = plane.d
 
-		TPlane result;
+		DxPlane result;
 		XMStoreFloat4(&result, X);
 		return result;
 	}
@@ -2850,7 +2851,7 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TQuaternion
+	* DxQuaternion
 	*
 	****************************************************************************/
 
@@ -2858,7 +2859,7 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TQuaternion::operator == (const TQuaternion& q) const
+	bool DxQuaternion::operator == (const DxQuaternion& q) const
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2866,7 +2867,7 @@ namespace TBASIS_EX
 		return XMQuaternionEqual(q1, q2);
 	}
 
-	bool TQuaternion::operator != (const TQuaternion& q) const
+	bool DxQuaternion::operator != (const DxQuaternion& q) const
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2878,7 +2879,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TQuaternion& TQuaternion::operator+= (const TQuaternion& q)
+	DxQuaternion& DxQuaternion::operator+= (const DxQuaternion& q)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2887,7 +2888,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TQuaternion& TQuaternion::operator-= (const TQuaternion& q)
+	DxQuaternion& DxQuaternion::operator-= (const DxQuaternion& q)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2896,7 +2897,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TQuaternion& TQuaternion::operator*= (const TQuaternion& q)
+	DxQuaternion& DxQuaternion::operator*= (const DxQuaternion& q)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2905,7 +2906,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TQuaternion& TQuaternion::operator*= (float S)
+	DxQuaternion& DxQuaternion::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
@@ -2913,7 +2914,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TQuaternion& TQuaternion::operator/= (const TQuaternion& q)
+	DxQuaternion& DxQuaternion::operator/= (const DxQuaternion& q)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -2927,12 +2928,12 @@ namespace TBASIS_EX
 	// Urnary operators
 	//------------------------------------------------------------------------------
 
-	TQuaternion TQuaternion::operator- () const
+	DxQuaternion DxQuaternion::operator- () const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMVectorNegate(q));
 		return R;
 	}
@@ -2941,125 +2942,125 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TQuaternion operator+ (const TQuaternion& Q1, const TQuaternion& Q2)
+	DxQuaternion operator+ (const DxQuaternion& Q1, const DxQuaternion& Q2)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(&Q1);
 		XMVECTOR q2 = XMLoadFloat4(&Q2);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMVectorAdd(q1, q2));
 		return R;
 	}
 
-	TQuaternion operator- (const TQuaternion& Q1, const TQuaternion& Q2)
+	DxQuaternion operator- (const DxQuaternion& Q1, const DxQuaternion& Q2)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(&Q1);
 		XMVECTOR q2 = XMLoadFloat4(&Q2);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMVectorSubtract(q1, q2));
 		return R;
 	}
 
-	TQuaternion operator* (const TQuaternion& Q1, const TQuaternion& Q2)
+	DxQuaternion operator* (const DxQuaternion& Q1, const DxQuaternion& Q2)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(&Q1);
 		XMVECTOR q2 = XMLoadFloat4(&Q2);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMQuaternionMultiply(q1, q2));
 		return R;
 	}
 
-	TQuaternion operator* (const TQuaternion& Q, float S)
+	DxQuaternion operator* (const DxQuaternion& Q, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(&Q);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMVectorScale(q, S));
 		return R;
 	}
 
-	TQuaternion operator/ (const TQuaternion& Q1, const TQuaternion& Q2)
+	DxQuaternion operator/ (const DxQuaternion& Q1, const DxQuaternion& Q2)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(&Q1);
 		XMVECTOR q2 = XMLoadFloat4(&Q2);
 		q2 = XMQuaternionInverse(q2);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMQuaternionMultiply(q1, q2));
 		return R;
 	}
 
-	TQuaternion operator* (float S, const TQuaternion& Q)
+	DxQuaternion operator* (float S, const DxQuaternion& Q)
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(&Q);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMVectorScale(q1, S));
 		return R;
 	}
 
 	//------------------------------------------------------------------------------
-	// TQuaternion operations
+	// DxQuaternion operations
 	//------------------------------------------------------------------------------
 
-	float TQuaternion::Length() const
+	float DxQuaternion::Length() const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		return XMVectorGetX(XMQuaternionLength(q));
 	}
 
-	float TQuaternion::LengthSquared() const
+	float DxQuaternion::LengthSquared() const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		return XMVectorGetX(XMQuaternionLengthSq(q));
 	}
 
-	void TQuaternion::Normalize()
+	void DxQuaternion::Normalize()
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMQuaternionNormalize(q));
 	}
 
-	void TQuaternion::Normalize(TQuaternion& result) const
+	void DxQuaternion::Normalize(DxQuaternion& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMQuaternionNormalize(q));
 	}
 
-	void TQuaternion::Conjugate()
+	void DxQuaternion::Conjugate()
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMQuaternionConjugate(q));
 	}
 
-	void TQuaternion::Conjugate(TQuaternion& result) const
+	void DxQuaternion::Conjugate(DxQuaternion& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMQuaternionConjugate(q));
 	}
 
-	void TQuaternion::Inverse(TQuaternion& result) const
+	void DxQuaternion::Inverse(DxQuaternion& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR q = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMQuaternionInverse(q));
 	}
 
-	float TQuaternion::Dot(const TQuaternion& q) const
+	float DxQuaternion::Dot(const DxQuaternion& q) const
 	{
 		using namespace DirectX;
 		XMVECTOR q1 = XMLoadFloat4(this);
@@ -3071,35 +3072,35 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	TQuaternion TQuaternion::CreateFromAxisAngle(const TVector3& axis, float angle)
+	DxQuaternion DxQuaternion::CreateFromAxisAngle(const DxVector3& axis, float angle)
 	{
 		using namespace DirectX;
 		XMVECTOR a = XMLoadFloat3(&axis);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMQuaternionRotationAxis(a, angle));
 		return R;
 	}
 
-	TQuaternion TQuaternion::CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+	DxQuaternion DxQuaternion::CreateFromYawPitchRoll(float yaw, float pitch, float roll)
 	{
 		using namespace DirectX;
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMQuaternionRotationRollPitchYaw(pitch, yaw, roll));
 		return R;
 	}
 
-	TQuaternion TQuaternion::CreateFromRotationMatrix(const TMatrix& M)
+	DxQuaternion DxQuaternion::CreateFromRotationMatrix(const DxMatrix& M)
 	{
 		using namespace DirectX;
 		XMMATRIX M0 = XMLoadFloat4x4(&M);
 
-		TQuaternion R;
+		DxQuaternion R;
 		XMStoreFloat4(&R, XMQuaternionRotationMatrix(M0));
 		return R;
 	}
 
-	void TQuaternion::Lerp(const TQuaternion& q1, const TQuaternion& q2, float t, TQuaternion& result)
+	void DxQuaternion::Lerp(const DxQuaternion& q1, const DxQuaternion& q2, float t, DxQuaternion& result)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
@@ -3124,7 +3125,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMQuaternionNormalize(R));
 	}
 
-	TQuaternion TQuaternion::Lerp(const TQuaternion& q1, const TQuaternion& q2, float t)
+	DxQuaternion DxQuaternion::Lerp(const DxQuaternion& q1, const DxQuaternion& q2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
@@ -3146,12 +3147,12 @@ namespace TBASIS_EX
 			R = XMVectorSubtract(X0, X1);
 		}
 
-		TQuaternion result;
+		DxQuaternion result;
 		XMStoreFloat4(&result, XMQuaternionNormalize(R));
 		return result;
 	}
 
-	void TQuaternion::Slerp(const TQuaternion& q1, const TQuaternion& q2, float t, TQuaternion& result)
+	void DxQuaternion::Slerp(const DxQuaternion& q1, const DxQuaternion& q2, float t, DxQuaternion& result)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
@@ -3159,18 +3160,18 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMQuaternionSlerp(Q0, Q1, t));
 	}
 
-	TQuaternion TQuaternion::Slerp(const TQuaternion& q1, const TQuaternion& q2, float t)
+	DxQuaternion DxQuaternion::Slerp(const DxQuaternion& q1, const DxQuaternion& q2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
 		XMVECTOR Q1 = XMLoadFloat4(&q2);
 
-		TQuaternion result;
+		DxQuaternion result;
 		XMStoreFloat4(&result, XMQuaternionSlerp(Q0, Q1, t));
 		return result;
 	}
 
-	void TQuaternion::Concatenate(const TQuaternion& q1, const TQuaternion& q2, TQuaternion& result)
+	void DxQuaternion::Concatenate(const DxQuaternion& q1, const DxQuaternion& q2, DxQuaternion& result)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
@@ -3178,13 +3179,13 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMQuaternionMultiply(Q1, Q0));
 	}
 
-	TQuaternion TQuaternion::Concatenate(const TQuaternion& q1, const TQuaternion& q2)
+	DxQuaternion DxQuaternion::Concatenate(const DxQuaternion& q1, const DxQuaternion& q2)
 	{
 		using namespace DirectX;
 		XMVECTOR Q0 = XMLoadFloat4(&q1);
 		XMVECTOR Q1 = XMLoadFloat4(&q2);
 
-		TQuaternion result;
+		DxQuaternion result;
 		XMStoreFloat4(&result, XMQuaternionMultiply(Q1, Q0));
 		return result;
 	}
@@ -3192,17 +3193,17 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TColor
+	* DxColor
 	*
 	****************************************************************************/
 
-	TColor::TColor(const DirectX::PackedVector::XMCOLOR& Packed)
+	DxColor::DxColor(const DirectX::PackedVector::XMCOLOR& Packed)
 	{
 		using namespace DirectX;
 		XMStoreFloat4(this, PackedVector::XMLoadColor(&Packed));
 	}
 
-	TColor::TColor(const DirectX::PackedVector::XMUBYTEN4& Packed)
+	DxColor::DxColor(const DirectX::PackedVector::XMUBYTEN4& Packed)
 	{
 		using namespace DirectX;
 		XMStoreFloat4(this, PackedVector::XMLoadUByteN4(&Packed));
@@ -3211,7 +3212,7 @@ namespace TBASIS_EX
 	//------------------------------------------------------------------------------
 	// Comparision operators
 	//------------------------------------------------------------------------------
-	bool TColor::operator == (const TColor& c) const
+	bool DxColor::operator == (const DxColor& c) const
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3219,7 +3220,7 @@ namespace TBASIS_EX
 		return XMColorEqual(c1, c2);
 	}
 
-	bool TColor::operator != (const TColor& c) const
+	bool DxColor::operator != (const DxColor& c) const
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3231,21 +3232,21 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TColor& TColor::operator= (const DirectX::PackedVector::XMCOLOR& Packed)
+	DxColor& DxColor::operator= (const DirectX::PackedVector::XMCOLOR& Packed)
 	{
 		using namespace DirectX;
 		XMStoreFloat4(this, PackedVector::XMLoadColor(&Packed));
 		return *this;
 	}
 
-	TColor& TColor::operator= (const DirectX::PackedVector::XMUBYTEN4& Packed)
+	DxColor& DxColor::operator= (const DirectX::PackedVector::XMUBYTEN4& Packed)
 	{
 		using namespace DirectX;
 		XMStoreFloat4(this, PackedVector::XMLoadUByteN4(&Packed));
 		return *this;
 	}
 
-	TColor& TColor::operator+= (const TColor& c)
+	DxColor& DxColor::operator+= (const DxColor& c)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3254,7 +3255,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TColor& TColor::operator-= (const TColor& c)
+	DxColor& DxColor::operator-= (const DxColor& c)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3263,7 +3264,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TColor& TColor::operator*= (const TColor& c)
+	DxColor& DxColor::operator*= (const DxColor& c)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3272,7 +3273,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TColor& TColor::operator*= (float S)
+	DxColor& DxColor::operator*= (float S)
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
@@ -3280,7 +3281,7 @@ namespace TBASIS_EX
 		return *this;
 	}
 
-	TColor& TColor::operator/= (const TColor& c)
+	DxColor& DxColor::operator/= (const DxColor& c)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(this);
@@ -3293,11 +3294,11 @@ namespace TBASIS_EX
 	// Urnary operators
 	//------------------------------------------------------------------------------
 
-	TColor TColor::operator- () const
+	DxColor DxColor::operator- () const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorNegate(c));
 		return R;
 	}
@@ -3306,69 +3307,69 @@ namespace TBASIS_EX
 	// Binary operators
 	//------------------------------------------------------------------------------
 
-	TColor operator+ (const TColor& C1, const TColor& C2)
+	DxColor operator+ (const DxColor& C1, const DxColor& C2)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(&C1);
 		XMVECTOR c2 = XMLoadFloat4(&C2);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorAdd(c1, c2));
 		return R;
 	}
 
-	TColor operator- (const TColor& C1, const TColor& C2)
+	DxColor operator- (const DxColor& C1, const DxColor& C2)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(&C1);
 		XMVECTOR c2 = XMLoadFloat4(&C2);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorSubtract(c1, c2));
 		return R;
 	}
 
-	TColor operator* (const TColor& C1, const TColor& C2)
+	DxColor operator* (const DxColor& C1, const DxColor& C2)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(&C1);
 		XMVECTOR c2 = XMLoadFloat4(&C2);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorMultiply(c1, c2));
 		return R;
 	}
 
-	TColor operator* (const TColor& C, float S)
+	DxColor operator* (const DxColor& C, float S)
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(&C);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorScale(c, S));
 		return R;
 	}
 
-	TColor operator/ (const TColor& C1, const TColor& C2)
+	DxColor operator/ (const DxColor& C1, const DxColor& C2)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(&C1);
 		XMVECTOR c2 = XMLoadFloat4(&C2);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorDivide(c1, c2));
 		return R;
 	}
 
-	TColor operator* (float S, const TColor& C)
+	DxColor operator* (float S, const DxColor& C)
 	{
 		using namespace DirectX;
 		XMVECTOR c1 = XMLoadFloat4(&C);
-		TColor R;
+		DxColor R;
 		XMStoreFloat4(&R, XMVectorScale(c1, S));
 		return R;
 	}
 
 	//------------------------------------------------------------------------------
-	// TColor operations
+	// DxColor operations
 	//------------------------------------------------------------------------------
 
-	DirectX::PackedVector::XMCOLOR TColor::BGRA() const
+	DirectX::PackedVector::XMCOLOR DxColor::BGRA() const
 	{
 		using namespace DirectX;
 		XMVECTOR clr = XMLoadFloat4(this);
@@ -3377,7 +3378,7 @@ namespace TBASIS_EX
 		return Packed;
 	}
 
-	DirectX::PackedVector::XMUBYTEN4 TColor::RGBA() const
+	DirectX::PackedVector::XMUBYTEN4 DxColor::RGBA() const
 	{
 		using namespace DirectX;
 		XMVECTOR clr = XMLoadFloat4(this);
@@ -3386,45 +3387,45 @@ namespace TBASIS_EX
 		return Packed;
 	}
 
-	TVector3 TColor::ToVector3() const
+	DxVector3 DxColor::ToVector3() const
 	{
-		return TVector3(x, y, z);
+		return DxVector3(x, y, z);
 	}
 
-	TVector4 TColor::ToVector4() const
+	DxVector4 DxColor::ToVector4() const
 	{
-		return TVector4(x, y, z, w);
+		return DxVector4(x, y, z, w);
 	}
 
-	void TColor::Negate()
+	void DxColor::Negate()
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMColorNegative(c));
 	}
 
-	void TColor::Negate(TColor& result) const
+	void DxColor::Negate(DxColor& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMColorNegative(c));
 	}
 
-	void TColor::Saturate()
+	void DxColor::Saturate()
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMVectorSaturate(c));
 	}
 
-	void TColor::Saturate(TColor& result) const
+	void DxColor::Saturate(DxColor& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMVectorSaturate(c));
 	}
 
-	void TColor::Premultiply()
+	void DxColor::Premultiply()
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
@@ -3433,7 +3434,7 @@ namespace TBASIS_EX
 		XMStoreFloat4(this, XMVectorMultiply(c, a));
 	}
 
-	void TColor::Premultiply(TColor& result) const
+	void DxColor::Premultiply(DxColor& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
@@ -3442,28 +3443,28 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMVectorMultiply(c, a));
 	}
 
-	void TColor::AdjustSaturation(float sat)
+	void DxColor::AdjustSaturation(float sat)
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMColorAdjustSaturation(c, sat));
 	}
 
-	void TColor::AdjustSaturation(float sat, TColor& result) const
+	void DxColor::AdjustSaturation(float sat, DxColor& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(&result, XMColorAdjustSaturation(c, sat));
 	}
 
-	void TColor::AdjustContrast(float contrast)
+	void DxColor::AdjustContrast(float contrast)
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
 		XMStoreFloat4(this, XMColorAdjustContrast(c, contrast));
 	}
 
-	void TColor::AdjustContrast(float contrast, TColor& result) const
+	void DxColor::AdjustContrast(float contrast, DxColor& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR c = XMLoadFloat4(this);
@@ -3474,7 +3475,7 @@ namespace TBASIS_EX
 	// Static functions
 	//------------------------------------------------------------------------------
 
-	void TColor::Modulate(const TColor& c1, const TColor& c2, TColor& result)
+	void DxColor::Modulate(const DxColor& c1, const DxColor& c2, DxColor& result)
 	{
 		using namespace DirectX;
 		XMVECTOR C0 = XMLoadFloat4(&c1);
@@ -3482,18 +3483,18 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMColorModulate(C0, C1));
 	}
 
-	TColor TColor::Modulate(const TColor& c1, const TColor& c2)
+	DxColor DxColor::Modulate(const DxColor& c1, const DxColor& c2)
 	{
 		using namespace DirectX;
 		XMVECTOR C0 = XMLoadFloat4(&c1);
 		XMVECTOR C1 = XMLoadFloat4(&c2);
 
-		TColor result;
+		DxColor result;
 		XMStoreFloat4(&result, XMColorModulate(C0, C1));
 		return result;
 	}
 
-	void TColor::Lerp(const TColor& c1, const TColor& c2, float t, TColor& result)
+	void DxColor::Lerp(const DxColor& c1, const DxColor& c2, float t, DxColor& result)
 	{
 		using namespace DirectX;
 		XMVECTOR C0 = XMLoadFloat4(&c1);
@@ -3501,13 +3502,13 @@ namespace TBASIS_EX
 		XMStoreFloat4(&result, XMVectorLerp(C0, C1, t));
 	}
 
-	TColor TColor::Lerp(const TColor& c1, const TColor& c2, float t)
+	DxColor DxColor::Lerp(const DxColor& c1, const DxColor& c2, float t)
 	{
 		using namespace DirectX;
 		XMVECTOR C0 = XMLoadFloat4(&c1);
 		XMVECTOR C1 = XMLoadFloat4(&c2);
 
-		TColor result;
+		DxColor result;
 		XMStoreFloat4(&result, XMVectorLerp(C0, C1, t));
 		return result;
 	}
@@ -3515,14 +3516,14 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TRay
+	* DxRay
 	*
 	****************************************************************************/
 
 	//-----------------------------------------------------------------------------
 	// Comparision operators
 	//------------------------------------------------------------------------------
-	bool TRay::operator == (const TRay& r) const
+	bool DxRay::operator == (const DxRay& r) const
 	{
 		using namespace DirectX;
 		XMVECTOR r1p = XMLoadFloat3(&position);
@@ -3532,7 +3533,7 @@ namespace TBASIS_EX
 		return XMVector3Equal(r1p, r2p) && XMVector3Equal(r1d, r2d);
 	}
 
-	bool TRay::operator != (const TRay& r) const
+	bool DxRay::operator != (const DxRay& r) const
 	{
 		using namespace DirectX;
 		XMVECTOR r1p = XMLoadFloat3(&position);
@@ -3543,25 +3544,25 @@ namespace TBASIS_EX
 	}
 
 	//-----------------------------------------------------------------------------
-	// TRay operators
+	// DxRay operators
 	//------------------------------------------------------------------------------
 
-	bool TRay::Intersects(const BoundingSphere& sphere, _Out_ float& Dist) const
+	bool DxRay::Intersects(const BoundingSphere& sphere, _Out_ float& Dist) const
 	{
 		return sphere.Intersects(position, direction, Dist);
 	}
 
-	bool TRay::Intersects(const BoundingBox& box, _Out_ float& Dist) const
+	bool DxRay::Intersects(const BoundingBox& box, _Out_ float& Dist) const
 	{
 		return box.Intersects(position, direction, Dist);
 	}
 
-	bool TRay::Intersects(const TVector3& tri0, const TVector3& tri1, const TVector3& tri2, _Out_ float& Dist) const
+	bool DxRay::Intersects(const DxVector3& tri0, const DxVector3& tri1, const DxVector3& tri2, _Out_ float& Dist) const
 	{
 		return DirectX::TriangleTests::Intersects(position, direction, tri0, tri1, tri2, Dist);
 	}
 
-	bool TRay::Intersects(const TPlane& plane, _Out_ float& Dist) const
+	bool DxRay::Intersects(const DxPlane& plane, _Out_ float& Dist) const
 	{
 		using namespace DirectX;
 
@@ -3599,7 +3600,7 @@ namespace TBASIS_EX
 
 	/****************************************************************************
 	*
-	* TViewport
+	* DxViewport
 	*
 	****************************************************************************/
 
@@ -3607,14 +3608,14 @@ namespace TBASIS_EX
 	// Comparision operators
 	//------------------------------------------------------------------------------
 
-	bool TViewport::operator == (const TViewport& vp) const
+	bool DxViewport::operator == (const DxViewport& vp) const
 	{
 		return (x == vp.x && y == vp.y
 			&& width == vp.width && height == vp.height
 			&& minDepth == vp.minDepth && maxDepth == vp.maxDepth);
 	}
 
-	bool TViewport::operator != (const TViewport& vp) const
+	bool DxViewport::operator != (const DxViewport& vp) const
 	{
 		return (x != vp.x || y != vp.y
 			|| width != vp.width || height != vp.height
@@ -3625,7 +3626,7 @@ namespace TBASIS_EX
 	// Assignment operators
 	//------------------------------------------------------------------------------
 
-	TViewport& TViewport::operator= (const RECT& rct)
+	DxViewport& DxViewport::operator= (const RECT& rct)
 	{
 		x = float(rct.left); y = float(rct.top);
 		width = float(rct.right - rct.left);
@@ -3635,7 +3636,7 @@ namespace TBASIS_EX
 	}
 
 #if defined(__d3d11_h__) || defined(__d3d11_x_h__)
-	TViewport& TViewport::operator= (const D3D11_VIEWPORT& vp)
+	DxViewport& DxViewport::operator= (const D3D11_VIEWPORT& vp)
 	{
 		x = vp.TopLeftX; y = vp.TopLeftY;
 		width = vp.Width; height = vp.Height;
@@ -3645,7 +3646,7 @@ namespace TBASIS_EX
 #endif
 
 #if defined(__d3d12_h__) || defined(__d3d12_x_h__)
-	TViewport& TViewport::operator= (const D3D12_VIEWPORT& vp)
+	DxViewport& DxViewport::operator= (const D3D12_VIEWPORT& vp)
 	{
 		x = vp.TopLeftX; y = vp.TopLeftY;
 		width = vp.Width; height = vp.Height;
@@ -3655,10 +3656,10 @@ namespace TBASIS_EX
 #endif
 
 	//------------------------------------------------------------------------------
-	// TViewport operations
+	// DxViewport operations
 	//------------------------------------------------------------------------------
 
-	float TViewport::AspectRatio() const
+	float DxViewport::AspectRatio() const
 	{
 		if (width == 0.f || height == 0.f)
 			return 0.f;
@@ -3666,19 +3667,19 @@ namespace TBASIS_EX
 		return (width / height);
 	}
 
-	TVector3 TViewport::Project(const TVector3& p, const TMatrix& proj, const TMatrix& view, const TMatrix& world) const
+	DxVector3 DxViewport::Project(const DxVector3& p, const DxMatrix& proj, const DxMatrix& view, const DxMatrix& world) const
 	{
 		using namespace DirectX;
 		XMVECTOR v = XMLoadFloat3(&p);
 		XMMATRIX projection = XMLoadFloat4x4(&proj);
 		v = XMVector3Project(v, x, y, width, height, minDepth, maxDepth, projection,
 			(CXMMATRIX)view, (CXMMATRIX)world);
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, v);
 		return result;
 	}
 
-	void TViewport::Project(const TVector3& p, const TMatrix& proj, const TMatrix& view, const TMatrix& world, TVector3& result) const
+	void DxViewport::Project(const DxVector3& p, const DxMatrix& proj, const DxMatrix& view, const DxMatrix& world, DxVector3& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v = XMLoadFloat3(&p);
@@ -3687,18 +3688,18 @@ namespace TBASIS_EX
 		XMStoreFloat3(&result, v);
 	}
 
-	TVector3 TViewport::Unproject(const TVector3& p, const TMatrix& proj, const TMatrix& view, const TMatrix& world) const
+	DxVector3 DxViewport::Unproject(const DxVector3& p, const DxMatrix& proj, const DxMatrix& view, const DxMatrix& world) const
 	{
 		using namespace DirectX;
 		XMVECTOR v = XMLoadFloat3(&p);
 		XMMATRIX projection = XMLoadFloat4x4(&proj);
 		v = XMVector3Unproject(v, x, y, width, height, minDepth, maxDepth, projection, (CXMMATRIX)view, (CXMMATRIX)world);
-		TVector3 result;
+		DxVector3 result;
 		XMStoreFloat3(&result, v);
 		return result;
 	}
 
-	void TViewport::Unproject(const TVector3& p, const TMatrix& proj, const TMatrix& view, const TMatrix& world, TVector3& result) const
+	void DxViewport::Unproject(const DxVector3& p, const DxMatrix& proj, const DxMatrix& view, const DxMatrix& world, DxVector3& result) const
 	{
 		using namespace DirectX;
 		XMVECTOR v = XMLoadFloat3(&p);

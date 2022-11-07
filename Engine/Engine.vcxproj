@@ -167,7 +167,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DxRT.h" />
     <ClInclude Include="Frustum.h" />
-    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="DxMath.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
@@ -189,14 +189,13 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TMath.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DxRT.cpp" />
     <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="DxMath.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />
@@ -223,9 +222,6 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TMath.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +235,11 @@
       <FileType>Document</FileType>
     </None>
     <None Include="..\..\Resource\Shader\Shape.hlsl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resource\Shader\Skinning.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

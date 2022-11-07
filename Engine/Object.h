@@ -4,6 +4,43 @@
 #include "Texture.h"
 #include "Collision.h"
 
+struct SimpleVertex
+{
+	DxVector3 position;
+	DxVector4 color;
+	DxVector2 uv;
+};
+
+struct DefaultVertex
+{
+	DxVector3 position;
+	DxVector3 normal;
+	DxVector4 color;
+	DxVector2 uv;
+};
+
+struct IndexWeightVertex
+{
+	DxVector4 index;
+	DxVector4 weight;
+};
+
+struct ConstantBuffer
+{
+	DxMatrix world;
+	DxMatrix view;
+	DxMatrix projection;
+	//float x;
+	//float y;
+	//float z;
+	//float timer;
+};
+
+struct BoneBuffer
+{
+	DxMatrix boneMatrix[255];
+};
+
 class Object
 {
 public:
@@ -29,11 +66,11 @@ public:
 	ID3DBlob* _pPixelShaderCode = nullptr;
 	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
 
-	MyMatrix _world;
-	MyMatrix _view;
-	MyMatrix _projection;
+	DxMatrix _world;
+	DxMatrix _view;
+	DxMatrix _projection;
 
-	MyVector3 _position;
+	DxVector3 _position;
 
 	DWORD _face;
 
@@ -51,7 +88,7 @@ public:
 	virtual HRESULT Release();
 
 	// 공간 설정
-	virtual void SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection);
+	virtual void SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection);
 
 	// 디바이스 설정
 	virtual HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);

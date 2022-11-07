@@ -58,6 +58,19 @@ bool Collision::RectToInRect(MyRect& a, MyRect& b)
     return false;
 }
 
+bool Collision::RectToPoint(MyRect& a, POINT& p)
+{
+    if (a._x1 <= p.x && a._x2 >= p.x)
+    {
+        if (a._y1 <= p.y && a._y2 >= p.y)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool Collision::CircleToCircle(MyCircle& a, MyCircle& b)
 {
     float sum = a._radius + b._radius;
@@ -65,6 +78,80 @@ bool Collision::CircleToCircle(MyCircle& a, MyCircle& b)
     float y = a._cy - b._cy;
     float distance = sqrtf(x * x + y * y);
 
+    if (distance <= sum)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+COLLISION_TYPE Collision::BoxToBox(MyBox& a, MyBox& b)
+{
+    float minX;    float maxX;
+    float minY;    float maxY;
+    float minZ;    float maxZ;
+    minX = a._min.x < b._min.x ? a._min.x : b._min.x;
+    minY = a._min.y < b._min.y ? a._min.y : b._min.y;
+    maxX = a._max.x > b._max.x ? a._max.x : b._max.x;
+    maxY = a._max.y > b._max.y ? a._max.y : b._max.y;
+
+    minZ = a._min.z < b._min.z ? a._min.z : b._min.z;
+    maxZ = a._max.z > b._max.z ? a._max.z : b._max.z;
+
+    //  가로 판정
+    if ((a._size.x + b._size.x) >= (maxX - minX))
+    {
+        //  세로 판정
+        if ((a._size.y + b._size.y) >= (maxY - minY))
+        {
+            if ((a._size.z + b._size.z) >= (maxZ - minZ))
+            {
+                // 교차한다. 교집합
+                DxVector3 min, max;
+                MyBox intersect;
+                min.x = a._min.x > b._min.x ? a._min.x : b._min.x;
+                min.y = a._min.y > b._min.y ? a._min.y : b._min.y;
+                min.z = a._min.z > b._min.z ? a._min.z : b._min.z;
+                                                                
+                max.x = a._max.x < b._max.x ? a._max.x : b._max.x;
+                max.y = a._max.y < b._max.y ? a._max.y : b._max.y;
+                max.z = a._max.z < b._max.z ? a._max.z : b._max.z;
+
+                intersect.Set(min, max - min);
+                if (intersect == a || intersect == b)
+                {
+                    return COLLISION_TYPE::RECT_IN;
+                }
+                return COLLISION_TYPE::RECT_OVERLAP;
+            }
+        }
+    }
+    return COLLISION_TYPE::RECT_OUT;
+}
+
+bool Collision::BoxToInBox(MyBox& a, MyBox& b)
+{
+    if (a._min.x <= b._min.x &&
+        a._min.y <= b._min.y &&
+        a._min.z <= b._min.z)
+    {
+        if (a._max.x >= b._max.x &&
+            a._max.y >= b._max.y &&
+            a._max.z >= b._max.z)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Collision::SphereToSphere(MySphere& a, MySphere& b)
+{
+    float sum = a._radius + b._radius;
+    DxVector3 direction = a._center - b._center;
+    float distance = direction.Length();
     if (distance <= sum)
     {
         return true;

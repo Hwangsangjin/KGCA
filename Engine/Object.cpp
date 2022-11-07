@@ -60,7 +60,7 @@ HRESULT Object::Release()
     return TRUE;
 }
 
-void Object::SetMatrix(MyMatrix* pWorld, MyMatrix* pView, MyMatrix* pProjection)
+void Object::SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection)
 {
     if (pWorld)
     {
@@ -121,18 +121,18 @@ void Object::CreateVertexData()
 
     _vertices.resize(4);
 
-    _vertices[0].position = MyVector3{ -1.0f, 1.0f, 0.0f };
-    _vertices[0].color = Vector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[0].uv = MyVector2{ 0.0f, 0.0f };
-    _vertices[1].position = MyVector3{ 1.0f, 1.0f , 0.0f };
-    _vertices[1].color = Vector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[1].uv = MyVector2{ 1.0f, 0.0f };
-    _vertices[2].position = MyVector3{ -1.0f, -1.0f, 0.0f };
-    _vertices[2].color = Vector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[2].uv = MyVector2{ 0.0f, 1.0f };
-    _vertices[3].position = MyVector3{ 1.0f, -1.0f, 0.0f };
-    _vertices[3].color = Vector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[3].uv = MyVector2{ 1.0f, 1.0f };
+    _vertices[0].position = DxVector3{ -1.0f, 1.0f, 0.0f };
+    _vertices[0].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+    _vertices[0].uv = DxVector2{ 0.0f, 0.0f };
+    _vertices[1].position = DxVector3{ 1.0f, 1.0f , 0.0f };
+    _vertices[1].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+    _vertices[1].uv = DxVector2{ 1.0f, 0.0f };
+    _vertices[2].position = DxVector3{ -1.0f, -1.0f, 0.0f };
+    _vertices[2].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+    _vertices[2].uv = DxVector2{ 0.0f, 1.0f };
+    _vertices[3].position = DxVector3{ 1.0f, -1.0f, 0.0f };
+    _vertices[3].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+    _vertices[3].uv = DxVector2{ 1.0f, 1.0f };
 
     _init = _vertices;
 }
@@ -198,9 +198,9 @@ HRESULT Object::CreateIndexBuffer()
 
 void Object::CreateConstantData()
 {
-    _constantBuffer.world.Identity();
-    _constantBuffer.view.Identity();
-    _constantBuffer.projection.Identity();
+    D3DXMatrixIdentity(&_constantBuffer.world);
+    D3DXMatrixIdentity(&_constantBuffer.view);
+    D3DXMatrixIdentity(&_constantBuffer.projection);
     //_constantBuffer.timer = 0.0f;
     _constantBuffer.world.Transpose();
     _constantBuffer.view.Transpose();

@@ -78,7 +78,7 @@ HRESULT Core::CoreInit()
 	HR(_font.SetSurface(pBackBuffer));
 	pBackBuffer->Release();
 	
-	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
+	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource///Rainbow/ainbow.bmp"));
 	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, RESOLUTION_X, RESOLUTION_Y));
 	
 	HR(Init());

@@ -8,7 +8,6 @@
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
-#include <SimpleMath.h>
 #include <vector>
 #include <list>
 #include <map>
@@ -23,7 +22,7 @@
 #include <tchar.h>
 #include <io.h>
 #include <wrl.h>
-#include "MyMath.h"
+#include "DxMath.h"
 
 // lib
 #pragma comment (lib, "d3d11")
@@ -50,10 +49,6 @@ using uint8 = unsigned __int8;
 using uint16 = unsigned __int16;
 using uint32 = unsigned __int32;
 using uint64 = unsigned __int64;
-using Vector2 = DirectX::SimpleMath::Vector2;
-using Vector4 = DirectX::SimpleMath::Vector4;
-using Matrix = DirectX::SimpleMath::Matrix;
-using Quaternion = DirectX::SimpleMath::Quaternion;
 
 // typedef
 typedef std::basic_string<TCHAR> T_STR;
@@ -61,33 +56,6 @@ typedef std::basic_string<char> C_STR;
 typedef std::basic_string<wchar_t> W_STR;
 typedef std::vector<std::basic_string<TCHAR>> TCHAR_STRING_VECTOR;
 typedef std::vector<DWORD> DWORD_VECTOR;
-
-// struct
-struct DefaultVertex
-{
-	MyVector3 position;
-	MyVector3 normal;
-	Vector4 color;
-	MyVector2 uv;
-};
-
-struct SimpleVertex
-{
-	MyVector3 position;
-	Vector4 color;
-	MyVector2 uv;
-};
-
-struct ConstantBuffer
-{
-	MyMatrix world;
-	MyMatrix view;
-	MyMatrix projection;
-	//float x;
-	//float y;
-	//float z;
-	//float timer;
-};
 
 // String Convert
 static std::wstring to_mw(const std::string& _src)

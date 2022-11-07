@@ -78,11 +78,11 @@ struct MyCircle
 
 struct MySphere
 {
-    MyVector3 _center;
+    DxVector3 _center;
     float _radius;
 
     MySphere() {};
-    MySphere(MyVector3 center, float radius)
+    MySphere(DxVector3 center, float radius)
     {
         _center = center;
         _radius = radius;
@@ -91,17 +91,17 @@ struct MySphere
 
 struct MyBox
 {
-    MyVector3 min;
-    MyVector3 max;
-    MyVector3 center;
-    MyVector3 size;
+    DxVector3 _min;
+    DxVector3 _max;
+    DxVector3 _center;
+    DxVector3 _size;
 
 
     bool   operator == (MyBox& dest)
     {
-        if (min == dest.min)
+        if (_min == dest._min)
         {
-            if (size == dest.size)
+            if (_size == dest._size)
             {
                 return true;
             }
@@ -110,43 +110,43 @@ struct MyBox
     }
 
     MyBox() {}
-    MyBox(MyVector3 pos, MyVector3 size)
+    MyBox(DxVector3 pos, DxVector3 size)
     {
         Set(pos, size);
     }
-    void  Set(MyVector3 pos, MyVector3 size)
+    void  Set(DxVector3 pos, DxVector3 size)
     {
-        min = pos;
-        this->size = size;
-        max = min + size;
-        center = (min + max) * 0.5f;
+        _min = pos;
+        _size = size;
+        _max = _min + size;
+        _center = (_min + _max) * 0.5f;
     }
 };
 
 struct CollisionAABB
 {
-    MyVector3 min;
-    MyVector3 max;
+    DxVector3 _min;
+    DxVector3 _max;
 };
 
 struct CollisionOBB
 {
-    MyVector3 center;
-    MyVector3 axis[3];
-    float distance[3];
+    DxVector3 _center;
+    DxVector3 _axis[3];
+    float _distance[3];
 };
 
 struct CollisionBOX
 {
-    MyVector3 _center;
-    MyVector3 _position[8];
+    DxVector3 _center;
+    DxVector3 _position[8];
 
     // AABB
-    MyVector3 _min;
-    MyVector3 _max;
+    DxVector3 _min;
+    DxVector3 _max;
 
     // OBB
-    MyVector3 _axis[3];
+    DxVector3 _axis[3];
     float _extent[3];
 };
 
@@ -155,6 +155,10 @@ class Collision
 public:
     static COLLISION_TYPE RectToRect(MyRect& a, MyRect& b);
     static bool RectToInRect(MyRect& a, MyRect& b);
+    static bool RectToPoint(MyRect& a, POINT& p);
     static bool CircleToCircle(MyCircle& a, MyCircle& b);
+    static COLLISION_TYPE BoxToBox(MyBox& a, MyBox& b);
+    static bool BoxToInBox(MyBox& a, MyBox& b);
+    static bool SphereToSphere(MySphere& a, MySphere& b);
 };
 

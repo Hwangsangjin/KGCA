@@ -35,12 +35,12 @@ void Object2D::SetScale(float x, float y)
     _scale.y = y;
 }
 
-void Object2D::SetDirection(Vector2 direction)
+void Object2D::SetDirection(DxVector2 direction)
 {
     _direction = direction;
 }
 
-void Object2D::SetPosition(Vector2 position)
+void Object2D::SetPosition(DxVector2 position)
 {
     _position = position;
 
@@ -48,7 +48,7 @@ void Object2D::SetPosition(Vector2 position)
     UpdateVertexBuffer();
 }
 
-void Object2D::SetPosition(Vector2 position, Vector2 cameraPosition)
+void Object2D::SetPosition(DxVector2 position, DxVector2 cameraPosition)
 {
     _position = position;
 
@@ -56,25 +56,25 @@ void Object2D::SetPosition(Vector2 position, Vector2 cameraPosition)
     UpdateVertexBuffer();
 }
 
-void Object2D::SetCameraPosition(Vector2 cameraPosition)
+void Object2D::SetCameraPosition(DxVector2 cameraPosition)
 {
     _cameraPosition = cameraPosition;
 }
 
-void Object2D::SetCameraViewSize(Vector2 cameraViewSize)
+void Object2D::SetCameraViewSize(DxVector2 cameraViewSize)
 {
     _cameraViewSize = cameraViewSize;
 }
 
-void Object2D::SetViewSpace(Vector2 cameraPosition, Vector2 camerViewSize)
+void Object2D::SetViewSpace(DxVector2 cameraPosition, DxVector2 camerViewSize)
 {
-    Vector2 center;
+    DxVector2 center;
     center.x = _rect._w / 2.0f;
     center.y = _rect._h / 2.0f;
 
     _collision.Set(_position.x - center.x * _scale.x, _position.y - center.y * _scale.y, _rect._w * _scale.x, _rect._h * _scale.y);
 
-    Vector2 viewPosition;
+    DxVector2 viewPosition;
     viewPosition.x = _collision._x1 - cameraPosition.x;
     viewPosition.y = _collision._y1 - cameraPosition.y;
 
@@ -91,7 +91,7 @@ bool Object2D::CheckCollision(Object2D& object)
 
 void Object2D::SetScreenSpace()
 {
-    Vector2 center;
+    DxVector2 center;
     center.x = _rect._w / 2.0f;
     center.y = _rect._h / 2.0f;
 

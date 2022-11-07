@@ -48,9 +48,6 @@
     <Filter Include="소스 파일\Core\Object\Sprite">
       <UniqueIdentifier>{cf31510f-d1f1-4185-a142-5bbb3c44fd58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Math">
-      <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\Object\Camera">
       <UniqueIdentifier>{7521b2fc-383d-440b-a78f-bc6a9b3520ce}</UniqueIdentifier>
     </Filter>
@@ -68,6 +65,9 @@
     </Filter>
     <Filter Include="소스 파일\Core\Object\Shader\HLSL">
       <UniqueIdentifier>{f56e4a8c-7824-4ce4-a8a7-887d91d594d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxMath">
+      <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +131,8 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="MyMath.h">
-      <Filter>소스 파일\Core\Math</Filter>
+    <ClInclude Include="DxMath.h">
+      <Filter>소스 파일\Core\DxMath</Filter>
     </ClInclude>
     <ClInclude Include="Object3D.h">
       <Filter>소스 파일\Core\Object</Filter>
@@ -142,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>소스 파일\Core\Object\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="TMath.h">
-      <Filter>소스 파일\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h">
       <Filter>소스 파일\Core\Object\Frustum</Filter>
@@ -214,8 +211,8 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>소스 파일\Core\Object\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="MyMath.cpp">
-      <Filter>소스 파일\Core\Math</Filter>
+    <ClCompile Include="DxMath.cpp">
+      <Filter>소스 파일\Core\DxMath</Filter>
     </ClCompile>
     <ClCompile Include="Object3D.cpp">
       <Filter>소스 파일\Core\Object</Filter>
@@ -225,9 +222,6 @@
     </ClCompile>
     <ClCompile Include="Shape.cpp">
       <Filter>소스 파일\Core\Object\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="TMath.cpp">
-      <Filter>소스 파일\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
       <Filter>소스 파일\Core\Object\Frustum</Filter>
@@ -247,6 +241,9 @@
       <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
+      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+    </None>
+    <None Include="..\..\Resource\Shader\Skinning.hlsl">
       <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
     </None>
   </ItemGroup>
