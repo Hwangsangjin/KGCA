@@ -22,7 +22,7 @@ public:
 	float _roll = 0.0f;
 
 	float _distance = 0.0f;
-	float _speed = 50.0f;
+	float _speed = 25.0f;
 
 	Frustum _frustum;
 

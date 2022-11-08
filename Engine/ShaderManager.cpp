@@ -24,6 +24,7 @@ HRESULT ShaderManager::Release()
 		{
 			shader.second->Release();
 			delete shader.second;
+			shader.second = nullptr;
 		}
 	}
 

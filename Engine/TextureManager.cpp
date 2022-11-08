@@ -23,9 +23,9 @@ HRESULT TextureManager::Release()
 		if (texture.second)
 		{
 			texture.second->Release();
+			delete texture.second;
+			texture.second = nullptr;
 		}
-
-		delete texture.second;
 	}
 
 	_textures.clear();

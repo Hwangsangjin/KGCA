@@ -23,6 +23,8 @@ HRESULT SpriteManager::Release()
 		if (sprite.second)
 		{
 			sprite.second->Release();
+			delete sprite.second;
+			sprite.second = nullptr;
 		}
 	}
 

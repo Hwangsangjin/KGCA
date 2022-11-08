@@ -74,6 +74,7 @@ public:
 
 	DWORD _face;
 
+	Object() {}
 	virtual ~Object() {};
 
 	// √ ±‚»≠

@@ -30,32 +30,11 @@
     <Filter Include="소스 파일\Core\Object">
       <UniqueIdentifier>{9842626c-b095-4ffb-9746-d5c9a0dae55f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Object\Shader">
-      <UniqueIdentifier>{c6e8abb3-3a1b-4569-b94f-4d4a6ec6d2c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\Object\Texture">
-      <UniqueIdentifier>{c73be6af-b366-47e6-b14a-6b09a1ede615}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\DxState">
       <UniqueIdentifier>{09f79972-6ff2-412c-a018-d28b1f32ef13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Object\Collision">
-      <UniqueIdentifier>{6b88e66d-dca2-49f3-8411-eedac9a37732}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\Sound">
       <UniqueIdentifier>{c6ccdd55-c818-46a5-92c5-7494b6a7e2c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\Object\Sprite">
-      <UniqueIdentifier>{cf31510f-d1f1-4185-a142-5bbb3c44fd58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\Object\Camera">
-      <UniqueIdentifier>{7521b2fc-383d-440b-a78f-bc6a9b3520ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\Object\Shape">
-      <UniqueIdentifier>{2e82e5b3-a206-45f9-82ba-320a0f1a04e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\Object\Frustum">
-      <UniqueIdentifier>{8b7d17ef-22be-47eb-8113-22e075768cc6}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Core\DxRT">
       <UniqueIdentifier>{32580ecf-3347-4626-9fc4-7debfe752a49}</UniqueIdentifier>
@@ -63,11 +42,35 @@
     <Filter Include="소스 파일\Precompiled">
       <UniqueIdentifier>{a704c924-11c1-46f2-83e6-6faadc5321c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Object\Shader\HLSL">
-      <UniqueIdentifier>{f56e4a8c-7824-4ce4-a8a7-887d91d594d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\DxMath">
       <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\FBX">
+      <UniqueIdentifier>{ce6fb54c-0aa3-4517-a6df-cee1d7e4f450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Camera">
+      <UniqueIdentifier>{7521b2fc-383d-440b-a78f-bc6a9b3520ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Collision">
+      <UniqueIdentifier>{6b88e66d-dca2-49f3-8411-eedac9a37732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Frustum">
+      <UniqueIdentifier>{8b7d17ef-22be-47eb-8113-22e075768cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Shader">
+      <UniqueIdentifier>{c6e8abb3-3a1b-4569-b94f-4d4a6ec6d2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Shader\HLSL">
+      <UniqueIdentifier>{f56e4a8c-7824-4ce4-a8a7-887d91d594d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Shape">
+      <UniqueIdentifier>{2e82e5b3-a206-45f9-82ba-320a0f1a04e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Sprite">
+      <UniqueIdentifier>{cf31510f-d1f1-4185-a142-5bbb3c44fd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Texture">
+      <UniqueIdentifier>{c73be6af-b366-47e6-b14a-6b09a1ede615}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,16 +93,16 @@
       <Filter>소스 파일\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>소스 파일\Core\Object\Shader</Filter>
+      <Filter>소스 파일\Core\Shader</Filter>
     </ClInclude>
     <ClInclude Include="ShaderManager.h">
-      <Filter>소스 파일\Core\Object\Shader</Filter>
+      <Filter>소스 파일\Core\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>소스 파일\Core\Object\Texture</Filter>
+      <Filter>소스 파일\Core\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
-      <Filter>소스 파일\Core\Object\Texture</Filter>
+      <Filter>소스 파일\Core\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>소스 파일\Core\Window</Filter>
@@ -111,13 +114,7 @@
       <Filter>소스 파일\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>소스 파일\Core\Object\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Object2D.h">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\Core\Object</Filter>
+      <Filter>소스 파일\Core\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>소스 파일\Core\Sound</Filter>
@@ -126,28 +123,40 @@
       <Filter>소스 파일\Core\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
-      <Filter>소스 파일\Core\Object\Sprite</Filter>
+      <Filter>소스 파일\Core\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="SpriteManager.h">
-      <Filter>소스 파일\Core\Object\Sprite</Filter>
+      <Filter>소스 파일\Core\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="DxMath.h">
       <Filter>소스 파일\Core\DxMath</Filter>
     </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>소스 파일\Core\Object\Camera</Filter>
+      <Filter>소스 파일\Core\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Shape.h">
-      <Filter>소스 파일\Core\Object\Shape</Filter>
+      <Filter>소스 파일\Core\Shape</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h">
-      <Filter>소스 파일\Core\Object\Frustum</Filter>
+      <Filter>소스 파일\Core\Frustum</Filter>
     </ClInclude>
     <ClInclude Include="DxRT.h">
       <Filter>소스 파일\Core\DxRT</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxLoader.h">
+      <Filter>소스 파일\Core\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxObject3D.h">
+      <Filter>소스 파일\Core\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object2D.h">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>소스 파일\Core\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,16 +182,16 @@
       <Filter>소스 파일\Core\Input</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>소스 파일\Core\Object\Shader</Filter>
+      <Filter>소스 파일\Core\Shader</Filter>
     </ClCompile>
     <ClCompile Include="ShaderManager.cpp">
-      <Filter>소스 파일\Core\Object\Shader</Filter>
+      <Filter>소스 파일\Core\Shader</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일\Core\Object\Texture</Filter>
+      <Filter>소스 파일\Core\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>소스 파일\Core\Object\Texture</Filter>
+      <Filter>소스 파일\Core\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>소스 파일\Core\Window</Filter>
@@ -191,13 +200,7 @@
       <Filter>소스 파일\Core\DxState</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>소스 파일\Core\Object\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Object2D.cpp">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Core\Object</Filter>
+      <Filter>소스 파일\Core\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>소스 파일\Core\Sound</Filter>
@@ -206,45 +209,57 @@
       <Filter>소스 파일\Core\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
-      <Filter>소스 파일\Core\Object\Sprite</Filter>
+      <Filter>소스 파일\Core\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="SpriteManager.cpp">
-      <Filter>소스 파일\Core\Object\Sprite</Filter>
+      <Filter>소스 파일\Core\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="DxMath.cpp">
       <Filter>소스 파일\Core\DxMath</Filter>
     </ClCompile>
-    <ClCompile Include="Object3D.cpp">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일\Core\Object\Camera</Filter>
+      <Filter>소스 파일\Core\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Shape.cpp">
-      <Filter>소스 파일\Core\Object\Shape</Filter>
+      <Filter>소스 파일\Core\Shape</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
-      <Filter>소스 파일\Core\Object\Frustum</Filter>
+      <Filter>소스 파일\Core\Frustum</Filter>
     </ClCompile>
     <ClCompile Include="DxRT.cpp">
       <Filter>소스 파일\Core\DxRT</Filter>
     </ClCompile>
+    <ClCompile Include="FbxLoader.cpp">
+      <Filter>소스 파일\Core\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxObject3D.cpp">
+      <Filter>소스 파일\Core\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object2D.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resource\Shader\Shape.hlsl">
-      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+      <Filter>소스 파일\Core\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\RenderTarget.hlsl">
-      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+      <Filter>소스 파일\Core\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\Mask.hlsl">
-      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+      <Filter>소스 파일\Core\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
-      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+      <Filter>소스 파일\Core\Shader\HLSL</Filter>
     </None>
     <None Include="..\..\Resource\Shader\Skinning.hlsl">
-      <Filter>소스 파일\Core\Object\Shader\HLSL</Filter>
+      <Filter>소스 파일\Core\Shader\HLSL</Filter>
     </None>
   </ItemGroup>
 </Project>

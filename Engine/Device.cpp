@@ -30,7 +30,6 @@ HRESULT Device::Render()
 HRESULT Device::Release()
 {
     SAFE_CLEARSTATE(_pImmediateContext);
-    SAFE_RELEASE(_pBackBuffer);
     SAFE_RELEASE(_pDepthStencilView);
     SAFE_RELEASE(_pRenderTargetView);
     SAFE_RELEASE(_pSwapChain);
@@ -155,6 +154,7 @@ HRESULT Device::CreateDepthStencilView()
     //_pd3dDevice->CreateDepthStencilView(pDepthSencilTexture.Get(), &dtvd, &_pDepthStencilView);
     HR(_pd3dDevice->CreateDepthStencilView(pDepthStencilTexture, &dtvd, &_pDepthStencilView));
     pDepthStencilTexture->Release();
+
     return TRUE;
 }
 

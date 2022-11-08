@@ -98,11 +98,11 @@ HRESULT CameraDebug::Frame()
 
 	if (INPUT->GetKey(VK_SPACE) == KEY_STATE::DOWN)
 	{
-		_speed = 100.0f;
+		_speed = 50.0f;
 	}
 	else if (INPUT->GetKey(VK_SPACE) == KEY_STATE::UP)
 	{
-		_speed = 50.0f;
+		_speed = 25.0f;
 	}
 
 	if (INPUT->GetKey('W') == KEY_STATE::HOLD)

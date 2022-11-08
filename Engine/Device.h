@@ -11,7 +11,6 @@ protected:
 	IDXGISwapChain* _pSwapChain = nullptr;
 	ID3D11RenderTargetView* _pRenderTargetView = nullptr;
 	ID3D11DepthStencilView* _pDepthStencilView = nullptr;
-	ID3D11Texture2D* _pBackBuffer = nullptr;
 	D3D11_VIEWPORT _viewport;
 
 public:

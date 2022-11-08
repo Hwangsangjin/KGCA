@@ -44,7 +44,8 @@ HRESULT Object::PostRender()
     }
     else
     {
-        _pImmediateContext->DrawIndexed(_face * 3, 0, 0);
+        //_pImmediateContext->DrawIndexed(_face * 3, 0, 0);
+        _pImmediateContext->DrawIndexed(_indices.size(), 0, 0);
     }
 
     return TRUE;

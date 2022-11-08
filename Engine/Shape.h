@@ -1,19 +1,19 @@
 #pragma once
 
-#include "Object3D.h"
+#include "Object.h"
 
 class Shape : public Object
 {
 public:
 	Shape() {}
-	~Shape() {}
+	virtual ~Shape() {}
 };
 
 class ShapeLine : public Shape
 {
 public:
 	ShapeLine() {}
-	~ShapeLine() {}
+	virtual ~ShapeLine() {}
 
 	virtual void CreateVertexData() override;
 	virtual void CreateIndexData() override;
@@ -25,7 +25,7 @@ class ShapeDirectionLine : public ShapeLine
 {
 public:
 	ShapeDirectionLine() {}
-	~ShapeDirectionLine() {}
+	virtual ~ShapeDirectionLine() {}
 
 	virtual void CreateVertexData() override;
 	virtual void CreateIndexData() override;
@@ -35,7 +35,7 @@ class ShapePlane : public Shape
 {
 public:
 	ShapePlane() {}
-	~ShapePlane() {}
+	virtual ~ShapePlane() {}
 
 	virtual void CreateVertexData() override;
 	virtual void CreateIndexData() override;

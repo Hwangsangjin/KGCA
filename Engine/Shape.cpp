@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "Shape.h"
-#include "Input.h"
-#include "Timer.h"
 
 void ShapeLine::CreateVertexData()
 {
