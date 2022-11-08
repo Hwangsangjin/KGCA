@@ -51,7 +51,7 @@ HRESULT Scene::Init()
 	{
 		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
 		{
-			FBXObject3D* pObject = fbx->_pDrawObjects[i];
+			FBXObject* pObject = fbx->_pDrawObjects[i];
 			std::wstring load = defaultDir + pObject->_textureName;
 			pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
 		}
@@ -202,7 +202,7 @@ HRESULT Scene::Render()
 		for (size_t j = 0; j < _pFBXFiles[i]->_pDrawObjects.size(); j++)
 		{
 			DxMatrix controlWorld;
-			FBXObject3D* pObject = _pFBXFiles[i]->_pDrawObjects[j];
+			FBXObject* pObject = _pFBXFiles[i]->_pDrawObjects[j];
 			//pObject->_constantBuffer.x = light._x;
 			//pObject->_constantBuffer.y = light._y;
 			//pObject->_constantBuffer.z = light._z;
@@ -223,7 +223,7 @@ HRESULT Scene::Render()
 				_pImmediateContext->RSSetViewports(1, &_viewport[k]);
 
 				DxMatrix controlWorld;
-				FBXObject3D* pObject = _pFBXFiles[i]->_pDrawObjects[j];
+				FBXObject* pObject = _pFBXFiles[i]->_pDrawObjects[j];
 				//pObject->_constantBuffer.x = light._x;
 				//pObject->_constantBuffer.y = light._y;
 				//pObject->_constantBuffer.z = light._z;
