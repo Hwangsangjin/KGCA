@@ -25,6 +25,8 @@ HRESULT TextureBox::Render()
 
 HRESULT TextureBox::Release()
 {
+	Object3D::Release();
+
 	if (_pDirectionLine)
 	{
 		_pDirectionLine->Release();

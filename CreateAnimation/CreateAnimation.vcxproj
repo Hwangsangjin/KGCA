@@ -166,8 +166,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="FbxLoader.cpp" />
-    <ClCompile Include="FbxObject3D.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="TextureBox.cpp" />
@@ -178,8 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="FbxLoader.h" />
-    <ClInclude Include="FbxObject3D.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="TextureBox.h" />

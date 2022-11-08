@@ -163,9 +163,6 @@ HRESULT Quadtree::Render()
 
 HRESULT Quadtree::Release()
 {
-    //SAFE_RELEASE(_pCamera);
-    //SAFE_RELEASE(_pMap);
-
     return TRUE;
 }
 

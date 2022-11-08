@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Object3D.h"
-#include "FbxLoader.h"
 
 class Actor : public Object3D
 {
@@ -20,6 +19,5 @@ public:
 	virtual void SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection);
 
 	class Shape* _pDirectionLine = nullptr;
-	FbxLoader _fbxLoader;
 };
 
