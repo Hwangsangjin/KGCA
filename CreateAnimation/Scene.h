@@ -20,7 +20,7 @@ public:
 	class Cube* _pCube = nullptr;
 
 	std::vector<class Object*> _pObjects;
-	std::vector<class FBXFile*> _pFBXFiles;
+	std::vector<class FbxLoader*> _pFbxObjects;
 
 	// √ ±‚»≠
 	virtual HRESULT Init();

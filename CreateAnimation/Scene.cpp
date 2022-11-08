@@ -10,12 +10,12 @@
 #include "TextureBox.h"
 #include "Cube.h"
 #include "Timer.h"
-#include "FBXFile.h"
+#include "FbxLoader.h"
 
 HRESULT Scene::Init()
 {
 	// FBX
-	FBXFile* pRyan = new FBXFile;
+	FbxLoader* pRyan = new FbxLoader;
 	if (SUCCEEDED(pRyan->Init()))
 	{
 		if (SUCCEEDED(pRyan->Load("../../Resource/FBX/Ryan.fbx")))
@@ -23,9 +23,9 @@ HRESULT Scene::Init()
 			pRyan->CreateConstantBuffer(_pd3dDevice);
 		}
 	}
-	_pFBXFiles.push_back(pRyan);
-	
-	FBXFile* pMultiCameras = new FBXFile;
+	_pFbxObjects.push_back(pRyan);
+
+	FbxLoader* pMultiCameras = new FbxLoader;
 	if (SUCCEEDED(pMultiCameras->Init()))
 	{
 		if (SUCCEEDED(pMultiCameras->Load("../../Resource/FBX/MultiCameras.fbx")))
@@ -33,9 +33,9 @@ HRESULT Scene::Init()
 			pMultiCameras->CreateConstantBuffer(_pd3dDevice);
 		}
 	}
-	_pFBXFiles.push_back(pMultiCameras);
+	_pFbxObjects.push_back(pMultiCameras);
 
-	FBXFile* pTurret = new FBXFile;
+	FbxLoader* pTurret = new FbxLoader;
 	if (SUCCEEDED(pTurret->Init()))
 	{
 		if (SUCCEEDED(pTurret->Load("../../Resource/FBX/Turret_Deploy1/Turret_Deploy1.fbx")))
@@ -43,15 +43,15 @@ HRESULT Scene::Init()
 			pTurret->CreateConstantBuffer(_pd3dDevice);
 		}
 	}
-	_pFBXFiles.push_back(pTurret);
+	_pFbxObjects.push_back(pTurret);
 
 	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/Skinning.hlsl";
-	for (auto& fbx : _pFBXFiles)
+	for (auto& fbx : _pFbxObjects)
 	{
 		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
 		{
-			FBXObject* pObject = fbx->_pDrawObjects[i];
+			FbxSkinningObject3D* pObject = fbx->_pDrawObjects[i];
 			std::wstring load = defaultDir + pObject->_textureName;
 			pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
 		}
@@ -74,12 +74,12 @@ HRESULT Scene::Init()
 	_pMap = new Map;
 	_pMap->Customize(4 + 1, 4 + 1);
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Map/Map.png");
-	
+
 	// 라이언
 	_pRyan = new Actor;
 	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Ryan/Ryan.png");
 	AddObject(_pRyan);
-	
+
 	// 박스
 	_pBox = new TextureBox;
 	_pBox->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Box/Box.png");
@@ -87,14 +87,14 @@ HRESULT Scene::Init()
 	D3DXMatrixTranslation(&m1, 9.0f, 1.0f, 0.0f);
 	_pBox->_world = _pBox->_world * m1;
 	AddObject(_pBox);
-	
+
 	_pBox2 = new TextureBox;
 	_pBox2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Box/Box.png");
 	DxMatrix m2;
 	D3DXMatrixTranslation(&m2, 10.0f, 1.0f, 1.0f);
 	_pBox2->_world = _pBox2->_world * m2;
 	AddObject(_pBox2);
-	
+
 	// 큐브
 	_pCube = new Cube;
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
@@ -107,7 +107,7 @@ HRESULT Scene::Init()
 
 	// 쿼드트리
 	_quadtree.CreateTree(_pMainCamera, _pMap);
-	
+
 	// 탑 뷰
 	DxVector3 position = DxVector3(0.0f, 10.0f, -0.1f);
 	DxVector3 up(0.0f, 1.0f, 0.0f);
@@ -125,12 +125,12 @@ HRESULT Scene::Init()
 	position = DxVector3(10.0f, 10.0f, -10.0f);
 	_pCamera[3] = new Camera;
 	_pCamera[3]->CreateView(position, DxVector3(0.0f, 0.0f, 0.0f), up);
-	
+
 	for (size_t i = 0; i < 4; i++)
 	{
 		_pCamera[i]->CreateProjection(1.0f, 100.0f, PI_DIVISION_4, (float)_viewport[i].Width / (float)_viewport[i].Height);
 	}
-	
+
 	// 뷰포트에 맞게 카메라 조정
 	for (size_t i = 0; i < 4; i++)
 	{
@@ -143,7 +143,7 @@ HRESULT Scene::Init()
 HRESULT Scene::Frame()
 {
 	ClearDeviceContext(_pImmediateContext);
-	
+
 	_quadtree.Frame();
 
 	_pMainCamera->Frame();
@@ -153,7 +153,7 @@ HRESULT Scene::Frame()
 		_pCamera[i]->Frame();
 	}
 
-	for (auto& fbx : _pFBXFiles)
+	for (auto& fbx : _pFbxObjects)
 	{
 		fbx->UpdateAnimation(_pImmediateContext);
 	}
@@ -195,14 +195,14 @@ HRESULT Scene::Render()
 	//D3DXVec3Normalize(&light, &light);
 
 	// FBX
-	for (size_t i = 0; i < _pFBXFiles.size(); i++)
+	for (size_t i = 0; i < _pFbxObjects.size(); i++)
 	{
-		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFBXFiles[i]->_pConstantBufferBone);
+		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFbxObjects[i]->_pConstantBufferBone);
 
-		for (size_t j = 0; j < _pFBXFiles[i]->_pDrawObjects.size(); j++)
+		for (size_t j = 0; j < _pFbxObjects[i]->_pDrawObjects.size(); j++)
 		{
 			DxMatrix controlWorld;
-			FBXObject* pObject = _pFBXFiles[i]->_pDrawObjects[j];
+			FbxSkinningObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
 			//pObject->_constantBuffer.x = light._x;
 			//pObject->_constantBuffer.y = light._y;
 			//pObject->_constantBuffer.z = light._z;
@@ -212,18 +212,18 @@ HRESULT Scene::Render()
 	}
 
 	// 뷰포트
-	for (size_t i = 0; i < _pFBXFiles.size(); i++)
+	for (size_t i = 0; i < _pFbxObjects.size(); i++)
 	{
-		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFBXFiles[i]->_pConstantBufferBone);
+		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFbxObjects[i]->_pConstantBufferBone);
 
-		for (size_t j = 0; j < _pFBXFiles[i]->_pDrawObjects.size(); j++)
+		for (size_t j = 0; j < _pFbxObjects[i]->_pDrawObjects.size(); j++)
 		{
 			for (size_t k = 0; k < 4; k++)
 			{
 				_pImmediateContext->RSSetViewports(1, &_viewport[k]);
 
 				DxMatrix controlWorld;
-				FBXObject* pObject = _pFBXFiles[i]->_pDrawObjects[j];
+				FbxSkinningObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
 				//pObject->_constantBuffer.x = light._x;
 				//pObject->_constantBuffer.y = light._y;
 				//pObject->_constantBuffer.z = light._z;
@@ -232,7 +232,7 @@ HRESULT Scene::Render()
 			}
 		}
 	}
-	
+
 	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
 
 	return TRUE;
@@ -263,7 +263,7 @@ HRESULT Scene::Release()
 		pObject = nullptr;
 	}
 
-	for (auto& fbx : _pFBXFiles)
+	for (auto& fbx : _pFbxObjects)
 	{
 		fbx->Release();
 		delete fbx;
