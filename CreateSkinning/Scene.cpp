@@ -83,23 +83,23 @@ HRESULT Scene::Init()
 	// 맵
 	_pMap = new Map;
 	_pMap->Customize(4 + 1, 4 + 1);
-	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Map/Map.png");
+	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Map/Map.png");
 	
 	// 라이언
 	//_pRyan = new Actor;
-	//_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Ryan/Ryan.png");
+	//_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Ryan/Ryan.png");
 	//AddObject(_pRyan);
 	
 	// 박스
 	_pBox = new TextureBox;
-	_pBox->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Box/Box.png");
+	_pBox->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Box/Box.png");
 	DxMatrix m1;
 	D3DXMatrixTranslation(&m1, 9.0f, 1.0f, 0.0f);
 	_pBox->_world = _pBox->_world * m1;
 	AddObject(_pBox);
 	
 	_pBox2 = new TextureBox;
-	_pBox2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Box/Box.png");
+	_pBox2->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Box/Box.png");
 	DxMatrix m2;
 	D3DXMatrixTranslation(&m2, 10.0f, 1.0f, 1.0f);
 	_pBox2->_world = _pBox2->_world * m2;
@@ -107,7 +107,7 @@ HRESULT Scene::Init()
 	
 	// 큐브
 	_pCube = new Cube;
-	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/Shape.hlsl", L"");
+	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shape.hlsl", L"");
 	AddObject(_pCube);
 
 	// 메인 카메라
