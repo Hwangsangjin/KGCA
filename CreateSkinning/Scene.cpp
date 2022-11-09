@@ -25,25 +25,35 @@ HRESULT Scene::Init()
 	}
 	_pFbxObjects.push_back(pRyan);
 	
-	FbxLoader* pMultiCameras = new FbxLoader;
-	if (SUCCEEDED(pMultiCameras->Init()))
-	{
-		if (SUCCEEDED(pMultiCameras->Load("../../Resource/FBX/MultiCameras.fbx")))
-		{
-			pMultiCameras->CreateConstantBuffer(_pd3dDevice);
-		}
-	}
-	_pFbxObjects.push_back(pMultiCameras);
+	//FbxLoader* pMultiCameras = new FbxLoader;
+	//if (SUCCEEDED(pMultiCameras->Init()))
+	//{
+	//	if (SUCCEEDED(pMultiCameras->Load("../../Resource/FBX/MultiCameras.fbx")))
+	//	{
+	//		pMultiCameras->CreateConstantBuffer(_pd3dDevice);
+	//	}
+	//}
+	//_pFbxObjects.push_back(pMultiCameras);
 
-	FbxLoader* pTurret = new FbxLoader;
-	if (SUCCEEDED(pTurret->Init()))
-	{
-		if (SUCCEEDED(pTurret->Load("../../Resource/FBX/Turret_Deploy1/Turret_Deploy1.fbx")))
-		{
-			pTurret->CreateConstantBuffer(_pd3dDevice);
-		}
-	}
-	_pFbxObjects.push_back(pTurret);
+	//FbxLoader* pTurret = new FbxLoader;
+	//if (SUCCEEDED(pTurret->Init()))
+	//{
+	//	if (SUCCEEDED(pTurret->Load("../../Resource/FBX/Turret_Deploy1/Turret_Deploy1.fbx")))
+	//	{
+	//		pTurret->CreateConstantBuffer(_pd3dDevice);
+	//	}
+	//}
+	//_pFbxObjects.push_back(pTurret);
+
+	//FbxLoader* pMan = new FbxLoader;
+	//if (SUCCEEDED(pMan->Init()))
+	//{
+	//	if (SUCCEEDED(pMan->Load("../../Resource/FBX/Man.fbx")))
+	//	{
+	//		pMan->CreateConstantBuffer(_pd3dDevice);
+	//	}
+	//}
+	//_pFbxObjects.push_back(pMan);
 
 	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/Skinning.hlsl";
@@ -51,7 +61,7 @@ HRESULT Scene::Init()
 	{
 		for (size_t i = 0; i < fbx->_pDrawObjects.size(); i++)
 		{
-			FbxSkinningObject3D* pObject = fbx->_pDrawObjects[i];
+			FbxObject3D* pObject = fbx->_pDrawObjects[i];
 			std::wstring load = defaultDir + pObject->_textureName;
 			pObject->CreateObject(_pd3dDevice, _pImmediateContext, shaderfilename, load);
 		}
@@ -76,9 +86,9 @@ HRESULT Scene::Init()
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Map/Map.png");
 	
 	// 라이언
-	_pRyan = new Actor;
-	_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Ryan/Ryan.png");
-	AddObject(_pRyan);
+	//_pRyan = new Actor;
+	//_pRyan->CreateObject(_pd3dDevice, _pImmediateContext, L"../../../Resource/Shader/DefaultObject.hlsl", L"../../../Resource/Ryan/Ryan.png");
+	//AddObject(_pRyan);
 	
 	// 박스
 	_pBox = new TextureBox;
@@ -102,7 +112,7 @@ HRESULT Scene::Init()
 
 	// 메인 카메라
 	_pMainCamera = new CameraDebug;
-	_pMainCamera->CreateView(DxVector3(0.0f, 10.0f, -100.0f), DxVector3(0.0f, 0.0f, 0.0f), DxVector3(0.0f, 1.0f, 0.0f));
+	_pMainCamera->CreateView(DxVector3(0.0f, 5.0f, -20.0f), DxVector3(0.0f, 0.0f, 0.0f), DxVector3(0.0f, 1.0f, 0.0f));
 	_pMainCamera->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
 
 	// 쿼드트리
@@ -168,7 +178,7 @@ HRESULT Scene::Frame()
 
 HRESULT Scene::Render()
 {
-	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
+	// 맵
 	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 	_quadtree.Render();
 
@@ -185,14 +195,13 @@ HRESULT Scene::Render()
 	}
 
 	// 조명
-	//static float timer = 0.0f;
-	//timer += DELTA_TIME;
-	//DxVector3 light(0.0f, 0.0f, 1.0f);
-	//DxMatrix rotation;
-	//D3DXMatrixRotationY(&rotation, timer);
-	//light = light * rotation;
-	//D3DXVec3TransformCoord(&light, &light, &rotation);
-	//D3DXVec3Normalize(&light, &light);
+	static float timer = 0.0f;
+	timer += DELTA_TIME;
+	DxVector3 light(0.0f, 0.0f, 1.0f);
+	DxMatrix rotation;
+	D3DXMatrixRotationY(&rotation, timer);
+	D3DXVec3TransformCoord(&light, &light, &rotation);
+	D3DXVec3Normalize(&light, &light);
 
 	// FBX
 	for (size_t i = 0; i < _pFbxObjects.size(); i++)
@@ -202,10 +211,11 @@ HRESULT Scene::Render()
 		for (size_t j = 0; j < _pFbxObjects[i]->_pDrawObjects.size(); j++)
 		{
 			DxMatrix controlWorld;
+			//D3DXMatrixRotationY(&controlWorld, timer);
 			FbxSkinningObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
-			//pObject->_constantBuffer.x = light._x;
-			//pObject->_constantBuffer.y = light._y;
-			//pObject->_constantBuffer.z = light._z;
+			pObject->_constantBuffer.x = light.x;
+			pObject->_constantBuffer.y = light.y;
+			pObject->_constantBuffer.z = light.z;
 			pObject->SetMatrix(&controlWorld, &_pMainCamera->_view, &_pMainCamera->_projection);
 			pObject->Render();
 		}
@@ -224,9 +234,6 @@ HRESULT Scene::Render()
 
 				DxMatrix controlWorld;
 				FbxSkinningObject3D* pObject = _pFbxObjects[i]->_pDrawObjects[j];
-				//pObject->_constantBuffer.x = light._x;
-				//pObject->_constantBuffer.y = light._y;
-				//pObject->_constantBuffer.z = light._z;
 				pObject->SetMatrix(&controlWorld, &_pCamera[k]->_view, &_pCamera[k]->_projection);
 				pObject->Render();
 			}
