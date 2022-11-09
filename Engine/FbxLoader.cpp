@@ -589,7 +589,7 @@ void FbxLoader::InitAnimation()
     FbxAnimStack* stackAnim = _pFbxScene->GetSrcObject<FbxAnimStack>(0);
     FbxLongLong s = 0;
     FbxLongLong n = 0;
-    FbxTime::EMode timeMode;
+    FbxTime::EMode timeMode = FbxTime::EMode::eDefaultMode;
 
     if (stackAnim)
     {
