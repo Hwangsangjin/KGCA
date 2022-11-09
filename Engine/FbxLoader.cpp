@@ -91,11 +91,11 @@ HRESULT FbxLoader::Load(C_STR filename)
         FbxMesh* pFbxMesh = object->_pFbxNode->GetMesh();
         if (pFbxMesh)
         {
-            _pFbxMeshs.push_back(pFbxMesh);
             ParseMesh(pFbxMesh, object);
         }
     }
 
+    // 애니메이션
     FbxTime time;
     for (FbxLongLong t = _animScene.startFrame; t <= _animScene.endFrame; t++)
     {
@@ -143,10 +143,11 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
     pObject->_name = to_mw(name);
     pObject->_pFbxNode = pFbxNode;
     pObject->_pFbxParentNode = pFbxNode->GetParent();
+    pObject->_boneCount = _pObjects.size();
 
     _pObjects.push_back(pObject);
     _pObjectMap.insert(std::make_pair(pFbxNode, pObject));
-    _pObjectIndexMap.insert(std::make_pair(pFbxNode, _pObjects.size() - 1));
+    _pObjectIndexMap.insert(std::make_pair(pFbxNode, pObject->_boneCount));
 
     int childCount = pFbxNode->GetChildCount();
     for (size_t i = 0; i < childCount; i++)
@@ -167,7 +168,7 @@ void FbxLoader::PreProcess(FbxNode* pFbxNode)
 void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObject)
 {
     // 스키닝 정보 확인
-    pObject->_isSkinning = ParseMeshSkinning(pFbxMesh, pObject);
+    pObject->_isSkinned = ParseMeshSkinning(pFbxMesh, pObject);
 
     FbxNode* pNode = pFbxMesh->GetNode();
 
@@ -243,15 +244,22 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObject)
             auto property = pSurface->FindProperty(FbxSurfaceMaterial::sDiffuse);
             if (property.IsValid())
             {
-                int textureCount = property.GetSrcObjectCount<FbxFileTexture>();
-                for (size_t j = 0; j < textureCount; j++)
+                //int textureCount = property.GetSrcObjectCount<FbxFileTexture>();
+                //for (size_t j = 0; j < textureCount; j++)
+                //{
+                //    const FbxFileTexture* texture = property.GetSrcObject<FbxFileTexture>(j);
+                //    if (texture)
+                //    {
+                //        fileName = texture->GetFileName();
+                //        textureNames[i] = fileName;
+                //    }
+                //}
+
+                const FbxFileTexture* texture = property.GetSrcObject<FbxFileTexture>();
+                if (texture)
                 {
-                    const FbxFileTexture* texture = property.GetSrcObject<FbxFileTexture>(j);
-                    if (texture)
-                    {
-                        fileName = texture->GetFileName();
-                        textureNames[i] = fileName;
-                    }
+                    fileName = texture->GetFileName();
+                    textureNames[i] = fileName;
                 }
             }
         }
@@ -351,15 +359,31 @@ void FbxLoader::ParseMesh(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObject)
                     vertex.normal.z = normal.mData[1];
                 }
 
-                IWVertex.index.x = _pObjectIndexMap.find(pNode)->second;
-                IWVertex.index.y = 0;
-                IWVertex.index.z = 0;
-                IWVertex.index.w = 0;
+                if (!pObject->_isSkinned)
+                {
+                    IWVertex.index.x = _pObjectIndexMap.find(pNode)->second;
+                    IWVertex.index.y = 0;
+                    IWVertex.index.z = 0;
+                    IWVertex.index.w = 0;
 
-                IWVertex.weight.x = 1.0f;
-                IWVertex.weight.y = 0.0f;
-                IWVertex.weight.z = 0.0f;
-                IWVertex.weight.w = 0.0f;
+                    IWVertex.weight.x = 1.0f;
+                    IWVertex.weight.y = 0.0f;
+                    IWVertex.weight.z = 0.0f;
+                    IWVertex.weight.w = 0.0f;
+                }
+                else
+                {
+                    Weight* pWeight = &pObject->_weights[vertexIndex];
+                    IWVertex.index.x = pWeight->indexs[0];
+                    IWVertex.index.y = pWeight->indexs[1];
+                    IWVertex.index.z = pWeight->indexs[2];
+                    IWVertex.index.w = pWeight->indexs[3];
+
+                    IWVertex.weight.x = pWeight->weights[0];
+                    IWVertex.weight.y = pWeight->weights[1];
+                    IWVertex.weight.z = pWeight->weights[2];
+                    IWVertex.weight.w = pWeight->weights[3];
+                }
 
                 if (materialCount <= 1)
                 {
@@ -415,7 +439,7 @@ bool FbxLoader::ParseMeshSkinning(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObjec
 
             DxMatrix bindPosePositionInvertMatrix = DXConvertMatrix(bindPosePositionMatrix);
             bindPosePositionInvertMatrix = bindPosePositionInvertMatrix.Invert();
-            pObject->_dxMatrixBindPoseMap.insert(std::make_pair(i, bindPosePositionInvertMatrix));
+            pObject->_dxMatrixBindPoseMap.insert(std::make_pair(boneIndex, bindPosePositionInvertMatrix));
 
             // 임의의 1개 정점에 영향을 미치는 뼈대의 갯수
             int weightCount = pCluster->GetControlPointIndicesCount();
@@ -425,7 +449,7 @@ bool FbxLoader::ParseMeshSkinning(FbxMesh* pFbxMesh, FbxSkinningObject3D* pObjec
             {
                 int vertexIndex = pIndices[i];
                 float weight = pWeights[i];
-                pObject->_weights[boneIndex].Insert(boneIndex, weight);
+                pObject->_weights[vertexIndex].Insert(boneIndex, weight);
             }
         }
     }
@@ -585,6 +609,7 @@ void FbxLoader::InitAnimation()
     _animScene.endFrame = n;
     _animScene.frameSpeed = 30.0f;
     _animScene.tickPerFrame = 160.0f;
+    _animScene.timeMode = timeMode;
 }
 
 void FbxLoader::LoadAnimation(FbxLongLong t, FbxTime time)
@@ -611,13 +636,35 @@ HRESULT FbxLoader::UpdateAnimation(ID3D11DeviceContext* pImmediateContext)
         _animInverse *= -1.0f;
     }
 
+    // Object + Skinning
+    std::vector<DxMatrix> currentAnimsMatrix;
     for (size_t i = 0; i < _pObjects.size(); i++)
     {
         DxMatrix animMatrix = _pObjects[i]->Interplate(_animFrame, _animScene);
         D3DXMatrixTranspose(&_cbDataBone.boneMatrix[i], &animMatrix);
+        currentAnimsMatrix.push_back(animMatrix);
     }
-
     pImmediateContext->UpdateSubresource(_pConstantBufferBone, 0, nullptr, &_cbDataBone, 0, 0);
+
+    // Skinning
+    for (size_t i = 0; i < _pDrawObjects.size(); i++)
+    {
+        if (_pDrawObjects[i]->_dxMatrixBindPoseMap.size())
+        {
+            for (size_t j = 0; j < _pObjects.size(); j++)
+            {
+                auto iter = _pDrawObjects[i]->_dxMatrixBindPoseMap.find(j);
+                if (iter != _pDrawObjects[i]->_dxMatrixBindPoseMap.end())
+                {
+                    DxMatrix bindMatrix = iter->second;
+                    DxMatrix animMatrix = bindMatrix * currentAnimsMatrix[j];
+                    D3DXMatrixTranspose(&_cbDataBone.boneMatrix[j], &animMatrix);
+                }
+            }
+            
+            pImmediateContext->UpdateSubresource(_pDrawObjects[i]->_pConstantBufferBone, 0, nullptr, &_cbDataBone, 0, 0);
+        }
+    }
 
     return TRUE;
 }

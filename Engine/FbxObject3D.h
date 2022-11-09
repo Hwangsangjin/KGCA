@@ -39,7 +39,7 @@ struct Weight
 		{
 			if (weight > this->weights[i])
 			{
-				for (size_t j = 0; j < indexs.size(); j++)
+				for (size_t j = indexs.size() -1; j > i; j--)
 				{
 					indexs[j] = indexs[j - 1];
 					weights[j] = weights[j - 1];
@@ -114,7 +114,7 @@ public:
 	BoneBuffer _cbDataBone;
 	ID3D11Buffer* _pConstantBufferBone;
 
-	bool _isSkinning = false;
+	bool _isSkinned = false;
 
 	virtual HRESULT Init() override;
 	virtual HRESULT Frame() override;

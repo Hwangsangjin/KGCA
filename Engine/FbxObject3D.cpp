@@ -26,15 +26,17 @@ HRESULT FbxObject3D::Render()
 
 HRESULT FbxObject3D::Release()
 {
-	Object3D::Release();
-
 	for (size_t i = 0; i < _pSubVertexBuffer.size(); i++)
 	{
 		if (_pSubVertexBuffer[i])
 		{
 			_pSubVertexBuffer[i]->Release();
+			_pSubVertexBuffer[i] = nullptr;
 		}
 	}
+	_pSubVertexBuffer.clear();
+
+	Object3D::Release();
 
 	return TRUE;
 }
@@ -184,31 +186,32 @@ HRESULT FbxSkinningObject3D::Frame()
 {
 	FbxObject3D::Frame();
 
-	return E_NOTIMPL;
+	return TRUE;
 }
 
 HRESULT FbxSkinningObject3D::Render()
 {
 	FbxObject3D::Render();
 
-	return E_NOTIMPL;
+	return TRUE;
 }
 
 HRESULT FbxSkinningObject3D::Release()
 {
-	Object3D::Release();
-
 	SAFE_RELEASE(_pConstantBufferBone);
 	SAFE_RELEASE(_pVertexBufferIW);
 
-	for (size_t i = 0; i < _pSubVertexBuffer.size(); i++)
+	for (size_t i = 0; i < _pSubVertexBufferIW.size(); i++)
 	{
-		if (_pSubVertexBuffer[i])
+		if (_pSubVertexBufferIW[i])
 		{
-			_pSubVertexBuffer[i]->Release();
 			_pSubVertexBufferIW[i]->Release();
+			_pSubVertexBufferIW[i] = nullptr;
 		}
 	}
+	_pSubVertexBufferIW.clear();
+
+	FbxObject3D::Release();
 
 	return TRUE;
 }
@@ -253,7 +256,6 @@ HRESULT FbxSkinningObject3D::CreateVertexBuffer()
 	}
 	else
 	{
-		Object3D::CreateVertexBuffer();
 		_pVertexBufferIW = DX::CreateVertexBuffer(_pd3dDevice, &_vertexListIW.at(0), _vertexListIW.size(), sizeof(IndexWeightVertex));
 	}
 
@@ -288,7 +290,7 @@ HRESULT FbxSkinningObject3D::CreateInputLayout()
 
 HRESULT FbxSkinningObject3D::PostRender()
 {
-	if (_isSkinning)
+	if (_isSkinned)
 	{
 		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pConstantBufferBone);
 	}

@@ -202,10 +202,12 @@ void Object::CreateConstantData()
     D3DXMatrixIdentity(&_constantBuffer.world);
     D3DXMatrixIdentity(&_constantBuffer.view);
     D3DXMatrixIdentity(&_constantBuffer.projection);
-    //_constantBuffer.timer = 0.0f;
-    _constantBuffer.world.Transpose();
-    _constantBuffer.view.Transpose();
-    _constantBuffer.projection.Transpose();
+
+    _constantBuffer.timer = 0.0f;
+
+    D3DXMatrixTranspose(&_constantBuffer.world, &_constantBuffer.world);
+    D3DXMatrixTranspose(&_constantBuffer.view, &_constantBuffer.view);
+    D3DXMatrixTranspose(&_constantBuffer.projection, &_constantBuffer.projection);
 }
 
 HRESULT Object::CreateConstantBuffer()

@@ -30,10 +30,10 @@ struct ConstantBuffer
 	DxMatrix world;
 	DxMatrix view;
 	DxMatrix projection;
-	//float x;
-	//float y;
-	//float z;
-	//float timer;
+	float x;
+	float y;
+	float z;
+	float timer;
 };
 
 struct BoneBuffer
