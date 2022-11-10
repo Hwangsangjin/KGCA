@@ -4,14 +4,21 @@
 #include "FbxObject3D.h"
 #include "TextureManager.h"
 
-class FbxLoader
+class FbxData
 {
 public:
+	ID3D11Device* _pd3dDevice = nullptr;
+	ID3D11DeviceContext* _pImmediateContext = nullptr;
+
 	FbxManager* _pFbxManager = nullptr;
 	FbxImporter* _pFbxImporter = nullptr;
 	FbxScene* _pFbxScene = nullptr;
 	FbxNode* _pRootNode = nullptr;
 	std::vector<FbxMesh*> _pFbxMeshs;
+
+	DxMatrix _world;
+	DxMatrix _view;
+	DxMatrix _projection;
 
 	AnimScene _animScene;
 	float _animFrame = 0.0f;
@@ -19,7 +26,7 @@ public:
 	float _animSpeed = 1.0f;
 
 	BoneBuffer _cbDataBone;
-	ID3D11Buffer* _pConstantBufferBone;
+	ID3D11Buffer* _pConstantBufferAnimBone;
 
 	//std::vector<FbxObject3D*> _pObjects;
 	std::vector<FbxSkinningObject3D*> _pObjects;
@@ -35,6 +42,7 @@ public:
 	HRESULT Release();
 
 	HRESULT Load(C_STR filename);
+	HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
 	HRESULT CreateConstantBuffer(ID3D11Device* pd3dDevice);
 
 	void PreProcess(FbxNode* pFbxNode);
@@ -48,7 +56,11 @@ public:
 	//void LoadAnimation(FbxObject3D* pObject);
 	void InitAnimation();
 	void LoadAnimation(FbxLongLong t, FbxTime time);
-	HRESULT UpdateAnimation(ID3D11DeviceContext* pImmediateContext);
+	void UpdateAnimation(ID3D11DeviceContext* pImmediateContext);
+	void UpdateSkeleton(ID3D11DeviceContext* pImmediateContext, float time, BoneBuffer& cbData);
+	void UpdateSkinning(ID3D11DeviceContext* pImmediateContext, BoneBuffer& cbInputData, std::vector<BoneBuffer>& cbOutputData);
+
+	void SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection);
 	DxMatrix ConvertMatrix(FbxAMatrix& fbxMatrix);
 	DxMatrix DXConvertMatrix(FbxAMatrix& fbxMatrix);
 };

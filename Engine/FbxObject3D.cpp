@@ -47,8 +47,15 @@ void FbxObject3D::SetParent(FbxObject3D* pParentNode)
 	_pParent = pParentNode;
 }
 
-DxMatrix FbxObject3D::Interplate(float frame, AnimScene animScene)
+DxMatrix FbxObject3D::Interpolate(float frame, AnimScene animScene)
 {
+	DxMatrix identityMatrix;
+	D3DXMatrixIdentity(&identityMatrix);
+	if (_animTracks.size() == 0)
+	{
+		return identityMatrix;
+	}
+
 	AnimTrack a, b;
 	a = _animTracks[max(animScene.startFrame, frame + 0)];
 	b = _animTracks[min(animScene.endFrame, frame + 1)];
@@ -198,7 +205,7 @@ HRESULT FbxSkinningObject3D::Render()
 
 HRESULT FbxSkinningObject3D::Release()
 {
-	SAFE_RELEASE(_pConstantBufferBone);
+	SAFE_RELEASE(_pConstantBufferSkinBone);
 	SAFE_RELEASE(_pVertexBufferIW);
 
 	for (size_t i = 0; i < _pSubVertexBufferIW.size(); i++)
@@ -234,7 +241,7 @@ HRESULT FbxSkinningObject3D::CreateConstantBuffer()
 	D3D11_SUBRESOURCE_DATA sd;
 	ZeroMemory(&sd, sizeof(sd));
 	sd.pSysMem = &_cbDataBone;
-	HR(_pd3dDevice->CreateBuffer(&bd, &sd, &_pConstantBufferBone));
+	HR(_pd3dDevice->CreateBuffer(&bd, &sd, &_pConstantBufferSkinBone));
 
 	return TRUE;
 }
@@ -286,15 +293,12 @@ HRESULT FbxSkinningObject3D::CreateInputLayout()
 		_pVertexShaderCode->GetBufferPointer(),
 		_pVertexShaderCode->GetBufferSize(),
 		&_pInputLayout));
+
+	return TRUE;
 }
 
 HRESULT FbxSkinningObject3D::PostRender()
 {
-	if (_isSkinned)
-	{
-		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pConstantBufferBone);
-	}
-
 	if (_pIndexBuffer == nullptr)
 	{
 		if (_vbDataList.size() > 0)

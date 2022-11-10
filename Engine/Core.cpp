@@ -162,8 +162,8 @@ HRESULT Core::CoreRelease()
 {
 	_rendertarget.Release();
 	_background.Release();
-	Release();
 	_font.Release();
+	Release();
 	SHADER->Release();
 	SPRITE->Release();
 	TEXTURE->Release();

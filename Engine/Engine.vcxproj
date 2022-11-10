@@ -166,7 +166,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DxRT.h" />
-    <ClInclude Include="FbxLoader.h" />
+    <ClInclude Include="FbxData.h" />
     <ClInclude Include="FbxObject3D.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="DxMath.h" />
@@ -196,7 +196,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DxRT.cpp" />
-    <ClCompile Include="FbxLoader.cpp" />
+    <ClCompile Include="FbxData.cpp" />
     <ClCompile Include="FbxObject3D.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="DxMath.cpp" />

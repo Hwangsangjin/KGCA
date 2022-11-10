@@ -57,10 +57,6 @@ struct Weight
 class FbxObject3D : public Object3D
 {
 public:
-	FbxNode* _pFbxNode = nullptr;
-	FbxNode* _pFbxParentNode = nullptr;
-	FbxObject3D* _pParent = nullptr;
-
 	UINT _boneCount;
 	DxMatrix _animMatrix;
 	DxMatrix _animControl;
@@ -69,6 +65,9 @@ public:
 	float _animSpeed = 1.0f;
 
 	FbxAMatrix _fbxLocalMatrix;
+	FbxNode* _pFbxNode = nullptr;
+	FbxNode* _pFbxParentNode = nullptr;
+	FbxObject3D* _pParent = nullptr;
 
 	std::vector<FbxObject3D*> _pFbxChilds;
 	std::vector<AnimTrack> _animTracks;
@@ -87,7 +86,7 @@ public:
 
 	void SetParent(FbxObject3D* pParentNode);
 
-	DxMatrix Interplate(float frame, AnimScene animScene);
+	DxMatrix Interpolate(float frame, AnimScene animScene);
 
 	HRESULT LoadTexture(W_STR textureFile);
 
@@ -112,7 +111,7 @@ public:
 	std::map<UINT, DxMatrix> _dxMatrixBindPoseMap;
 
 	BoneBuffer _cbDataBone;
-	ID3D11Buffer* _pConstantBufferBone;
+	ID3D11Buffer* _pConstantBufferSkinBone;
 
 	bool _isSkinned = false;
 

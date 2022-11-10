@@ -36,9 +36,9 @@ HRESULT SoundManager::Release()
         if (sound.second)
         {
             sound.second->Release();
+            delete sound.second;
+            sound.second = nullptr;
         }
-
-        delete sound.second;
     }
 
     _pSystem->close();

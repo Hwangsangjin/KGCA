@@ -143,7 +143,7 @@
     <ClInclude Include="DxRT.h">
       <Filter>소스 파일\Core\DxRT</Filter>
     </ClInclude>
-    <ClInclude Include="FbxLoader.h">
+    <ClInclude Include="FbxData.h">
       <Filter>소스 파일\Core\FBX</Filter>
     </ClInclude>
     <ClInclude Include="FbxObject3D.h">
@@ -229,7 +229,7 @@
     <ClCompile Include="DxRT.cpp">
       <Filter>소스 파일\Core\DxRT</Filter>
     </ClCompile>
-    <ClCompile Include="FbxLoader.cpp">
+    <ClCompile Include="FbxData.cpp">
       <Filter>소스 파일\Core\FBX</Filter>
     </ClCompile>
     <ClCompile Include="FbxObject3D.cpp">
