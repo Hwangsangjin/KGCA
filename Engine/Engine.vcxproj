@@ -136,7 +136,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "*.h" "../../Include/$(ProjectName)"</Command>
+      <Command>copy "*.h" "../../Include/$(ProjectName)"
+copy "*.hlsl" "../../Resource/Shader"</Command>
     </PostBuildEvent>
     <Lib />
   </ItemDefinitionGroup>
@@ -229,21 +230,24 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
+    <None Include="Default.hlsl">
       <FileType>Document</FileType>
     </None>
-    <None Include="..\..\Resource\Shader\Mask.hlsl">
+    <None Include="Mask.hlsl">
       <FileType>Document</FileType>
     </None>
-    <None Include="..\..\Resource\Shader\RenderTarget.hlsl">
+    <None Include="RenderTarget.hlsl">
       <FileType>Document</FileType>
     </None>
-    <None Include="..\..\Resource\Shader\Shape.hlsl">
+    <None Include="Shape.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Skinning.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resource\Shader\Skinning.hlsl">
+    <None Include="VertexNormal.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

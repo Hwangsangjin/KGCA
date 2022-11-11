@@ -60,9 +60,6 @@
     <Filter Include="소스 파일\Core\Shader">
       <UniqueIdentifier>{c6e8abb3-3a1b-4569-b94f-4d4a6ec6d2c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Shader\HLSL">
-      <UniqueIdentifier>{f56e4a8c-7824-4ce4-a8a7-887d91d594d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\Shape">
       <UniqueIdentifier>{2e82e5b3-a206-45f9-82ba-320a0f1a04e0}</UniqueIdentifier>
     </Filter>
@@ -71,6 +68,9 @@
     </Filter>
     <Filter Include="소스 파일\Core\Texture">
       <UniqueIdentifier>{c73be6af-b366-47e6-b14a-6b09a1ede615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\HLSL">
+      <UniqueIdentifier>{ee2aabbf-db27-4485-a428-0063ce204a69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,20 +246,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resource\Shader\Shape.hlsl">
-      <Filter>소스 파일\Core\Shader\HLSL</Filter>
+    <None Include="Default.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
     </None>
-    <None Include="..\..\Resource\Shader\RenderTarget.hlsl">
-      <Filter>소스 파일\Core\Shader\HLSL</Filter>
+    <None Include="Mask.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
     </None>
-    <None Include="..\..\Resource\Shader\Mask.hlsl">
-      <Filter>소스 파일\Core\Shader\HLSL</Filter>
+    <None Include="RenderTarget.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
     </None>
-    <None Include="..\..\Resource\Shader\DefaultObject.hlsl">
-      <Filter>소스 파일\Core\Shader\HLSL</Filter>
+    <None Include="Shape.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
     </None>
-    <None Include="..\..\Resource\Shader\Skinning.hlsl">
-      <Filter>소스 파일\Core\Shader\HLSL</Filter>
+    <None Include="Skinning.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
+    <None Include="VertexNormal.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
     </None>
   </ItemGroup>
 </Project>
