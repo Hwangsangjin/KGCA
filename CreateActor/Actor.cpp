@@ -132,7 +132,7 @@ void Actor::UpdateAnimation(ID3D11DeviceContext* pImmediateContext)
 	else
 	{
 		_pFbxData->UpdateSkeleton(pImmediateContext, _animFrame, _cbDataBone);
-		_pFbxActionData->UpdateSkinning(pImmediateContext, _cbDataBone, _cbDrawGeometry);
+		_pFbxData->UpdateSkinning(pImmediateContext, _cbDataBone, _cbDrawGeometry);
 	}
 
 	for (size_t iBone = 0; iBone < _pConstantBufferSkinBone.size(); iBone++)

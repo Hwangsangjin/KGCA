@@ -18,7 +18,7 @@ HRESULT Scene::Init()
 	FbxData* pFbxDataA = new FbxData;
 	if (SUCCEEDED(pFbxDataA->Init()))
 	{
-		if (SUCCEEDED(pFbxDataA->Load("../../data/fbx/Swat@turning_right_45_degrees.fbx")))
+		if (SUCCEEDED(pFbxDataA->Load("../../Resource/FBX/Ryan.fbx")))
 		{
 			pFbxDataA->CreateConstantBuffer(_pd3dDevice);
 		}
@@ -28,52 +28,32 @@ HRESULT Scene::Init()
 	FbxData* pFbxDataB = new FbxData;
 	if (SUCCEEDED(pFbxDataB->Init()))
 	{
-		if (SUCCEEDED(pFbxDataB->Load("../../data/fbx/Swat@turning_right_45_degrees.fbx")))
+		if (SUCCEEDED(pFbxDataB->Load("../../Resource/FBX/Man.fbx")))
 		{
 			pFbxDataB->CreateConstantBuffer(_pd3dDevice);
 		}
 	}
 	_pFbxDatas.push_back(pFbxDataB);
 
-	//FbxData* pRyan = new FbxData;
-	//if (SUCCEEDED(pRyan->Init()))
-	//{
-	//	if (SUCCEEDED(pRyan->Load("../../Resource/FBX/Renekton.fbx")))
-	//	{
-	//		pRyan->CreateConstantBuffer(_pd3dDevice);
-	//	}
-	//}
-	//_pFbxDatas.push_back(pRyan);
-	
-	//FbxData* pMultiCameras = new FbxData;
-	//if (SUCCEEDED(pMultiCameras->Init()))
-	//{
-	//	if (SUCCEEDED(pMultiCameras->Load("../../Resource/FBX/MultiCameras.fbx")))
-	//	{
-	//		pMultiCameras->CreateConstantBuffer(_pd3dDevice);
-	//	}
-	//}
-	//_pFbxDatas.push_back(pMultiCameras);
+	FbxData* pFbxDataC = new FbxData;
+	if (SUCCEEDED(pFbxDataC->Init()))
+	{
+		if (SUCCEEDED(pFbxDataC->Load("../../Resource/FBX/Swat@turning_right_45_degrees.fbx")))
+		{
+			pFbxDataC->CreateConstantBuffer(_pd3dDevice);
+		}
+	}
+	_pFbxDatas.push_back(pFbxDataC);
 
-	//FbxData* pTurret = new FbxData;
-	//if (SUCCEEDED(pTurret->Init()))
-	//{
-	//	if (SUCCEEDED(pTurret->Load("../../Resource/FBX/Turret_Deploy1/Turret_Deploy1.fbx")))
-	//	{
-	//		pTurret->CreateConstantBuffer(_pd3dDevice);
-	//	}
-	//}
-	//_pFbxDatas.push_back(pTurret);
-
-	//FbxData* pMan = new FbxData;
-	//if (SUCCEEDED(pMan->Init()))
-	//{
-	//	if (SUCCEEDED(pMan->Load("../../Resource/FBX/Man.fbx")))
-	//	{
-	//		pMan->CreateConstantBuffer(_pd3dDevice);
-	//	}
-	//}
-	//_pFbxDatas.push_back(pMan);
+	FbxData* pFbxDataD = new FbxData;
+	if (SUCCEEDED(pFbxDataD->Init()))
+	{
+		if (SUCCEEDED(pFbxDataD->Load("../../Resource/FBX/Swat.fbx")))
+		{
+			pFbxDataD->CreateConstantBuffer(_pd3dDevice);
+		}
+	}
+	_pFbxDatas.push_back(pFbxDataD);
 
 	W_STR defaultDir = L"../../Resource/FBX/";
 	std::wstring shaderfilename = L"../../Resource/Shader/Skinning.hlsl";
@@ -87,17 +67,41 @@ HRESULT Scene::Init()
 		}
 	}
 
+	Actor* pRyan = new Actor;
+	pRyan->_fbxListIndex = 0;
+	pRyan->_pFbxData = _pFbxDatas[pRyan->_fbxListIndex];
+	pRyan->_world._41 = -5.0f;
+	pRyan->_animScene = pRyan->_pFbxData->_animScene;
+	pRyan->CreateConstantBuffer(_pd3dDevice);
+	ActionTable ryanAction;
+	ryanAction.isLoop = true;
+	pRyan->_actions.insert(std::make_pair(L"Walk", ryanAction));
+	pRyan->_currentAction = pRyan->_actions.find(L"Walk")->second;
+	_pActors.push_back(pRyan);
+
+	Actor* pMan = new Actor;
+	pMan->_fbxListIndex = 1;
+	pMan->_pFbxData = _pFbxDatas[pMan->_fbxListIndex];
+	pMan->_world._41 = 5.0f;
+	pMan->_animScene = pMan->_pFbxData->_animScene;
+	pMan->CreateConstantBuffer(_pd3dDevice);
+	ActionTable manAction;
+	manAction.isLoop = true;
+	pMan->_actions.insert(std::make_pair(L"Walk", manAction));
+	pMan->_currentAction = pMan->_actions.find(L"Walk")->second;
+	_pActors.push_back(pMan);
+
 	_pActor = new Actor;
-	_pActor->_fbxListIndex = 1;
+	_pActor->_fbxListIndex = 3;
 	_pActor->_pFbxData = _pFbxDatas[_pActor->_fbxListIndex];
-	_pActor->_pFbxActionData = pFbxDataA;
+	_pActor->_pFbxActionData = pFbxDataC;
 	if (_pActor->_pFbxActionData)
 	{
 		_pActor->_animScene = _pActor->_pFbxActionData->_animScene;
-		_pActor->_pFbxDatas.insert(std::make_pair(L"Walking", pFbxDataA));
-		_pActor->_currentAction.startFrame = pFbxDataA->_animScene.startFrame;
+		_pActor->_pFbxDatas.insert(std::make_pair(L"Walk", pFbxDataC));
+		_pActor->_currentAction.startFrame = pFbxDataC->_animScene.startFrame;
+		//_pActor->_currentAction.endFrame = pFbxDataC->_animScene.endFrame;
 		_pActor->_currentAction.endFrame = 50;
-		//_pActor->_currentAction.endFrame = pFbxDataA->_animScene.endFrame;
 	}
 	else
 	{
@@ -111,6 +115,23 @@ HRESULT Scene::Init()
 
 	_pActor->CreateConstantBuffer(_pd3dDevice);
 
+	/*for (size_t i = 0; i < 5; i++)
+	{
+		Actor* pActor = new Actor;
+		pActor->_fbxListIndex = 0;
+		pActor->_pFbxData = _pFbxDatas[pActor->_fbxListIndex];
+		pActor->_world._41 = -4.0f + i * 2;
+		pActor->_world._43 = 4.0f;
+		pActor->_animScene = pActor->_pFbxData->_animScene;
+		pActor->CreateConstantBuffer(_pd3dDevice);
+
+		ActionTable action;
+		action.isLoop = true;
+		pActor->_actions.insert(std::make_pair(L"Walk", action));
+		pActor->_currentAction = pActor->_actions.find(L"Walk")->second;
+
+		_pActors.push_back(pActor);
+	}*/
 
 	// ºäÆ÷Æ®
 	int width = rtClient.right / 5;
@@ -127,7 +148,7 @@ HRESULT Scene::Init()
 
 	// ¸Ê
 	_pMap = new Map;
-	_pMap->Customize(4 + 1, 4 + 1);
+	_pMap->Customize(256 + 1, 256 + 1);
 	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/DefaultObject.hlsl", L"../../Resource/Map/Map.png");
 
 	// Å¥ºê
@@ -204,15 +225,15 @@ HRESULT Scene::Frame()
 		_pCamera[i]->Frame();
 	}
 
-	//for (auto& fbx : _pFbxDatas)
-	//{
-	//	fbx->UpdateAnimation(_pImmediateContext);
-	//}
+	for (auto& object : _pObjects)
+	{
+		object->Frame();
+	}
 
-	//for (auto& pObject : _pObjects)
-	//{
-	//	pObject->Frame();
-	//}
+	for (auto& actor : _pActors)
+	{
+		actor->UpdateAnimation(_pImmediateContext);
+	}
 
 	_pActor->UpdateAnimation(_pImmediateContext);
 
@@ -247,43 +268,23 @@ HRESULT Scene::Render()
 	D3DXVec3Normalize(&light, &light);
 
 	// FBX
-	//for (size_t i = 0; i < _pFbxDatas.size(); i++)
-	//{
-	//	_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFbxDatas[i]->_pConstantBufferBone);
-
-	//	for (size_t j = 0; j < _pFbxDatas[i]->_pDrawObjects.size(); j++)
-	//	{
-	//		DxMatrix controlWorld;
-	//		//D3DXMatrixRotationY(&controlWorld, timer);
-	//		FbxSkinningObject3D* pObject = _pFbxDatas[i]->_pDrawObjects[j];
-	//		pObject->_constantBuffer.x = light.x;
-	//		pObject->_constantBuffer.y = light.y;
-	//		pObject->_constantBuffer.z = light.z;
-	//		pObject->SetMatrix(&controlWorld, &_pMainCamera->_view, &_pMainCamera->_projection);
-	//		pObject->Render();
-	//	}
-	//}
+	for (size_t i = 0; i < _pActors.size(); i++)
+	{
+		_pActors[i]->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
+		_pActors[i]->Render(_pImmediateContext);
+	}
 
 	_pActor->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
 	_pActor->Render(_pImmediateContext);
 
 	// ºäÆ÷Æ®
-	for (size_t i = 0; i < _pFbxDatas.size(); i++)
+	for (size_t i = 0; i < 4; i++)
 	{
-		//_pImmediateContext->VSSetConstantBuffers(1, 1, &_pFbxDatas[i]->_pConstantBufferBone);
+		_pImmediateContext->RSSetViewports(1, &_viewport[i]);
 
-		for (size_t j = 0; j < _pFbxDatas[i]->_pDrawObjects.size(); j++)
-		{
-			for (size_t k = 0; k < 4; k++)
-			{
-				_pImmediateContext->RSSetViewports(1, &_viewport[k]);
-
-				DxMatrix controlWorld;
-				FbxSkinningObject3D* pObject = _pFbxDatas[i]->_pDrawObjects[j];
-				pObject->SetMatrix(&controlWorld, &_pCamera[k]->_view, &_pCamera[k]->_projection);
-				pObject->Render();
-			}
-		}
+		DxMatrix controlWorld;
+		_pActor->SetMatrix(&controlWorld, &_pCamera[i]->_view, &_pCamera[i]->_projection);
+		_pActor->Render(_pImmediateContext);
 	}
 	
 	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
@@ -334,6 +335,17 @@ HRESULT Scene::Release()
 		delete _pCamera[i];
 		_pCamera[i] = nullptr;
 	}
+
+	for (auto& actor : _pActors)
+	{
+		actor->Release();
+		delete actor;
+		actor = nullptr;
+	}
+
+	_pActor->Release();
+	delete _pActor;
+	_pActor = nullptr;
 
 	return TRUE;
 }
