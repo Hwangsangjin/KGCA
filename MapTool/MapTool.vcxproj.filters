@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\MFC">
+      <UniqueIdentifier>{221f7117-722f-4f70-90f7-a530a1edc1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Precomplied">
+      <UniqueIdentifier>{76b62eec-1c1f-4b32-86e3-ef3cfdd51661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Sample">
+      <UniqueIdentifier>{0340c9d8-d0be-4af3-ae99-084407b6c403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Sample\Scene">
+      <UniqueIdentifier>{0493b4b1-a4cd-4d8f-ae29-c8e4e40c6b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Sample\Scene\Actor">
+      <UniqueIdentifier>{eca3e629-6388-48c3-bb08-8f8ffc6a3ac6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>소스 파일\Precomplied</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\Precomplied</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>소스 파일\Precomplied</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>소스 파일\Precomplied</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>소스 파일\MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>소스 파일\MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolDoc.h">
+      <Filter>소스 파일\MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolView.h">
+      <Filter>소스 파일\MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>소스 파일\MFC\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\MFC\Sample\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>소스 파일\MFC\Sample\Scene\Actor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>소스 파일\MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>소스 파일\MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolDoc.cpp">
+      <Filter>소스 파일\MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolView.cpp">
+      <Filter>소스 파일\MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\Precomplied</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>소스 파일\MFC\Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\MFC\Sample\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>소스 파일\MFC\Sample\Scene\Actor</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MapTool.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\userimages.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\MapToolDoc.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\MapTool.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MapTool.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+</Project>
