@@ -27,6 +27,9 @@ public:
 	// 윈도우 설정
 	HRESULT SetWindow(HINSTANCE hInstance, const WCHAR * title, UINT width, UINT height);
 
+	// 윈도우 핸들
+	void SetHandle(HWND hWnd);
+
 	// 윈도우 위치를 화면 중앙으로 이동
 	void CenterWindow();
 

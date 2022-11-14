@@ -171,17 +171,20 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClInclude Include="FbxObject3D.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="DxMath.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="DxState.h" />
     <ClInclude Include="EnginePCH.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Font.h" />
+    <ClInclude Include="Writer.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object2D.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Shape.h" />
@@ -201,13 +204,15 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClCompile Include="FbxObject3D.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="DxMath.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="DxState.cpp" />
     <ClCompile Include="EnginePCH.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Writer.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Object2D.cpp" />
     <ClCompile Include="Object3D.cpp" />
@@ -217,6 +222,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Shape.cpp" />

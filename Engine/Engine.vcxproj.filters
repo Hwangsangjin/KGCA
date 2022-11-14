@@ -15,9 +15,6 @@
     <Filter Include="소스 파일\Core\Device">
       <UniqueIdentifier>{4056bd43-d005-480e-9d8c-4a887e5bbb4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Font">
-      <UniqueIdentifier>{7819a383-ad0d-4fa4-b9ef-16e7e8197ab2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\Input">
       <UniqueIdentifier>{587e86c5-51cb-421c-84b5-9088d48587ef}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,15 @@
     <Filter Include="소스 파일\HLSL">
       <UniqueIdentifier>{ee2aabbf-db27-4485-a428-0063ce204a69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\Map">
+      <UniqueIdentifier>{f05106d4-cc07-4b5b-af45-4f03ccb64fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Quadtree">
+      <UniqueIdentifier>{381d76bb-3080-4753-b138-9260e17a2fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Writer">
+      <UniqueIdentifier>{7819a383-ad0d-4fa4-b9ef-16e7e8197ab2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -86,8 +92,8 @@
     <ClInclude Include="Timer.h">
       <Filter>소스 파일\Core\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>소스 파일\Core\Font</Filter>
+    <ClInclude Include="Writer.h">
+      <Filter>소스 파일\Core\Writer</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>소스 파일\Core\Input</Filter>
@@ -158,6 +164,15 @@
     <ClInclude Include="Object3D.h">
       <Filter>소스 파일\Core\Object</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>소스 파일\Core\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>소스 파일\Core\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>소스 파일\Core\Quadtree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,8 +187,8 @@
     <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\Core\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>소스 파일\Core\Font</Filter>
+    <ClCompile Include="Writer.cpp">
+      <Filter>소스 파일\Core\Writer</Filter>
     </ClCompile>
     <ClCompile Include="Core.cpp">
       <Filter>소스 파일\Core</Filter>
@@ -243,6 +258,15 @@
     </ClCompile>
     <ClCompile Include="Object3D.cpp">
       <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일\Core\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>소스 파일\Core\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>소스 파일\Core\Quadtree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

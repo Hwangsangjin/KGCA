@@ -1,6 +1,6 @@
 #pragma once
 
-class Font
+class Writer
 {
 private:
 	ID2D1Factory* _pd2dFactory = nullptr;

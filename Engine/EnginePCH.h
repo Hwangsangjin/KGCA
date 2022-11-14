@@ -37,8 +37,8 @@
 #pragma comment(lib, "zlib-md")
 
 // extern
-extern HWND hWnd;
-extern RECT rtClient;
+extern HWND gHandle;
+extern RECT gClient;
 
 // using
 using int8 = __int8;
@@ -134,7 +134,7 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 // define
 #define RESOLUTION_X		800.0f
 #define RESOLUTION_Y		600.0f
-#define RESOLUTION_RATIO    RESOLUTION_X / RESOLUTION_Y
+#define RESOLUTION_RATIO	RESOLUTION_X / RESOLUTION_Y
 
 #define GRAVITY				9.8f
 #define FRICTION			0.9f

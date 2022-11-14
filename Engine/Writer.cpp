@@ -1,25 +1,25 @@
 #include "pch.h"
-#include "Font.h"
+#include "Writer.h"
 #include "Input.h"
 
-HRESULT Font::Init()
+HRESULT Writer::Init()
 {
     HR(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &_pd2dFactory));
     HR(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)&_pWriteFactory));
     HR(_pWriteFactory->CreateTextFormat(L"Consolas", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", &_pTextFormat));
-    HR(_pWriteFactory->CreateTextLayout(_text.c_str(), _text.size(), _pTextFormat, rtClient.right, rtClient.bottom, &_pTextLayout));
+    HR(_pWriteFactory->CreateTextLayout(_text.c_str(), _text.size(), _pTextFormat, gClient.right, gClient.bottom, &_pTextLayout));
 
     return TRUE;
 }
 
-HRESULT Font::Frame()
+HRESULT Writer::Frame()
 {
     _point = INPUT->GetPosition();
 
     return TRUE;
 }
 
-HRESULT Font::Render()
+HRESULT Writer::Render()
 {
     Draw(0, 0, _text, { 1.0f, 1.0f, 1.0f, 1.0f });
 
@@ -70,15 +70,15 @@ HRESULT Font::Render()
         Draw(30, 280, L"SPACE", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
-    Draw(rtClient.right - 120.0f, rtClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
-    Draw(rtClient.right - 120.0f, rtClient.top + 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
-    Draw(rtClient.right - 120.0f, rtClient.top + 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
-    Draw(rtClient.right - 120.0f, rtClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(gClient.right - 120.0f, gClient.top + 0.0f, L"Top View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(gClient.right - 120.0f, gClient.top + 150.0f, L"Front View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(gClient.right - 120.0f, gClient.top + 300.0f, L"Side View", { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(gClient.right - 120.0f, gClient.top + 450.0f, L"User View", { 1.0f, 1.0f, 1.0f, 1.0f });
 
     return TRUE;
 }
 
-HRESULT Font::Release()
+HRESULT Writer::Release()
 {
     SAFE_RELEASE(_pTextColor);
     SAFE_RELEASE(_pTextLayout);
@@ -90,14 +90,14 @@ HRESULT Font::Release()
     return TRUE;
 }
 
-HRESULT Font::CreateDXResource()
+HRESULT Writer::CreateDXResource()
 {
     HR(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, &_pTextColor));
 
     return TRUE;
 }
 
-HRESULT Font::DeleteDXResource()
+HRESULT Writer::DeleteDXResource()
 {
     SAFE_RELEASE(_pTextColor);
     SAFE_RELEASE(_pd2dRenderTarget);
@@ -105,7 +105,7 @@ HRESULT Font::DeleteDXResource()
     return TRUE;
 }
 
-HRESULT Font::SetSurface(IDXGISurface1* pDXGISurface1)
+HRESULT Writer::SetSurface(IDXGISurface1* pDXGISurface1)
 {
     D2D1_RENDER_TARGET_PROPERTIES props;
     ZeroMemory(&props, sizeof(props));
@@ -123,9 +123,9 @@ HRESULT Font::SetSurface(IDXGISurface1* pDXGISurface1)
     return TRUE;
 }
 
-HRESULT Font::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
+HRESULT Writer::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
 {
-    D2D1_RECT_F rect = { x, y, rtClient.right, rtClient.bottom };
+    D2D1_RECT_F rect = { x, y, gClient.right, gClient.bottom };
 
     _pd2dRenderTarget->BeginDraw();
 
@@ -144,7 +144,7 @@ HRESULT Font::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
     return TRUE;
 }
 
-void Font::SetText(std::wstring text)
+void Writer::SetText(std::wstring text)
 {
     _text = text;
 }

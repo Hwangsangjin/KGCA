@@ -45,10 +45,10 @@ HRESULT Core::Run()
 
 HRESULT Core::CreateDXResource()
 {
-	_font.Init();
+	_writer.Init();
 	IDXGISurface1* pBackBuffer;
 	_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer);
-	_font.SetSurface(pBackBuffer);
+	_writer.SetSurface(pBackBuffer);
 	pBackBuffer->Release();
 
 	return TRUE;
@@ -56,14 +56,25 @@ HRESULT Core::CreateDXResource()
 
 HRESULT Core::DeleteDXResource()
 {
-	_font.DeleteDXResource();
+	_writer.DeleteDXResource();
+
+	return TRUE;
+}
+
+HRESULT Core::Tool()
+{
+	if (FAILED(CoreFrame()) || FAILED(CoreRender()))
+	{
+		_isRun = false;
+
+		return E_FAIL;
+	}
 
 	return TRUE;
 }
 
 HRESULT Core::CoreInit()
 {
-
 	HR(Device::Init());
 	HR(DxState::SetSamplerState(_pd3dDevice));
 	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
@@ -72,14 +83,14 @@ HRESULT Core::CoreInit()
 	HR(INPUT->Init());
 	HR(TIMER->Init());
 	HR(SOUND->Init());
-	HR(_font.Init());
+	HR(_writer.Init());
 	IDXGISurface1* pBackBuffer;
 	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer));
-	HR(_font.SetSurface(pBackBuffer));
+	HR(_writer.SetSurface(pBackBuffer));
 	pBackBuffer->Release();
 	
 	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
-	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, RESOLUTION_X, RESOLUTION_Y));
+	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, gClient.right, gClient.bottom));
 	
 	HR(Init());
 
@@ -91,8 +102,8 @@ HRESULT Core::CoreFrame()
 	INPUT->Frame();
 	TIMER->Frame();
 	SOUND->Frame();
-	_font.SetText(TIMER->GetText());
-	_font.Frame();
+	_writer.SetText(TIMER->GetText());
+	_writer.Frame();
 	Frame();
 
 	return TRUE;
@@ -150,7 +161,7 @@ HRESULT Core::CorePostRender()
 	_background.Render();
 	
 	// 폰트
-	_font.Render();
+	_writer.Render();
 
 	// 플리핑
 	_pSwapChain->Present(0, 0);
@@ -162,7 +173,7 @@ HRESULT Core::CoreRelease()
 {
 	_rendertarget.Release();
 	_background.Release();
-	_font.Release();
+	_writer.Release();
 	Release();
 	SHADER->Release();
 	SPRITE->Release();

@@ -98,10 +98,10 @@ void Object2D::SetScreenSpace()
     _collision.Set(_position.x - center.x * _scale.x, _position.y - center.y * _scale.y, _rect._w * _scale.x, _rect._h * _scale.y);
     _circle.Set(_position.x, _position.y, 40.0f);
 
-    _drawPosition.x = (_collision._x1 / rtClient.right) * 2.0f - 1.0f;
-    _drawPosition.y = -((_collision._y1 / rtClient.bottom) * 2.0f - 1.0f);
-    _drawSize.x = (_rect._w / rtClient.right) * 2.0f * _scale.x;
-    _drawSize.y = (_rect._h / rtClient.bottom) * 2.0f * _scale.y;
+    _drawPosition.x = (_collision._x1 / gClient.right) * 2.0f - 1.0f;
+    _drawPosition.y = -((_collision._y1 / gClient.bottom) * 2.0f - 1.0f);
+    _drawSize.x = (_rect._w / gClient.right) * 2.0f * _scale.x;
+    _drawSize.y = (_rect._h / gClient.bottom) * 2.0f * _scale.y;
 }
 
 void Object2D::UpdateVertexBuffer()

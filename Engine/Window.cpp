@@ -2,8 +2,8 @@
 #include "Window.h"
 
 // 윈도우 프로시저
-HWND hWnd;
-RECT rtClient;
+HWND gHandle;
+RECT gClient;
 Window* gWindow = nullptr;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -22,6 +22,10 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             UINT width = LOWORD(lParam);
             UINT height = HIWORD(lParam);
+            GetWindowRect(hWnd, &_rtWindow);
+            GetClientRect(hWnd, &_rtClient);
+            gClient = _rtClient;
+
             ResizeDevice(width, height);
         }
         break;
@@ -106,20 +110,27 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     // 등록한 윈도우를 생성한다.
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    _hWnd = CreateWindowW(title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
-    if (FAILED(_hWnd)) return E_FAIL;
+    HWND hWnd = CreateWindowW(title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
+    if (FAILED(hWnd)) return E_FAIL;
 
-    // 윈도우 영역과 클라이언트 영역을 얻는다.
-    GetWindowRect(_hWnd, &_rtWindow);
-    GetClientRect(_hWnd, &_rtClient);
-    ShowWindow(_hWnd, SW_SHOW);
+    // 윈도우 설정
+    SetHandle(hWnd);
+    ShowWindow(hWnd, SW_SHOW);
     ShowCursor(TRUE);
     CenterWindow();
 
-    hWnd = _hWnd;
-    rtClient = _rtClient;
-
     return TRUE;
+}
+
+// 윈도우 핸들
+void Window::SetHandle(HWND hWnd)
+{
+    // 윈도우 영역과 클라이언트 영역을 얻는다.
+    GetWindowRect(hWnd, &_rtWindow);
+    GetClientRect(hWnd, &_rtClient);
+    gClient = _rtClient;
+    gHandle = hWnd;
+    _hWnd = hWnd;
 }
 
 // 윈도우 중앙으로 이동

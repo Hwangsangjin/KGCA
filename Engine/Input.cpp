@@ -5,7 +5,7 @@ HRESULT Input::Init()
 {
 	ZeroMemory(_keyState, sizeof(DWORD) * 256);
 	::GetCursorPos(&_position);
-	::ScreenToClient(hWnd, &_position);
+	::ScreenToClient(gHandle, &_position);
 	_init = _position;
 
 	return TRUE;
@@ -14,7 +14,7 @@ HRESULT Input::Init()
 HRESULT Input::Frame()
 {
 	::GetCursorPos(&_position);			// 화면 좌표
-	::ScreenToClient(hWnd, &_position);	// 클라이언트 화면
+	::ScreenToClient(gHandle, &_position);	// 클라이언트 화면
 
 	_offset.x = _position.x - _init.x;
 	_offset.y = _position.y - _init.y;

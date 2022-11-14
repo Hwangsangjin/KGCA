@@ -91,11 +91,11 @@ HRESULT Device::CreateSwapChain()
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.BufferCount = 1;
-    sd.BufferDesc.Width = rtClient.right;
-    sd.BufferDesc.Height = rtClient.bottom;
+    sd.BufferDesc.Width = gClient.right;
+    sd.BufferDesc.Height = gClient.bottom;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = hWnd;
+    sd.OutputWindow = gHandle;
     sd.Windowed = true;
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -161,8 +161,8 @@ HRESULT Device::CreateDepthStencilView()
 // 뷰포트
 HRESULT Device::CreateViewport()
 {
-    _viewport.Width = rtClient.right;
-    _viewport.Height = rtClient.bottom;
+    _viewport.Width = gClient.right;
+    _viewport.Height = gClient.bottom;
     _viewport.TopLeftX = 0.0f;
     _viewport.TopLeftY = 0.0f;
     _viewport.MinDepth = 0.0f;
@@ -176,6 +176,10 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // 디바이스가 생성되지 않은 경우
     if (_pd3dDevice == nullptr) return TRUE;
 
+    // 클라이언트 설정
+    gClient.right = width;
+    gClient.bottom = height;
+
     // 리소스를 삭제한다.
     DeleteDXResource();
 
@@ -185,15 +189,15 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     SAFE_RELEASE(_pDepthStencilView);
 
     // 후면 버퍼의 크기를 조정한다.
-    DXGI_SWAP_CHAIN_DESC current, after;
-    _pSwapChain->GetDesc(&current);
-    _pSwapChain->ResizeBuffers(current.BufferCount, width, height, current.BufferDesc.Format, 0);
+    DXGI_SWAP_CHAIN_DESC currentSD, afterSD;
+    _pSwapChain->GetDesc(&currentSD);
+    HRESULT hr =  _pSwapChain->ResizeBuffers(currentSD.BufferCount, width, height, currentSD.BufferDesc.Format, 0);
 
     // 변경된 후면 버퍼의 크기를 얻는다.
-    _pSwapChain->GetDesc(&after);
-    GetClientRect(hWnd, &rtClient);
-    rtClient.right = after.BufferDesc.Width;
-    rtClient.bottom = after.BufferDesc.Height;
+    _pSwapChain->GetDesc(&afterSD);
+    GetClientRect(gHandle, &gClient);
+    gClient.right = afterSD.BufferDesc.Width;
+    gClient.bottom = afterSD.BufferDesc.Height;
 
     // 렌더타겟뷰를 생성하고 적용한다.
     HR(CreateRenderTargetView());

@@ -3,7 +3,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Timer.h"
-#include "Font.h"
+#include "Writer.h"
 #include "DxRT.h"
 #include "DxState.h"
 #include "SoundManager.h"
@@ -13,7 +13,7 @@
 
 class Core : public Window
 {
-private:
+public:
 	// 실행 플래그
 	bool _isRun = true;
 
@@ -25,9 +25,8 @@ private:
 	HRESULT CorePostRender();
 	HRESULT CoreRelease();
 
-protected:
 	// 폰트
-	Font _font;
+	Writer _writer;
 
 	// 배경
 	Object _background;
@@ -35,7 +34,6 @@ protected:
 	// 렌더타겟
 	DxRT _rendertarget;
 
-public:
 	Core() = default;
 	virtual ~Core() = default;
 
@@ -53,5 +51,8 @@ public:
 	// 리소스 생성, 삭제
 	virtual HRESULT CreateDXResource() override;
 	virtual HRESULT DeleteDXResource() override;
+
+	// 툴
+	HRESULT Tool();
 };
 
