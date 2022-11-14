@@ -11,7 +11,7 @@ public:
 	class Camera* _pMainCamera = nullptr;
 	class Camera* _pCamera[4];
 	class Map* _pMap = nullptr;
-	class Quadtree* _quadtree;
+	class Quadtree* _pQuadtree = nullptr;
 	class PixelCube* _pCube = nullptr;
 	class TextureBox* _pBox = nullptr;
 	class TextureBox* _pBox2 = nullptr;

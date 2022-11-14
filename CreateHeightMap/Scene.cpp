@@ -133,26 +133,6 @@ HRESULT Scene::Init()
 		_pActors.push_back(pActor);
 	}*/
 
-	// ºäÆ÷Æ®
-	int width = rtClient.right / 5;
-	int height = rtClient.bottom / 4;
-	for (int i = 0; i < 4; i++)
-	{
-		_viewport[i].Width = width;
-		_viewport[i].Height = height;
-		_viewport[i].TopLeftX = rtClient.right - width;
-		_viewport[i].TopLeftY = height * i;
-		_viewport[i].MinDepth = 0.0f;
-		_viewport[i].MaxDepth = 1.0f;
-	}
-
-	// ¸Ê
-	_pMap = new Map;
-	//_pMap->BuildMap(256 + 1, 256 + 1);
-	_pMap->LoadHeightMap(_pd3dDevice, _pImmediateContext, L"../../Resource/Map/HeightMap.bmp");
-	_pMap->BuildMap(_pMap->_width, _pMap->_height);
-	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Tile/Tile.png");
-
 	// Å¥ºê
 	_pCube = new PixelCube;
 	_pCube->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Shape.hlsl", L"");
@@ -176,11 +156,31 @@ HRESULT Scene::Init()
 	// ¸ÞÀÎ Ä«¸Þ¶ó
 	_pMainCamera = new CameraDebug;
 	_pMainCamera->CreateView(DxVector3(0.0f, 5.0f, -20.0f), DxVector3(0.0f, 0.0f, 0.0f), DxVector3(0.0f, 1.0f, 0.0f));
-	_pMainCamera->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, RESOLUTION_RATIO);
+	_pMainCamera->CreateProjection(1.0f, 10000.0f, PI_DIVISION_4, (float)gClient.right / (float)gClient.bottom);
+
+	// ¸Ê
+	_pMap = new Map;
+	//_pMap->BuildMap(256 + 1, 256 + 1);
+	_pMap->LoadHeightMap(_pd3dDevice, _pImmediateContext, L"../../Resource/Map/HeightMap.bmp");
+	_pMap->BuildMap(_pMap->_width, _pMap->_height);
+	_pMap->CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/Default.hlsl", L"../../Resource/Tile/Tile.png");
 
 	// ÄõµåÆ®¸®
-	_quadtree = new Quadtree;
-	_quadtree->CreateTree(_pMainCamera, _pMap);
+	_pQuadtree = new Quadtree;
+	_pQuadtree->CreateTree(_pMainCamera, _pMap);
+
+	// ºäÆ÷Æ®
+	int width = gClient.right / 5;
+	int height = gClient.bottom / 4;
+	for (int i = 0; i < 4; i++)
+	{
+		_viewport[i].Width = width;
+		_viewport[i].Height = height;
+		_viewport[i].TopLeftX = gClient.right - width;
+		_viewport[i].TopLeftY = height * i;
+		_viewport[i].MinDepth = 0.0f;
+		_viewport[i].MaxDepth = 1.0f;
+	}
 	
 	// Å¾ ºä
 	DxVector3 position = DxVector3(0.0f, 10.0f, -0.1f);
@@ -218,7 +218,7 @@ HRESULT Scene::Frame()
 {
 	ClearDeviceContext(_pImmediateContext);
 	
-	_quadtree->Frame();
+	_pQuadtree->Frame();
 
 	_pMainCamera->Frame();
 
@@ -246,7 +246,7 @@ HRESULT Scene::Render()
 {
 	// ¸Ê
 	_pMap->SetMatrix(nullptr, &_pMainCamera->_view, &_pMainCamera->_projection);
-	_quadtree->Render();
+	_pQuadtree->Render();
 
 	// ¿ÀºêÁ§Æ®
 	for (auto& pObject : _pObjects)
@@ -296,11 +296,11 @@ HRESULT Scene::Render()
 
 HRESULT Scene::Release()
 {
-	if (_quadtree)
+	if (_pQuadtree)
 	{
-		_quadtree->Release();
-		delete _quadtree;
-		_quadtree = nullptr;
+		_pQuadtree->Release();
+		delete _pQuadtree;
+		_pQuadtree = nullptr;
 	}
 
 	if (_pMap)

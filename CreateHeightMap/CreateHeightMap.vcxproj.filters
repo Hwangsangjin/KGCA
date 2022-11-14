@@ -29,16 +29,7 @@
     <ClCompile Include="Actor.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
     <ClCompile Include="TextureBox.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniMap.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Quadtree.cpp">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClCompile>
     <ClCompile Include="PixelCube.cpp">
@@ -55,16 +46,7 @@
     <ClInclude Include="Actor.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
     <ClInclude Include="TextureBox.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MiniMap.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Quadtree.h">
       <Filter>소스 파일\Sample\Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="PixelCube.h">

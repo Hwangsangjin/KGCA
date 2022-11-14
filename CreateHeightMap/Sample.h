@@ -4,6 +4,9 @@
 
 class Sample : public Core
 {
+private:
+	class Scene* _pScene = nullptr;
+
 public:
 	Sample() = default;
 	virtual ~Sample() = default;
@@ -17,7 +20,7 @@ public:
 	// 皋葛府 秦力
 	virtual HRESULT Release() override;
 
-private:
-	class Scene* _pScene = nullptr;
+	// 府家胶 积己
+	virtual HRESULT CreateDXResource() override;
 };
 

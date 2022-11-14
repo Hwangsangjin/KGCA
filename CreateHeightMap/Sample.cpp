@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Sample.h"
 #include "Scene.h"
-#include "Map.h"
 #include "Camera.h"
 #ifdef _DEBUG
 #include <dxgidebug.h>
@@ -28,7 +27,7 @@ void MemoryLeakCheck()
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
 	Sample sample;
-	sample.SetWindow(hInstance, L"Client", RESOLUTION_X, RESOLUTION_Y);
+	sample.SetWindow(hInstance, L"Client", 800, 600);
 	sample.Run();
 
 #ifdef DEBUG
@@ -73,6 +72,18 @@ HRESULT Sample::Release()
 		_pScene->Release();
 		delete _pScene;
 		_pScene = nullptr;
+	}
+
+	return TRUE;
+}
+
+HRESULT Sample::CreateDXResource()
+{
+	Core::CreateDXResource();
+
+	if (_pScene)
+	{
+		_pScene->_pMainCamera->CreateProjection(1.0f, 1000.0f, PI_DIVISION_4, (float)gClient.right / (float)gClient.bottom);
 	}
 
 	return TRUE;

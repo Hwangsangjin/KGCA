@@ -166,21 +166,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="MiniMap.cpp" />
-    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="TextureBox.cpp" />
     <ClCompile Include="PixelCube.cpp" />
-    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="MiniMap.h" />
-    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="TextureBox.h" />
     <ClInclude Include="PixelCube.h" />
-    <ClInclude Include="Map.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
   </ItemGroup>
