@@ -172,7 +172,7 @@ HRESULT Scene::Init()
 	// ºäÆ÷Æ®
 	int width = gClient.right / 5;
 	int height = gClient.bottom / 4;
-	for (int i = 0; i < 4; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		_viewport[i].Width = width;
 		_viewport[i].Height = height;
