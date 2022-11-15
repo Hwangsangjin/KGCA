@@ -12,7 +12,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // 메시지 프로시저
-HICON hIconS, hIconB;
 LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -22,9 +21,9 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             UINT width = LOWORD(lParam);
             UINT height = HIWORD(lParam);
-            GetWindowRect(hWnd, &_rtWindow);
-            GetClientRect(hWnd, &_rtClient);
-            gClient = _rtClient;
+            //GetWindowRect(hWnd, &_rtWindow);
+            //GetClientRect(hWnd, &_rtClient);
+            //gClient = _rtClient;
 
             ResizeDevice(width, height);
         }
@@ -111,7 +110,10 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
     HWND hWnd = CreateWindowW(title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
-    if (FAILED(hWnd)) return E_FAIL;
+    if (FAILED(hWnd))
+    {
+        return E_FAIL;
+    }
 
     // 윈도우 설정
     SetHandle(hWnd);

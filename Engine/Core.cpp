@@ -90,7 +90,7 @@ HRESULT Core::CoreInit()
 	pBackBuffer->Release();
 	
 	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
-	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, gClient.right, gClient.bottom));
+	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, 1920.0f, 1280.0f));
 	
 	HR(Init());
 

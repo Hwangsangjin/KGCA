@@ -143,7 +143,7 @@ HRESULT Device::CreateDepthStencilView()
     td.CPUAccessFlags = 0;
     td.MiscFlags = 0;
 
-    //HR(_pd3dDevice->CreateTexture2D(&td, nullptr, pDepthSencilTexture.GetAddressOf()));
+    //HR(_pd3dDevice->CreateTexture2D(&td, nullptr, pDepthStencilTexture.GetAddressOf()));
     HR(_pd3dDevice->CreateTexture2D(&td, nullptr, &pDepthStencilTexture));
 
     D3D11_DEPTH_STENCIL_VIEW_DESC dtvd;
@@ -151,7 +151,7 @@ HRESULT Device::CreateDepthStencilView()
     dtvd.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;    // 정규화 하지 않은 깊이값 24, 스텐실값 8
     dtvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
-    //_pd3dDevice->CreateDepthStencilView(pDepthSencilTexture.Get(), &dtvd, &_pDepthStencilView);
+    //_pd3dDevice->CreateDepthStencilView(pDepthStencilTexture.Get(), &dtvd, &_pDepthStencilView);
     HR(_pd3dDevice->CreateDepthStencilView(pDepthStencilTexture, &dtvd, &_pDepthStencilView));
     pDepthStencilTexture->Release();
 
@@ -191,13 +191,13 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // 후면 버퍼의 크기를 조정한다.
     DXGI_SWAP_CHAIN_DESC currentSD, afterSD;
     _pSwapChain->GetDesc(&currentSD);
-    HRESULT hr =  _pSwapChain->ResizeBuffers(currentSD.BufferCount, width, height, currentSD.BufferDesc.Format, 0);
+    _pSwapChain->ResizeBuffers(currentSD.BufferCount, width, height, currentSD.BufferDesc.Format, 0);
 
-    // 변경된 후면 버퍼의 크기를 얻는다.
-    _pSwapChain->GetDesc(&afterSD);
-    GetClientRect(gHandle, &gClient);
-    gClient.right = afterSD.BufferDesc.Width;
-    gClient.bottom = afterSD.BufferDesc.Height;
+    //// 변경된 후면 버퍼의 크기를 얻는다.
+    //_pSwapChain->GetDesc(&afterSD);
+    //GetClientRect(gHandle, &gClient);
+    //gClient.right = afterSD.BufferDesc.Width;
+    //gClient.bottom = afterSD.BufferDesc.Height;
 
     // 렌더타겟뷰를 생성하고 적용한다.
     HR(CreateRenderTargetView());

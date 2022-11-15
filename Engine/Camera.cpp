@@ -128,12 +128,12 @@ HRESULT CameraDebug::Frame()
 
 	if (INPUT->GetKey('Q') == KEY_STATE::HOLD)
 	{
-		_position += _up * _speed * DELTA_TIME;
+		_position -= _up * _speed * DELTA_TIME;
 	}
 
 	if (INPUT->GetKey('E') == KEY_STATE::HOLD)
 	{
-		_position -= _up * _speed * DELTA_TIME;
+		_position += _up * _speed * DELTA_TIME;
 	}
 
 	DxVector3 position;
