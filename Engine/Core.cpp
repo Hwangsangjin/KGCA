@@ -89,8 +89,8 @@ HRESULT Core::CoreInit()
 	HR(_writer.SetSurface(pBackBuffer));
 	pBackBuffer->Release();
 	
-	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Rainbow/Rainbow.bmp"));
-	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, 1920.0f, 1280.0f));
+	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Background/Background.png"));
+	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, 1920.0f, 1080.0f));
 	
 	HR(Init());
 
