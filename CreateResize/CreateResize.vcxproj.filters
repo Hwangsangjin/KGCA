@@ -12,33 +12,33 @@
     <Filter Include="소스 파일\Sample">
       <UniqueIdentifier>{f1920d7c-1bf2-4148-8e93-c7e72ebfdbdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Sample\Scene">
-      <UniqueIdentifier>{95a62a2a-7464-4345-825b-479ae7b85094}</UniqueIdentifier>
+    <Filter Include="소스 파일\Window">
+      <UniqueIdentifier>{aaf4ee65-8e41-4445-a438-1a83fc3b0fcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Sample\Scene\Object">
-      <UniqueIdentifier>{4fc24eec-12d4-4e3a-ba8a-584b269813f5}</UniqueIdentifier>
+    <Filter Include="소스 파일\Device">
+      <UniqueIdentifier>{37e65b04-29b3-46b1-9dae-9a4de6212f17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
       <Filter>소스 파일\Sample</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Sample\Scene</Filter>
+    <ClCompile Include="Window.cpp">
+      <Filter>소스 파일\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Ryan.cpp">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    <ClCompile Include="Device.cpp">
+      <Filter>소스 파일\Device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h">
       <Filter>소스 파일\Sample</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>소스 파일\Sample\Scene</Filter>
+    <ClInclude Include="Window.h">
+      <Filter>소스 파일\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Ryan.h">
-      <Filter>소스 파일\Sample\Scene\Object</Filter>
+    <ClInclude Include="Device.h">
+      <Filter>소스 파일\Device</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Core.h"
-#include "Scene.h"
+#include "Window.h"
 
-class Sample : public Core
+class Sample : public Window
 {
 public:
 	Sample() = default;
@@ -17,9 +16,5 @@ public:
 	virtual HRESULT Render() override;
 	// 메모리 해제
 	virtual HRESULT Release() override;
-
-private:
-	POINT _point = { 0, 0 };
-	Scene* _pScene = nullptr;
 };
 
