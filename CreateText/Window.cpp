@@ -1,9 +1,9 @@
-#include "pch.h"
 #include "Window.h"
+#include <assert.h>
 
 // 윈도우 프로시저
-HWND hWnd;
-RECT rtClient;
+HWND gHandle;
+RECT gClient;
 Window* gWindow = nullptr;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -20,7 +20,7 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         if (SIZE_MINIMIZED != wParam)
         {
             UINT width = LOWORD(lParam);
-            UINT height = HIWORD(lParam);
+            UINT height = LOWORD(lParam);
             ResizeDevice(width, height);
         }
         break;
@@ -28,6 +28,7 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
     }
+
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
@@ -67,6 +68,13 @@ HRESULT Window::Release()
 // 실행
 HRESULT Window::Run()
 {
+    // 초기화
+    if (FAILED(Init()))
+    {
+        return E_FAIL;
+    }
+
+    // 윈도우 메시지 처리
     MSG msg = { 0 };
     while (WM_QUIT != msg.message)
     {
@@ -75,21 +83,30 @@ HRESULT Window::Run()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-#ifdef CORE
         else
         {
-            return TRUE;
+            // 프레임, 렌더
+            if (FAILED(Frame()) || FAILED(Render()))
+            {
+                break;
+            }
         }
-#endif
     }
-    return E_FAIL;
+
+    // 릴리즈
+    if (FAILED(Release()))
+    {
+        return E_FAIL;
+    }
+
+    return TRUE;
 }
 
 // 윈도우 설정
 HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height)
 {
-    // 윈도우 클래스를 등록한다.
-    WNDCLASSEX wcex;
+    // 윈도우 클래스를 등록
+    WNDCLASSEXW wcex;
     ZeroMemory(&wcex, sizeof(WNDCLASSEX));
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -98,41 +115,50 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = NULL;
     wcex.lpszClassName = title;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
     if (!RegisterClassEx(&wcex)) return E_FAIL;
 
-    // 등록한 윈도우를 생성한다.
+    // 등록한 윈도우를 생성
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-    _hWnd = CreateWindowEx(WS_EX_TOPMOST, title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
-    if (FAILED(_hWnd)) return E_FAIL;
+    HWND hWnd = CreateWindowW(title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
+    if (FAILED(hWnd))
+    {
+        return E_FAIL;
+    }
 
-    // 윈도우 영역과 클라이언트 영역을 얻는다.
-    GetWindowRect(_hWnd, &_rtWindow);
-    GetClientRect(_hWnd, &_rtClient);
-    ShowWindow(_hWnd, SW_SHOW);
+    // 등록한 윈도우 설정
+    SetHandle(hWnd);
+    ShowWindow(hWnd, SW_SHOW);
     ShowCursor(TRUE);
     CenterWindow();
 
-    hWnd = _hWnd;
-    rtClient = _rtClient;
-
     return TRUE;
+}
+
+// 윈도우 핸들
+void Window::SetHandle(HWND hWnd)
+{
+    // 윈도우 영역과 클라이언트 영역 설정
+    GetWindowRect(hWnd, &_rtWindow);
+    GetClientRect(hWnd, &_rtClient);
+    gClient = _rtClient;
+    gHandle = hWnd;
+    _hWnd = hWnd;
 }
 
 // 윈도우 중앙으로 이동
 void Window::CenterWindow()
 {
-    // 화면 스크린의 해상도(넓이와 높이)을 얻는다.
+    // 화면 스크린의 해상도(넓이와 높이)
     const int width = GetSystemMetrics(SM_CXFULLSCREEN);
     const int height = GetSystemMetrics(SM_CYFULLSCREEN);
 
-    // 윈도우 클라이언트 중앙과 화면 스크린 중앙을 맞춘다.
+    // 윈도우 클라이언트 중앙과 화면 스크린 중앙을 설정
     int x = (width - (_rtWindow.right - _rtWindow.left)) / 2;
     int y = (height - (_rtWindow.bottom - _rtWindow.top)) / 2;
 
-    // 윈도우를 화면 중앙으로 이동한다.
+    // 윈도우를 화면 중앙으로 이동
     MoveWindow(_hWnd, x, y, _rtWindow.right - _rtWindow.left, _rtWindow.bottom - _rtWindow.top, true);
 }
