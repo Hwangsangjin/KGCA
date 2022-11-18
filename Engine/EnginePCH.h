@@ -176,9 +176,13 @@ public:								\
 
 #define GET_SINGLE(type)	type::GetInstance()
 
-#define SAFE_DELETE(p)		{ if (p) { delete p; p = nullptr; } }
-#define SAFE_RELEASE(p)		{ if (p) { p->Release(); p = nullptr; } }
-#define SAFE_CLEARSTATE(p)	{ if (p) { p->ClearState(); } }
+#define SAFE_ZERO(A)		{ A = 0; }
+#define SAFE_NEW(A, B)		{ if (!A) A = new B; }
+#define SAFE_NEW_ARRAY(A, B, C) { if (!A && C) A = new B[C]; }
+#define SAFE_DELETE(A)		{ if (A) { delete A; A = nullptr; } }
+#define SAFE_DELETE_ARRAY(A) { if (A) delete [] A; (A) = nullptr; }
+#define SAFE_RELEASE(A)		{ if (A) { A->Release(); A = nullptr; } }
+#define SAFE_CLEARSTATE(A)	{ if (A) { A->ClearState(); } }
 
 #define DELTA_TIME			GET_SINGLE(Timer)->GetDeltaTime()
 #define TIMER				GET_SINGLE(Timer)
