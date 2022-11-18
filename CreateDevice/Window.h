@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Windows.h>
+#include "Device.h"
 
-class Window
+class Window : public Device
 {
 protected:
 	HWND _hWnd;		// 윈도우 핸들
@@ -14,13 +14,13 @@ public:
 	virtual ~Window() = default;
 
 	// 초기화
-	virtual HRESULT Init();
+	virtual HRESULT Init() override;
 	// 프레임 계산
-	virtual HRESULT Frame();
+	virtual HRESULT Frame() override;
 	// 렌더
-	virtual HRESULT Render();
+	virtual HRESULT Render() override;
 	// 메모리 해제
-	virtual HRESULT Release();
+	virtual HRESULT Release() override;
 	// 실행
 	virtual HRESULT Run();
 
