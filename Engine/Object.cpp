@@ -91,12 +91,12 @@ HRESULT Object::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmedi
 
 HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile)
 {
-    HR(SetDevice(pd3dDevice, pImmediateContext));
-    HR(CreateVertexBuffer());
-    HR(CreateIndexBuffer());
-    HR(CreateConstantBuffer());
-    HR(CreateShader(shaderFile));
-    HR(CreateInputLayout());
+    assert(SUCCEEDED(SetDevice(pd3dDevice, pImmediateContext)));
+    assert(SUCCEEDED(CreateVertexBuffer()));
+    assert(SUCCEEDED(CreateIndexBuffer()));
+    assert(SUCCEEDED(CreateConstantBuffer()));
+    assert(SUCCEEDED(CreateShader(shaderFile)));
+    assert(SUCCEEDED(CreateInputLayout()));
 
     if (SUCCEEDED(LoadTexture(textureFile)))
     {
@@ -152,10 +152,10 @@ HRESULT Object::CreateVertexBuffer()
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_vertices.at(0);
-    HR(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &_pVertexBuffer));
+        &_pVertexBuffer)));
 
     return TRUE;
 }
@@ -189,10 +189,10 @@ HRESULT Object::CreateIndexBuffer()
     D3D11_SUBRESOURCE_DATA  sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_indices.at(0);
-    HR(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
-        &_pIndexBuffer));
+        &_pIndexBuffer)));
 
     return TRUE;
 }
@@ -224,10 +224,10 @@ HRESULT Object::CreateConstantBuffer()
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_constantBuffer;
-    HR(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &_pConstantBuffer));
+        &_pConstantBuffer)));
 
     return TRUE;
 }
@@ -266,8 +266,8 @@ HRESULT Object::CreateInputLayout()
     UINT numElements = ARRAYSIZE(ied);
 
     // 생성
-    HR(_pd3dDevice->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
-        _pShader->_pVertexShaderCode->GetBufferSize(), &_pInputLayout));
+    assert(SUCCEEDED(_pd3dDevice->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
+        _pShader->_pVertexShaderCode->GetBufferSize(), &_pInputLayout)));
 
     return TRUE;
 }
@@ -323,10 +323,10 @@ ID3D11Buffer* DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, void* pDataAddres
     D3D11_SUBRESOURCE_DATA  sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = pDataAddress;
-    HR(pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(pd3dDevice->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &pVertexBuffer));
+        &pVertexBuffer)));
 
     return pVertexBuffer;
 }

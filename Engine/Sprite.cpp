@@ -26,7 +26,7 @@ HRESULT Sprite::Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateCo
 {
     Texture* pMask = TEXTURE->Load(_maskPath);
 
-    HR(CreateObject(pd3dDevice, pImmediateContext, _shaderPath, _texturePath));
+    assert(SUCCEEDED(CreateObject(pd3dDevice, pImmediateContext, _shaderPath, _texturePath)));
     SetMask(pMask);
 
     return TRUE;

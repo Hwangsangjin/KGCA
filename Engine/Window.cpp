@@ -8,6 +8,7 @@ Window* gWindow = nullptr;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     assert(gWindow);
+
     return gWindow->MsgProc(hWnd, message, wParam, lParam);
 }
 
@@ -34,9 +35,6 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 // 생성자
 Window::Window()
-    : _hWnd(0)
-    , _rtWindow{ 0, 0 }
-    , _rtClient{ 0, 0 }
 {
     gWindow = this;
 }
@@ -69,10 +67,7 @@ HRESULT Window::Release()
 HRESULT Window::Run()
 {
     // 초기화
-    if (FAILED(Init()))
-    {
-        return E_FAIL;
-    }
+    assert(SUCCEEDED(Init()));
 
     // 윈도우 메시지 처리
     MSG msg = { 0 };
@@ -90,10 +85,7 @@ HRESULT Window::Run()
     }
 
     // 릴리즈
-    if (FAILED(Release()))
-    {
-        return E_FAIL;
-    }
+    assert(SUCCEEDED(Release()));
 
     return E_FAIL;
 }
@@ -113,16 +105,13 @@ HRESULT Window::SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, U
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszClassName = title;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-    if (!RegisterClassEx(&wcex)) return E_FAIL;
+    assert(RegisterClassEx(&wcex));
 
     // 등록한 윈도우를 생성
     RECT rect = { 0, 0, width, height };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
     HWND hWnd = CreateWindowW(title, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
-    if (FAILED(hWnd))
-    {
-        return E_FAIL;
-    }
+    assert(SUCCEEDED(hWnd));
 
     // 등록한 윈도우 설정
     SetHandle(hWnd);
@@ -139,9 +128,9 @@ void Window::SetHandle(HWND hWnd)
     // 윈도우 영역과 클라이언트 영역 설정
     GetWindowRect(hWnd, &_rtWindow);
     GetClientRect(hWnd, &_rtClient);
-    gClient = _rtClient;
-    gHandle = hWnd;
     _hWnd = hWnd;
+    gHandle = hWnd;
+    gClient = _rtClient;
 }
 
 // 윈도우 중앙으로 이동

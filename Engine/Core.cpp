@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Core.h"
-#include "Input.h"
 #include "Timer.h"
+#include "Input.h"
 #include "Text.h"
 
 // 초기화
@@ -32,10 +32,7 @@ HRESULT Core::Release()
 HRESULT Core::Run()
 {
 	// 코어 초기화
-	if (FAILED(CoreInit()))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(CoreInit()));
 
 	while (_isRun)
 	{
@@ -53,10 +50,7 @@ HRESULT Core::Run()
 	}
 
 	// 코어 릴리즈
-	if (FAILED(CoreRelease()))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(CoreRelease()));
 
 	return TRUE;
 }
@@ -64,18 +58,10 @@ HRESULT Core::Run()
 // 리소스 생성
 HRESULT Core::CreateResource()
 {
-	Text::GetInstance()->Init();
+	TEXT->Init();
 	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
-
-	if (FAILED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())))
-	{
-		return E_FAIL;
-	}
-
-	if (FAILED(Text::GetInstance()->SetSurface(pBackBuffer.Get())))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())));
+	assert(SUCCEEDED(TEXT->SetSurface(pBackBuffer.Get())));
 
 	return TRUE;
 }
@@ -83,7 +69,7 @@ HRESULT Core::CreateResource()
 // 리소스 삭제
 HRESULT Core::DeleteResource()
 {
-	Text::GetInstance()->DeleteResource();
+	TEXT->DeleteResource();
 
 	return TRUE;
 }
@@ -91,30 +77,16 @@ HRESULT Core::DeleteResource()
 // 코어 초기화
 HRESULT Core::CoreInit()
 {
-	if (FAILED(Device::Init()))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(Device::Init()));
 
-	Input::GetInstance()->Init();
-	Timer::GetInstance()->Init();
-	Text::GetInstance()->Init();
+	assert(SUCCEEDED(TIMER->Init()));
+	assert(SUCCEEDED(INPUT->Init()));
+	assert(SUCCEEDED(TEXT->Init()));
 	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
+	assert(SUCCEEDED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())));
+	assert(SUCCEEDED(Text::GetInstance()->SetSurface(pBackBuffer.Get())));
 
-	if (FAILED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())))
-	{
-		return E_FAIL;
-	}
-
-	if (FAILED(Text::GetInstance()->SetSurface(pBackBuffer.Get())))
-	{
-		return E_FAIL;
-	}
-
-	if (FAILED(Init()))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(Init()));
 
 	return TRUE;
 }
@@ -122,10 +94,10 @@ HRESULT Core::CoreInit()
 // 코어 프레임
 HRESULT Core::CoreFrame()
 {
-	Input::GetInstance()->Frame();
-	Timer::GetInstance()->Frame();
-	Text::GetInstance()->SetText(Timer::GetInstance()->GetText());
-	Text::GetInstance()->Frame();
+	assert(SUCCEEDED(TIMER->Frame()));
+	assert(SUCCEEDED(INPUT->Frame()));
+	TEXT->SetText(TIMER->GetText());
+	assert(SUCCEEDED(TEXT->Frame()));
 
 	Frame();
 
@@ -143,12 +115,12 @@ HRESULT Core::CorePreRender()
 
 HRESULT Core::CoreRender()
 {
-	CorePreRender();
+	assert(SUCCEEDED(CorePreRender()));
 
-	Text::GetInstance()->Render();
-	Render();
+	assert(SUCCEEDED(TEXT->Render()));
+	assert(SUCCEEDED(Render()));
 
-	CorePostRender();
+	assert(SUCCEEDED(CorePostRender()));
 
 	return TRUE;
 }
@@ -156,21 +128,18 @@ HRESULT Core::CoreRender()
 HRESULT Core::CorePostRender()
 {
 	// 플리핑
-	if (FAILED(_pSwapChain->Present(0, 0)))
-	{
-		return E_FAIL;
-	}
+	assert(SUCCEEDED(_pSwapChain->Present(0, 0)));
 
 	return TRUE;
 }
 
 HRESULT Core::CoreRelease()
 {
-	Release();
-	Input::GetInstance()->Release();
-	Timer::GetInstance()->Release();
-	Text::GetInstance()->Release();
-	Device::Release();
+	assert(SUCCEEDED(Release()));
+	assert(SUCCEEDED(TIMER->Release()));
+	assert(SUCCEEDED(INPUT->Release()));
+	assert(SUCCEEDED(TEXT->Release()));
+	assert(SUCCEEDED(Device::Release()));
 
 	return TRUE;
 }

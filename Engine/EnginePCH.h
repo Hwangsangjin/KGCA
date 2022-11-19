@@ -2,7 +2,7 @@
 
 // header
 #include <Windows.h>
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <d3d11.h>
 #include <d2d1.h>
@@ -153,19 +153,10 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 #define GAME_END    }
 #define GAME_RUN(s,x,y) GAME_START GAME_WINDOW(s,x,y) GAME_END
 
-#define HR(todo)					\
-	{                               \
-		HRESULT hr = (todo);        \
-		if(FAILED(hr))              \
-		{                           \
-			E_FAIL;					\
-		}                           \
-	}
-
 #define DECLARE_SINGLE(type)		\
 private:							\
 	type() {}						\
-	~type() { Release(); }		    \
+	~type() {}					    \
                                     \
 public:								\
 	static type* GetInstance()		\
@@ -176,21 +167,21 @@ public:								\
 
 #define GET_SINGLE(type)		type::GetInstance()
 
+#define TEXT					GET_SINGLE(Text)
+#define INPUT					GET_SINGLE(Input)
+#define TIMER					GET_SINGLE(Timer)
+#define DELTA_TIME				GET_SINGLE(Timer)->GetDeltaTime()
+
+#define SOUND					GET_SINGLE(SoundManager)
+#define SHADER					GET_SINGLE(ShaderManager)
+#define SPRITE					GET_SINGLE(SpriteManager)
+#define TEXTURE					GET_SINGLE(TextureManager)
+
 #define SAFE_ZERO(A)			{ A = 0; }
 #define SAFE_NEW(A, B)			{ if (!A) A = new B; }
 #define SAFE_NEW_ARRAY(A, B, C) { if (!A && C) A = new B[C]; }
 #define SAFE_DELETE(A)			{ if (A) { delete A; A = nullptr; } }
 #define SAFE_DELETE_ARRAY(A)	{ if (A) delete [] A; (A) = nullptr; }
 #define SAFE_RELEASE(A)			{ if (A) { A->Release(); A = nullptr; } }
-#define SAFE_CLEARSTATE(A)		{ if (A) { A->ClearState(); } }
-
-#define DELTA_TIME				GET_SINGLE(Timer)->GetDeltaTime()
-#define TIMER					GET_SINGLE(Timer)
-#define INPUT					GET_SINGLE(Input)
-
-#define SOUND					GET_SINGLE(SoundManager)
-#define SHADER					GET_SINGLE(ShaderManager)
-#define SPRITE					GET_SINGLE(SpriteManager)
-#define TEXTURE					GET_SINGLE(TextureManager)
 
 #define RAND(min, max)			(min+((float)max-(float)min)*rand()/(float)RAND_MAX)

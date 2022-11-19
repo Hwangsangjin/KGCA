@@ -2,6 +2,8 @@
 
 class Text
 {
+	DECLARE_SINGLE(Text);
+
 private:
 	Microsoft::WRL::ComPtr<ID2D1Factory> _pd2dFactory;
 	Microsoft::WRL::ComPtr<IDWriteFactory> _pWriteFactory;
@@ -13,20 +15,7 @@ private:
 	std::wstring _text = L"KGCA Game Academy";
 	POINT _point = { 0, 0 };
 
-	Text() {}
-	~Text()
-	{
-		Release();
-	}
-
 public:
-	// 싱글톤
-	static Text* GetInstance()
-	{
-		static Text instance;
-		return &instance;
-	}
-
 	// 초기화
 	virtual HRESULT Init();
 	// 프레임 계산

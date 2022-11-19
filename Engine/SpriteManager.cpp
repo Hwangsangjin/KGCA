@@ -132,7 +132,7 @@ HRESULT SpriteManager::Load(std::wstring filename)
 	m_MaskTextureNameList.clear();
 	m_ShaderNameList.clear();
 
-	HR(GameDataLoad(filename.c_str()));
+	assert(SUCCEEDED(GameDataLoad(filename.c_str())));
 
 	for (int ifile = 0; ifile < filelist.size(); ifile++)
 	{

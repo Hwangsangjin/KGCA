@@ -23,10 +23,10 @@ HRESULT Timer::Frame()
 
 	if (_frameTime >= 1.0f)
 	{
-		_fps = static_cast<__int32>(_frameCount / _frameTime);
+		_fps = static_cast<int32>(_frameCount / _frameTime);
 
-		_frameTime = 0;
 		_frameCount = 0;
+		_frameTime = 0.0f;
 	}
 
 	_text = L"FPS: ";

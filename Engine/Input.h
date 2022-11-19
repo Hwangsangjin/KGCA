@@ -10,24 +10,13 @@ enum KEY_STATE
 
 class Input
 {
-private:
-    DWORD _keyState[256];
-    POINT _position;
+    DECLARE_SINGLE(Input);
 
-    Input() {}
-    ~Input()
-    {
-        Release();
-    }
+private:
+    DWORD _keyState[256] = { 0 };
+    POINT _position = { 0, 0 };
 
 public:
-    // 싱글톤
-    static Input* GetInstance()
-    {
-        static Input instance;
-        return &instance;
-    }
-
     // 초기화
     HRESULT Init();
     // 프레임 계산
