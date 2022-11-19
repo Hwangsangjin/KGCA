@@ -11,7 +11,7 @@ HRESULT Timer::Init()
 
 HRESULT Timer::Frame()
 {
-	uint64 currentCount;
+	__int64 currentCount;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
 
 	_deltaTime = (currentCount - _prevCount) / static_cast<float>(_frequency);
@@ -23,7 +23,7 @@ HRESULT Timer::Frame()
 
 	if (_frameTime >= 1.0f)
 	{
-		_fps = static_cast<uint32>(_frameCount / _frameTime);
+		_fps = static_cast<__int32>(_frameCount / _frameTime);
 
 		_frameTime = 0;
 		_frameCount = 0;
@@ -52,7 +52,7 @@ HRESULT Timer::Release()
 	return TRUE;
 }
 
-uint32 Timer::GetFPS()
+__int32 Timer::GetFPS()
 {
 	return _fps;
 }
@@ -60,6 +60,11 @@ uint32 Timer::GetFPS()
 float Timer::GetDeltaTime()
 {
 	return _deltaTime;
+}
+
+float Timer::GetGameTime()
+{
+	return _gameTime;
 }
 
 std::wstring Timer::GetText()

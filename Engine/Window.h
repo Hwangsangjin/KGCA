@@ -10,6 +10,7 @@ protected:
 	RECT _rtClient;	// 클라이언트 영역
 
 public:
+	// 생성자, 소멸자
 	Window();
 	virtual ~Window() = default;
 
@@ -25,7 +26,7 @@ public:
 	virtual HRESULT Run();
 
 	// 윈도우 설정
-	HRESULT SetWindow(HINSTANCE hInstance, const WCHAR * title, UINT width, UINT height);
+	HRESULT SetWindow(HINSTANCE hInstance, const WCHAR* title, UINT width, UINT height);
 
 	// 윈도우 핸들
 	void SetHandle(HWND hWnd);

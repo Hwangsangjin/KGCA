@@ -6,24 +6,20 @@ HRESULT Input::Init()
 	ZeroMemory(_keyState, sizeof(DWORD) * 256);
 	::GetCursorPos(&_position);
 	::ScreenToClient(gHandle, &_position);
-	_init = _position;
 
 	return TRUE;
 }
 
 HRESULT Input::Frame()
 {
-	::GetCursorPos(&_position);			// 화면 좌표
+	::GetCursorPos(&_position);				// 화면 좌표
 	::ScreenToClient(gHandle, &_position);	// 클라이언트 화면
 
-	_offset.x = _position.x - _init.x;
-	_offset.y = _position.y - _init.y;
-
-    for (size_t i = 0; i < 256; i++)
-    {
-        SHORT key = ::GetAsyncKeyState(i);  // 비동기 키 상태 
-        if (key & 0x8000) // 1000 0000 0000 0000
-        {
+	for (size_t i = 0; i < 256; i++)
+	{
+		SHORT key = ::GetAsyncKeyState(i);  // 비동기 키 상태 
+		if (key & 0x8000) // 1000 0000 0000 0000
+		{
 			if (_keyState[i] == KEY_STATE::NONE || _keyState[i] == KEY_STATE::UP)
 			{
 				_keyState[i] = KEY_STATE::DOWN;
@@ -32,7 +28,7 @@ HRESULT Input::Frame()
 			{
 				_keyState[i] = KEY_STATE::HOLD;
 			}
-        }
+		}
 		else
 		{
 			if (_keyState[i] == KEY_STATE::DOWN || _keyState[i] == KEY_STATE::HOLD)
@@ -44,9 +40,7 @@ HRESULT Input::Frame()
 				_keyState[i] = KEY_STATE::NONE;
 			}
 		}
-    }
-
-	_init = _position;
+	}
 
 	return TRUE;
 }

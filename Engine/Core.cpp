@@ -1,34 +1,48 @@
 #include "pch.h"
 #include "Core.h"
+#include "Input.h"
+#include "Timer.h"
+#include "Text.h"
 
+// 초기화
 HRESULT Core::Init()
 {
 	return TRUE;
 }
 
+// 프레임
 HRESULT Core::Frame()
 {
 	return TRUE;
 }
 
+// 렌더
 HRESULT Core::Render()
 {
 	return TRUE;
 }
 
+// 릴리즈
 HRESULT Core::Release()
 {
 	return TRUE;
 }
 
+// 실행
 HRESULT Core::Run()
 {
-	HR(CoreInit());
+	// 코어 초기화
+	if (FAILED(CoreInit()))
+	{
+		return E_FAIL;
+	}
 
 	while (_isRun)
 	{
+		// 윈도우 실행
 		if (Window::Run() == TRUE)
 		{
+			// 코어 프레임, 렌더
 			CoreFrame();
 			CoreRender();
 		}
@@ -38,72 +52,81 @@ HRESULT Core::Run()
 		}
 	}
 
-	HR(CoreRelease());
-
-	return TRUE;
-}
-
-HRESULT Core::CreateDXResource()
-{
-	_writer.Init();
-	IDXGISurface1* pBackBuffer;
-	_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer);
-	_writer.SetSurface(pBackBuffer);
-	pBackBuffer->Release();
-
-	return TRUE;
-}
-
-HRESULT Core::DeleteDXResource()
-{
-	_writer.DeleteDXResource();
-
-	return TRUE;
-}
-
-HRESULT Core::Tool()
-{
-	if (FAILED(CoreFrame()) || FAILED(CoreRender()))
+	// 코어 릴리즈
+	if (FAILED(CoreRelease()))
 	{
-		_isRun = false;
-
 		return E_FAIL;
 	}
 
 	return TRUE;
 }
 
-HRESULT Core::CoreInit()
+// 리소스 생성
+HRESULT Core::CreateResource()
 {
-	HR(Device::Init());
-	HR(DxState::SetSamplerState(_pd3dDevice));
-	HR(SHADER->SetDevice(_pd3dDevice, _pImmediateContext));
-	HR(SPRITE->SetDevice(_pd3dDevice, _pImmediateContext));
-	HR(TEXTURE->SetDevice(_pd3dDevice, _pImmediateContext));
-	HR(INPUT->Init());
-	HR(TIMER->Init());
-	HR(SOUND->Init());
-	HR(_writer.Init());
-	IDXGISurface1* pBackBuffer;
-	HR(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer));
-	HR(_writer.SetSurface(pBackBuffer));
-	pBackBuffer->Release();
-	
-	HR(_background.CreateObject(_pd3dDevice, _pImmediateContext, L"../../Resource/Shader/RenderTarget.hlsl", L"../../Resource/Background/Background.png"));
-	HR(_rendertarget.CreateRenderTarget(_pd3dDevice, _pImmediateContext, 1920.0f, 1080.0f));
-	
-	HR(Init());
+	Text::GetInstance()->Init();
+	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
+
+	if (FAILED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(Text::GetInstance()->SetSurface(pBackBuffer.Get())))
+	{
+		return E_FAIL;
+	}
 
 	return TRUE;
 }
 
+// 리소스 삭제
+HRESULT Core::DeleteResource()
+{
+	Text::GetInstance()->DeleteResource();
+
+	return TRUE;
+}
+
+// 코어 초기화
+HRESULT Core::CoreInit()
+{
+	if (FAILED(Device::Init()))
+	{
+		return E_FAIL;
+	}
+
+	Input::GetInstance()->Init();
+	Timer::GetInstance()->Init();
+	Text::GetInstance()->Init();
+	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
+
+	if (FAILED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(Text::GetInstance()->SetSurface(pBackBuffer.Get())))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(Init()))
+	{
+		return E_FAIL;
+	}
+
+	return TRUE;
+}
+
+// 코어 프레임
 HRESULT Core::CoreFrame()
 {
-	INPUT->Frame();
-	TIMER->Frame();
-	SOUND->Frame();
-	_writer.SetText(TIMER->GetText());
-	_writer.Frame();
+	Input::GetInstance()->Frame();
+	Timer::GetInstance()->Frame();
+	Text::GetInstance()->SetText(Timer::GetInstance()->GetText());
+	Text::GetInstance()->Frame();
+
 	Frame();
 
 	return TRUE;
@@ -111,19 +134,9 @@ HRESULT Core::CoreFrame()
 
 HRESULT Core::CorePreRender()
 {
-	// 그래픽스 파이프라인 바인딩
-	_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	_pImmediateContext->RSSetViewports(1, &_viewport);
-	_pImmediateContext->RSSetState(DxState::_pDefaultRSSolid);
-	_pImmediateContext->PSSetSamplers(0, 1, &DxState::_pDefaultSSMirror);
-	_pImmediateContext->OMSetBlendState(DxState::_pAlphaBlend, 0, -1);
-	_pImmediateContext->OMSetRenderTargets(1, &_pRenderTargetView, _pDepthStencilView);
-	_pImmediateContext->OMSetDepthStencilState(DxState::_pDefaultDepthStencil, 0xff);
-
-	// 후면 버퍼 클리어
-	const float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; // Red, Green, Blue, Alpha
-	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, color);
-	_pImmediateContext->ClearDepthStencilView(_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	// 후면 버퍼 삭제
+	const float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
+	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView.Get(), ClearColor);
 
 	return TRUE;
 }
@@ -131,24 +144,10 @@ HRESULT Core::CorePreRender()
 HRESULT Core::CoreRender()
 {
 	CorePreRender();
-	
-	// 렌더타겟 지정
-	_rendertarget._pOldRenderTargetView = _pRenderTargetView;
-	_rendertarget._pOldDepthStencilView = _pDepthStencilView;
-	_rendertarget._oldViewport[0] = _viewport;
-	
-	if (SUCCEEDED(_rendertarget.Begin(_pImmediateContext)))
-	{
-		Render();
-	
-		_rendertarget.End(_pImmediateContext);
-	}
-	
-	if (_rendertarget._pShaderResourceView)
-	{
-		_background._pShaderResourceView = _rendertarget._pShaderResourceView.Get();
-	}
-	
+
+	Text::GetInstance()->Render();
+	Render();
+
 	CorePostRender();
 
 	return TRUE;
@@ -156,32 +155,21 @@ HRESULT Core::CoreRender()
 
 HRESULT Core::CorePostRender()
 {
-	// 배경
-	_background.SetMatrix(nullptr, nullptr, nullptr);
-	_background.Render();
-	
-	// 폰트
-	_writer.Render();
-
 	// 플리핑
-	_pSwapChain->Present(0, 0);
+	if (FAILED(_pSwapChain->Present(0, 0)))
+	{
+		return E_FAIL;
+	}
 
 	return TRUE;
 }
 
 HRESULT Core::CoreRelease()
 {
-	_rendertarget.Release();
-	_background.Release();
-	_writer.Release();
 	Release();
-	SHADER->Release();
-	SPRITE->Release();
-	TEXTURE->Release();
-	TIMER->Release();
-	INPUT->Release();
-	SOUND->Release();
-	DxState::Release();
+	Input::GetInstance()->Release();
+	Timer::GetInstance()->Release();
+	Text::GetInstance()->Release();
 	Device::Release();
 
 	return TRUE;

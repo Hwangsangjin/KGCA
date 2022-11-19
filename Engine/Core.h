@@ -1,39 +1,15 @@
 #pragma once
 
 #include "Window.h"
-#include "Input.h"
-#include "Timer.h"
-#include "Writer.h"
-#include "DxRT.h"
-#include "DxState.h"
-#include "SoundManager.h"
-#include "ShaderManager.h"
-#include "SpriteManager.h"
-#include "TextureManager.h"
 
 class Core : public Window
 {
-public:
+private:
 	// 실행 플래그
 	bool _isRun = true;
 
-	// 코어 함수
-	HRESULT CoreInit();
-	HRESULT CoreFrame();
-	HRESULT CorePreRender();
-	HRESULT CoreRender();
-	HRESULT CorePostRender();
-	HRESULT CoreRelease();
-
-	// 폰트
-	Writer _writer;
-
-	// 배경
-	Object _background;
-
-	// 렌더타겟
-	DxRT _rendertarget;
-
+public:
+	// 생성자, 소멸자
 	Core() = default;
 	virtual ~Core() = default;
 
@@ -49,10 +25,15 @@ public:
 	virtual HRESULT Run() final;
 
 	// 리소스 생성, 삭제
-	virtual HRESULT CreateDXResource() override;
-	virtual HRESULT DeleteDXResource() override;
+	virtual HRESULT CreateResource() override;
+	virtual HRESULT DeleteResource() override;
 
-	// 툴
-	HRESULT Tool();
+	// 코어 함수
+	HRESULT CoreInit();
+	HRESULT CoreFrame();
+	HRESULT CorePreRender();
+	HRESULT CoreRender();
+	HRESULT CorePostRender();
+	HRESULT CoreRelease();
 };
 

@@ -174,23 +174,23 @@ public:								\
 		return &instance;			\
 	}								\
 
-#define GET_SINGLE(type)	type::GetInstance()
+#define GET_SINGLE(type)		type::GetInstance()
 
-#define SAFE_ZERO(A)		{ A = 0; }
-#define SAFE_NEW(A, B)		{ if (!A) A = new B; }
+#define SAFE_ZERO(A)			{ A = 0; }
+#define SAFE_NEW(A, B)			{ if (!A) A = new B; }
 #define SAFE_NEW_ARRAY(A, B, C) { if (!A && C) A = new B[C]; }
-#define SAFE_DELETE(A)		{ if (A) { delete A; A = nullptr; } }
-#define SAFE_DELETE_ARRAY(A) { if (A) delete [] A; (A) = nullptr; }
-#define SAFE_RELEASE(A)		{ if (A) { A->Release(); A = nullptr; } }
-#define SAFE_CLEARSTATE(A)	{ if (A) { A->ClearState(); } }
+#define SAFE_DELETE(A)			{ if (A) { delete A; A = nullptr; } }
+#define SAFE_DELETE_ARRAY(A)	{ if (A) delete [] A; (A) = nullptr; }
+#define SAFE_RELEASE(A)			{ if (A) { A->Release(); A = nullptr; } }
+#define SAFE_CLEARSTATE(A)		{ if (A) { A->ClearState(); } }
 
-#define DELTA_TIME			GET_SINGLE(Timer)->GetDeltaTime()
-#define TIMER				GET_SINGLE(Timer)
-#define INPUT				GET_SINGLE(Input)
+#define DELTA_TIME				GET_SINGLE(Timer)->GetDeltaTime()
+#define TIMER					GET_SINGLE(Timer)
+#define INPUT					GET_SINGLE(Input)
 
-#define SOUND				GET_SINGLE(SoundManager)
-#define SHADER				GET_SINGLE(ShaderManager)
-#define SPRITE				GET_SINGLE(SpriteManager)
-#define TEXTURE				GET_SINGLE(TextureManager)
+#define SOUND					GET_SINGLE(SoundManager)
+#define SHADER					GET_SINGLE(ShaderManager)
+#define SPRITE					GET_SINGLE(SpriteManager)
+#define TEXTURE					GET_SINGLE(TextureManager)
 
-#define RAND(min, max)      (min+((float)max-(float)min)*rand()/(float)RAND_MAX)
+#define RAND(min, max)			(min+((float)max-(float)min)*rand()/(float)RAND_MAX)

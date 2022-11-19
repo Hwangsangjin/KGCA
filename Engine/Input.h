@@ -10,13 +10,23 @@ enum KEY_STATE
 
 class Input
 {
-    DECLARE_SINGLE(Input);
-
-public:
+private:
     DWORD _keyState[256];
     POINT _position;
-    POINT _init;
-    POINT _offset;
+
+    Input() {}
+    ~Input()
+    {
+        Release();
+    }
+
+public:
+    // ΩÃ±€≈Ê
+    static Input* GetInstance()
+    {
+        static Input instance;
+        return &instance;
+    }
 
     // √ ±‚»≠
     HRESULT Init();
