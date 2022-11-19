@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Timer.h"
 
 HRESULT Timer::Init()
@@ -11,7 +10,7 @@ HRESULT Timer::Init()
 
 HRESULT Timer::Frame()
 {
-	uint64 currentCount;
+	__int64 currentCount;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
 
 	_deltaTime = (currentCount - _prevCount) / static_cast<float>(_frequency);
@@ -21,10 +20,9 @@ HRESULT Timer::Frame()
 	_frameTime += _deltaTime;
 	_gameTime += _deltaTime;
 
-	if (_frameTime > 1.0f)
+	if (_frameTime >= 1.0f)
 	{
-		_fps = static_cast<uint32>(_frameCount / _frameTime);
-		_fps = _frameCount;
+		_fps = static_cast<__int32>(_frameCount / _frameTime);
 
 		_frameTime = 0;
 		_frameCount = 0;
@@ -32,6 +30,13 @@ HRESULT Timer::Frame()
 
 	_text = L"FPS: ";
 	_text += std::to_wstring((int)_fps);
+
+#ifdef _DEBUG
+	if (_deltaTime >= 1.0f / 60.0f)
+	{
+		_deltaTime = 1.0f / 60.0f;
+	}
+#endif
 
 	return TRUE;
 }
@@ -46,7 +51,7 @@ HRESULT Timer::Release()
 	return TRUE;
 }
 
-uint32 Timer::GetFPS()
+__int32 Timer::GetFPS()
 {
 	return _fps;
 }
@@ -54,6 +59,11 @@ uint32 Timer::GetFPS()
 float Timer::GetDeltaTime()
 {
 	return _deltaTime;
+}
+
+float Timer::GetGameTime()
+{
+	return _gameTime;
 }
 
 std::wstring Timer::GetText()

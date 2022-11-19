@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 enum KEY_STATE
 {
     NONE,
@@ -10,13 +12,24 @@ enum KEY_STATE
 
 class Input
 {
-	DECLARE_SINGLE(Input)
-
 private:
     DWORD _keyState[256];
-    POINT _pos;
+    POINT _position;
+
+    Input() {}
+    ~Input()
+    {
+        Release();
+    }
 
 public:
+    // 싱글톤
+    static Input* GetInstance()
+    {
+        static Input instance;
+        return &instance;
+    }
+
     // 초기화
     HRESULT Init();
     // 프레임 계산
@@ -28,7 +41,7 @@ public:
 
     // 키
     DWORD GetKey(DWORD key);
-    // 좌표
-    POINT GetPos();
+    // 위치
+    POINT GetPosition();
 };
 

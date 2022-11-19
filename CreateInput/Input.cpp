@@ -1,17 +1,20 @@
-#include "pch.h"
 #include "Input.h"
+
+extern HWND gHandle;
 
 HRESULT Input::Init()
 {
 	ZeroMemory(_keyState, sizeof(DWORD) * 256);
+	::GetCursorPos(&_position);
+	::ScreenToClient(gHandle, &_position);
 
 	return TRUE;
 }
 
 HRESULT Input::Frame()
 {
-	::GetCursorPos(&_pos);			// 화면 좌표
-	::ScreenToClient(hWnd, &_pos);	// 클라이언트 화면
+	::GetCursorPos(&_position);				// 화면 좌표
+	::ScreenToClient(gHandle, &_position);	// 클라이언트 화면
 
     for (size_t i = 0; i < 256; i++)
     {
@@ -58,7 +61,7 @@ DWORD Input::GetKey(DWORD key)
 	return _keyState[key];
 }
 
-POINT Input::GetPos()
+POINT Input::GetPosition()
 {
-	return _pos;
+	return _position;
 }
