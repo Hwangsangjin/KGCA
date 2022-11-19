@@ -185,25 +185,17 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     // 리소스 삭제
     DeleteResource();
 
-    // 리소스뷰 초기화
+    // 현재 설정된 렌더타겟 초기화와 렌더타겟뷰 해제
     _pImmediateContext->OMSetRenderTargets(0, nullptr, nullptr);
-
-    // 렌더타겟뷰 해제
     if (_pRenderTargetView)
     {
         _pRenderTargetView->Release();
     }
 
     // 후면 버퍼 크기 재조정
-    DXGI_SWAP_CHAIN_DESC currentSD, afterSD;
+    DXGI_SWAP_CHAIN_DESC currentSD;
     _pSwapChain->GetDesc(&currentSD);
     _pSwapChain->ResizeBuffers(currentSD.BufferCount, width, height, currentSD.BufferDesc.Format, 0);
-
-    //// 변경된 후면 버퍼 크기로 클라이언트 영역 설정
-    //_pSwapChain->GetDesc(&afterSD);
-    //GetClientRect(gHandle, &gClient);
-    //gClient.right = afterSD.BufferDesc.Width;
-    //gClient.bottom = afterSD.BufferDesc.Height;
 
     // 렌더타겟뷰 설정
     if (FAILED(SetRenderTargetView()))

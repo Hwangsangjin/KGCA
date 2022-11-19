@@ -4,25 +4,25 @@ extern RECT gClient;
 
 HRESULT Text::Init()
 {
-    // Direct2D 객체 생성(ID2D1Factory)
+    // Direct2D 객체 생성
     if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, _pd2dFactory.GetAddressOf())))
     {
         return E_FAIL;
     }
 
-    // DirectWrite 객체 생성(DWriteFactory)
+    // DirectWrite 객체 생성
     if (FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)_pWriteFactory.GetAddressOf())))
     {
         return E_FAIL;
     }
 
-    // 텍스트 포맷 객체 생성(IDWriteTextFormat)
+    // 텍스트 포맷 객체 생성
     if (FAILED(_pWriteFactory->CreateTextFormat(L"Consolas", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", _pTextFormat.GetAddressOf())))
     {
         return E_FAIL;
     }
 
-    // 텍스트 레이아웃 지정(IDWriteTextLayout)
+    // 텍스트 레이아웃 지정
     if (FAILED(_pWriteFactory->CreateTextLayout(_text.c_str(), _text.size(), _pTextFormat.Get(), gClient.right, gClient.bottom, _pTextLayout.GetAddressOf())))
     {
         return E_FAIL;
