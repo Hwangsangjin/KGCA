@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Window.h"
-#include <memory>
 
 class Sample : public Window
 {

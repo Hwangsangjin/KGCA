@@ -29,6 +29,13 @@ private:
 	}
 
 public:
+	// 싱글톤
+	static Text* GetInstance()
+	{
+		static Text instance;
+		return &instance;
+	}
+
 	// 초기화
 	virtual HRESULT Init();
 	// 프레임 계산
@@ -49,11 +56,5 @@ public:
 
 	// 그리기
 	HRESULT Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = { 0.0f, 0.0f, 0.0f, 1.0f });
-
-	static Text* GetInstance()
-	{
-		static Text instance;
-		return &instance;
-	}
 };
 
