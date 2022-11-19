@@ -48,9 +48,9 @@ HRESULT Text::Release()
     return TRUE;
 }
 
-HRESULT Text::CreateDXResource()
+HRESULT Text::CreateResource()
 {
-    if (FAILED(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, &_pTextColor)))
+    if (FAILED(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, _pTextColor.GetAddressOf())))
     {
         return E_FAIL;
     }
@@ -58,8 +58,18 @@ HRESULT Text::CreateDXResource()
     return TRUE;
 }
 
-HRESULT Text::DeleteDXResource()
+HRESULT Text::DeleteResource()
 {
+    if (_pTextColor)
+    {
+        _pTextColor->Release();
+    }
+
+    if (_pd2dRenderTarget)
+    {
+        _pd2dRenderTarget->Release();
+    }
+
     return TRUE;
 }
 
@@ -78,6 +88,8 @@ HRESULT Text::SetSurface(IDXGISurface1* pDXGISurface1)
     {
         return E_FAIL;
     }
+
+    CreateResource();
     
     return TRUE;
 }

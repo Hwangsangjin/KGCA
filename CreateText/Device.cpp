@@ -178,6 +178,13 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
         return TRUE;
     }
 
+    // 클라이언트 화면 설정
+    gClient.right = width;
+    gClient.bottom = height;
+
+    // 리소스 삭제
+    DeleteResource();
+
     // 리소스뷰 초기화
     _pImmediateContext->OMSetRenderTargets(0, nullptr, nullptr);
 
@@ -187,16 +194,16 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
         _pRenderTargetView->Release();
     }
 
-    // 후면 버퍼 크기 조정
+    // 후면 버퍼 크기 재조정
     DXGI_SWAP_CHAIN_DESC currentSD, afterSD;
     _pSwapChain->GetDesc(&currentSD);
     _pSwapChain->ResizeBuffers(currentSD.BufferCount, width, height, currentSD.BufferDesc.Format, 0);
 
-    // 변경된 후면 버퍼 크기로 클라이언트 영역 설정
-    _pSwapChain->GetDesc(&afterSD);
-    GetClientRect(gHandle, &gClient);
-    gClient.right = afterSD.BufferDesc.Width;
-    gClient.bottom = afterSD.BufferDesc.Height;
+    //// 변경된 후면 버퍼 크기로 클라이언트 영역 설정
+    //_pSwapChain->GetDesc(&afterSD);
+    //GetClientRect(gHandle, &gClient);
+    //gClient.right = afterSD.BufferDesc.Width;
+    //gClient.bottom = afterSD.BufferDesc.Height;
 
     // 렌더타겟뷰 설정
     if (FAILED(SetRenderTargetView()))
@@ -210,6 +217,18 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
         return E_FAIL;
     }
 
+    // 리소스 생성
+    CreateResource();
 
+    return TRUE;
+}
+
+HRESULT Device::CreateResource()
+{
+    return TRUE;
+}
+
+HRESULT Device::DeleteResource()
+{
     return TRUE;
 }

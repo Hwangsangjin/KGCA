@@ -85,3 +85,28 @@ HRESULT Sample::Release()
 
 	return TRUE;
 }
+
+HRESULT Sample::CreateResource()
+{
+    Text::GetInstance()->Init();
+    Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
+
+    if (FAILED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())))
+    {
+        return E_FAIL;
+    }
+
+    if (FAILED(Text::GetInstance()->SetSurface(pBackBuffer.Get())))
+    {
+        return E_FAIL;
+    }
+
+    return TRUE;
+}
+
+HRESULT Sample::DeleteResource()
+{
+    Text::GetInstance()->DeleteResource();
+
+    return TRUE;
+}

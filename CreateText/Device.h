@@ -10,7 +10,6 @@ class Device
 {
 protected:
 	// 디바이스 객체
-	
 	Microsoft::WRL::ComPtr<ID3D11Device> _pd3dDevice;
 	// 디바이스 컨텍스트 객체
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _pImmediateContext;
@@ -63,5 +62,9 @@ public:
 
 	// 화면 크기 조정
 	HRESULT ResizeDevice(UINT width, UINT height);
+
+	// 리소스 생성, 삭제
+	virtual HRESULT CreateResource();
+	virtual HRESULT DeleteResource();
 };
 

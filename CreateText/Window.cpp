@@ -20,7 +20,7 @@ LRESULT Window::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         if (SIZE_MINIMIZED != wParam)
         {
             UINT width = LOWORD(lParam);
-            UINT height = LOWORD(lParam);
+            UINT height = HIWORD(lParam);
             ResizeDevice(width, height);
         }
         break;

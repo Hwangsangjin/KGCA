@@ -39,8 +39,8 @@ public:
 	virtual HRESULT Release();
 
 	// 리소스 생성, 삭제
-	virtual HRESULT CreateDXResource();
-	virtual HRESULT DeleteDXResource();
+	virtual HRESULT CreateResource();
+	virtual HRESULT DeleteResource();
 
 	// 표면 설정
 	HRESULT SetSurface(IDXGISurface1* pDXGISurface1);

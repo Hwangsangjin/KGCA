@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Window.h"
+#include <memory>
 
 class Sample : public Window
 {
 public:
-	// 咆胶飘
-	Microsoft::WRL::ComPtr<class Text> _pText;
-
 	// 积己磊, 家戈磊
 	Sample() = default;
 	virtual ~Sample() = default;
@@ -20,5 +18,9 @@ public:
 	virtual HRESULT Render() override;
 	// 皋葛府 秦力
 	virtual HRESULT Release() override;
+
+	// 府家胶 积己, 昏力
+	virtual HRESULT CreateResource() override;
+	virtual HRESULT DeleteResource() override;
 };
 
