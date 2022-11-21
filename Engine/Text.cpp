@@ -5,16 +5,16 @@
 HRESULT Text::Init()
 {
     // Direct2D 객체 생성
-    assert(SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, _pd2dFactory.GetAddressOf())));
+    assert(SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, d2d_factory_.GetAddressOf())));
 
     // DirectWrite 객체 생성
-    assert(SUCCEEDED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)_pWriteFactory.GetAddressOf())));
+    assert(SUCCEEDED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)dwrite_factory_.GetAddressOf())));
 
     // 텍스트 포맷 객체 생성
-    assert(SUCCEEDED(_pWriteFactory->CreateTextFormat(L"Consolas", nullptr, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", _pTextFormat.GetAddressOf())));
+    assert(SUCCEEDED(dwrite_factory_->CreateTextFormat(L"Consolas", nullptr, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", dwrite_text_format_.GetAddressOf())));
 
     // 텍스트 레이아웃 지정
-    assert(SUCCEEDED(_pWriteFactory->CreateTextLayout(_text.c_str(), _text.size(), _pTextFormat.Get(), gClient.right, gClient.bottom, _pTextLayout.GetAddressOf())));
+    assert(SUCCEEDED(dwrite_factory_->CreateTextLayout(text_.c_str(), text_.size(), dwrite_text_format_.Get(), g_client_rect.right, g_client_rect.bottom, dwrite_text_layout_.GetAddressOf())));
 
     return TRUE;
 }
@@ -26,7 +26,7 @@ HRESULT Text::Frame()
 
 HRESULT Text::Render()
 {
-    Draw(0, 0, _text, { 1.0f, 1.0f, 1.0f, 1.0f });
+    Draw(0, 0, text_, { 1.0f, 1.0f, 1.0f, 1.0f });
 
     std::wstring point = L"(" + std::to_wstring(INPUT->GetPosition().x) + L", " + std::to_wstring(INPUT->GetPosition().y) + L")";
 
@@ -85,27 +85,27 @@ HRESULT Text::Release()
 
 HRESULT Text::CreateResource()
 {
-    assert(SUCCEEDED(_pd2dRenderTarget->CreateSolidColorBrush({ 0, 0, 0, 1 }, _pTextColor.GetAddressOf())));
+    assert(SUCCEEDED(d2d_render_target_->CreateSolidColorBrush({ 0, 0, 0, 1 }, text_color_.GetAddressOf())));
 
     return TRUE;
 }
 
 HRESULT Text::DeleteResource()
 {
-    if (_pTextColor)
+    if (text_color_)
     {
-        _pTextColor->Release();
+        text_color_->Release();
     }
 
-    if (_pd2dRenderTarget)
+    if (d2d_render_target_)
     {
-        _pd2dRenderTarget->Release();
+        d2d_render_target_->Release();
     }
 
     return TRUE;
 }
 
-HRESULT Text::SetSurface(IDXGISurface1* pDXGISurface1)
+HRESULT Text::SetSurface(Microsoft::WRL::ComPtr<IDXGISurface1> DXGISurface1)
 {
     D2D1_RENDER_TARGET_PROPERTIES props;
     ZeroMemory(&props, sizeof(props));
@@ -116,7 +116,7 @@ HRESULT Text::SetSurface(IDXGISurface1* pDXGISurface1)
     props.usage = D2D1_RENDER_TARGET_USAGE_NONE;
     props.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
-    assert(SUCCEEDED(_pd2dFactory->CreateDxgiSurfaceRenderTarget(pDXGISurface1, &props, _pd2dRenderTarget.GetAddressOf())));
+    assert(SUCCEEDED(d2d_factory_->CreateDxgiSurfaceRenderTarget(DXGISurface1.Get(), &props, d2d_render_target_.GetAddressOf())));
 
     CreateResource();
 
@@ -125,21 +125,21 @@ HRESULT Text::SetSurface(IDXGISurface1* pDXGISurface1)
 
 HRESULT Text::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
 {
-    D2D1_RECT_F rect = { x, y, gClient.right, gClient.bottom };
+    D2D1_RECT_F rect = { x, y, g_client_rect.right, g_client_rect.bottom };
 
-    _pd2dRenderTarget->BeginDraw();
+    d2d_render_target_->BeginDraw();
 
-    _pTextColor->SetColor(color);
-    _pTextColor->SetOpacity(1.0f);
+    text_color_->SetColor(color);
+    text_color_->SetOpacity(1.0f);
 
-    _pd2dRenderTarget->DrawText(text.c_str(), text.size(), _pTextFormat.Get(), rect, _pTextColor.Get());
+    d2d_render_target_->DrawText(text.c_str(), text.size(), dwrite_text_format_.Get(), rect, text_color_.Get());
 
-    assert(SUCCEEDED(_pd2dRenderTarget->EndDraw()));
+    assert(SUCCEEDED(d2d_render_target_->EndDraw()));
 
     return TRUE;
 }
 
 void Text::SetText(std::wstring text)
 {
-    _text = text;
+    text_ = text;
 }

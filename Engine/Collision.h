@@ -9,24 +9,24 @@ enum COLLISION_TYPE
 
 struct MyRect
 {
-    float _x1;
-    float _y1;
-    float _w;
-    float _h;
-    float _x2;
-    float _y2;
-    float _cx;
-    float _cy;
+    float x1;
+    float y1;
+    float w;
+    float h;
+    float x2;
+    float y2;
+    float cx;
+    float cy;
 
     bool operator==(MyRect& dest)
     {
-        if (fabs(_x1 - dest._x1) < FLT_EPSILON)
+        if (fabs(x1 - dest.x1) < FLT_EPSILON)
         {
-            if (fabs(_y1 - dest._y1) < FLT_EPSILON)
+            if (fabs(y1 - dest.y1) < FLT_EPSILON)
             {
-                if (fabs(_w - dest._w) < FLT_EPSILON)
+                if (fabs(w - dest.w) < FLT_EPSILON)
                 {
-                    if (fabs(_h - dest._h) < FLT_EPSILON)
+                    if (fabs(h - dest.h) < FLT_EPSILON)
                     {
                         return true;
                     }
@@ -37,7 +37,7 @@ struct MyRect
         return false;
     }
 
-    MyRect() {}
+    MyRect() = default;
     MyRect(float x, float y, float w, float h)
     {
         Set(x, y, w, h);
@@ -45,67 +45,67 @@ struct MyRect
 
     void Set(float x, float y, float w, float h)
     {
-        _x1 = x;
-        _y1 = y;
-        _w = w;
-        _h = h;
-        _x2 = _x1 + _w;
-        _y2 = _y1 + _h;
-        _cx = (_x1 + _x2) / 2.0f;
-        _cy = (_y1 + _y2) / 2.0f;
+        x1 = x;
+        y1 = y;
+        this->w = w;
+        this->h = h;
+        x2 = x1 + w;
+        y2 = y1 + h;
+        cx = (x1 + x2) / 2.0f;
+        cy = (y1 + y2) / 2.0f;
     }
 };
 
 struct MyCircle
 {
-    float _cx;
-    float _cy;
-    float _radius;
+    float cx;
+    float cy;
+    float radius;
 
-    MyCircle() {};
-    MyCircle(float x, float y, float r)
+    MyCircle() = default;
+    MyCircle(float x, float y, float radius)
     {
-        Set(x, y, r);
+        Set(x, y, radius);
     }
 
-    void Set(float x, float y, float r)
+    void Set(float x, float y, float radius)
     {
-        _cx = x;
-        _cy = y;
-        _radius = r;
+        cx = x;
+        cy = y;
+        this->radius = radius;
     }
 };
 
 struct MySphere
 {
-    DxVector3 _center;
-    float _radius;
+    DxVector3 center;
+    float radius;
 
-    MySphere() {};
+    MySphere() = default;
     MySphere(DxVector3 center, float radius)
     {
-        _center = center;
-        _radius = radius;
+        this->center = center;
+        this->radius = radius;
     };
 };
 
 struct MyBox
 {
-    DxVector3 _min;
-    DxVector3 _max;
-    DxVector3 _center;
-    DxVector3 _size;
+    DxVector3 min;
+    DxVector3 max;
+    DxVector3 center;
+    DxVector3 size;
 
-
-    bool   operator == (MyBox& dest)
+    bool operator==(MyBox& dest)
     {
-        if (_min == dest._min)
+        if (min == dest.min)
         {
-            if (_size == dest._size)
+            if (size == dest.size)
             {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -116,38 +116,38 @@ struct MyBox
     }
     void  Set(DxVector3 pos, DxVector3 size)
     {
-        _min = pos;
-        _size = size;
-        _max = _min + size;
-        _center = (_min + _max) * 0.5f;
+        min = pos;
+        this->size = size;
+        max = min + size;
+        center = (min + max) * 0.5f;
     }
 };
 
 struct CollisionAABB
 {
-    DxVector3 _min;
-    DxVector3 _max;
+    DxVector3 min;
+    DxVector3 max;
 };
 
 struct CollisionOBB
 {
-    DxVector3 _center;
-    DxVector3 _axis[3];
-    float _distance[3];
+    DxVector3 center;
+    DxVector3 axis[3];
+    float distance[3];
 };
 
 struct CollisionBOX
 {
-    DxVector3 _center;
-    DxVector3 _position[8];
+    DxVector3 center;
+    DxVector3 position[8];
 
     // AABB
-    DxVector3 _min;
-    DxVector3 _max;
+    DxVector3 min;
+    DxVector3 max;
 
     // OBB
-    DxVector3 _axis[3];
-    float _extent[3];
+    DxVector3 axis[3];
+    float extent[3];
 };
 
 class Collision

@@ -7,8 +7,8 @@ class ShaderManager
 	DECLARE_SINGLE(ShaderManager);
 
 private:
-	ID3D11Device* _pd3dDevice = nullptr;
-	ID3D11DeviceContext* _pImmediateContext = nullptr;
+	ID3D11Device* device_ = nullptr;
+	ID3D11DeviceContext* device_context_ = nullptr;
 
 	std::map<std::wstring, Shader*> _shaders;
 

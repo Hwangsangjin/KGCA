@@ -35,8 +35,8 @@ HRESULT TextureManager::Release()
 
 HRESULT TextureManager::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-	_pd3dDevice = pd3dDevice;
-	_pImmediateContext = pImmediateContext;
+	device_ = pd3dDevice;
+	device_context_ = pImmediateContext;
 
 	return TRUE;
 }
@@ -52,7 +52,7 @@ Texture* TextureManager::Load(std::wstring textureFile)
 	Texture* pNewTexture = new Texture;
 	if (pNewTexture)
 	{
-		hr = pNewTexture->CreateTexture(_pd3dDevice, _pImmediateContext, textureFile);
+		hr = pNewTexture->CreateTexture(device_, device_context_, textureFile);
 		if (SUCCEEDED(hr))
 		{
 			_textures.insert(std::make_pair(textureFile, pNewTexture));

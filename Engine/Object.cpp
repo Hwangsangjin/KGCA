@@ -17,13 +17,13 @@ HRESULT Object::PreRender()
 {
     UINT stride = sizeof(DefaultVertex);
     UINT offset = 0;
-    _pImmediateContext->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
-    _pImmediateContext->IASetIndexBuffer(_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-    _pImmediateContext->IASetInputLayout(_pInputLayout);
-    _pImmediateContext->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
-    _pImmediateContext->VSSetShader(_pVertexShader, NULL, 0);
-    _pImmediateContext->PSSetShader(_pPixelShader, NULL, 0);
-    _pImmediateContext->PSSetShaderResources(0, 1, &_pShaderResourceView);
+    device_context_->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
+    device_context_->IASetIndexBuffer(_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+    device_context_->IASetInputLayout(_pInputLayout);
+    device_context_->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
+    device_context_->VSSetShader(_pVertexShader, NULL, 0);
+    device_context_->PSSetShader(_pPixelShader, NULL, 0);
+    device_context_->PSSetShaderResources(0, 1, &_pShaderResourceView);
 
     return TRUE;
 }
@@ -40,12 +40,12 @@ HRESULT Object::PostRender()
 {
     if (!_pIndexBuffer)
     {
-        _pImmediateContext->Draw(_vertices.size(), 0);
+        device_context_->Draw(_vertices.size(), 0);
     }
     else
     {
-        //_pImmediateContext->DrawIndexed(_face * 3, 0, 0);
-        _pImmediateContext->DrawIndexed(_indices.size(), 0, 0);
+        //device_context_->DrawIndexed(_face * 3, 0, 0);
+        device_context_->DrawIndexed(_indices.size(), 0, 0);
     }
 
     return TRUE;
@@ -83,8 +83,8 @@ void Object::SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection)
 
 HRESULT Object::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-    _pd3dDevice = pd3dDevice;
-    _pImmediateContext = pImmediateContext;
+    device_ = pd3dDevice;
+    device_context_ = pImmediateContext;
 
     return TRUE;
 }
@@ -152,9 +152,9 @@ HRESULT Object::CreateVertexBuffer()
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_vertices.at(0);
-    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
-        &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
+        &sd, // 초기 할당된 버퍼를 채우는 CPU 메모리 주소
         &_pVertexBuffer)));
 
     return TRUE;
@@ -189,7 +189,7 @@ HRESULT Object::CreateIndexBuffer()
     D3D11_SUBRESOURCE_DATA  sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_indices.at(0);
-    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
         &_pIndexBuffer)));
@@ -224,7 +224,7 @@ HRESULT Object::CreateConstantBuffer()
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.pSysMem = &_constantBuffer;
-    assert(SUCCEEDED(_pd3dDevice->CreateBuffer(
+    assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
         &_pConstantBuffer)));
@@ -266,7 +266,7 @@ HRESULT Object::CreateInputLayout()
     UINT numElements = ARRAYSIZE(ied);
 
     // 생성
-    assert(SUCCEEDED(_pd3dDevice->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
+    assert(SUCCEEDED(device_->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
         _pShader->_pVertexShaderCode->GetBufferSize(), &_pInputLayout)));
 
     return TRUE;
@@ -285,7 +285,7 @@ HRESULT Object::CreateTexture(std::wstring textureFile)
 
 void Object::UpdateVertexBuffer()
 {
-    _pImmediateContext->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
+    device_context_->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
 }
 
 void Object::UpdateConstantBuffer()
@@ -294,7 +294,7 @@ void Object::UpdateConstantBuffer()
     _constantBuffer.view = _view.Transpose();
     _constantBuffer.projection = _projection.Transpose();
 
-    _pImmediateContext->UpdateSubresource(_pConstantBuffer, NULL, NULL, &_constantBuffer, 0, 0);
+    device_context_->UpdateSubresource(_pConstantBuffer, NULL, NULL, &_constantBuffer, 0, 0);
 }
 
 HRESULT Object::LoadTexture(W_STR filename)

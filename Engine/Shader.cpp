@@ -28,8 +28,8 @@ HRESULT Shader::Release()
 
 void Shader::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-    _pd3dDevice = pd3dDevice;
-    _pImmediateContext = pImmediateContext;
+    device_ = pd3dDevice;
+    device_context_ = pImmediateContext;
 }
 
 HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile)
@@ -54,7 +54,7 @@ HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     }
 
     // Á¤Á¡ ¼ÎÀÌ´õ »ý¼º
-    hr = _pd3dDevice->CreateVertexShader(_pVertexShaderCode->GetBufferPointer(), _pVertexShaderCode->GetBufferSize(), NULL, &_pVertexShader);
+    hr = device_->CreateVertexShader(_pVertexShaderCode->GetBufferPointer(), _pVertexShaderCode->GetBufferSize(), NULL, &_pVertexShader);
     if (FAILED(hr))
     {
         if (pErrorCode)
@@ -80,7 +80,7 @@ HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
     }
 
     // ÇÈ¼¿ ¼ÎÀÌ´õ »ý¼º
-    hr = _pd3dDevice->CreatePixelShader(_pPixelShaderCode->GetBufferPointer(), _pPixelShaderCode->GetBufferSize(), NULL, &_pPixelShader);
+    hr = device_->CreatePixelShader(_pPixelShaderCode->GetBufferPointer(), _pPixelShaderCode->GetBufferSize(), NULL, &_pPixelShader);
     if (FAILED(hr))
     {
         if (pErrorCode)

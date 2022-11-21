@@ -35,8 +35,8 @@ HRESULT SpriteManager::Release()
 
 HRESULT SpriteManager::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-	_pd3dDevice = pd3dDevice;
-	_pImmediateContext = pImmediateContext;
+	device_ = pd3dDevice;
+	device_context_ = pImmediateContext;
 
 	return TRUE;
 }
@@ -179,7 +179,7 @@ HRESULT SpriteManager::Load(std::wstring filename)
 
 		if (pNewSprite)
 		{
-			bool bRet = pNewSprite->Load(_pd3dDevice, _pImmediateContext, filename);
+			bool bRet = pNewSprite->Load(device_, device_context_, filename);
 			if (bRet)
 			{
 				m_List.insert(std::make_pair(pNewSprite->_name, std::move(pNewSprite)));

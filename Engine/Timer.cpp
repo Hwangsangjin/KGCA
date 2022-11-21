@@ -3,8 +3,8 @@
 
 HRESULT Timer::Init()
 {
-	::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&_frequency));
-	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&_prevCount));
+	::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&frequency_));
+	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&prev_count_));
 
 	return TRUE;
 }
@@ -14,28 +14,28 @@ HRESULT Timer::Frame()
 	__int64 currentCount;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
 
-	_deltaTime = (currentCount - _prevCount) / static_cast<float>(_frequency);
-	_prevCount = currentCount;
+	delta_time_ = (currentCount - prev_count_) / static_cast<float>(frequency_);
+	prev_count_ = currentCount;
 
-	_frameCount++;
-	_frameTime += _deltaTime;
-	_gameTime += _deltaTime;
+	frame_count_++;
+	frame_time_ += delta_time_;
+	game_time_ += delta_time_;
 
-	if (_frameTime >= 1.0f)
+	if (frame_time_ >= 1.0f)
 	{
-		_fps = static_cast<int32>(_frameCount / _frameTime);
+		fps_ = static_cast<int32>(frame_count_ / frame_time_);
 
-		_frameCount = 0;
-		_frameTime = 0.0f;
+		frame_count_ = 0;
+		frame_time_ = 0.0f;
 	}
 
-	_text = L"FPS: ";
-	_text += std::to_wstring((int)_fps);
+	text_ = L"FPS: ";
+	text_ += std::to_wstring((int)fps_);
 
 #ifdef _DEBUG
-	if (_deltaTime >= 1.0f / 60.0f)
+	if (delta_time_ >= 1.0f / 60.0f)
 	{
-		_deltaTime = 1.0f / 60.0f;
+		delta_time_ = 1.0f / 60.0f;
 	}
 #endif
 
@@ -54,20 +54,20 @@ HRESULT Timer::Release()
 
 __int32 Timer::GetFPS()
 {
-	return _fps;
+	return fps_;
 }
 
 float Timer::GetDeltaTime()
 {
-	return _deltaTime;
+	return delta_time_;
 }
 
 float Timer::GetGameTime()
 {
-	return _gameTime;
+	return game_time_;
 }
 
 std::wstring Timer::GetText()
 {
-	return _text;
+	return text_;
 }

@@ -6,7 +6,7 @@ class Core : public Window
 {
 private:
 	// 실행 플래그
-	bool _isRun = true;
+	bool is_Running_ = true;
 
 public:
 	// 생성자, 소멸자

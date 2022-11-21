@@ -13,8 +13,8 @@ class Input
     DECLARE_SINGLE(Input);
 
 private:
-    DWORD _keyState[256] = { 0 };
-    POINT _position = { 0, 0 };
+    DWORD key_state_[256] = { 0 };
+    POINT position_ = { 0, 0 };
 
 public:
     // √ ±‚»≠

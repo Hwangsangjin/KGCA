@@ -35,8 +35,8 @@ HRESULT ShaderManager::Release()
 
 HRESULT ShaderManager::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-	_pd3dDevice = pd3dDevice;
-	_pImmediateContext = pImmediateContext;
+	device_ = pd3dDevice;
+	device_context_ = pImmediateContext;
 
 	return TRUE;
 }
@@ -58,7 +58,7 @@ Shader* ShaderManager::Load(std::wstring shaderFile)
 	Shader* pNewShader = new Shader;
 	if (pNewShader)
 	{
-		hr = pNewShader->CreateShader(_pd3dDevice, _pImmediateContext, shaderFile);
+		hr = pNewShader->CreateShader(device_, device_context_, shaderFile);
 		if (SUCCEEDED(hr))
 		{
 			_shaders.insert(std::make_pair(shaderFile, pNewShader));

@@ -5,9 +5,9 @@
 class Window : public Device
 {
 protected:
-	HWND _hWnd = nullptr;				// 윈도우 핸들
-	RECT _rtWindow = { 0, 0, 0, 0 };	// 윈도우 영역
-	RECT _rtClient = { 0, 0, 0, 0 };	// 클라이언트 영역
+	HWND hWnd_ = nullptr;				// 윈도우 핸들
+	RECT window_rect_ = { 0, 0, 0, 0 };	// 윈도우 영역
+	RECT client_rect_ = { 0, 0, 0, 0 };	// 클라이언트 영역
 
 public:
 	// 생성자, 소멸자

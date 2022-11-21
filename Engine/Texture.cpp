@@ -26,8 +26,8 @@ HRESULT Texture::Release()
 
 void Texture::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
 {
-    _pd3dDevice = pd3dDevice;
-    _pImmediateContext = pImmediateContext;
+    device_ = pd3dDevice;
+    device_context_ = pImmediateContext;
 }
 
 HRESULT Texture::CreateTexture(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring textureFile)

@@ -37,8 +37,8 @@
 #pragma comment(lib, "zlib-md")
 
 // extern
-extern HWND gHandle;
-extern RECT gClient;
+extern HWND g_handle;
+extern RECT g_client_rect;
 
 // using
 using int8 = __int8;

@@ -222,5 +222,8 @@
     <None Include="VertexNormal.hlsl">
       <Filter>소스 파일\HLSL</Filter>
     </None>
+    <None Include="Sample.hlsl">
+      <Filter>소스 파일\HLSL</Filter>
+    </None>
   </ItemGroup>
 </Project>

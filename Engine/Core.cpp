@@ -34,7 +34,7 @@ HRESULT Core::Run()
 	// 코어 초기화
 	assert(SUCCEEDED(CoreInit()));
 
-	while (_isRun)
+	while (is_Running_)
 	{
 		// 윈도우 실행
 		if (Window::Run() == TRUE)
@@ -45,7 +45,7 @@ HRESULT Core::Run()
 		}
 		else
 		{
-			_isRun = false;
+			is_Running_ = false;
 		}
 	}
 
@@ -59,9 +59,9 @@ HRESULT Core::Run()
 HRESULT Core::CreateResource()
 {
 	TEXT->Init();
-	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
-	assert(SUCCEEDED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())));
-	assert(SUCCEEDED(TEXT->SetSurface(pBackBuffer.Get())));
+	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
+	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
+	assert(SUCCEEDED(TEXT->SetSurface(back_buffer.Get())));
 
 	return TRUE;
 }
@@ -82,9 +82,9 @@ HRESULT Core::CoreInit()
 	assert(SUCCEEDED(TIMER->Init()));
 	assert(SUCCEEDED(INPUT->Init()));
 	assert(SUCCEEDED(TEXT->Init()));
-	Microsoft::WRL::ComPtr<IDXGISurface1> pBackBuffer;
-	assert(SUCCEEDED(_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)pBackBuffer.GetAddressOf())));
-	assert(SUCCEEDED(Text::GetInstance()->SetSurface(pBackBuffer.Get())));
+	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
+	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
+	assert(SUCCEEDED(Text::GetInstance()->SetSurface(back_buffer.Get())));
 
 	assert(SUCCEEDED(Init()));
 
@@ -107,8 +107,8 @@ HRESULT Core::CoreFrame()
 HRESULT Core::CorePreRender()
 {
 	// 후면 버퍼 삭제
-	const float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
-	_pImmediateContext->ClearRenderTargetView(_pRenderTargetView.Get(), ClearColor);
+	const float clear_color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
+	d3d11_device_context_->ClearRenderTargetView(render_target_view_.Get(), clear_color);
 
 	return TRUE;
 }
@@ -128,7 +128,7 @@ HRESULT Core::CoreRender()
 HRESULT Core::CorePostRender()
 {
 	// 플리핑
-	assert(SUCCEEDED(_pSwapChain->Present(0, 0)));
+	assert(SUCCEEDED(swap_chain_.Get()->Present(0, 0)));
 
 	return TRUE;
 }

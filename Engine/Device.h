@@ -4,24 +4,24 @@ class Device
 {
 protected:
 	// 디바이스 객체
-	Microsoft::WRL::ComPtr<ID3D11Device> _pd3dDevice;
+	Microsoft::WRL::ComPtr<ID3D11Device> d3d11_device_;
 	// 디바이스 컨텍스트 객체
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _pImmediateContext;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> d3d11_device_context_;
 	// 팩토리 객체
-	Microsoft::WRL::ComPtr<IDXGIFactory> _pFactory;
+	Microsoft::WRL::ComPtr<IDXGIFactory> dxgi_factory_;
 	// 스왑체인 객체
-	Microsoft::WRL::ComPtr<IDXGISwapChain> _pSwapChain;
+	Microsoft::WRL::ComPtr<IDXGISwapChain> swap_chain_;
 	// 메인 렌더타겟 뷰
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _pRenderTargetView;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> render_target_view_;
 
 	// 드라이버 타입 속성값
-	D3D_DRIVER_TYPE _driverType = D3D_DRIVER_TYPE_NULL;
+	D3D_DRIVER_TYPE driver_type_ = D3D_DRIVER_TYPE_NULL;
 	// 특성 레벨 속성값
-	D3D_FEATURE_LEVEL _featureLevel = D3D_FEATURE_LEVEL_11_1;
+	D3D_FEATURE_LEVEL feature_level_ = D3D_FEATURE_LEVEL_11_1;
 	// 스왑체인 속성값
-	DXGI_SWAP_CHAIN_DESC _swapChainDesc;
+	DXGI_SWAP_CHAIN_DESC swap_chain_desc_;
 	// 뷰 포트 속성값
-	D3D11_VIEWPORT _viewport;
+	D3D11_VIEWPORT viewport_;
 
 public:
 	// 생성자, 소멸자
