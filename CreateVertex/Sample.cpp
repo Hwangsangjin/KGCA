@@ -26,25 +26,25 @@ HRESULT Sample::Frame()
 
 HRESULT Sample::Render()
 {
-	// 토포롤지 설정
-	d3d11_device_context_.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// 토폴로지 설정
+	device_context_.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// 정점 버퍼 설정
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
-	d3d11_device_context_.Get()->IASetVertexBuffers(0, 1, vertex_buffer_.GetAddressOf(), &stride, &offset);
+	device_context_.Get()->IASetVertexBuffers(0, 1, vertex_buffer_.GetAddressOf(), &stride, &offset);
 
 	// 정점 셰이더 설정
-	d3d11_device_context_.Get()->VSSetShader(vertex_shader_.Get(), nullptr, 0);
+	device_context_.Get()->VSSetShader(vertex_shader_.Get(), nullptr, 0);
 
 	// 픽셀 셰이더 설정
-	d3d11_device_context_.Get()->PSSetShader(pixel_shader_.Get(), nullptr, 0);
+	device_context_.Get()->PSSetShader(pixel_shader_.Get(), nullptr, 0);
 
 	// 입력 레이아웃 설정
-	d3d11_device_context_.Get()->IASetInputLayout(input_layout_.Get());
+	device_context_.Get()->IASetInputLayout(input_layout_.Get());
 
 	// 그리기
-	d3d11_device_context_.Get()->Draw(3, 0);
+	device_context_.Get()->Draw(3, 0);
 
 	return TRUE;
 }
@@ -81,7 +81,7 @@ HRESULT Sample::CreateVertexBuffer()
 	sd.SysMemSlicePitch = 0;						// 3차원 텍스처의 깊이의 간격(바이트 단위)
 
 	// 버퍼 생성
-	assert(SUCCEEDED(d3d11_device_.Get()->CreateBuffer(
+	assert(SUCCEEDED(device_.Get()->CreateBuffer(
 		&bd, // 버퍼 할당
 		&sd, // 초기 할당된 버퍼를 채우는 CPU 메모리 주소
 		vertex_buffer_.GetAddressOf())));
@@ -94,48 +94,37 @@ HRESULT Sample::CreateShader()
     Microsoft::WRL::ComPtr<ID3DBlob> error_code;
 
     // 정점 셰이더 컴파일 
-    //assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
-
-	HRESULT hr = D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf());
-	if (FAILED(hr))
-	{
-		if (error_code)
-		{
-			OutputDebugStringA((char*)error_code->GetBufferPointer());
-			error_code->Release();
-		}
-		return E_FAIL;
-	}
+    assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // 정점 셰이더 생성
-	assert(SUCCEEDED(d3d11_device_.Get()->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
+	assert(SUCCEEDED(device_.Get()->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
 
     // 픽셀 셰이더 컴파일  
 	assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "PS", "ps_5_0", 0, 0, pixel_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // 픽셀 셰이더 생성
-	assert(SUCCEEDED(d3d11_device_.Get()->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
+	assert(SUCCEEDED(device_.Get()->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
 
 	return TRUE;
 }
 
 HRESULT Sample::CreateInputLayout()
 {
+	// 정점 셰이더 코드가 없는 경우
 	if (!vertex_shader_code_)
 	{
 		return E_FAIL;
 	}
 
-	// 입력 레이아웃 정의
+	// 정의
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		//{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 	UINT elements = ARRAYSIZE(layout);
 
-	// 입력 레이아웃 생성
-	assert(SUCCEEDED(d3d11_device_.Get()->CreateInputLayout(layout, elements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
+	// 생성
+	assert(SUCCEEDED(device_.Get()->CreateInputLayout(layout, elements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
 
 	return TRUE;
 }
