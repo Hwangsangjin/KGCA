@@ -36,30 +36,30 @@ HRESULT Device::Release()
 // 디바이스 생성
 HRESULT Device::CreateDevice()
 {
-    UINT createDeviceFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+    UINT create_device_flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 #ifdef _DEBUG
-    createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+    create_device_flags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif 
 
-    D3D_DRIVER_TYPE driverTypes[] =
+    D3D_DRIVER_TYPE driver_types[] =
     {
         D3D_DRIVER_TYPE_HARDWARE,
         D3D_DRIVER_TYPE_WARP,
         D3D_DRIVER_TYPE_REFERENCE
     };
-    UINT numDriverTypes = ARRAYSIZE(driverTypes);
+    UINT driver_types_count = ARRAYSIZE(driver_types);
 
-    D3D_FEATURE_LEVEL featureLevels[] =
+    D3D_FEATURE_LEVEL feature_levels[] =
     {
         D3D_FEATURE_LEVEL_11_1,
         D3D_FEATURE_LEVEL_11_0
     };
-    UINT numFeatureLevels = ARRAYSIZE(featureLevels);
+    UINT feature_Levels_count = ARRAYSIZE(feature_levels);
 
-    for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
+    for (UINT driver_type_index = 0; driver_type_index < driver_types_count; driver_type_index++)
     {
-        driver_type_ = driverTypes[driverTypeIndex];
-        assert(SUCCEEDED(D3D11CreateDevice(nullptr, driver_type_, nullptr, createDeviceFlags, featureLevels, numFeatureLevels, D3D11_SDK_VERSION, d3d11_device_.GetAddressOf(), &feature_level_, d3d11_device_context_.GetAddressOf())));
+        driver_type_ = driver_types[driver_type_index];
+        assert(SUCCEEDED(D3D11CreateDevice(nullptr, driver_type_, nullptr, create_device_flags, feature_levels, feature_Levels_count, D3D11_SDK_VERSION, device_.GetAddressOf(), &feature_level_, device_context_.GetAddressOf())));
         {
             if (feature_level_ < D3D_FEATURE_LEVEL_11_1)
             {
@@ -76,7 +76,7 @@ HRESULT Device::CreateDevice()
 // 팩토리 생성
 HRESULT Device::CreateFactory()
 {
-    assert(SUCCEEDED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&dxgi_factory_)));
+    assert(SUCCEEDED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory_)));
 
     return TRUE;
 }
@@ -99,7 +99,7 @@ HRESULT Device::CreateSwapChain()
     sd.SampleDesc.Quality = 0;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    assert(SUCCEEDED(dxgi_factory_->CreateSwapChain(d3d11_device_.Get(), &sd, swap_chain_.GetAddressOf())));
+    assert(SUCCEEDED(factory_->CreateSwapChain(device_.Get(), &sd, swap_chain_.GetAddressOf())));
 
     return TRUE;
 }
@@ -107,11 +107,11 @@ HRESULT Device::CreateSwapChain()
 // 렌더타겟뷰 설정
 HRESULT Device::SetRenderTargetView()
 {
-    Microsoft::WRL::ComPtr<ID3D11Texture2D> pBackBuffer = nullptr;
-    assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer)));
-    assert(SUCCEEDED(d3d11_device_->CreateRenderTargetView(pBackBuffer.Get(), nullptr, render_target_view_.GetAddressOf())));
+    Microsoft::WRL::ComPtr<ID3D11Texture2D> back_buffer;
+    assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)back_buffer.GetAddressOf())));
+    assert(SUCCEEDED(device_->CreateRenderTargetView(back_buffer.Get(), nullptr, render_target_view_.GetAddressOf())));
 
-    d3d11_device_context_->OMSetRenderTargets(1, render_target_view_.GetAddressOf(), nullptr);
+    device_context_->OMSetRenderTargets(1, render_target_view_.GetAddressOf(), nullptr);
 
     return TRUE;
 }
@@ -127,7 +127,7 @@ HRESULT Device::SetViewport()
     viewport_.MinDepth = 0.0f;
     viewport_.MaxDepth = 1.0f;
 
-    d3d11_device_context_->RSSetViewports(1, &viewport_);
+    device_context_->RSSetViewports(1, &viewport_);
 
     return TRUE;
 }
@@ -136,9 +136,9 @@ HRESULT Device::SetViewport()
 HRESULT Device::CleanupDevice()
 {
     // 디바이스 컨텍스트를 기본 설정으로 재설정
-    if (d3d11_device_context_)
+    if (device_context_)
     {
-        d3d11_device_context_->ClearState();
+        device_context_->ClearState();
     }
 
     return TRUE;
@@ -147,7 +147,7 @@ HRESULT Device::CleanupDevice()
 HRESULT Device::ResizeDevice(UINT width, UINT height)
 {
     // 디바이스가 생성되지 않은 경우
-    if (!d3d11_device_)
+    if (!device_)
     {
         return TRUE;
     }
@@ -160,7 +160,7 @@ HRESULT Device::ResizeDevice(UINT width, UINT height)
     assert(SUCCEEDED(DeleteResource()));
 
     // 현재 설정된 렌더타겟 초기화와 렌더타겟뷰 해제
-    d3d11_device_context_->OMSetRenderTargets(0, nullptr, nullptr);
+    device_context_->OMSetRenderTargets(0, nullptr, nullptr);
     render_target_view_->Release();
 
     // 후면 버퍼 크기 재조정

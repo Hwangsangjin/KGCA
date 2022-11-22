@@ -108,7 +108,7 @@ HRESULT Core::CorePreRender()
 {
 	// 후면 버퍼 삭제
 	const float clear_color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
-	d3d11_device_context_->ClearRenderTargetView(render_target_view_.Get(), clear_color);
+	device_context_->ClearRenderTargetView(render_target_view_.Get(), clear_color);
 
 	return TRUE;
 }

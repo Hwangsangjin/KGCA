@@ -22,23 +22,23 @@ HRESULT Sprite::Release()
     return TRUE;
 }
 
-HRESULT Sprite::Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
+HRESULT Sprite::Load(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring sprite_file)
 {
-    Texture* pMask = TEXTURE->Load(_maskPath);
+    Texture* mask = TEXTURE->Load(mask_file_);
 
-    assert(SUCCEEDED(CreateObject(pd3dDevice, pImmediateContext, _shaderPath, _texturePath)));
-    SetMask(pMask);
+    assert(SUCCEEDED(CreateObject(device, device_context, shader_file_, texture_file_)));
+    SetMask(mask);
 
     return TRUE;
 }
 
-HRESULT SpriteTexture::Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name)
+HRESULT SpriteTexture::Load(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring sprite_file)
 {
-    _pTextures.resize(_textures.size());
-    for (int i = 0; i < _textures.size(); i++)
+    textures_.resize(strings_.size());
+    for (int i = 0; i < strings_.size(); i++)
     {
-        _pTextures[i] = TEXTURE->Load(_textures[i]);
+        textures_[i] = TEXTURE->Load(strings_[i]);
     }
 
-    return Sprite::Load(pd3dDevice, pImmediateContext, name);
+    return Sprite::Load(device, device_context, sprite_file);
 }

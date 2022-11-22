@@ -6,43 +6,43 @@ HRESULT Object2D::Frame()
     return TRUE;
 }
 
-void Object2D::SetMask(Texture* pMaskTexture)
+void Object2D::SetMask(Texture* mask_texture)
 {
-    _pMaskTexture = pMaskTexture;
+    mask_texture_ = mask_texture;
 }
 
 void Object2D::SetRect(MyRect rect)
 {
-    _rect = rect;
+    rect_ = rect;
 
-    _imageSize.x = _pTexture->_desc.Width;
-    _imageSize.y = _pTexture->_desc.Height;
+    image_size_.x = texture_->texture2D_desc_.Width;
+    image_size_.y = texture_->texture2D_desc_.Height;
 
-    _uv._x1 = rect._x1 / _imageSize.x;
-    _uv._y1 = rect._y1 / _imageSize.y;
-    _uv._w = rect._w / _imageSize.x;
-    _uv._h = rect._h / _imageSize.y;
+    uv_.x1 = rect.x1 / image_size_.x;
+    uv_.y1 = rect.y1 / image_size_.y;
+    uv_.w = rect.w / image_size_.x;
+    uv_.h = rect.h / image_size_.y;
 }
 
 void Object2D::SetSpeed(float speed)
 {
-    _speed = speed;
+    speed_ = speed;
 }
 
 void Object2D::SetScale(float x, float y)
 {
-    _scale.x = x;
-    _scale.y = y;
+    scale_.x = x;
+    scale_.y = y;
 }
 
 void Object2D::SetDirection(DxVector2 direction)
 {
-    _direction = direction;
+    direction_ = direction;
 }
 
 void Object2D::SetPosition(DxVector2 position)
 {
-    _position = position;
+    direction_ = position;
 
     SetScreenSpace();
     UpdateVertexBuffer();
@@ -50,38 +50,38 @@ void Object2D::SetPosition(DxVector2 position)
 
 void Object2D::SetPosition(DxVector2 position, DxVector2 cameraPosition)
 {
-    _position = position;
+    position_ = position;
 
-    SetViewSpace(cameraPosition, _cameraViewSize);
+    SetViewSpace(cameraPosition, camera_view_size_);
     UpdateVertexBuffer();
 }
 
 void Object2D::SetCameraPosition(DxVector2 cameraPosition)
 {
-    _cameraPosition = cameraPosition;
+    camera_position_ = cameraPosition;
 }
 
 void Object2D::SetCameraViewSize(DxVector2 cameraViewSize)
 {
-    _cameraViewSize = cameraViewSize;
+    camera_view_size_ = cameraViewSize;
 }
 
-void Object2D::SetViewSpace(DxVector2 cameraPosition, DxVector2 camerViewSize)
+void Object2D::SetViewSpace(DxVector2 camera_position, DxVector2 camera_view_size)
 {
     DxVector2 center;
-    center.x = _rect._w / 2.0f;
-    center.y = _rect._h / 2.0f;
+    center.x = rect_.w / 2.0f;
+    center.y = rect_.h / 2.0f;
 
-    _collision.Set(_position.x - center.x * _scale.x, _position.y - center.y * _scale.y, _rect._w * _scale.x, _rect._h * _scale.y);
+    collision_.Set(position_.x - center.x * scale_.x, position_.y - center.y * scale_.y, rect_.w * scale_.x, rect_.h * scale_.y);
 
-    DxVector2 viewPosition;
-    viewPosition.x = _collision._x1 - cameraPosition.x;
-    viewPosition.y = _collision._y1 - cameraPosition.y;
+    DxVector2 view_position;
+    view_position.x = collision_.x1 - camera_position.x;
+    view_position.y = collision_.y1 - camera_position.y;
 
-    _drawPosition.x = viewPosition.x * (2.0f / camerViewSize.x);
-    _drawPosition.y = -(viewPosition.y * (2.0f / camerViewSize.y));
-    _drawSize.x = (_rect._w / camerViewSize.x) * 2.0f * _scale.x;
-    _drawSize.y = (_rect._h / camerViewSize.y) * 2.0f * _scale.y;
+    draw_position_.x = view_position.x * (2.0f / camera_view_size.x);
+    draw_position_.y = -(view_position.y * (2.0f / camera_view_size.y));
+    draw_size_.x = (rect_.w / camera_view_size.x) * 2.0f * scale_.x;
+    draw_size_.y = (rect_.h / camera_view_size.y) * 2.0f * scale_.y;
 }
 
 bool Object2D::CheckCollision(Object2D& object)
@@ -92,31 +92,31 @@ bool Object2D::CheckCollision(Object2D& object)
 void Object2D::SetScreenSpace()
 {
     DxVector2 center;
-    center.x = _rect._w / 2.0f;
-    center.y = _rect._h / 2.0f;
+    center.x = rect_.w / 2.0f;
+    center.y = rect_.h / 2.0f;
 
-    _collision.Set(_position.x - center.x * _scale.x, _position.y - center.y * _scale.y, _rect._w * _scale.x, _rect._h * _scale.y);
-    _circle.Set(_position.x, _position.y, 40.0f);
+    collision_.Set(position_.x - center.x * scale_.x, position_.y - center.y * scale_.y, rect_.w * scale_.x, rect_.h * scale_.y);
+    circle_.Set(position_.x, position_.y, 40.0f);
 
-    _drawPosition.x = (_collision._x1 / g_client_rect.right) * 2.0f - 1.0f;
-    _drawPosition.y = -((_collision._y1 / g_client_rect.bottom) * 2.0f - 1.0f);
-    _drawSize.x = (_rect._w / g_client_rect.right) * 2.0f * _scale.x;
-    _drawSize.y = (_rect._h / g_client_rect.bottom) * 2.0f * _scale.y;
+    draw_position_.x = (collision_.x1 / g_client_rect.right) * 2.0f - 1.0f;
+    draw_position_.y = -((collision_.y1 / g_client_rect.bottom) * 2.0f - 1.0f);
+    draw_size_.x = (rect_.w / g_client_rect.right) * 2.0f * scale_.x;
+    draw_size_.y = (rect_.h / g_client_rect.bottom) * 2.0f * scale_.y;
 }
 
 void Object2D::UpdateVertexBuffer()
 {
-    _vertices[0].position = { _drawPosition.x, _drawPosition.y, 0.0f };
-    _vertices[0].uv = { _uv._x1, _uv._y1 };
+    vertices_[0].position = { draw_position_.x, draw_position_.y, 0.0f };
+    vertices_[0].uv = { uv_.x1, uv_.y1 };
+            
+    vertices_[1].position = { draw_position_.x + draw_size_.x, draw_position_.y, 0.0f };
+    vertices_[1].uv = { uv_.x1 + uv_.w, uv_.y1 };
+            
+    vertices_[2].position = { draw_position_.x, draw_position_.y - draw_size_.y, 0.0f };
+    vertices_[2].uv = { uv_.x1, uv_.y1 + uv_.h };
+            
+    vertices_[3].position = { draw_position_.x + draw_size_.x, draw_position_.y - draw_size_.y, 0.0f };
+    vertices_[3].uv = { uv_.x1 + uv_.w , uv_.y1 + uv_.h };
 
-    _vertices[1].position = { _drawPosition.x + _drawSize.x, _drawPosition.y, 0.0f };
-    _vertices[1].uv = { _uv._x1 + _uv._w, _uv._y1 };
-
-    _vertices[2].position = { _drawPosition.x, _drawPosition.y - _drawSize.y, 0.0f };
-    _vertices[2].uv = { _uv._x1, _uv._y1 + _uv._h };
-
-    _vertices[3].position = { _drawPosition.x + _drawSize.x, _drawPosition.y - _drawSize.y, 0.0f };
-    _vertices[3].uv = { _uv._x1 + _uv._w , _uv._y1 + _uv._h };
-
-    device_context_->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
+    device_context_->UpdateSubresource(vertex_buffer_.Get(), 0, 0, &vertices_.at(0), 0, 0);
 }

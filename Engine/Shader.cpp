@@ -18,79 +18,32 @@ HRESULT Shader::Render()
 
 HRESULT Shader::Release()
 {
-    SAFE_RELEASE(_pVertexShader);
-    SAFE_RELEASE(_pPixelShader);
-    SAFE_RELEASE(_pVertexShaderCode);
-    SAFE_RELEASE(_pPixelShaderCode);
-
     return TRUE;
 }
 
-void Shader::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+void Shader::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
-    device_ = pd3dDevice;
-    device_context_ = pImmediateContext;
+    device_ = device;
+    device_context_ = device_context;
 }
 
-HRESULT Shader::CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile)
+HRESULT Shader::CreateShader(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring shader_file)
 {
     // µð¹ÙÀÌ½º ¼³Á¤
-    SetDevice(pd3dDevice, pImmediateContext);
+    SetDevice(device, device_context);
 
-    HRESULT hr;
-    ID3DBlob* pErrorCode = nullptr;
-
-    // Á¤Á¡ ¼ÎÀÌ´õ ÄÄÆÄÀÏ 
-    hr = D3DCompileFromFile(shaderFile.c_str(), NULL, NULL, "VS", "vs_5_0", 0, 0, &_pVertexShaderCode, &pErrorCode);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-
-        return hr;
-    }
+    // Á¤Á¡ ¼ÎÀÌ´õ ÄÄÆÄÀÏ
+    Microsoft::WRL::ComPtr<ID3DBlob> error_code;
+    assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // Á¤Á¡ ¼ÎÀÌ´õ »ý¼º
-    hr = device_->CreateVertexShader(_pVertexShaderCode->GetBufferPointer(), _pVertexShaderCode->GetBufferSize(), NULL, &_pVertexShader);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-
-        return hr;
-    }
+    assert(SUCCEEDED(device_.Get()->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
 
     // ÇÈ¼¿ ¼ÎÀÌ´õ ÄÄÆÄÀÏ  
-    hr = D3DCompileFromFile(shaderFile.c_str(), NULL, NULL, "PS", "ps_5_0", 0, 0, &_pPixelShaderCode, &pErrorCode);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-
-        return hr;
-    }
+    assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "PS", "ps_5_0", 0, 0, pixel_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // ÇÈ¼¿ ¼ÎÀÌ´õ »ý¼º
-    hr = device_->CreatePixelShader(_pPixelShaderCode->GetBufferPointer(), _pPixelShaderCode->GetBufferSize(), NULL, &_pPixelShader);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
+    assert(SUCCEEDED(device_.Get()->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
 
-        return hr;
-    }
-
-    return hr;
+    return TRUE;
 }

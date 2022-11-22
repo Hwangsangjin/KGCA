@@ -6,42 +6,43 @@
 class Object2D : public Object
 {
 public:
-	W_STR _name;
-	UINT _index;
-	W_STR _texturePath;
-	W_STR _maskPath;
-	W_STR _shaderPath;
+	W_STR name_;
+	UINT index_;
+	W_STR texture_file_;
+	W_STR mask_file_;
+	W_STR shader_file_;
 
-	float _speed;
-	MyCircle _circle;
-	MyRect _collision;
-	MyRect _rect;
-	MyRect _uv;
-	DxVector2 _scale = { 1.0f, 1.0f };
-	DxVector2 _direction = { 0.0f, 0.0f };
-	DxVector2 _position;
-	DxVector2 _drawPosition;
-	DxVector2 _drawSize;
-	DxVector2 _imageSize;
-	DxVector2 _cameraPosition;
-	DxVector2 _cameraViewSize;
-	Texture* _pMaskTexture = nullptr;
+	float speed_;
+	MyCircle circle_;
+	MyRect collision_;
+	MyRect rect_;
+	MyRect uv_;
+	DxVector2 scale_ = { 1.0f, 1.0f };
+	DxVector2 direction_ = { 0.0f, 0.0f };
+	DxVector2 position_;
+	DxVector2 draw_position_;
+	DxVector2 draw_size_;
+	DxVector2 image_size_;
+	DxVector2 camera_position_;
+	DxVector2 camera_view_size_;
 
-	bool _isCollision = false;
+	Texture* mask_texture_ = nullptr;
+
+	bool is_collision_ = false;
 
 	virtual HRESULT Frame() override;
 	virtual bool CheckCollision(Object2D& object);
 
-	void SetMask(Texture* pMaskTexture);
+	void SetMask(Texture* mask_texture);
 	void SetRect(MyRect rect);
 	void SetSpeed(float speed);
 	void SetScale(float x, float y);
 	void SetDirection(DxVector2 direction);
 	void SetPosition(DxVector2 position);
-	void SetPosition(DxVector2 position, DxVector2 cameraPosition);
-	void SetCameraPosition(DxVector2 cameraPosition);
-	void SetCameraViewSize(DxVector2 cameraViewSize);
-	void SetViewSpace(DxVector2 cameraPosition, DxVector2 camerViewSize);
+	void SetPosition(DxVector2 position, DxVector2 camera_position);
+	void SetCameraPosition(DxVector2 camera_position);
+	void SetCameraViewSize(DxVector2 camera_view_size);
+	void SetViewSpace(DxVector2 camera_position, DxVector2 camer_view_size);
 	void SetScreenSpace();
 	virtual void UpdateVertexBuffer() override;
 };

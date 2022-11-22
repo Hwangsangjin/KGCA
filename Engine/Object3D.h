@@ -5,11 +5,11 @@
 class Object3D : public Object
 {
 public:
-	W_STR _name;
+	W_STR name_;
 
-	DxVector3 _look;
-	DxVector3 _up;
-	DxVector3 _right;
+	DxVector3 look_;
+	DxVector3 up_;
+	DxVector3 right_;
 
 	Object3D() {}
 	virtual ~Object3D() {}

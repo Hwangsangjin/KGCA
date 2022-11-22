@@ -4,11 +4,11 @@ class Device
 {
 protected:
 	// 디바이스 객체
-	Microsoft::WRL::ComPtr<ID3D11Device> d3d11_device_;
+	Microsoft::WRL::ComPtr<ID3D11Device> device_;
 	// 디바이스 컨텍스트 객체
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> d3d11_device_context_;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 	// 팩토리 객체
-	Microsoft::WRL::ComPtr<IDXGIFactory> dxgi_factory_;
+	Microsoft::WRL::ComPtr<IDXGIFactory> factory_;
 	// 스왑체인 객체
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swap_chain_;
 	// 메인 렌더타겟 뷰

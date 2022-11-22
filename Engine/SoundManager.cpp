@@ -1,19 +1,20 @@
 #include "pch.h"
 #include "SoundManager.h"
+#include "Sound.h"
 
 HRESULT SoundManager::Init()
 {
-    FMOD::System_Create(&_pSystem);
-    _pSystem->init(32, FMOD_INIT_NORMAL, 0);
+    FMOD::System_Create(&system_);
+    system_->init(32, FMOD_INIT_NORMAL, 0);
 
     return TRUE;
 }
 
 HRESULT SoundManager::Frame()
 {
-    _pSystem->update();
+    system_->update();
 
-    for (auto& sound : _sounds)
+    for (auto& sound : sounds_)
     {
         if (sound.second)
         {
@@ -31,7 +32,7 @@ HRESULT SoundManager::Render()
 
 HRESULT SoundManager::Release()
 {
-    for (auto& sound : _sounds)
+    for (auto& sound : sounds_)
     {
         if (sound.second)
         {
@@ -41,44 +42,44 @@ HRESULT SoundManager::Release()
         }
     }
 
-    _pSystem->close();
-    _pSystem->release();
-    _sounds.clear();
+    system_->close();
+    system_->release();
+    sounds_.clear();
 
     return TRUE;
 }
 
-Sound* SoundManager::Load(std::wstring filename)
+Sound* SoundManager::Load(std::wstring sound_file)
 {
     HRESULT hr;
-    W_STR splitName = GetSplitName(filename);
+    W_STR split_name = GetSplitName(sound_file);
 
     // 중복 제거
-    for (auto& sound : _sounds)
+    for (auto& sound : sounds_)
     {
-        if (sound.first == filename)
+        if (sound.first == sound_file)
         {
             return sound.second;
         }
     }
 
-    Sound* pNewSound = new Sound;
-    pNewSound->GetName() = filename;
-    if (pNewSound)
+    Sound* new_sound = new Sound;
+    new_sound->GetName() = sound_file;
+    if (new_sound)
     {
-        hr = pNewSound->Load(_pSystem, filename);
+        hr = new_sound->Load(system_, sound_file);
         if (SUCCEEDED(hr))
         {
-            _sounds.insert(std::make_pair(splitName, pNewSound));
+            sounds_.insert(std::make_pair(split_name, new_sound));
         }
     }
 
     return nullptr;
 }
 
-void SoundManager::LoadDir(std::wstring path)
+void SoundManager::LoadDir(std::wstring file_path)
 {
-    W_STR dir = path + L"*.*";
+    W_STR dir = file_path + L"*.*";
     intptr_t handle;
     struct _wfinddata_t fd;
     
@@ -92,32 +93,32 @@ void SoundManager::LoadDir(std::wstring path)
     {
         if ((fd.attrib & _A_SUBDIR) && fd.name[0] != '.')
         {
-            LoadDir(path + fd.name + L"/");
+            LoadDir(file_path + fd.name + L"/");
         }
         else if (fd.name[0] != '.')
         {
-            _files.push_back(path + fd.name);
+            files_.push_back(file_path + fd.name);
         }
     } while (_wfindnext(handle, &fd) == 0);
 
     _findclose(handle);
 }
 
-void SoundManager::LoadAll(std::wstring path)
+void SoundManager::LoadAll(std::wstring file_path)
 {
-    LoadDir(path);
+    LoadDir(file_path);
 
-    for (auto& file : _files)
+    for (auto& file : files_)
     {
         Load(file);
     }
 }
 
-Sound* SoundManager::GetPtr(W_STR filename)
+Sound* SoundManager::GetPtr(W_STR sound_file)
 {
-    for (auto& sound : _sounds)
+    for (auto& sound : sounds_)
     {
-        if (sound.first == filename)
+        if (sound.first == sound_file)
         {
             return sound.second;
         }
@@ -126,17 +127,17 @@ Sound* SoundManager::GetPtr(W_STR filename)
     return nullptr;
 }
 
-T_STR SoundManager::GetSplitName(std::wstring filename)
+T_STR SoundManager::GetSplitName(std::wstring sound_file)
 {
-    W_STR splitName;
+    W_STR split_name;
     TCHAR dirve[MAX_PATH] = { 0 };
     TCHAR dir[MAX_PATH] = { 0 };
     TCHAR file[MAX_PATH] = { 0 };
     TCHAR ext[MAX_PATH] = { 0 };
 
-    _tsplitpath_s(filename.c_str(), dirve, dir, file, ext);
-    splitName = file;
-    splitName += ext;
+    _tsplitpath_s(sound_file.c_str(), dirve, dir, file, ext);
+    split_name = file;
+    split_name += ext;
 
-    return splitName;
+    return split_name;
 }

@@ -5,9 +5,9 @@ class Text
 	DECLARE_SINGLE(Text);
 
 private:
-	Microsoft::WRL::ComPtr<ID2D1Factory> d2d_factory_;
+	Microsoft::WRL::ComPtr<ID2D1Factory> d2d1_factory_;
 	Microsoft::WRL::ComPtr<IDWriteFactory> dwrite_factory_;
-	Microsoft::WRL::ComPtr<ID2D1RenderTarget> d2d_render_target_;
+	Microsoft::WRL::ComPtr<ID2D1RenderTarget> d2d1_render_target_;
 	Microsoft::WRL::ComPtr<IDWriteTextFormat> dwrite_text_format_;
 	Microsoft::WRL::ComPtr<IDWriteTextLayout> dwrite_text_layout_;
 	Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> text_color_;

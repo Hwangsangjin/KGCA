@@ -1,11 +1,23 @@
 #pragma once
+
 class Shader
 {
 private:
-	ID3D11Device* device_ = nullptr;
-	ID3D11DeviceContext* device_context_ = nullptr;
+	// 디바이스
+	Microsoft::WRL::ComPtr<ID3D11Device> device_;
+	// 디바이스 컨텍스트
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
 public:
+	// 정점 셰이더
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertex_shader_;
+	// 정점 셰이더 코드
+	Microsoft::WRL::ComPtr<ID3DBlob> vertex_shader_code_;
+	// 픽셀 셰이더
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> pixel_shader_;
+	// 픽셀 셰이더 코드
+	Microsoft::WRL::ComPtr<ID3DBlob> pixel_shader_code_;
+
 	// 초기화
 	HRESULT Init();
 	// 프레임 계산
@@ -16,14 +28,9 @@ public:
 	HRESULT Release();
 
 	// 디바이스 설정
-	void SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
+	void SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context);
 
 	// 셰이더 생성
-	HRESULT CreateShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile);
-
-	ID3D11VertexShader* _pVertexShader = nullptr;
-	ID3D11PixelShader* _pPixelShader = nullptr;
-	ID3DBlob* _pVertexShaderCode = nullptr;
-	ID3DBlob* _pPixelShaderCode = nullptr;
+	HRESULT CreateShader(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring shader_file);
 };
 

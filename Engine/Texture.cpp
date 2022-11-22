@@ -18,34 +18,31 @@ HRESULT Texture::Render()
 
 HRESULT Texture::Release()
 {
-    SAFE_RELEASE(_pTexture2D);
-    SAFE_RELEASE(_pShaderResourceView);
-
     return TRUE;
 }
 
-void Texture::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+void Texture::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
-    device_ = pd3dDevice;
-    device_context_ = pImmediateContext;
+    device_ = device;
+    device_context_ = device_context;
 }
 
-HRESULT Texture::CreateTexture(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring textureFile)
+HRESULT Texture::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring texture_file)
 {
     // 디바이스 설정
-    SetDevice(pd3dDevice, pImmediateContext);
+    SetDevice(device, device_context);
 
     // 텍스처 생성
-    HRESULT hr = DirectX::CreateWICTextureFromFile(pd3dDevice, pImmediateContext, textureFile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView);
+    HRESULT hr = DirectX::CreateWICTextureFromFile(device, device_context, texture_file.c_str(), (ID3D11Resource**)texture2D_.GetAddressOf(), &shader_resource_view_);
 
     if (FAILED(hr))
     {
-        hr = DirectX::CreateDDSTextureFromFile(pd3dDevice, pImmediateContext, textureFile.c_str(), (ID3D11Resource**)&_pTexture2D, &_pShaderResourceView);
+        hr = DirectX::CreateDDSTextureFromFile(device, device_context, texture_file.c_str(), (ID3D11Resource**)texture2D_.GetAddressOf(), &shader_resource_view_);
     }
 
-    if (_pTexture2D)
+    if (texture2D_)
     {
-        _pTexture2D->GetDesc(&_desc);
+        texture2D_->GetDesc(&texture2D_desc_);
     }
 
     return TRUE;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ShaderManager.h"
+#include "Shader.h"
 
 HRESULT ShaderManager::Init()
 {
@@ -18,7 +19,7 @@ HRESULT ShaderManager::Render()
 
 HRESULT ShaderManager::Release()
 {
-	for (auto& shader : _shaders)
+	for (auto& shader : shaders_)
 	{
 		if (shader.second)
 		{
@@ -28,42 +29,42 @@ HRESULT ShaderManager::Release()
 		}
 	}
 
-	_shaders.clear();
+	shaders_.clear();
 
 	return TRUE;
 }
 
-HRESULT ShaderManager::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+HRESULT ShaderManager::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
-	device_ = pd3dDevice;
-	device_context_ = pImmediateContext;
+	device_ = device;
+	device_context_ = device_context;
 
 	return TRUE;
 }
 
-Shader* ShaderManager::Load(std::wstring shaderFile)
+Shader* ShaderManager::Load(std::wstring shader_file)
 {
 	HRESULT hr;
 
 	// 중복 제거
-	for (auto& shader : _shaders)
+	for (auto& shader : shaders_)
 	{
-		if (shader.first == shaderFile)
+		if (shader.first == shader_file)
 		{
 			return shader.second;
 		}
 	}
 
 	// 셰이더 생성
-	Shader* pNewShader = new Shader;
-	if (pNewShader)
+	Shader* new_shader = new Shader;
+	if (new_shader)
 	{
-		hr = pNewShader->CreateShader(device_, device_context_, shaderFile);
+		hr = new_shader->CreateShader(device_.Get(), device_context_.Get(), shader_file);
 		if (SUCCEEDED(hr))
 		{
-			_shaders.insert(std::make_pair(shaderFile, pNewShader));
+			shaders_.insert(std::make_pair(shader_file, new_shader));
 		}
 	}
 
-	return pNewShader;
+	return new_shader;
 }

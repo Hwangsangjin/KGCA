@@ -5,7 +5,7 @@
 HRESULT Text::Init()
 {
     // Direct2D 梓端 持失
-    assert(SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, d2d_factory_.GetAddressOf())));
+    assert(SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, d2d1_factory_.GetAddressOf())));
 
     // DirectWrite 梓端 持失
     assert(SUCCEEDED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)dwrite_factory_.GetAddressOf())));
@@ -85,7 +85,7 @@ HRESULT Text::Release()
 
 HRESULT Text::CreateResource()
 {
-    assert(SUCCEEDED(d2d_render_target_->CreateSolidColorBrush({ 0, 0, 0, 1 }, text_color_.GetAddressOf())));
+    assert(SUCCEEDED(d2d1_render_target_->CreateSolidColorBrush({ 0, 0, 0, 1 }, text_color_.GetAddressOf())));
 
     return TRUE;
 }
@@ -97,9 +97,9 @@ HRESULT Text::DeleteResource()
         text_color_->Release();
     }
 
-    if (d2d_render_target_)
+    if (d2d1_render_target_)
     {
-        d2d_render_target_->Release();
+        d2d1_render_target_->Release();
     }
 
     return TRUE;
@@ -116,7 +116,7 @@ HRESULT Text::SetSurface(Microsoft::WRL::ComPtr<IDXGISurface1> DXGISurface1)
     props.usage = D2D1_RENDER_TARGET_USAGE_NONE;
     props.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
-    assert(SUCCEEDED(d2d_factory_->CreateDxgiSurfaceRenderTarget(DXGISurface1.Get(), &props, d2d_render_target_.GetAddressOf())));
+    assert(SUCCEEDED(d2d1_factory_->CreateDxgiSurfaceRenderTarget(DXGISurface1.Get(), &props, d2d1_render_target_.GetAddressOf())));
 
     CreateResource();
 
@@ -127,14 +127,14 @@ HRESULT Text::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
 {
     D2D1_RECT_F rect = { x, y, g_client_rect.right, g_client_rect.bottom };
 
-    d2d_render_target_->BeginDraw();
+    d2d1_render_target_->BeginDraw();
 
     text_color_->SetColor(color);
     text_color_->SetOpacity(1.0f);
 
-    d2d_render_target_->DrawText(text.c_str(), text.size(), dwrite_text_format_.Get(), rect, text_color_.Get());
+    d2d1_render_target_->DrawText(text.c_str(), text.size(), dwrite_text_format_.Get(), rect, text_color_.Get());
 
-    assert(SUCCEEDED(d2d_render_target_->EndDraw()));
+    assert(SUCCEEDED(d2d1_render_target_->EndDraw()));
 
     return TRUE;
 }

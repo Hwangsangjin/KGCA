@@ -11,11 +11,11 @@ HRESULT Timer::Init()
 
 HRESULT Timer::Frame()
 {
-	__int64 currentCount;
-	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
+	__int64 current_count;
+	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&current_count));
 
-	delta_time_ = (currentCount - prev_count_) / static_cast<float>(frequency_);
-	prev_count_ = currentCount;
+	delta_time_ = (current_count - prev_count_) / static_cast<float>(frequency_);
+	prev_count_ = current_count;
 
 	frame_count_++;
 	frame_time_ += delta_time_;

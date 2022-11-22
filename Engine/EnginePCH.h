@@ -58,16 +58,16 @@ typedef std::vector<std::basic_string<TCHAR>> TCHAR_STRING_VECTOR;
 typedef std::vector<DWORD> DWORD_VECTOR;
 
 // String Convert
-static std::wstring to_mw(const std::string& _src)
+static std::wstring to_mw(const std::string& src)
 {
 	USES_CONVERSION;
-	return std::wstring(A2W(_src.c_str()));
+	return std::wstring(A2W(src.c_str()));
 };
 
-static std::string to_wm(const std::wstring& _src)
+static std::string to_wm(const std::wstring& src)
 {
 	USES_CONVERSION;
-	return std::string(W2A(_src.c_str()));
+	return std::string(W2A(src.c_str()));
 };
 
 static std::wstring mtw(std::string str)

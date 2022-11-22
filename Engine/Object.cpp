@@ -17,13 +17,13 @@ HRESULT Object::PreRender()
 {
     UINT stride = sizeof(DefaultVertex);
     UINT offset = 0;
-    device_context_->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
-    device_context_->IASetIndexBuffer(_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-    device_context_->IASetInputLayout(_pInputLayout);
-    device_context_->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
-    device_context_->VSSetShader(_pVertexShader, NULL, 0);
-    device_context_->PSSetShader(_pPixelShader, NULL, 0);
-    device_context_->PSSetShaderResources(0, 1, &_pShaderResourceView);
+    device_context_->IASetVertexBuffers(0, 1, &vertex_buffer_, &stride, &offset);
+    device_context_->IASetIndexBuffer(index_buffer_.Get(), DXGI_FORMAT_R32_UINT, 0);
+    device_context_->IASetInputLayout(input_layout_.Get());
+    device_context_->VSSetConstantBuffers(0, 1, constant_buffer_.GetAddressOf());
+    device_context_->VSSetShader(vertex_shader_.Get(), NULL, 0);
+    device_context_->PSSetShader(pixel_shader_.Get(), NULL, 0);
+    device_context_->PSSetShaderResources(0, 1, shader_resource_view_.GetAddressOf());
 
     return TRUE;
 }
@@ -38,14 +38,14 @@ HRESULT Object::Render()
 
 HRESULT Object::PostRender()
 {
-    if (!_pIndexBuffer)
+    if (!index_buffer_)
     {
-        device_context_->Draw(_vertices.size(), 0);
+        device_context_->Draw(vertices_.size(), 0);
     }
     else
     {
-        //device_context_->DrawIndexed(_face * 3, 0, 0);
-        device_context_->DrawIndexed(_indices.size(), 0, 0);
+        //device_context_->DrawIndexed(face_ * 3, 0, 0);
+        device_context_->DrawIndexed(indices_.size(), 0, 0);
     }
 
     return TRUE;
@@ -53,54 +53,49 @@ HRESULT Object::PostRender()
 
 HRESULT Object::Release()
 {
-    SAFE_RELEASE(_pVertexBuffer);
-    SAFE_RELEASE(_pIndexBuffer);
-    SAFE_RELEASE(_pConstantBuffer);
-    SAFE_RELEASE(_pInputLayout);
-
     return TRUE;
 }
 
-void Object::SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection)
+void Object::SetMatrix(DxMatrix* world_matrix, DxMatrix* view_matrix, DxMatrix* projection_matrix)
 {
-    if (pWorld)
+    if (world_matrix)
     {
-        _world = *pWorld;
+        world_matrix_ = *world_matrix;
     }
 
-    if (pView)
+    if (view_matrix)
     {
-        _view = *pView;
+        view_matrix_ = *view_matrix;
     }
 
-    if (pProjection)
+    if (projection_matrix)
     {
-        _projection = *pProjection;
+        projection_matrix_ = *projection_matrix;
     }
 
     UpdateConstantBuffer();
 }
 
-HRESULT Object::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+HRESULT Object::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
-    device_ = pd3dDevice;
-    device_context_ = pImmediateContext;
+    device_ = device;
+    device_context_ = device_context;
 
     return TRUE;
 }
 
-HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile)
+HRESULT Object::CreateObject(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring shader_file, std::wstring texture_file)
 {
-    assert(SUCCEEDED(SetDevice(pd3dDevice, pImmediateContext)));
+    assert(SUCCEEDED(SetDevice(device, device_context)));
     assert(SUCCEEDED(CreateVertexBuffer()));
     assert(SUCCEEDED(CreateIndexBuffer()));
     assert(SUCCEEDED(CreateConstantBuffer()));
-    assert(SUCCEEDED(CreateShader(shaderFile)));
+    assert(SUCCEEDED(CreateShader(shader_file)));
     assert(SUCCEEDED(CreateInputLayout()));
 
-    if (SUCCEEDED(LoadTexture(textureFile)))
+    if (SUCCEEDED(LoadTexture(texture_file)))
     {
-        _pShaderResourceView = _pTexture->_pShaderResourceView;
+        shader_resource_view_ = texture_->shader_resource_view_;
     }
 
     if (FAILED(Init()))
@@ -113,29 +108,28 @@ HRESULT Object::CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImm
 
 void Object::CreateVertexData()
 {
-    if (_vertices.size() > 0)
+    if (vertices_.size() > 0)
     {
-        _init = _vertices;
+        init_vertices_ = vertices_;
 
         return;
     }
 
-    _vertices.resize(4);
+    vertices_.resize(4);
+    vertices_[0].position = DxVector3{ -1.0f, 1.0f, 0.0f };
+    vertices_[0].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
+    vertices_[0].uv = DxVector2{ 0.0f, 0.0f };
+    vertices_[1].position = DxVector3{ 1.0f, 1.0f , 0.0f };
+    vertices_[1].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
+    vertices_[1].uv = DxVector2{ 1.0f, 0.0f };
+    vertices_[2].position = DxVector3{ -1.0f, -1.0f, 0.0f };
+    vertices_[2].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
+    vertices_[2].uv = DxVector2{ 0.0f, 1.0f };
+    vertices_[3].position = DxVector3{ 1.0f, -1.0f, 0.0f };
+    vertices_[3].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
+    vertices_[3].uv = DxVector2{ 1.0f, 1.0f };
 
-    _vertices[0].position = DxVector3{ -1.0f, 1.0f, 0.0f };
-    _vertices[0].color = DxVector4{ 0.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[0].uv = DxVector2{ 0.0f, 0.0f };
-    _vertices[1].position = DxVector3{ 1.0f, 1.0f , 0.0f };
-    _vertices[1].color = DxVector4{ 0.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[1].uv = DxVector2{ 1.0f, 0.0f };
-    _vertices[2].position = DxVector3{ -1.0f, -1.0f, 0.0f };
-    _vertices[2].color = DxVector4{ 1.0f, 0.0f, 1.0f, 1.0f };
-    _vertices[2].uv = DxVector2{ 0.0f, 1.0f };
-    _vertices[3].position = DxVector3{ 1.0f, -1.0f, 0.0f };
-    _vertices[3].color = DxVector4{ 1.0f, 1.0f, 0.0f, 1.0f };
-    _vertices[3].uv = DxVector2{ 1.0f, 1.0f };
-
-    _init = _vertices;
+    init_vertices_ = vertices_;
 }
 
 HRESULT Object::CreateVertexBuffer()
@@ -144,35 +138,35 @@ HRESULT Object::CreateVertexBuffer()
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(DefaultVertex) * _vertices.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(DefaultVertex) * vertices_.size(); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = &_vertices.at(0);
+    sd.pSysMem = &vertices_.at(0);
     assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 채우는 CPU 메모리 주소
-        &_pVertexBuffer)));
+        vertex_buffer_.GetAddressOf())));
 
     return TRUE;
 }
 
 void Object::CreateIndexData()
 {
-    if (_indices.size() > 0)
+    if (indices_.size() > 0)
     {
         return;
     }
 
-    _indices.resize(6);
+    indices_.resize(6);
 
-    _indices[0] = 0; _indices[1] = 1; _indices[2] = 2;
-    _indices[3] = 2; _indices[4] = 1; _indices[5] = 3;
+    indices_[0] = 0; indices_[1] = 1; indices_[2] = 2;
+    indices_[3] = 2; indices_[4] = 1; indices_[5] = 3;
 
-    _face = _indices.size() / 3;
+    face_ = indices_.size() / 3;
 }
 
 HRESULT Object::CreateIndexBuffer()
@@ -181,33 +175,33 @@ HRESULT Object::CreateIndexBuffer()
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(DWORD) * _indices.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(DWORD) * indices_.size(); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
     D3D11_SUBRESOURCE_DATA  sd;
     ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = &_indices.at(0);
+    sd.pSysMem = &indices_.at(0);
     assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
-        &_pIndexBuffer)));
+        &index_buffer_)));
 
     return TRUE;
 }
 
 void Object::CreateConstantData()
 {
-    D3DXMatrixIdentity(&_constantBuffer.world);
-    D3DXMatrixIdentity(&_constantBuffer.view);
-    D3DXMatrixIdentity(&_constantBuffer.projection);
+    D3DXMatrixIdentity(&constant_buffer_data.world_matrix);
+    D3DXMatrixIdentity(&constant_buffer_data.view_matrix);
+    D3DXMatrixIdentity(&constant_buffer_data.projection_matrix);
 
-    _constantBuffer.timer = 0.0f;
+    constant_buffer_data.timer = 0.0f;
 
-    D3DXMatrixTranspose(&_constantBuffer.world, &_constantBuffer.world);
-    D3DXMatrixTranspose(&_constantBuffer.view, &_constantBuffer.view);
-    D3DXMatrixTranspose(&_constantBuffer.projection, &_constantBuffer.projection);
+    D3DXMatrixTranspose(&constant_buffer_data.world_matrix, &constant_buffer_data.world_matrix);
+    D3DXMatrixTranspose(&constant_buffer_data.view_matrix, &constant_buffer_data.view_matrix);
+    D3DXMatrixTranspose(&constant_buffer_data.projection_matrix, &constant_buffer_data.projection_matrix);
 }
 
 HRESULT Object::CreateConstantBuffer()
@@ -223,24 +217,24 @@ HRESULT Object::CreateConstantBuffer()
 
     D3D11_SUBRESOURCE_DATA sd;
     ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = &_constantBuffer;
+    sd.pSysMem = constant_buffer_.GetAddressOf();
     assert(SUCCEEDED(device_->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &_pConstantBuffer)));
+        constant_buffer_.GetAddressOf())));
 
     return TRUE;
 }
 
 HRESULT Object::CreateShader(std::wstring shaderFile)
 {
-    _pShader = SHADER->Load(shaderFile);
-    if (_pShader)
+    shader_ = SHADER->Load(shaderFile);
+    if (shader_)
     {
-        _pVertexShader = _pShader->_pVertexShader;
-        _pPixelShader = _pShader->_pPixelShader;
-        _pVertexShaderCode = _pShader->_pVertexShaderCode;
-        _pPixelShaderCode = _pShader->_pPixelShaderCode;
+        vertex_shader_ = shader_->vertex_shader_;
+        pixel_shader_ = shader_->pixel_shader_;
+        vertex_shader_code_ = shader_->vertex_shader_code_;
+        pixel_shader_code_ = shader_->pixel_shader_code_;
 
         return TRUE;
     }
@@ -250,32 +244,32 @@ HRESULT Object::CreateShader(std::wstring shaderFile)
 
 HRESULT Object::CreateInputLayout()
 {
-    if (!_pVertexShaderCode)
+    if (!vertex_shader_code_)
     {
         return E_FAIL;
     }
 
     // 정의
-    D3D11_INPUT_ELEMENT_DESC ied[] =
+    D3D11_INPUT_ELEMENT_DESC layout[] =
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 40, D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
-    UINT numElements = ARRAYSIZE(ied);
+    UINT elements = ARRAYSIZE(layout);
 
     // 생성
-    assert(SUCCEEDED(device_->CreateInputLayout(ied, numElements, _pShader->_pVertexShaderCode->GetBufferPointer(),
-        _pShader->_pVertexShaderCode->GetBufferSize(), &_pInputLayout)));
+    assert(SUCCEEDED(device_->CreateInputLayout(layout, elements, shader_->vertex_shader_code_->GetBufferPointer(),
+        shader_->vertex_shader_code_->GetBufferSize(), &input_layout_)));
 
     return TRUE;
 }
 
-HRESULT Object::CreateTexture(std::wstring textureFile)
+HRESULT Object::CreateTexture(std::wstring texture_file)
 {
-    _pTexture = TEXTURE->Load(textureFile);
-    if (_pTexture)
+    texture_ = TEXTURE->Load(texture_file);
+    if (texture_)
     {
         return TRUE;
     }
@@ -285,24 +279,24 @@ HRESULT Object::CreateTexture(std::wstring textureFile)
 
 void Object::UpdateVertexBuffer()
 {
-    device_context_->UpdateSubresource(_pVertexBuffer, NULL, NULL, &_vertices.at(0), 0, 0);
+    device_context_->UpdateSubresource(vertex_buffer_.Get(), NULL, NULL, &vertices_.at(0), 0, 0);
 }
 
 void Object::UpdateConstantBuffer()
 {
-    _constantBuffer.world = _world.Transpose();
-    _constantBuffer.view = _view.Transpose();
-    _constantBuffer.projection = _projection.Transpose();
+    constant_buffer_data.world_matrix = world_matrix_.Transpose();
+    constant_buffer_data.view_matrix = view_matrix_.Transpose();
+    constant_buffer_data.projection_matrix = projection_matrix_.Transpose();
 
-    device_context_->UpdateSubresource(_pConstantBuffer, NULL, NULL, &_constantBuffer, 0, 0);
+    device_context_->UpdateSubresource(constant_buffer_.Get(), NULL, NULL, constant_buffer_.GetAddressOf(), 0, 0);
 }
 
-HRESULT Object::LoadTexture(W_STR filename)
+HRESULT Object::LoadTexture(W_STR texture_file)
 {
-    _pTexture = TEXTURE->Load(filename);
-    if (_pTexture)
+    texture_ = TEXTURE->Load(texture_file);
+    if (texture_)
     {
-        _pShaderResourceView = _pTexture->_pShaderResourceView;
+        shader_resource_view_ = texture_->shader_resource_view_;
 
         return TRUE;
     }
@@ -310,23 +304,23 @@ HRESULT Object::LoadTexture(W_STR filename)
     return E_FAIL;
 }
 
-ID3D11Buffer* DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, void* pDataAddress, UINT vertexCount, UINT vertexSize)
+ID3D11Buffer* DX::CreateVertexBuffer(ID3D11Device* device, void* data_address, UINT vertex_count, UINT vertex_size)
 {
-    ID3D11Buffer* pVertexBuffer = nullptr;
+    ID3D11Buffer* vertex_buffer = nullptr;
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = vertexCount * vertexSize; // 바이트 용량
+    bd.ByteWidth = vertex_count * vertex_size; // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼 용도
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
     D3D11_SUBRESOURCE_DATA  sd;
     ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = pDataAddress;
-    assert(SUCCEEDED(pd3dDevice->CreateBuffer(
+    sd.pSysMem = data_address;
+    assert(SUCCEEDED(device->CreateBuffer(
         &bd, // 버퍼 할당
         &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
-        &pVertexBuffer)));
+        &vertex_buffer)));
 
-    return pVertexBuffer;
+    return vertex_buffer;
 }

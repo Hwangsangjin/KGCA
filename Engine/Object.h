@@ -27,52 +27,52 @@ struct IndexWeightVertex
 
 struct ConstantBuffer
 {
-	DxMatrix world;
-	DxMatrix view;
-	DxMatrix projection;
-	float x;
-	float y;
-	float z;
-	float timer;
+	DxMatrix world_matrix;
+	DxMatrix view_matrix;
+	DxMatrix projection_matrix;
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
+	float timer = 0.0f;
 };
 
 struct BoneBuffer
 {
-	DxMatrix boneMatrix[255];
+	DxMatrix bone_matrix[255];
 };
 
 class Object
 {
 public:
-	ID3D11Device* device_ = nullptr;
-	ID3D11DeviceContext* device_context_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> device_;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
-	std::vector<DefaultVertex> _init;
-	std::vector<DefaultVertex> _vertices;
-	std::vector<DWORD> _indices;
-	ID3D11Buffer* _pVertexBuffer = nullptr;
-	ID3D11Buffer* _pIndexBuffer = nullptr;
-	ConstantBuffer _constantBuffer;
-	ID3D11Buffer* _pConstantBuffer = nullptr;
-	ID3D11InputLayout* _pInputLayout = nullptr;
+	std::vector<DefaultVertex> init_vertices_;
+	std::vector<DefaultVertex> vertices_;
+	std::vector<DWORD> indices_;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> vertex_buffer_;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> index_buffer_;
+	ConstantBuffer constant_buffer_data;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> constant_buffer_;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> input_layout_;
 
-	std::wstring _textureName;
-	std::wstring _shaderName;
-	Texture* _pTexture = nullptr;
-	Shader* _pShader = nullptr;
-	ID3D11VertexShader* _pVertexShader = nullptr;
-	ID3D11PixelShader* _pPixelShader = nullptr;
-	ID3DBlob* _pVertexShaderCode = nullptr;
-	ID3DBlob* _pPixelShaderCode = nullptr;
-	ID3D11ShaderResourceView* _pShaderResourceView = nullptr;
+	std::wstring texture_name_;
+	std::wstring shader_name_;
+	Texture* texture_ = nullptr;
+	Shader* shader_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertex_shader_;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> pixel_shader_;
+	Microsoft::WRL::ComPtr<ID3DBlob> vertex_shader_code_;
+	Microsoft::WRL::ComPtr<ID3DBlob> pixel_shader_code_;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shader_resource_view_;
 
-	DxMatrix _world;
-	DxMatrix _view;
-	DxMatrix _projection;
+	DxMatrix world_matrix_;
+	DxMatrix view_matrix_;
+	DxMatrix projection_matrix_;
 
-	DxVector3 _position;
+	DxVector3 position_;
 
-	DWORD _face;
+	DWORD face_ = 0;
 
 	Object() {}
 	virtual ~Object() {};
@@ -89,13 +89,13 @@ public:
 	virtual HRESULT Release();
 
 	// 공간 설정
-	virtual void SetMatrix(DxMatrix* pWorld, DxMatrix* pView, DxMatrix* pProjection);
+	virtual void SetMatrix(DxMatrix* world_matrix, DxMatrix* view_matrix, DxMatrix* projection_matrix);
 
 	// 디바이스 설정
-	virtual HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
+	virtual HRESULT SetDevice(ID3D11Device* d3d11_device, ID3D11DeviceContext* d3d11_device_context);
 
 	// 오브젝트 생성
-	virtual HRESULT CreateObject(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring shaderFile, std::wstring textureFile);
+	virtual HRESULT CreateObject(ID3D11Device* d3d11_device, ID3D11DeviceContext* d3d11_device_context, std::wstring shader_file, std::wstring texture_file);
 
 	// 정점 데이터 생성
 	virtual void CreateVertexData();
@@ -110,11 +110,11 @@ public:
 	// 상수 버퍼 생성
 	virtual HRESULT CreateConstantBuffer();
 	// 셰이더 생성
-	virtual HRESULT CreateShader(std::wstring shaderFile);
+	virtual HRESULT CreateShader(std::wstring shader_file);
 	// 입력 레이아웃 생성
 	virtual HRESULT CreateInputLayout();
 	// 텍스처 생성
-	virtual HRESULT CreateTexture(std::wstring textureFile);
+	virtual HRESULT CreateTexture(std::wstring texture_file);
 
 	// 정점 버퍼 설정 
 	virtual void UpdateVertexBuffer();
@@ -122,10 +122,10 @@ public:
 	virtual void UpdateConstantBuffer();
 
 	// 텍스처 로드
-	virtual HRESULT LoadTexture(W_STR filename);
+	virtual HRESULT LoadTexture(W_STR texture_file);
 };
 
 namespace DX
 {
-	ID3D11Buffer* CreateVertexBuffer(ID3D11Device* pd3dDevice, void* pDataAddress, UINT vertexCount, UINT vertexSize);
+	ID3D11Buffer* CreateVertexBuffer(ID3D11Device* d3d_device, void* data_address, UINT vertex_count, UINT vertex_size);
 }

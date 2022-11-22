@@ -1,43 +1,27 @@
 #include "pch.h"
-#include "DxState.h"
+#include "SamplerState.h"
 
-ID3D11BlendState* DxState::_pAlphaBlend = nullptr;
-ID3D11SamplerState* DxState::_pDefaultSSWrap = nullptr;
-ID3D11SamplerState* DxState::_pDefaultSSMirror = nullptr;
-ID3D11RasterizerState* DxState::_pDefaultRSSolid = nullptr;
-ID3D11RasterizerState* DxState::_pDefaultRSWireFrame = nullptr;
-ID3D11DepthStencilState* DxState::_pDefaultDepthStencil = nullptr;
-ID3D11DepthStencilState* DxState::_pGreaterDepthStencil = nullptr;
-
-HRESULT DxState::Init()
+HRESULT SamplerState::Init()
 {
     return TRUE;
 }
 
-HRESULT DxState::Frame()
+HRESULT SamplerState::Frame()
 {
     return TRUE;
 }
 
-HRESULT DxState::Render()
+HRESULT SamplerState::Render()
 {
     return TRUE;
 }
 
-HRESULT DxState::Release()
+HRESULT SamplerState::Release()
 {
-    SAFE_RELEASE(_pAlphaBlend);
-    SAFE_RELEASE(_pDefaultSSWrap);
-    SAFE_RELEASE(_pDefaultSSMirror);
-    SAFE_RELEASE(_pDefaultRSSolid);
-    SAFE_RELEASE(_pDefaultRSWireFrame);
-    SAFE_RELEASE(_pDefaultDepthStencil);
-    SAFE_RELEASE(_pGreaterDepthStencil);
-
     return TRUE;
 }
 
-HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
+HRESULT SamplerState::SetSamplerState(ID3D11Device* d3d11_device)
 {
     D3D11_SAMPLER_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
@@ -56,24 +40,23 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
     //FLOAT MinLOD;
     //FLOAT MaxLOD;
 
-    assert(SUCCEEDED(pd3dDevice->CreateSamplerState(&sd, &_pDefaultSSWrap)));
+    assert(SUCCEEDED(d3d11_device->CreateSamplerState(&sd, &default_wrap_)));
 
     sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     sd.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
-    assert(SUCCEEDED(pd3dDevice->CreateSamplerState(&sd, &_pDefaultSSMirror)));
+    assert(SUCCEEDED(d3d11_device->CreateSamplerState(&sd, &default_mirror_)));
 
     D3D11_RASTERIZER_DESC rd;
     ZeroMemory(&rd, sizeof(rd));
     rd.DepthClipEnable = TRUE;
     rd.FillMode = D3D11_FILL_WIREFRAME;
     rd.CullMode = D3D11_CULL_BACK;
-    assert(SUCCEEDED(pd3dDevice->CreateRasterizerState(&rd, &_pDefaultRSWireFrame)));
+    assert(SUCCEEDED(d3d11_device->CreateRasterizerState(&rd, &default_wire_frame_)));
 
     rd.FillMode = D3D11_FILL_SOLID;
-    assert(SUCCEEDED(pd3dDevice->CreateRasterizerState(&rd, &_pDefaultRSSolid)));
-
+    assert(SUCCEEDED(d3d11_device->CreateRasterizerState(&rd, &default_solid_)));
 
     D3D11_BLEND_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
@@ -93,23 +76,23 @@ HRESULT DxState::SetSamplerState(ID3D11Device* pd3dDevice)
     bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
     bd.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
     //  A 성분을 혼합하는 명령
-    // finalAlpha = SrcAlpha*1.0f+DestAlpha*0.0f;
+    // finalAlpha = SrcAlpha * 1.0f + DestAlpha * 0.0f;
     bd.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
     bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
     bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 
     bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-    assert(SUCCEEDED(pd3dDevice->CreateBlendState(&bd, &_pAlphaBlend)));
+    assert(SUCCEEDED(d3d11_device->CreateBlendState(&bd, &alpha_blend_)));
 
     D3D11_DEPTH_STENCIL_DESC dsd;
     ZeroMemory(&dsd, sizeof(dsd));
     dsd.DepthEnable = true;
     dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
     dsd.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-    assert(SUCCEEDED(pd3dDevice->CreateDepthStencilState(&dsd, &_pDefaultDepthStencil)));
+    assert(SUCCEEDED(d3d11_device->CreateDepthStencilState(&dsd, &default_depth_stencil_)));
 
     dsd.DepthFunc = D3D11_COMPARISON_GREATER;
-    assert(SUCCEEDED(pd3dDevice->CreateDepthStencilState(&dsd, &_pGreaterDepthStencil)));
+    assert(SUCCEEDED(d3d11_device->CreateDepthStencilState(&dsd, &greater_depth_stencil_)));
 
     return TRUE;
 }

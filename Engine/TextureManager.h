@@ -1,16 +1,14 @@
 #pragma once
 
-#include "Texture.h"
-
 class TextureManager
 {
 	DECLARE_SINGLE(TextureManager);
 
 private:
-	ID3D11Device* device_ = nullptr;
-	ID3D11DeviceContext* device_context_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> device_;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
-	std::map<std::wstring, Texture*> _textures;
+	std::map<std::wstring, class Texture*> textures_;
 
 public:
 	// 초기화
@@ -23,14 +21,14 @@ public:
 	HRESULT Release();
 
 	// 디바이스 설정
-	HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
+	HRESULT SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context);
 
 	// 텍스처 파일 로드
-	Texture* Load(std::wstring textureFile);
+	Texture* Load(std::wstring texture_file);
 	// 텍스처 파일 검색
-	Texture* Find(std::wstring textureFile);
+	Texture* Find(std::wstring texture_file);
 	// 파일명 분할
-	T_STR GetSplitName(std::wstring fullPath);
-	T_STR GetSplitName(std::string fullPath);
+	T_STR GetSplitName(std::wstring full_path);
+	T_STR GetSplitName(std::string full_path);
 };
 

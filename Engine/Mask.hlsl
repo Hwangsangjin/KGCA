@@ -1,6 +1,6 @@
-Texture2D baseTexture : register(t0);
-Texture2D maskTexture : register(t1);
-SamplerState baseSampler : register(s0);
+Texture2D base_texture : register(t0);
+Texture2D mask_texture : register(t1);
+SamplerState base_sampler : register(s0);
 
 struct VS_INPUT
 {
@@ -28,8 +28,8 @@ VS_OUTPUT VS(VS_INPUT input)
 
 float4 PS(VS_OUTPUT input) : SV_TARGET
 {
-	float4 color = baseTexture.Sample(baseSampler, input.uv);
-	float4 mask = maskTexture.Sample(baseSampler, input.uv);
+	float4 color = base_texture.Sample(base_sampler, input.uv);
+	float4 mask = mask_texture.Sample(base_sampler, input.uv);
 	float4 final = color;
 	
 	if (mask.r > 0.5f)

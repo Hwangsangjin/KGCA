@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SpriteManager.h"
+#include "Sprite.h"
 
 HRESULT SpriteManager::Init()
 {
@@ -18,7 +19,7 @@ HRESULT SpriteManager::Render()
 
 HRESULT SpriteManager::Release()
 {
-	for (auto& sprite : m_List)
+	for (auto& sprite : sprites_)
 	{
 		if (sprite.second)
 		{
@@ -28,15 +29,15 @@ HRESULT SpriteManager::Release()
 		}
 	}
 
-	m_List.clear();
+	sprites_.clear();
 
     return TRUE;
 }
 
-HRESULT SpriteManager::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext)
+HRESULT SpriteManager::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
-	device_ = pd3dDevice;
-	device_context_ = pImmediateContext;
+	device_ = device;
+	device_context_ = device_context;
 
 	return TRUE;
 }
@@ -45,9 +46,9 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 {
 	TCHAR buffer[256] = { 0 };
 	TCHAR temp[256] = { 0 };
-	TCHAR texturePath[256] = { 0 };
-	TCHAR maskPath[256] = { 0 };
-	TCHAR shaderPath[256] = { 0 };
+	TCHAR texture_path[256] = { 0 };
+	TCHAR mask_path[256] = { 0 };
+	TCHAR shader_path[256] = { 0 };
 
 	int num = 0;
 	FILE* file;
@@ -68,9 +69,9 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 		_stscanf_s(buffer, _T("%s %d%d %s%s%s"), 
 			temp, (unsigned int)_countof(temp), 
 			&frame, &animation, 
-			texturePath, (unsigned int)_countof(texturePath), 
-			maskPath, (unsigned int)_countof(maskPath), 
-			shaderPath, (unsigned int)_countof(shaderPath));
+			texture_path, (unsigned int)_countof(texture_path),
+			mask_path, (unsigned int)_countof(mask_path),
+			shader_path, (unsigned int)_countof(shader_path));
 
 		W_STR name = temp;
 		if (name == L"#END")
@@ -78,28 +79,28 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 			break;
 		}
 
-		m_iSpriteTypeList.push_back(animation);
-		m_rtNameList.push_back(temp);
-		m_TextureNameList.push_back(texturePath);
-		m_MaskTextureNameList.push_back(maskPath);
-		m_ShaderNameList.push_back(shaderPath);
+		sprite_types_.push_back(animation);
+		rect_names.push_back(temp);
+		texture_names_.push_back(texture_path);
+		mask_texture_names_.push_back(mask_path);
+		shader_names_.push_back(shader_path);
 
-		int iReadFrame = 0;
+		int read_frame = 0;
 
 		if (animation == 0)
 		{
-			std::vector<RECT> rtList;
+			std::vector<RECT> rects;
 			RECT rt;
 			for (int i = 0; i < frame; i++)
 			{
 				_fgetts(buffer, _countof(buffer), file);
 				_stscanf_s(buffer, _T("%d %d %d %d %d"),
-					&iReadFrame,
+					&read_frame,
 					&rt.left, &rt.top, &rt.right, &rt.bottom);
-				rtList.push_back(rt);
+				rects.push_back(rt);
 			}
 
-			m_rtSpriteList.push_back(rtList);
+			sprite_rects_.push_back(rects);
 		}
 		else
 		{
@@ -108,12 +109,12 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 			{
 				_fgetts(buffer, _countof(buffer), file);
 				_stscanf_s(buffer, _T("%d %s"),
-					&iReadFrame,
+					&read_frame,
 					temp, (unsigned int)_countof(temp));
 				list.push_back(temp);
 			}
 
-			m_szSpriteList.push_back(list);
+			sprite_strings_.push_back(list);
 		}
 	}
 
@@ -122,72 +123,76 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 	return TRUE;
 }
 
-HRESULT SpriteManager::Load(std::wstring filename)
+HRESULT SpriteManager::Load(std::wstring sprite_file)
 {
-	m_rtSpriteList.clear();
-	m_szSpriteList.clear();
-	m_iSpriteTypeList.clear();
-	m_rtNameList.clear();
-	m_TextureNameList.clear();
-	m_MaskTextureNameList.clear();
-	m_ShaderNameList.clear();
+	sprite_rects_.clear();
+	sprites_.clear();
+	sprite_types_.clear();
+	rect_names.clear();
+	texture_names_.clear();
+	mask_texture_names_.clear();
+	shader_names_.clear();
 
-	assert(SUCCEEDED(GameDataLoad(filename.c_str())));
+	assert(SUCCEEDED(GameDataLoad(sprite_file.c_str())));
 
-	for (int ifile = 0; ifile < filelist.size(); ifile++)
+	for (size_t i = 0; i < sprite_files_.size(); i++)
 	{
-		if (filelist[ifile] == filename)
+		if (sprite_files_[i] == sprite_file)
 		{
 			return TRUE;
 		}
 	}
 
-	filelist.push_back(filename);
+	sprite_files_.push_back(sprite_file);
 
 	HRESULT hr;
-	UINT iCurrentTexIndex = 0;
-	UINT iCurrentUVIndex = 0;
+	UINT current_texture_index = 0;
+	UINT current_uv_index = 0;
 
-	for (size_t i = 0; i < m_rtNameList.size(); i++)
+	for (size_t i = 0; i < rect_names.size(); i++)
 	{
 		// 중복 제거
-		auto data = Find(m_rtNameList[i]);
+		auto data = Find(rect_names[i]);
 		if (data != nullptr)
 		{
 			continue;
 		}
 
-		Sprite* pNewSprite = nullptr;
-		if (m_iSpriteTypeList[i] == 0)
-			pNewSprite = new Sprite;
-		else
-			pNewSprite = new SpriteTexture;
-
-		pNewSprite->_name = m_rtNameList[i];
-		pNewSprite->_texturePath = m_TextureNameList[i];
-		pNewSprite->_maskPath = m_MaskTextureNameList[i];
-		pNewSprite->_shaderPath = m_ShaderNameList[i];
-
-		if (m_iSpriteTypeList[i] == 1)
+		Sprite* new_sprite = nullptr;
+		if (sprite_types_[i] == 0)
 		{
-			pNewSprite->_textures = m_szSpriteList[iCurrentTexIndex++];
+			new_sprite = new Sprite;
 		}
 		else
 		{
-			pNewSprite->_uvs = m_rtSpriteList[iCurrentUVIndex++];
+			new_sprite = new SpriteTexture;
 		}
 
-		if (pNewSprite)
+		new_sprite->name_ = rect_names[i];
+		new_sprite->texture_file_ = texture_names_[i];
+		new_sprite->mask_file_ = mask_texture_names_[i];
+		new_sprite->shader_file_ = shader_names_[i];
+
+		if (sprite_types_[i] == 1)
 		{
-			bool bRet = pNewSprite->Load(device_, device_context_, filename);
-			if (bRet)
+			new_sprite->strings_ = sprite_strings_[current_texture_index++];
+		}
+		else
+		{
+			new_sprite->rects_ = sprite_rects_[current_uv_index++];
+		}
+
+		if (new_sprite)
+		{
+			HRESULT is_loaded = new_sprite->Load(device_.Get(), device_context_.Get(), sprite_file);
+			if (SUCCEEDED(is_loaded))
 			{
-				m_List.insert(std::make_pair(pNewSprite->_name, std::move(pNewSprite)));
+				sprites_.insert(std::make_pair(new_sprite->name_, std::move(new_sprite)));
 			}
 			else
 			{
-				pNewSprite->Release();
-				delete pNewSprite;
+				new_sprite->Release();
+				delete new_sprite;
 			}
 		}
 	}
@@ -197,17 +202,18 @@ HRESULT SpriteManager::Load(std::wstring filename)
 
 Sprite* SpriteManager::Find(std::wstring name)
 {
-	auto iter = m_List.find(name);
-	if (iter != m_List.end())
+	auto iter = sprites_.find(name);
+	if (iter != sprites_.end())
 	{
 		return iter->second;
 	}
+
 	return nullptr;
 }
 
 Sprite& SpriteManager::Get(W_STR str)
 {
-	for (auto& sprite : m_List)
+	for (auto& sprite : sprites_)
 	{
 		if (sprite.first == str)
 		{
@@ -218,7 +224,7 @@ Sprite& SpriteManager::Get(W_STR str)
 
 Sprite* SpriteManager::GetPtr(W_STR str)
 {
-	for (auto& sprite : m_List)
+	for (auto& sprite : sprites_)
 	{
 		if (sprite.first == str)
 		{

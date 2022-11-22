@@ -1,23 +1,21 @@
 #pragma once
 
-#include "Sprite.h"
-
 class SpriteManager
 {
 	DECLARE_SINGLE(SpriteManager);
 
 public:
-    ID3D11Device* device_ = nullptr;
-    ID3D11DeviceContext* device_context_ = nullptr;
-    std::vector<W_STR>  filelist;
-    std::vector<UINT>  m_iSpriteTypeList;
-    std::vector<W_STR> m_rtNameList;
-    std::vector<W_STR> m_TextureNameList;
-    std::vector<W_STR> m_MaskTextureNameList;
-    std::vector<W_STR> m_ShaderNameList;
-    std::vector<std::vector<RECT>> m_rtSpriteList;
-    std::vector<TCHAR_STRING_VECTOR> m_szSpriteList;
-    std::map<std::wstring, Sprite*> m_List;
+    Microsoft::WRL::ComPtr<ID3D11Device> device_;
+    Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
+    std::vector<W_STR> sprite_files_;
+    std::vector<UINT> sprite_types_;
+    std::vector<W_STR> rect_names;
+    std::vector<W_STR> texture_names_;
+    std::vector<W_STR> mask_texture_names_;
+    std::vector<W_STR> shader_names_;
+    std::vector<std::vector<RECT>> sprite_rects_;
+    std::vector<TCHAR_STRING_VECTOR> sprite_strings_;
+    std::map<std::wstring, class Sprite*> sprites_;
 
     // 초기화
     HRESULT Init();
@@ -29,11 +27,11 @@ public:
     HRESULT Release();
 
     // 디바이스 설정
-    HRESULT SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext);
+    HRESULT SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context);
 
-    HRESULT GameDataLoad(const TCHAR* spriteFile);
-    HRESULT Load(std::wstring name);
-    Sprite* Find(std::wstring name);
+    HRESULT GameDataLoad(const TCHAR* sprite_file);
+    HRESULT Load(std::wstring sprite_file);
+    Sprite* Find(std::wstring sprite_file);
 
     Sprite& Get(W_STR str);
     Sprite* GetPtr(W_STR str);

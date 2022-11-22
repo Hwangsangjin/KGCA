@@ -1,5 +1,5 @@
-Texture2D baseTexture : register(t0);
-SamplerState baseSampler : register(s0);
+Texture2D base_texture : register(t0);
+SamplerState base_sampler : register(s0);
 
 cbuffer CB_DATA : register(b0)
 {
@@ -41,6 +41,6 @@ VS_OUTPUT VS(VS_INPUT input)
 
 float4 PS(VS_OUTPUT input) : SV_TARGET
 {
-	float4 color = baseTexture.Sample(baseSampler, input.uv);
+	float4 color = base_texture.Sample(base_sampler, input.uv);
 	return input.color;
 }

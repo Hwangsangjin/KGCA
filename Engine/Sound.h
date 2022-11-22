@@ -3,15 +3,15 @@
 class Sound
 {
 public:
-	FMOD::System* _pSystem = nullptr;
-	FMOD::Sound* _pSound = nullptr;
-	FMOD::Channel* _pChannel = nullptr;
-	FMOD::Channel* _pChannel2 = nullptr;
+	FMOD::System* system_ = nullptr;
+	FMOD::Sound* sound_ = nullptr;
+	FMOD::Channel* channel_ = nullptr;
+	FMOD::Channel* channel2_ = nullptr;
 
-	std::wstring _name;
-	std::wstring _buffer;
-	UINT _totalTime;
-	float _volume;
+	std::wstring name_;
+	std::wstring buffer_;
+	UINT total_time_;
+	float volume_;
 
 	// 초기화
 	HRESULT Init();
@@ -22,11 +22,11 @@ public:
 	// 메모리 해제
 	HRESULT Release();
 
-	HRESULT Load(FMOD::System* pSystem, std::wstring filename);
-	HRESULT PlayBGM(bool isLoop = false);
-	HRESULT PlayEffect(bool isLoop = false);
+	HRESULT Load(FMOD::System* system, std::wstring sound_file);
+	HRESULT PlayBGM(bool is_loop = false);
+	HRESULT PlayEffect(bool is_loop = false);
 	bool IsPlaying();
-	void SetLoop(bool isLoop = false);
+	void SetLoop(bool is_loop = false);
 	void Paused();
 	void Stop();
 	void VolumeUp(float volume = 0.1f);

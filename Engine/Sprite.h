@@ -5,10 +5,10 @@
 class Sprite : public Object2D
 {
 public:
-    std::vector<RECT> _uvs;
-    std::vector<W_STR> _textures;
-    std::vector<Texture*> _pTextures;
-    std::vector<Sprite*> _pSprites;
+    std::vector<RECT> rects_;
+    std::vector<W_STR> strings_;
+    std::vector<Texture*> textures_;
+    std::vector<Sprite*> sprites_;
 
     // 초기화
     HRESULT Init();
@@ -20,11 +20,11 @@ public:
     HRESULT Release();
 
     // 스프라이트 생성
-    virtual HRESULT Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name);
+    virtual HRESULT Load(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring sprite_file);
 };
 
 class SpriteTexture : public Sprite
 {
 public:
-    virtual HRESULT Load(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmediateContext, std::wstring name);
+    virtual HRESULT Load(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring sprite_file);
 };

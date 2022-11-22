@@ -166,16 +166,16 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DxMath.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
-    <ClInclude Include="DxState.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object2D.h" />
+    <ClInclude Include="Object3D.h" />
+    <ClInclude Include="SamplerState.h" />
     <ClInclude Include="EnginePCH.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Object2D.h" />
-    <ClInclude Include="Object3D.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
@@ -191,16 +191,16 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DxMath.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />
-    <ClCompile Include="DxState.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object2D.cpp" />
+    <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="SamplerState.cpp" />
     <ClCompile Include="EnginePCH.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Object2D.cpp" />
-    <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -244,6 +244,7 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
   <ItemGroup>
     <None Include="Sample.hlsl">
       <FileType>Document</FileType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

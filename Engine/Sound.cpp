@@ -8,13 +8,13 @@ HRESULT Sound::Init()
 
 HRESULT Sound::Frame()
 {
-    if (_pChannel)
+    if (channel_)
     {
         UINT ms = 0;
-        _pChannel->getPosition(&ms, FMOD_TIMEUNIT_MS);
+        channel_->getPosition(&ms, FMOD_TIMEUNIT_MS);
         TCHAR buffer[256] = { 0 };
-        _stprintf_s(buffer, _T("경과 시간[%02d:%02d], 파일 크기[%02d:%02d:%02d]"), ms / 1000 / 60, ms / 1000 % 60, ms / 10 % 60, _totalTime / 1000 / 60, _totalTime / 1000 % 60, _totalTime / 10 % 60);
-        _buffer = buffer;
+        _stprintf_s(buffer, _T("경과 시간[%02d:%02d], 파일 크기[%02d:%02d:%02d]"), ms / 1000 / 60, ms / 1000 % 60, ms / 10 % 60, total_time_ / 1000 / 60, total_time_ / 1000 % 60, total_time_ / 10 % 60);
+        buffer_ = buffer;
     }
 
     return TRUE;
@@ -27,51 +27,51 @@ HRESULT Sound::Render()
 
 HRESULT Sound::Release()
 {
-    if (_pSound)
+    if (sound_)
     {
-        _pSound->release();
+        sound_->release();
     }
 
     return TRUE;
 }
 
-HRESULT Sound::Load(FMOD::System* pSystem, std::wstring filename)
+HRESULT Sound::Load(FMOD::System* system, std::wstring sound_file)
 {
-    _pSystem = pSystem;
+    system_ = system;
 
-    FMOD_RESULT hr = _pSystem->createStream(to_wm(filename).c_str(), FMOD_DEFAULT, nullptr, &_pSound);
+    FMOD_RESULT hr = system_->createStream(to_wm(sound_file).c_str(), FMOD_DEFAULT, nullptr, &sound_);
     if (hr == FMOD_OK)
     {
-        _pSound->getLength(&_totalTime, FMOD_TIMEUNIT_MS);
+        sound_->getLength(&total_time_, FMOD_TIMEUNIT_MS);
     }
 
     return TRUE;
 }
 
-HRESULT Sound::PlayBGM(bool isLoop)
+HRESULT Sound::PlayBGM(bool is_loop)
 {
     if (IsPlaying() == false)
     {
-        FMOD_RESULT hr = _pSystem->playSound(_pSound, nullptr, false, &_pChannel);
+        FMOD_RESULT hr = system_->playSound(sound_, nullptr, false, &channel_);
         if (hr == FMOD_OK)
         {
-            _volume = 0.5f;
-            _pChannel->setVolume(_volume);
-            SetLoop(isLoop);
+            volume_ = 0.5f;
+            channel_->setVolume(volume_);
+            SetLoop(is_loop);
         }
     }
 
     return TRUE;
 }
 
-HRESULT Sound::PlayEffect(bool isLoop)
+HRESULT Sound::PlayEffect(bool is_loop)
 {
-    FMOD_RESULT hr = _pSystem->playSound(_pSound, nullptr, false, &_pChannel2);
+    FMOD_RESULT hr = system_->playSound(sound_, nullptr, false, &channel2_);
     if (hr == FMOD_OK)
     {
-        _volume = 1.0f;
-        _pChannel2->setVolume(_volume);
-        SetLoop(isLoop);
+        volume_ = 1.0f;
+        channel2_->setVolume(volume_);
+        SetLoop(is_loop);
     }
 
     return TRUE;
@@ -79,60 +79,60 @@ HRESULT Sound::PlayEffect(bool isLoop)
 
 bool Sound::IsPlaying()
 {
-    bool isPlaying = false;
+    bool is_playing = false;
 
-    if (_pChannel != nullptr)
+    if (channel_ != nullptr)
     {
-        _pChannel->isPlaying(&isPlaying);
+        channel_->isPlaying(&is_playing);
     }
 
-    return isPlaying;
+    return is_playing;
 }
 
-void Sound::SetLoop(bool isLoop)
+void Sound::SetLoop(bool is_loop)
 {
-    if (isLoop)
+    if (is_loop)
     {
-        _pSound->setMode(FMOD_LOOP_NORMAL);
+        sound_->setMode(FMOD_LOOP_NORMAL);
     }
     else
     {
-        _pSound->setMode(FMOD_LOOP_OFF);
+        sound_->setMode(FMOD_LOOP_OFF);
     }
 }
 
 void Sound::Paused()
 {
-    if (_pChannel == nullptr)
+    if (channel_ == nullptr)
     {
         return;
     }
 
-    bool isPaused;
-    _pChannel->getPaused(&isPaused);
-    _pChannel->setPaused(!isPaused);
+    bool is_paused;
+    channel_->getPaused(&is_paused);
+    channel_->setPaused(!is_paused);
 }
 
 void Sound::Stop()
 {
-    _pChannel->stop();
+    channel_->stop();
 }
 
 void Sound::VolumeUp(float volume)
 {
-    _volume += volume;
-    _volume = max(0.0f, _volume);
-    _pChannel->setVolume(_volume);
+    volume_ += volume;
+    volume_ = max(0.0f, volume_);
+    channel_->setVolume(volume_);
 }
 
 void Sound::VolumeDown(float volume)
 {
-    _volume -= volume;
-    _volume = max(0.0f, _volume);
-    _pChannel->setVolume(_volume);
+    volume_ -= volume;
+    volume_ = max(0.0f, volume_);
+    channel_->setVolume(volume_);
 }
 
 std::wstring Sound::GetName()
 {
-    return _name;
+    return name_;
 }

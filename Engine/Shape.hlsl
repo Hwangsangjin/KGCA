@@ -1,5 +1,5 @@
-Texture2D baseTexture : register(t0);
-SamplerState baseSampler : register(s0);
+Texture2D base_texture : register(t0);
+SamplerState base_sampler : register(s0);
 
 cbuffer CB_DATA : register(b0)
 {
