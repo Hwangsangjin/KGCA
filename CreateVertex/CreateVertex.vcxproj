@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3b502b6f-3605-4c46-b250-0c736436b3b5}</ProjectGuid>
-    <RootNamespace>CreateShader</RootNamespace>
+    <ProjectGuid>{233062ba-e2ae-4a0d-a9fe-3c4e91eb04b6}</ProjectGuid>
+    <RootNamespace>CreateVertex</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

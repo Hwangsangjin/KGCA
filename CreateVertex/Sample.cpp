@@ -91,16 +91,27 @@ HRESULT Sample::CreateVertexBuffer()
 
 HRESULT Sample::CreateShader()
 {
-    Microsoft::WRL::ComPtr<ID3DBlob> pErrorCode;
+    Microsoft::WRL::ComPtr<ID3DBlob> error_code;
 
     // Á¤Á¡ ¼ÎÀÌ´õ ÄÄÆÄÀÏ 
-    assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), pErrorCode.GetAddressOf())));
+    //assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
+
+	HRESULT hr = D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf());
+	if (FAILED(hr))
+	{
+		if (error_code)
+		{
+			OutputDebugStringA((char*)error_code->GetBufferPointer());
+			error_code->Release();
+		}
+		return E_FAIL;
+	}
 
     // Á¤Á¡ ¼ÎÀÌ´õ »ý¼º
 	assert(SUCCEEDED(d3d11_device_.Get()->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
 
     // ÇÈ¼¿ ¼ÎÀÌ´õ ÄÄÆÄÀÏ  
-	assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "PS", "ps_5_0", 0, 0, pixel_shader_code_.GetAddressOf(), pErrorCode.GetAddressOf())));
+	assert(SUCCEEDED(D3DCompileFromFile(L"../../Resource/Shader/Sample.hlsl", nullptr, nullptr, "PS", "ps_5_0", 0, 0, pixel_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // ÇÈ¼¿ ¼ÎÀÌ´õ »ý¼º
 	assert(SUCCEEDED(d3d11_device_.Get()->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
@@ -119,11 +130,12 @@ HRESULT Sample::CreateInputLayout()
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		//{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
-	UINT numElements = ARRAYSIZE(layout);
+	UINT elements = ARRAYSIZE(layout);
 
 	// ÀÔ·Â ·¹ÀÌ¾Æ¿ô »ý¼º
-	assert(SUCCEEDED(d3d11_device_.Get()->CreateInputLayout(layout, numElements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
+	assert(SUCCEEDED(d3d11_device_.Get()->CreateInputLayout(layout, elements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
 
 	return TRUE;
 }
