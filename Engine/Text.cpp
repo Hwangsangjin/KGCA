@@ -147,5 +147,5 @@ void Text::SetText()
     fps_text_ += std::to_wstring((int)Timer::GetInstance()->GetFPS());
 
     time_text_ = L"TIME: ";
-    time_text_ += std::to_wstring((int)Timer::GetInstance()->GetGameTime());
+    time_text_ += std::to_wstring((int)Timer::GetInstance()->GetElapsedTime());
 }

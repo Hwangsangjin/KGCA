@@ -19,7 +19,7 @@ HRESULT Timer::Frame()
 
 	frame_count_++;
 	frame_time_ += delta_time_;
-	game_time_ += delta_time_;
+	elapsed_time_ += delta_time_;
 
 	if (frame_time_ >= 1.0f)
 	{
@@ -59,7 +59,7 @@ float Timer::GetDeltaTime()
 	return delta_time_;
 }
 
-float Timer::GetGameTime()
+float Timer::GetElapsedTime()
 {
-	return game_time_;
+	return elapsed_time_;
 }

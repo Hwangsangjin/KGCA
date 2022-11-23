@@ -128,7 +128,7 @@ HRESULT Core::CoreRender()
 HRESULT Core::CorePostRender()
 {
 	// ÇÃ¸®ÇÎ
-	assert(SUCCEEDED(swap_chain_.Get()->Present(0, 0)));
+	assert(SUCCEEDED(swap_chain_->Present(0, 0)));
 
 	return TRUE;
 }
