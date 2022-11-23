@@ -3,7 +3,7 @@
 #include "Core.h"
 
 // 정점 구조체
-struct Vertex
+struct SampleVertex
 {
 	float x;
 	float y;
@@ -47,7 +47,6 @@ public:
 
 	// 정점 버퍼 생성
 	HRESULT CreateVertexBuffer();
-
 	// 인덱스 버퍼 생성
 	HRESULT CreateIndexBuffer();
 
