@@ -2,12 +2,21 @@
 
 class SoundManager
 {
-    DECLARE_SINGLE(SoundManager);
-
-public:
+private:
     FMOD::System* system_ = nullptr;
     std::list<std::wstring> files_;
     std::map<std::wstring, class Sound*> sounds_;
+
+    SoundManager() = default;
+    ~SoundManager() = default;
+
+public:
+    // ΩÃ±€≈Ê
+    static SoundManager* GetInstance()
+    {
+        static SoundManager instance;
+        return &instance;
+    }
 
     // √ ±‚»≠
     HRESULT Init();

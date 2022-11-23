@@ -3,19 +3,19 @@
 
 COLLISION_TYPE Collision::RectToRect(MyRect& a, MyRect& b)
 {
-    float minX;   float minY;
-    float maxX;   float maxY;
+    float min_x;   float min_y;
+    float max_x;   float max_y;
 
-    minX = a.x1 < b.x1 ? a.x1 : b.x1;
-    minY = a.y1 < b.y1 ? a.y1 : b.y1;
-    maxX = a.x2 > b.x2 ? a.x2 : b.x2;
-    maxY = a.y2 > b.y2 ? a.y2 : b.y2;
+    min_x = a.x1 < b.x1 ? a.x1 : b.x1;
+    min_y = a.y1 < b.y1 ? a.y1 : b.y1;
+    max_x = a.x2 > b.x2 ? a.x2 : b.x2;
+    max_y = a.y2 > b.y2 ? a.y2 : b.y2;
 
     //  가로 판정
-    if ((a.w + b.w) >= (maxX - minX))
+    if ((a.w + b.w) >= (max_x - min_x))
     {
         //  세로 판정
-        if ((a.h + b.h) >= (maxY - minY))
+        if ((a.h + b.h) >= (max_y - min_y))
         {
             // 교집합
             float x1, y1, x2, y2;
@@ -88,24 +88,24 @@ bool Collision::CircleToCircle(MyCircle& a, MyCircle& b)
 
 COLLISION_TYPE Collision::BoxToBox(MyBox& a, MyBox& b)
 {
-    float minX;    float maxX;
-    float minY;    float maxY;
-    float minZ;    float maxZ;
-    minX = a.min.x < b.min.x ? a.min.x : b.min.x;
-    minY = a.min.y < b.min.y ? a.min.y : b.min.y;
-    maxX = a.max.x > b.max.x ? a.max.x : b.max.x;
-    maxY = a.max.y > b.max.y ? a.max.y : b.max.y;
+    float min_x;    float max_x;
+    float min_y;    float max_y;
+    float min_z;    float max_z;
+    min_x = a.min.x < b.min.x ? a.min.x : b.min.x;
+    min_y = a.min.y < b.min.y ? a.min.y : b.min.y;
+    max_x = a.max.x > b.max.x ? a.max.x : b.max.x;
+    max_y = a.max.y > b.max.y ? a.max.y : b.max.y;
 
-    minZ = a.min.z < b.min.z ? a.min.z : b.min.z;
-    maxZ = a.max.z > b.max.z ? a.max.z : b.max.z;
+    min_z = a.min.z < b.min.z ? a.min.z : b.min.z;
+    max_z = a.max.z > b.max.z ? a.max.z : b.max.z;
 
     //  가로 판정
-    if ((a.size.x + b.size.x) >= (maxX - minX))
+    if ((a.size.x + b.size.x) >= (max_x - min_x))
     {
         //  세로 판정
-        if ((a.size.y + b.size.y) >= (maxY - minY))
+        if ((a.size.y + b.size.y) >= (max_y - min_y))
         {
-            if ((a.size.z + b.size.z) >= (maxZ - minZ))
+            if ((a.size.z + b.size.z) >= (max_z - min_z))
             {
                 // 교차한다. 교집합
                 DxVector3 min, max;

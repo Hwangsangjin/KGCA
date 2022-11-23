@@ -109,7 +109,7 @@ struct MyBox
         return false;
     }
 
-    MyBox() {}
+    MyBox() = default;
     MyBox(DxVector3 pos, DxVector3 size)
     {
         Set(pos, size);

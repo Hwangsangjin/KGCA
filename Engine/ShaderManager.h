@@ -2,15 +2,23 @@
 
 class ShaderManager
 {
-	DECLARE_SINGLE(ShaderManager);
-
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device_;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
 	std::map<std::wstring, class Shader*> shaders_;
 
+	ShaderManager() = default;
+	~ShaderManager() = default;
+
 public:
+	// 싱글톤
+	static ShaderManager* GetInstance()
+	{
+		static ShaderManager instance;
+		return &instance;
+	}
+
 	// 초기화
 	HRESULT Init();
 	// 프레임 계산

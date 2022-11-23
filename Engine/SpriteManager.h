@@ -2,9 +2,7 @@
 
 class SpriteManager
 {
-	DECLARE_SINGLE(SpriteManager);
-
-public:
+private:
     Microsoft::WRL::ComPtr<ID3D11Device> device_;
     Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
     std::vector<W_STR> sprite_files_;
@@ -16,6 +14,17 @@ public:
     std::vector<std::vector<RECT>> sprite_rects_;
     std::vector<TCHAR_STRING_VECTOR> sprite_strings_;
     std::map<std::wstring, class Sprite*> sprites_;
+
+    SpriteManager() = default;
+    ~SpriteManager() = default;
+
+public:
+    // ΩÃ±€≈Ê
+    static SpriteManager* GetInstance()
+    {
+        static SpriteManager instance;
+        return &instance;
+    }
 
     // √ ±‚»≠
     HRESULT Init();

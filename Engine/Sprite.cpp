@@ -24,7 +24,7 @@ HRESULT Sprite::Release()
 
 HRESULT Sprite::Load(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring sprite_file)
 {
-    Texture* mask = TEXTURE->Load(mask_file_);
+    Texture* mask = TextureManager::GetInstance()->Load(mask_file_);
 
     assert(SUCCEEDED(CreateObject(device, device_context, shader_file_, texture_file_)));
     SetMask(mask);
@@ -37,7 +37,7 @@ HRESULT SpriteTexture::Load(ID3D11Device* device, ID3D11DeviceContext* device_co
     textures_.resize(strings_.size());
     for (int i = 0; i < strings_.size(); i++)
     {
-        textures_[i] = TEXTURE->Load(strings_[i]);
+        textures_[i] = TextureManager::GetInstance()->Load(strings_[i]);
     }
 
     return Sprite::Load(device, device_context, sprite_file);

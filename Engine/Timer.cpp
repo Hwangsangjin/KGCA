@@ -29,9 +29,6 @@ HRESULT Timer::Frame()
 		frame_time_ = 0.0f;
 	}
 
-	text_ = L"FPS: ";
-	text_ += std::to_wstring((int)fps_);
-
 #ifdef _DEBUG
 	if (delta_time_ >= 1.0f / 60.0f)
 	{
@@ -52,7 +49,7 @@ HRESULT Timer::Release()
 	return TRUE;
 }
 
-__int32 Timer::GetFPS()
+int32 Timer::GetFPS()
 {
 	return fps_;
 }
@@ -65,9 +62,4 @@ float Timer::GetDeltaTime()
 float Timer::GetGameTime()
 {
 	return game_time_;
-}
-
-std::wstring Timer::GetText()
-{
-	return text_;
 }

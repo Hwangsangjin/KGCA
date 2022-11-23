@@ -57,7 +57,7 @@ typedef std::basic_string<wchar_t> W_STR;
 typedef std::vector<std::basic_string<TCHAR>> TCHAR_STRING_VECTOR;
 typedef std::vector<DWORD> DWORD_VECTOR;
 
-// String Convert
+// string convert
 static std::wstring to_mw(const std::string& src)
 {
 	USES_CONVERSION;
@@ -132,10 +132,6 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 }
 
 // define
-#define RESOLUTION_X		800.0f
-#define RESOLUTION_Y		600.0f
-#define RESOLUTION_RATIO	RESOLUTION_X / RESOLUTION_Y
-
 #define GRAVITY				9.8f
 #define FRICTION			0.9f
 #define COEFFICIENT			0.9f
@@ -144,44 +140,5 @@ static bool GetMtW(char* pSrc, WCHAR* pDest)
 #define PI_DIVISION_2		1.570796327f
 #define	PI_DIVISION_4		0.785398163f
 
-#define DEGREE_TO_RADIAN(x)	(x *(PI / 180.0f))
-#define RADIAN_TO_DEGREE(x)	(x *(180.0f / PI))
-
-#define CORE
-#define GAME_START  int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
-#define GAME_WINDOW(s,x,y)  Sample sample; sample.SetWindow(hInstance,L#s,x,y); sample.Run(); return 0;
-#define GAME_END    }
-#define GAME_RUN(s,x,y) GAME_START GAME_WINDOW(s,x,y) GAME_END
-
-#define DECLARE_SINGLE(type)		\
-private:							\
-	type() {}						\
-	~type() {}					    \
-                                    \
-public:								\
-	static type* GetInstance()		\
-	{								\
-		static type instance;		\
-		return &instance;			\
-	}								\
-
-#define GET_SINGLE(type)		type::GetInstance()
-
-#define TEXT					GET_SINGLE(Text)
-#define INPUT					GET_SINGLE(Input)
-#define TIMER					GET_SINGLE(Timer)
-#define DELTA_TIME				GET_SINGLE(Timer)->GetDeltaTime()
-
-#define SOUND					GET_SINGLE(SoundManager)
-#define SHADER					GET_SINGLE(ShaderManager)
-#define SPRITE					GET_SINGLE(SpriteManager)
-#define TEXTURE					GET_SINGLE(TextureManager)
-
-#define SAFE_ZERO(A)			{ A = 0; }
-#define SAFE_NEW(A, B)			{ if (!A) A = new B; }
-#define SAFE_NEW_ARRAY(A, B, C) { if (!A && C) A = new B[C]; }
-#define SAFE_DELETE(A)			{ if (A) { delete A; A = nullptr; } }
-#define SAFE_DELETE_ARRAY(A)	{ if (A) delete [] A; (A) = nullptr; }
-#define SAFE_RELEASE(A)			{ if (A) { A->Release(); A = nullptr; } }
-
-#define RAND(min, max)			(min+((float)max-(float)min)*rand()/(float)RAND_MAX)
+#define DEGREE_TO_RADIAN(x)	(x * (PI / 180.0f))
+#define RADIAN_TO_DEGREE(x)	(x * (180.0f / PI))

@@ -58,10 +58,10 @@ HRESULT Core::Run()
 // 府家胶 积己
 HRESULT Core::CreateResource()
 {
-	TEXT->Init();
+	Text::GetInstance()->Init();
 	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
 	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
-	assert(SUCCEEDED(TEXT->SetSurface(back_buffer.Get())));
+	assert(SUCCEEDED(Text::GetInstance()->SetSurface(back_buffer.Get())));
 
 	return TRUE;
 }
@@ -69,7 +69,7 @@ HRESULT Core::CreateResource()
 // 府家胶 昏力
 HRESULT Core::DeleteResource()
 {
-	TEXT->DeleteResource();
+	Text::GetInstance()->DeleteResource();
 
 	return TRUE;
 }
@@ -79,9 +79,9 @@ HRESULT Core::CoreInit()
 {
 	assert(SUCCEEDED(Device::Init()));
 
-	assert(SUCCEEDED(TIMER->Init()));
-	assert(SUCCEEDED(INPUT->Init()));
-	assert(SUCCEEDED(TEXT->Init()));
+	assert(SUCCEEDED(Timer::GetInstance()->Init()));
+	assert(SUCCEEDED(Input::GetInstance()->Init()));
+	assert(SUCCEEDED(Text::GetInstance()->Init()));
 	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
 	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
 	assert(SUCCEEDED(Text::GetInstance()->SetSurface(back_buffer.Get())));
@@ -94,10 +94,10 @@ HRESULT Core::CoreInit()
 // 内绢 橇饭烙
 HRESULT Core::CoreFrame()
 {
-	assert(SUCCEEDED(TIMER->Frame()));
-	assert(SUCCEEDED(INPUT->Frame()));
-	TEXT->SetText(TIMER->GetText());
-	assert(SUCCEEDED(TEXT->Frame()));
+	assert(SUCCEEDED(Timer::GetInstance()->Frame()));
+	assert(SUCCEEDED(Input::GetInstance()->Frame()));
+	Text::GetInstance()->SetText();
+	assert(SUCCEEDED(Text::GetInstance()->Frame()));
 
 	Frame();
 
@@ -117,7 +117,7 @@ HRESULT Core::CoreRender()
 {
 	assert(SUCCEEDED(CorePreRender()));
 
-	assert(SUCCEEDED(TEXT->Render()));
+	assert(SUCCEEDED(Text::GetInstance()->Render()));
 	assert(SUCCEEDED(Render()));
 
 	assert(SUCCEEDED(CorePostRender()));
@@ -136,9 +136,9 @@ HRESULT Core::CorePostRender()
 HRESULT Core::CoreRelease()
 {
 	assert(SUCCEEDED(Release()));
-	assert(SUCCEEDED(TIMER->Release()));
-	assert(SUCCEEDED(INPUT->Release()));
-	assert(SUCCEEDED(TEXT->Release()));
+	assert(SUCCEEDED(Timer::GetInstance()->Release()));
+	assert(SUCCEEDED(Input::GetInstance()->Release()));
+	assert(SUCCEEDED(Text::GetInstance()->Release()));
 	assert(SUCCEEDED(Device::Release()));
 
 	return TRUE;

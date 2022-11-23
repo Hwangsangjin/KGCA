@@ -75,12 +75,10 @@ HRESULT Window::Run()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-#ifdef CORE
         else
         {
             return TRUE;
         }
-#endif
     }
 
     return E_FAIL;

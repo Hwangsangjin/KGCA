@@ -2,15 +2,23 @@
 
 class TextureManager
 {
-	DECLARE_SINGLE(TextureManager);
-
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device_;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
 	std::map<std::wstring, class Texture*> textures_;
 
+	TextureManager() = default;
+	~TextureManager() = default;
+
 public:
+	// 싱글톤
+	static TextureManager* GetInstance()
+	{
+		static TextureManager instance;
+		return &instance;
+	}
+
 	// 초기화
 	HRESULT Init();
 	// 프레임 계산

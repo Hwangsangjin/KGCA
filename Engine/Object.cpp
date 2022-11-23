@@ -228,7 +228,7 @@ HRESULT Object::CreateConstantBuffer()
 
 HRESULT Object::CreateShader(std::wstring shaderFile)
 {
-    shader_ = SHADER->Load(shaderFile);
+    shader_ = ShaderManager::GetInstance()->Load(shaderFile);
     if (shader_)
     {
         vertex_shader_ = shader_->vertex_shader_;
@@ -268,7 +268,7 @@ HRESULT Object::CreateInputLayout()
 
 HRESULT Object::CreateTexture(std::wstring texture_file)
 {
-    texture_ = TEXTURE->Load(texture_file);
+    texture_ = TextureManager::GetInstance()->Load(texture_file);
     if (texture_)
     {
         return TRUE;
@@ -293,7 +293,7 @@ void Object::UpdateConstantBuffer()
 
 HRESULT Object::LoadTexture(W_STR texture_file)
 {
-    texture_ = TEXTURE->Load(texture_file);
+    texture_ = TextureManager::GetInstance()->Load(texture_file);
     if (texture_)
     {
         shader_resource_view_ = texture_->shader_resource_view_;
