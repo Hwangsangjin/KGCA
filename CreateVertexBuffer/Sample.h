@@ -3,7 +3,7 @@
 #include "Core.h"
 
 // 정점 구조체
-struct Vertex
+struct SampleVertex
 {
 	float x;
 	float y;
