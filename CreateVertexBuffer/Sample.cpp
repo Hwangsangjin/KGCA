@@ -68,17 +68,17 @@ HRESULT Sample::CreateVertexBuffer()
 	// 버퍼 구조체
 	D3D11_BUFFER_DESC bd;
 	bd.ByteWidth = sizeof(SampleVertex) * vertex_size;	// 생성되는 버퍼 크기(바이트 단위)
-	bd.Usage = D3D11_USAGE_DEFAULT;					// 생성되는 버퍼의 읽기 및 쓰기 방법 지정
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;		// 정점 버퍼 파이프라인 바인딩
-	bd.CPUAccessFlags = 0;							// CPU가 생성되는 버퍼에 접근하는 유형 지정
-	bd.MiscFlags = 0;								// 추가 옵션 플래그
-	bd.StructureByteStride = 0;						// 구조화된 버퍼를 사용할 경우에 구조체 버퍼의 크기(바이트 단위)
+	bd.Usage = D3D11_USAGE_DEFAULT;						// 생성되는 버퍼의 읽기 및 쓰기 방법 지정
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;			// 정점 버퍼 파이프라인 바인딩
+	bd.CPUAccessFlags = 0;								// CPU가 생성되는 버퍼에 접근하는 유형 지정
+	bd.MiscFlags = 0;									// 추가 옵션 플래그
+	bd.StructureByteStride = 0;							// 구조화된 버퍼를 사용할 경우에 구조체 버퍼의 크기(바이트 단위)
 
 	// 서브리소스 데이터
 	D3D11_SUBRESOURCE_DATA sd;
-	sd.pSysMem = vertices;							// 초기화 데이터에 대한 포인터
-	sd.SysMemPitch = 0;								// 텍스처 리소스의 한줄의 크기(바이트 단위)
-	sd.SysMemSlicePitch = 0;						// 3차원 텍스처의 깊이의 간격(바이트 단위)
+	sd.pSysMem = vertices;								// 초기화 데이터에 대한 포인터
+	sd.SysMemPitch = 0;									// 텍스처 리소스의 한줄의 크기(바이트 단위)
+	sd.SysMemSlicePitch = 0;							// 3차원 텍스처의 깊이의 간격(바이트 단위)
 
 	// 버퍼 생성
 	assert(SUCCEEDED(device_.Get()->CreateBuffer(
