@@ -28,27 +28,27 @@ HRESULT Sample::Frame()
 HRESULT Sample::Render()
 {
 	// 토폴로지 설정
-	device_context_.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	device_context_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// 정점 버퍼 설정
 	UINT stride = sizeof(SampleVertex);
 	UINT offset = 0;
-	device_context_.Get()->IASetVertexBuffers(0, 1, vertex_buffer_.GetAddressOf(), &stride, &offset);
+	device_context_->IASetVertexBuffers(0, 1, vertex_buffer_.GetAddressOf(), &stride, &offset);
 
 	// 인덱스 버퍼 설정
-	device_context_.Get()->IASetIndexBuffer(index_buffer_.Get(), DXGI_FORMAT_R16_UINT, 0);
+	device_context_->IASetIndexBuffer(index_buffer_.Get(), DXGI_FORMAT_R16_UINT, 0);
 
 	// 정점 셰이더 설정
-	device_context_.Get()->VSSetShader(vertex_shader_.Get(), nullptr, 0);
+	device_context_->VSSetShader(vertex_shader_.Get(), nullptr, 0);
 
 	// 픽셀 셰이더 설정
-	device_context_.Get()->PSSetShader(pixel_shader_.Get(), nullptr, 0);
+	device_context_->PSSetShader(pixel_shader_.Get(), nullptr, 0);
 
 	// 입력 레이아웃 설정
-	device_context_.Get()->IASetInputLayout(input_layout_.Get());
+	device_context_->IASetInputLayout(input_layout_.Get());
 
 	// 그리기
-	device_context_.Get()->DrawIndexed(6, 0, 0);
+	device_context_->DrawIndexed(6, 0, 0);
 
 	return TRUE;
 }
@@ -86,7 +86,7 @@ HRESULT Sample::CreateVertexBuffer()
 	sd.SysMemSlicePitch = 0;						// 3차원 텍스처의 깊이의 간격(바이트 단위)
 
 	// 버퍼 생성
-	assert(SUCCEEDED(device_.Get()->CreateBuffer(
+	assert(SUCCEEDED(device_->CreateBuffer(
 		&bd, // 버퍼 할당
 		&sd, // 초기 할당된 버퍼를 채우는 CPU 메모리 주소
 		vertex_buffer_.GetAddressOf())));
@@ -120,7 +120,7 @@ HRESULT Sample::CreateIndexBuffer()
 	sd.SysMemSlicePitch = 0;							// 3차원 텍스처의 깊이의 간격(바이트 단위)
 
 	// 버퍼 생성
-	assert(SUCCEEDED(device_.Get()->CreateBuffer(
+	assert(SUCCEEDED(device_->CreateBuffer(
 		&bd, // 버퍼 할당
 		&sd, // 초기 할당된 버퍼를 채우는 CPU 메모리 주소
 		index_buffer_.GetAddressOf())));
@@ -136,13 +136,13 @@ HRESULT Sample::CreateShader()
     assert(SUCCEEDED(D3DCompileFromFile(L"Sample.hlsl", nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // 정점 셰이더 생성
-	assert(SUCCEEDED(device_.Get()->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
+	assert(SUCCEEDED(device_->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));
 
     // 픽셀 셰이더 컴파일  
 	assert(SUCCEEDED(D3DCompileFromFile(L"Sample.hlsl", nullptr, nullptr, "PS", "ps_5_0", 0, 0, pixel_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
 
     // 픽셀 셰이더 생성
-	assert(SUCCEEDED(device_.Get()->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
+	assert(SUCCEEDED(device_->CreatePixelShader(pixel_shader_code_->GetBufferPointer(), pixel_shader_code_->GetBufferSize(), nullptr, pixel_shader_.GetAddressOf())));
 
 	return TRUE;
 }
@@ -163,7 +163,7 @@ HRESULT Sample::CreateInputLayout()
 	UINT elements = ARRAYSIZE(layout);
 
 	// 생성
-	assert(SUCCEEDED(device_.Get()->CreateInputLayout(layout, elements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
+	assert(SUCCEEDED(device_->CreateInputLayout(layout, elements, vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), input_layout_.GetAddressOf())));
 
 	return TRUE;
 }
