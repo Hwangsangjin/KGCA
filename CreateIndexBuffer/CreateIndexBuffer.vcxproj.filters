@@ -23,4 +23,9 @@
       <Filter>소스 파일\Sample</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Sample.hlsl">
+      <Filter>소스 파일\Sample</Filter>
+    </None>
+  </ItemGroup>
 </Project>
