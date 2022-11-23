@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Core.h"
-#include "Timer.h"
 #include "Input.h"
+#include "Timer.h"
 #include "Text.h"
 
 // 초기화
@@ -79,8 +79,8 @@ HRESULT Core::CoreInit()
 {
 	assert(SUCCEEDED(Device::Init()));
 
-	assert(SUCCEEDED(Timer::GetInstance()->Init()));
 	assert(SUCCEEDED(Input::GetInstance()->Init()));
+	assert(SUCCEEDED(Timer::GetInstance()->Init()));
 	assert(SUCCEEDED(Text::GetInstance()->Init()));
 	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
 	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
@@ -94,8 +94,8 @@ HRESULT Core::CoreInit()
 // 코어 프레임
 HRESULT Core::CoreFrame()
 {
-	assert(SUCCEEDED(Timer::GetInstance()->Frame()));
 	assert(SUCCEEDED(Input::GetInstance()->Frame()));
+	assert(SUCCEEDED(Timer::GetInstance()->Frame()));
 	Text::GetInstance()->SetText();
 	assert(SUCCEEDED(Text::GetInstance()->Frame()));
 
@@ -136,8 +136,8 @@ HRESULT Core::CorePostRender()
 HRESULT Core::CoreRelease()
 {
 	assert(SUCCEEDED(Release()));
-	assert(SUCCEEDED(Timer::GetInstance()->Release()));
 	assert(SUCCEEDED(Input::GetInstance()->Release()));
+	assert(SUCCEEDED(Timer::GetInstance()->Release()));
 	assert(SUCCEEDED(Text::GetInstance()->Release()));
 	assert(SUCCEEDED(Device::Release()));
 

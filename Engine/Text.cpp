@@ -39,42 +39,42 @@ HRESULT Text::Render()
 
     if (Input::GetInstance()->GetKey('Q') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(30.0f, 140.0f, L"Q", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(30.0f, 160.0f, L"Q", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey('W') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(50.0f, 140.0f, L"W", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(50.0f, 160.0f, L"W", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey('E') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(70.0f, 140.0f, L"E", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(70.0f, 160.0f, L"E", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey('A') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(30.0f, 160.0f, L"A", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(30.0f, 180.0f, L"A", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey('S') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(50.0f, 160.0f, L"S", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(50.0f, 180.0f, L"S", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey('D') == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(70.0f, 160.0f, L"D", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(70.0f, 180.0f, L"D", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey(VK_SHIFT) == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(30.0f, 220.0f, L"SHIFT", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(30.0f, 240.0f, L"SHIFT", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     if (Input::GetInstance()->GetKey(VK_SPACE) == KEY_STATE::HOLD)
     {
-        Text::GetInstance()->Draw(30.0f, 280.0f, L"SPACE", { 1.0f, 1.0f, 1.0f, 1.0f });
+        Text::GetInstance()->Draw(30.0f, 300.0f, L"SPACE", { 1.0f, 1.0f, 1.0f, 1.0f });
     }
 
     return TRUE;
