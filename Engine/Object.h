@@ -58,8 +58,8 @@ public:
 
 	std::wstring texture_name_;
 	std::wstring shader_name_;
-	Texture* texture_ = nullptr;
-	Shader* shader_ = nullptr;
+	std::shared_ptr<Texture> texture_;
+	std::shared_ptr<Shader> shader_;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertex_shader_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> pixel_shader_;
 	Microsoft::WRL::ComPtr<ID3DBlob> vertex_shader_code_;

@@ -19,16 +19,6 @@ HRESULT ShaderManager::Render()
 
 HRESULT ShaderManager::Release()
 {
-	for (auto& shader : shaders_)
-	{
-		if (shader.second)
-		{
-			shader.second->Release();
-			delete shader.second;
-			shader.second = nullptr;
-		}
-	}
-
 	shaders_.clear();
 
 	return TRUE;
@@ -42,11 +32,8 @@ HRESULT ShaderManager::SetDevice(ID3D11Device* device, ID3D11DeviceContext* devi
 	return TRUE;
 }
 
-Shader* ShaderManager::Load(std::wstring shader_file)
+std::shared_ptr<Shader> ShaderManager::FindFile(std::wstring shader_file)
 {
-	HRESULT hr;
-
-	// 중복 제거
 	for (auto& shader : shaders_)
 	{
 		if (shader.first == shader_file)
@@ -55,15 +42,20 @@ Shader* ShaderManager::Load(std::wstring shader_file)
 		}
 	}
 
+	return nullptr;
+}
+
+std::shared_ptr<Shader> ShaderManager::LoadFile(std::wstring shader_file)
+{
+	// 중복 제거
+	FindFile(shader_file);
+
 	// 셰이더 생성
-	Shader* new_shader = new Shader;
+	std::shared_ptr<Shader> new_shader = std::make_shared<Shader>();
 	if (new_shader)
 	{
-		hr = new_shader->CreateShader(device_.Get(), device_context_.Get(), shader_file);
-		if (SUCCEEDED(hr))
-		{
-			shaders_.insert(std::make_pair(shader_file, new_shader));
-		}
+		assert(SUCCEEDED(new_shader->CreateShader(device_.Get(), device_context_.Get(), shader_file)));
+		shaders_.insert(std::make_pair(shader_file, new_shader));
 	}
 
 	return new_shader;

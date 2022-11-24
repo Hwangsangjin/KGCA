@@ -120,8 +120,8 @@ HRESULT Device::SetRenderTargetView()
 HRESULT Device::SetViewport()
 {
     // ºäÆ÷Æ® ¼³Á¤
-    viewport_.Width = g_client_rect.right;
-    viewport_.Height = g_client_rect.bottom;
+    viewport_.Width = static_cast<float>(g_client_rect.right);
+    viewport_.Height = static_cast<float>(g_client_rect.bottom);
     viewport_.TopLeftX = 0.0f;
     viewport_.TopLeftY = 0.0f;
     viewport_.MinDepth = 0.0f;

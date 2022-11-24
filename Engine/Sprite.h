@@ -7,8 +7,8 @@ class Sprite : public Object2D
 public:
     std::vector<RECT> rects_;
     std::vector<W_STR> strings_;
-    std::vector<Texture*> textures_;
-    std::vector<Sprite*> sprites_;
+    std::vector<std::shared_ptr<Texture>> textures_;
+    std::vector<std::shared_ptr<Sprite>> sprites_;
 
     // √ ±‚»≠
     HRESULT Init();

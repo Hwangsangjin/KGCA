@@ -6,7 +6,7 @@ HRESULT Object2D::Frame()
     return TRUE;
 }
 
-void Object2D::SetMask(Texture* mask_texture)
+void Object2D::SetMask(std::shared_ptr<Texture> mask_texture)
 {
     mask_texture_ = mask_texture;
 }
@@ -15,8 +15,8 @@ void Object2D::SetRect(MyRect rect)
 {
     rect_ = rect;
 
-    image_size_.x = texture_->texture2D_desc_.Width;
-    image_size_.y = texture_->texture2D_desc_.Height;
+    image_size_.x = static_cast<float>(texture_->texture2D_desc_.Width);
+    image_size_.y = static_cast<float>(texture_->texture2D_desc_.Height);
 
     uv_.x1 = rect.x1 / image_size_.x;
     uv_.y1 = rect.y1 / image_size_.y;

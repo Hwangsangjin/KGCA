@@ -19,16 +19,6 @@ HRESULT SpriteManager::Render()
 
 HRESULT SpriteManager::Release()
 {
-	for (auto& sprite : sprites_)
-	{
-		if (sprite.second)
-		{
-			sprite.second->Release();
-			delete sprite.second;
-			sprite.second = nullptr;
-		}
-	}
-
 	sprites_.clear();
 
     return TRUE;
@@ -123,7 +113,7 @@ HRESULT SpriteManager::GameDataLoad(const TCHAR* data)
 	return TRUE;
 }
 
-HRESULT SpriteManager::Load(std::wstring sprite_file)
+HRESULT SpriteManager::LoadFile(std::wstring sprite_file)
 {
 	sprite_rects_.clear();
 	sprites_.clear();
@@ -145,14 +135,13 @@ HRESULT SpriteManager::Load(std::wstring sprite_file)
 
 	sprite_files_.push_back(sprite_file);
 
-	HRESULT hr;
 	UINT current_texture_index = 0;
 	UINT current_uv_index = 0;
 
 	for (size_t i = 0; i < rect_names.size(); i++)
 	{
 		// 중복 제거
-		auto data = Find(rect_names[i]);
+		auto data = FindFile(rect_names[i]);
 		if (data != nullptr)
 		{
 			continue;
@@ -200,36 +189,12 @@ HRESULT SpriteManager::Load(std::wstring sprite_file)
     return TRUE;
 }
 
-Sprite* SpriteManager::Find(std::wstring name)
+std::shared_ptr<Sprite> SpriteManager::FindFile(std::wstring sprite_file)
 {
-	auto iter = sprites_.find(name);
+	auto iter = sprites_.find(sprite_file);
 	if (iter != sprites_.end())
 	{
 		return iter->second;
-	}
-
-	return nullptr;
-}
-
-Sprite& SpriteManager::Get(W_STR str)
-{
-	for (auto& sprite : sprites_)
-	{
-		if (sprite.first == str)
-		{
-			return *sprite.second;
-		}
-	}
-}
-
-Sprite* SpriteManager::GetPtr(W_STR str)
-{
-	for (auto& sprite : sprites_)
-	{
-		if (sprite.first == str)
-		{
-			return sprite.second;
-		}
 	}
 
 	return nullptr;

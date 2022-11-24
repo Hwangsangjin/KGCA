@@ -40,12 +40,12 @@ HRESULT Object::PostRender()
 {
     if (!index_buffer_)
     {
-        device_context_->Draw(vertices_.size(), 0);
+        device_context_->Draw(static_cast<UINT>(vertices_.size()), 0);
     }
     else
     {
-        //device_context_->DrawIndexed(face_ * 3, 0, 0);
-        device_context_->DrawIndexed(indices_.size(), 0, 0);
+        device_context_->DrawIndexed(face_ * 3, 0, 0);
+        //device_context_->DrawIndexed(indices_.size(), 0, 0);
     }
 
     return TRUE;
@@ -80,6 +80,8 @@ HRESULT Object::SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_cont
 {
     device_ = device;
     device_context_ = device_context;
+
+    ShaderManager::GetInstance()->SetDevice(device_.Get(), device_context_.Get());
 
     return TRUE;
 }
@@ -138,7 +140,7 @@ HRESULT Object::CreateVertexBuffer()
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(DefaultVertex) * vertices_.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(DefaultVertex) * static_cast<UINT>(vertices_.size()); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -166,7 +168,7 @@ void Object::CreateIndexData()
     indices_[0] = 0; indices_[1] = 1; indices_[2] = 2;
     indices_[3] = 2; indices_[4] = 1; indices_[5] = 3;
 
-    face_ = indices_.size() / 3;
+    face_ = (DWORD)indices_.size() / 3;
 }
 
 HRESULT Object::CreateIndexBuffer()
@@ -175,7 +177,7 @@ HRESULT Object::CreateIndexBuffer()
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(DWORD) * indices_.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(DWORD) * static_cast<UINT>(indices_.size()); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
@@ -226,9 +228,9 @@ HRESULT Object::CreateConstantBuffer()
     return TRUE;
 }
 
-HRESULT Object::CreateShader(std::wstring shaderFile)
+HRESULT Object::CreateShader(std::wstring shader_file)
 {
-    shader_ = ShaderManager::GetInstance()->Load(shaderFile);
+    shader_ = ShaderManager::GetInstance()->LoadFile(shader_file);
     if (shader_)
     {
         vertex_shader_ = shader_->vertex_shader_;
@@ -268,7 +270,7 @@ HRESULT Object::CreateInputLayout()
 
 HRESULT Object::CreateTexture(std::wstring texture_file)
 {
-    texture_ = TextureManager::GetInstance()->Load(texture_file);
+    texture_ = TextureManager::GetInstance()->LoadFile(texture_file);
     if (texture_)
     {
         return TRUE;
@@ -293,7 +295,7 @@ void Object::UpdateConstantBuffer()
 
 HRESULT Object::LoadTexture(W_STR texture_file)
 {
-    texture_ = TextureManager::GetInstance()->Load(texture_file);
+    texture_ = TextureManager::GetInstance()->LoadFile(texture_file);
     if (texture_)
     {
         shader_resource_view_ = texture_->shader_resource_view_;

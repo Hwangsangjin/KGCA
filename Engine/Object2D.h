@@ -26,14 +26,14 @@ public:
 	DxVector2 camera_position_;
 	DxVector2 camera_view_size_;
 
-	Texture* mask_texture_ = nullptr;
+	std::shared_ptr<Texture> mask_texture_;
 
 	bool is_collision_ = false;
 
 	virtual HRESULT Frame() override;
 	virtual bool CheckCollision(Object2D& object);
 
-	void SetMask(Texture* mask_texture);
+	void SetMask(std::shared_ptr<Texture> mask_texture);
 	void SetRect(MyRect rect);
 	void SetSpeed(float speed);
 	void SetScale(float x, float y);

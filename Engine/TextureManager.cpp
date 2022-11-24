@@ -19,16 +19,6 @@ HRESULT TextureManager::Render()
 
 HRESULT TextureManager::Release()
 {
-	for (auto& texture : textures_)
-	{
-		if (texture.second)
-		{
-			texture.second->Release();
-			delete texture.second;
-			texture.second = nullptr;
-		}
-	}
-
 	textures_.clear();
 
 	return TRUE;
@@ -42,18 +32,16 @@ HRESULT TextureManager::SetDevice(ID3D11Device* device, ID3D11DeviceContext* dev
 	return TRUE;
 }
 
-Texture* TextureManager::Load(std::wstring texture_file)
+std::shared_ptr<Texture> TextureManager::LoadFile(std::wstring texture_file)
 {
-	HRESULT hr;
-
 	// 중복 제거
-	Find(texture_file);
+	FindFile(texture_file);
 
 	// 텍스처 생성
-	Texture* new_texture = new Texture;
+	std::shared_ptr<Texture> new_texture = std::make_shared<Texture>();
 	if (new_texture)
 	{
-		hr = new_texture->CreateTexture(device_.Get(), device_context_.Get(), texture_file);
+		HRESULT hr = new_texture->CreateTexture(device_.Get(), device_context_.Get(), texture_file);
 		if (SUCCEEDED(hr))
 		{
 			textures_.insert(std::make_pair(texture_file, new_texture));
@@ -62,11 +50,10 @@ Texture* TextureManager::Load(std::wstring texture_file)
 		}
 	}
 
-	delete new_texture;
 	return nullptr;
 }
 
-Texture* TextureManager::Find(std::wstring texture_file)
+std::shared_ptr<Texture> TextureManager::FindFile(std::wstring texture_file)
 {
 	for (auto& texture : textures_)
 	{
