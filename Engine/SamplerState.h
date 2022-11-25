@@ -20,7 +20,7 @@ public:
 	// 메모리 해제
 	static HRESULT Release();
 
-	// 샘플러 설정
-	static HRESULT SetSamplerState(ID3D11Device* d3d11_device);
+	// 샘플러 상태 설정
+	static HRESULT SetSamplerState(ID3D11Device* device);
 };
 

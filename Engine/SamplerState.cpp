@@ -21,7 +21,7 @@ HRESULT SamplerState::Release()
     return TRUE;
 }
 
-HRESULT SamplerState::SetSamplerState(ID3D11Device* d3d11_device)
+HRESULT SamplerState::SetSamplerState(ID3D11Device* device)
 {
     D3D11_SAMPLER_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
@@ -40,23 +40,23 @@ HRESULT SamplerState::SetSamplerState(ID3D11Device* d3d11_device)
     //FLOAT MinLOD;
     //FLOAT MaxLOD;
 
-    assert(SUCCEEDED(d3d11_device->CreateSamplerState(&sd, &default_wrap_)));
+    assert(SUCCEEDED(device->CreateSamplerState(&sd, &default_wrap_)));
 
     sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     sd.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
-    assert(SUCCEEDED(d3d11_device->CreateSamplerState(&sd, &default_mirror_)));
+    assert(SUCCEEDED(device->CreateSamplerState(&sd, &default_mirror_)));
 
     D3D11_RASTERIZER_DESC rd;
     ZeroMemory(&rd, sizeof(rd));
     rd.DepthClipEnable = TRUE;
     rd.FillMode = D3D11_FILL_WIREFRAME;
     rd.CullMode = D3D11_CULL_BACK;
-    assert(SUCCEEDED(d3d11_device->CreateRasterizerState(&rd, &default_wire_frame_)));
+    assert(SUCCEEDED(device->CreateRasterizerState(&rd, &default_wire_frame_)));
 
     rd.FillMode = D3D11_FILL_SOLID;
-    assert(SUCCEEDED(d3d11_device->CreateRasterizerState(&rd, &default_solid_)));
+    assert(SUCCEEDED(device->CreateRasterizerState(&rd, &default_solid_)));
 
     D3D11_BLEND_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
@@ -82,17 +82,17 @@ HRESULT SamplerState::SetSamplerState(ID3D11Device* d3d11_device)
     bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 
     bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-    assert(SUCCEEDED(d3d11_device->CreateBlendState(&bd, &alpha_blend_)));
+    assert(SUCCEEDED(device->CreateBlendState(&bd, &alpha_blend_)));
 
     D3D11_DEPTH_STENCIL_DESC dsd;
     ZeroMemory(&dsd, sizeof(dsd));
     dsd.DepthEnable = true;
     dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
     dsd.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-    assert(SUCCEEDED(d3d11_device->CreateDepthStencilState(&dsd, &default_depth_stencil_)));
+    assert(SUCCEEDED(device->CreateDepthStencilState(&dsd, &default_depth_stencil_)));
 
     dsd.DepthFunc = D3D11_COMPARISON_GREATER;
-    assert(SUCCEEDED(d3d11_device->CreateDepthStencilState(&dsd, &greater_depth_stencil_)));
+    assert(SUCCEEDED(device->CreateDepthStencilState(&dsd, &greater_depth_stencil_)));
 
     return TRUE;
 }
