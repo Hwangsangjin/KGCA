@@ -1,29 +1,31 @@
 #include <iostream>
-#include <vector>
 
-int TestFunc(int param)
+// std::function 객체를 사용하기 위한 헤더 추가
+#include <functional>
+
+// std::function 템플릿 클래스를 매개변수로 받는다.
+void TestFunc(const char* pszParam, std::function<int(const char*, int)> param)
 {
-    std::cout << "Function Pointer: " << param << std::endl;
-
-    return param;
+    std::cout << pszParam << std::endl;
+    param("Hello", 10);
 }
 
 int main()
 {
-    // 람다식 선언 및 정의
-    auto func = [](int param)->int
-    {
-        std::cout << "Lambda: " << param << std::endl;
+    std::cout << "-Begin-" << std::endl;
+    
+    ::TestFunc(
+        "TestFunc()",
 
-        return param;
-    };
+        // 함수의 실인수로 함수 몸체를 람다식으로 기술한다.
+        [](const char* pszParam, int nParam)->int
+        {
+            std::cout << pszParam << " : " << nParam << std::endl;
 
-    // 람다식 호출
-    func(5);
+            return 0;
+        });
 
-    // 함수 포인터를 이용한 호출
-    auto pfTest = TestFunc;
-    pfTest(10);
+    std::cout << "-End-" << std::endl;
 
     return 0;
 }
