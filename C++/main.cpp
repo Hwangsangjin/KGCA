@@ -1,12 +1,7 @@
 #include <iostream>
+#include <functional>
 
 // 제작자 코드
-class CompareBase
-{
-public:
-    virtual int operator()(int a, int b) const abstract;
-};
-
 class TestData
 {
 private:
@@ -33,16 +28,17 @@ public:
     }
 
     // 배열을 정렬한다.
-    void Sort(const CompareBase& cmp)
+    // 함수의 매개변수가 람다식을 받을 수 있는 function 클래스다.
+    void Sort(std::function<int(int, int)> cmp)
     {
         int nTemp;
 
         for (size_t i = 0; i < 4; i++)
         {
-            for (size_t j = 0; j < 5; j++)
+            for (size_t j = i + 1; j < 5; j++)
             {
                 // 두 항을 비교하는 방법은 함수 객체를 이용한다.
-                if (cmp(m_array[i], m_array[j] < 0))
+                if (cmp(m_array[i], m_array[j]) < 0)
                 {
                     nTemp = m_array[i];
                     m_array[i] = m_array[j];
@@ -53,31 +49,16 @@ public:
     }
 };
 
-// 사용자 코드
-class MyCmpDesc : public CompareBase
-{
-public:
-    int operator()(int a, int b) const { return a - b; }
-};
-
-class MyCmpAsce : public CompareBase
-{
-public:
-    int operator()(int a, int b) const { return b - a; }
-};
-
 int main()
 {
     TestData data;
 
     // 내림차순 정렬 및 출력
-    MyCmpDesc desc;
-    data.Sort(desc);
+    data.Sort([](int a, int b)->int { return a - b; });
     data.Print();
 
     // 오름차순 정렬 및 출력
-    MyCmpAsce asce;
-    data.Sort(asce);
+    data.Sort([](int a, int b)->int {return b - a; });
     data.Print();
 
     return 0;
