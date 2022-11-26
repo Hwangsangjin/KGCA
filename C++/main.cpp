@@ -1,31 +1,24 @@
 #include <iostream>
 
-// std::function 객체를 사용하기 위한 헤더 추가
-#include <functional>
-
-// std::function 템플릿 클래스를 매개변수로 받는다.
-void TestFunc(const char* pszParam, std::function<int(const char*, int)> param)
+// 사용자는 각 항을 비교하는 방법을 정의해야 한다.
+int CompareData(const void* pLeft, const void* pRight)
 {
-    std::cout << pszParam << std::endl;
-    param("Hello", 10);
+    return *(int*)pLeft - *(int*)pRight;
 }
 
 int main()
 {
-    std::cout << "-Begin-" << std::endl;
-    
-    ::TestFunc(
-        "TestFunc()",
+    int aList[5] = { 30, 50, 10, 20, 40 };
 
-        // 함수의 실인수로 함수 몸체를 람다식으로 기술한다.
-        [](const char* pszParam, int nParam)->int
-        {
-            std::cout << pszParam << " : " << nParam << std::endl;
+    // 각 항을 비교하는 방법(함수 주소)을 콜백 함수로 전달한다.
+    qsort(aList, 5, sizeof(int), CompareData);
 
-            return 0;
-        });
+    for (auto& i : aList)
+    {
+        std::cout << i << '\t';
+    }
 
-    std::cout << "-End-" << std::endl;
+    std::cout << std::endl;
 
     return 0;
 }
