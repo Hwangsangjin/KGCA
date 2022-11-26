@@ -1,31 +1,29 @@
 #include <iostream>
 #include <vector>
 
+int TestFunc(int param)
+{
+    std::cout << "Function Pointer: " << param << std::endl;
+
+    return param;
+}
+
 int main()
 {
-    // 요소가 int 자료형이고 개수가 세 개인 벡터 선언
-    std::vector<int> vec(3);
-    vec[0] = 10;
-    vec[1] = 20;
-    vec[2] = 30;
-
-    for (auto& i : vec)
+    // 람다식 선언 및 정의
+    auto func = [](int param)->int
     {
-        std::cout << i << '\t';
-    }
+        std::cout << "Lambda: " << param << std::endl;
 
-    std::cout << std::endl;
+        return param;
+    };
 
-    // 뒤에 새로운 요소 두 개를 더 추가한다.
-    vec.push_back(30);
-    vec.push_back(40);
+    // 람다식 호출
+    func(5);
 
-    for (auto& i : vec)
-    {
-        std::cout << i << '\t';
-    }
-
-    std::cout << std::endl;
+    // 함수 포인터를 이용한 호출
+    auto pfTest = TestFunc;
+    pfTest(10);
 
     return 0;
 }
