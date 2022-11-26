@@ -1,45 +1,84 @@
 #include <iostream>
 
-// 함수 객체 클래스의 선언 및 정의
-class Add
+// 제작자 코드
+class CompareBase
 {
 public:
-    // 함수 호출 연산자를 다중 정의한다.
-    int operator()(int a, int b)
-    {
-        std::cout << "()(int a, int b)" << std::endl;
+    virtual int operator()(int a, int b) const abstract;
+};
 
-        return a + b;
+class TestData
+{
+private:
+    int m_array[5];
+
+public:
+    TestData()
+    {
+        m_array[0] = 30;
+        m_array[1] = 10;
+        m_array[2] = 50;
+        m_array[3] = 20;
+        m_array[4] = 40;
     }
 
-    // 다양한 매개변수 구성으로 다중 정의할 수 있다.
-    double operator()(double a, double b)
+    void Print()
     {
-        std::cout << "()(double a, double b)" << std::endl;
+        for (auto& i : m_array)
+        {
+            std::cout << i << '\t';
+        }
 
-        return a + b;
+        std::cout << std::endl;
+    }
+
+    // 배열을 정렬한다.
+    void Sort(const CompareBase& cmp)
+    {
+        int nTemp;
+
+        for (size_t i = 0; i < 4; i++)
+        {
+            for (size_t j = 0; j < 5; j++)
+            {
+                // 두 항을 비교하는 방법은 함수 객체를 이용한다.
+                if (cmp(m_array[i], m_array[j] < 0))
+                {
+                    nTemp = m_array[i];
+                    m_array[i] = m_array[j];
+                    m_array[j] = nTemp;
+                }
+            }
+        }
     }
 };
 
-// 제작자의 코드
-void TestFunc(Add& add)
+// 사용자 코드
+class MyCmpDesc : public CompareBase
 {
-    // 사용자가 만든 함수를 제작자가 호출한다.
-    std::cout << add(3, 4) << std::endl;
-}
+public:
+    int operator()(int a, int b) const { return a - b; }
+};
 
-// 사용자의 코드
+class MyCmpAsce : public CompareBase
+{
+public:
+    int operator()(int a, int b) const { return b - a; }
+};
+
 int main()
 {
-    // 함수를 만들고
-    Add adder;
+    TestData data;
 
-    //// 함수 객체를 호출한다.
-    //std::cout << adder(3, 4) << std::endl;
-    //std::cout << adder(3.3, 4.4) << std::endl;
+    // 내림차순 정렬 및 출력
+    MyCmpDesc desc;
+    data.Sort(desc);
+    data.Print();
 
-    // 제작자에게 전달하면 호출해준다.
-    TestFunc(adder);
+    // 오름차순 정렬 및 출력
+    MyCmpAsce asce;
+    data.Sort(asce);
+    data.Print();
 
     return 0;
 }
