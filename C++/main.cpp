@@ -2,15 +2,16 @@
 
 int main()
 {
-    int data = 10;
-    std::cout << data << std::endl;
+    int x = 10;
+    int y = 20;
+    int z = 0;
 
-    auto TestFunc = [data]()->void
+    auto TestFunc = [&]()->int
     {
-        std::cout << data << std::endl;
+        return z = x + y;
     };
 
-    TestFunc();
-
+    std::cout << TestFunc() << std::endl;
+  
     return 0;
 }
