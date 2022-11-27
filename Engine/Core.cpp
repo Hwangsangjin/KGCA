@@ -117,8 +117,8 @@ HRESULT Core::CoreRender()
 {
 	assert(SUCCEEDED(CorePreRender()));
 
-	assert(SUCCEEDED(Text::GetInstance()->Render()));
 	assert(SUCCEEDED(Render()));
+	assert(SUCCEEDED(Text::GetInstance()->Render()));
 
 	assert(SUCCEEDED(CorePostRender()));
 
