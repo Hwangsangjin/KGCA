@@ -1,6 +1,6 @@
 #pragma once
 
-class SamplerState
+class DxState
 {
 public:
 	static Microsoft::WRL::ComPtr<ID3D11BlendState> alpha_blend_;
@@ -18,9 +18,9 @@ public:
 	// 렌더
 	HRESULT Render();
 	// 메모리 해제
-	static HRESULT Release();
+	HRESULT Release();
 
-	// 샘플러 상태 설정
-	static HRESULT SetSamplerState(ID3D11Device* device);
+	// 상태 설정
+	static HRESULT SetState(ID3D11Device* device);
 };
 

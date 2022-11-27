@@ -306,22 +306,22 @@ HRESULT Object::LoadTexture(W_STR texture_file)
     return E_FAIL;
 }
 
-ID3D11Buffer* DX::CreateVertexBuffer(ID3D11Device* device, void* data_address, UINT vertex_count, UINT vertex_size)
+Microsoft::WRL::ComPtr<ID3D11Buffer> DX::CreateVertexBuffer(ID3D11Device* device, void* data_address, UINT vertex_count, UINT vertex_size)
 {
-    ID3D11Buffer* vertex_buffer = nullptr;
-    D3D11_BUFFER_DESC bd;
-    ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = vertex_count * vertex_size; // 바이트 용량
+    Microsoft::WRL::ComPtr<ID3D11Buffer> vertex_buffer;
+    D3D11_BUFFER_DESC buffer_desc;
+    ZeroMemory(&buffer_desc, sizeof(buffer_desc));
+    buffer_desc.ByteWidth = vertex_count * vertex_size; // 바이트 용량
     // GPU 메모리에 할당
-    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼 용도
-    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    buffer_desc.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼 용도
+    buffer_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-    D3D11_SUBRESOURCE_DATA  sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = data_address;
+    D3D11_SUBRESOURCE_DATA  subresource_data;
+    ZeroMemory(&subresource_data, sizeof(subresource_data));
+    subresource_data.pSysMem = data_address;
     assert(SUCCEEDED(device->CreateBuffer(
-        &bd, // 버퍼 할당
-        &sd, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
+        &buffer_desc, // 버퍼 할당
+        &subresource_data, // 초기 할당된 버퍼를 체우는 CPU 메모리 주소
         &vertex_buffer)));
 
     return vertex_buffer;

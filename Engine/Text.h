@@ -41,7 +41,7 @@ public:
 	virtual HRESULT DeleteResource();
 
 	// 표면 설정
-	HRESULT SetSurface(Microsoft::WRL::ComPtr<IDXGISurface1> pDXGISurface1);
+	HRESULT SetSurface(IDXGISurface1* surface);
 	// 텍스트 설정
 	void SetText();
 

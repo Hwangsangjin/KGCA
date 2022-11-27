@@ -66,7 +66,7 @@ std::shared_ptr<Texture> TextureManager::FindFile(std::wstring texture_file)
 	return nullptr;
 }
 
-T_STR TextureManager::GetSplitName(std::wstring full_path)
+T_STR TextureManager::GetSplitName(std::wstring texture_file)
 {
 	W_STR name;
 	TCHAR dirve[MAX_PATH] = { 0 };
@@ -74,16 +74,16 @@ T_STR TextureManager::GetSplitName(std::wstring full_path)
 	TCHAR file_name[MAX_PATH] = { 0 };
 	TCHAR ext[MAX_PATH] = { 0 };
 
-	_tsplitpath_s(full_path.c_str(), dirve, dir, file_name, ext);
+	_tsplitpath_s(texture_file.c_str(), dirve, dir, file_name, ext);
 	name = file_name;
 	name += ext;
 
 	return name;
 }
 
-T_STR TextureManager::GetSplitName(std::string full_path)
+T_STR TextureManager::GetSplitName(std::string texture_file)
 {
-	W_STR unicode = to_mw(full_path);
+	W_STR unicode = to_mw(texture_file);
 	TCHAR dirve[MAX_PATH] = { 0 };
 	TCHAR dir[MAX_PATH] = { 0 };
 	TCHAR file_name[MAX_PATH] = { 0 };

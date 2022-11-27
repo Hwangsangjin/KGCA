@@ -92,10 +92,10 @@ public:
 	virtual void SetMatrix(DxMatrix* world_matrix, DxMatrix* view_matrix, DxMatrix* projection_matrix);
 
 	// 디바이스 설정
-	virtual HRESULT SetDevice(ID3D11Device* d3d11_device, ID3D11DeviceContext* d3d11_device_context);
+	virtual HRESULT SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context);
 
 	// 오브젝트 생성
-	virtual HRESULT CreateObject(ID3D11Device* d3d11_device, ID3D11DeviceContext* d3d11_device_context, std::wstring shader_file, std::wstring texture_file);
+	virtual HRESULT CreateObject(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring shader_file, std::wstring texture_file);
 
 	// 정점 데이터 생성
 	virtual void CreateVertexData();
@@ -127,5 +127,6 @@ public:
 
 namespace DX
 {
-	ID3D11Buffer* CreateVertexBuffer(ID3D11Device* d3d_device, void* data_address, UINT vertex_count, UINT vertex_size);
+	// 정점 버퍼 생성
+	Microsoft::WRL::ComPtr<ID3D11Buffer> CreateVertexBuffer(ID3D11Device* device, void* data_address, UINT vertex_count, UINT vertex_size);
 }

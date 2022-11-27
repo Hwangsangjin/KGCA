@@ -51,14 +51,14 @@
     <Filter Include="소스 파일\Core\Text">
       <UniqueIdentifier>{7819a383-ad0d-4fa4-b9ef-16e7e8197ab2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Core\Math">
-      <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Core\SamplerState">
-      <UniqueIdentifier>{09f79972-6ff2-412c-a018-d28b1f32ef13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core\Object">
       <UniqueIdentifier>{6a08c210-9093-4001-a0cd-9f2542364d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxState">
+      <UniqueIdentifier>{09f79972-6ff2-412c-a018-d28b1f32ef13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DxMath">
+      <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -95,8 +95,8 @@
     <ClInclude Include="Window.h">
       <Filter>소스 파일\Core\Window</Filter>
     </ClInclude>
-    <ClInclude Include="SamplerState.h">
-      <Filter>소스 파일\Core\SamplerState</Filter>
+    <ClInclude Include="DxState.h">
+      <Filter>소스 파일\Core\DxState</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>소스 파일\Precompiled</Filter>
@@ -117,7 +117,7 @@
       <Filter>소스 파일\Core\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="DxMath.h">
-      <Filter>소스 파일\Core\Math</Filter>
+      <Filter>소스 파일\Core\DxMath</Filter>
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>소스 파일\Core\Shape</Filter>
@@ -169,8 +169,8 @@
     <ClCompile Include="Window.cpp">
       <Filter>소스 파일\Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="SamplerState.cpp">
-      <Filter>소스 파일\Core\SamplerState</Filter>
+    <ClCompile Include="DxState.cpp">
+      <Filter>소스 파일\Core\DxState</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>소스 파일\Core\Collision</Filter>
@@ -188,7 +188,7 @@
       <Filter>소스 파일\Core\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="DxMath.cpp">
-      <Filter>소스 파일\Core\Math</Filter>
+      <Filter>소스 파일\Core\DxMath</Filter>
     </ClCompile>
     <ClCompile Include="Shape.cpp">
       <Filter>소스 파일\Core\Shape</Filter>

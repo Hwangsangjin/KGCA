@@ -107,7 +107,7 @@ HRESULT Text::DeleteResource()
     return TRUE;
 }
 
-HRESULT Text::SetSurface(Microsoft::WRL::ComPtr<IDXGISurface1> DXGISurface1)
+HRESULT Text::SetSurface(IDXGISurface1* surface)
 {
     D2D1_RENDER_TARGET_PROPERTIES props;
     ZeroMemory(&props, sizeof(props));
@@ -118,7 +118,7 @@ HRESULT Text::SetSurface(Microsoft::WRL::ComPtr<IDXGISurface1> DXGISurface1)
     props.usage = D2D1_RENDER_TARGET_USAGE_NONE;
     props.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
-    assert(SUCCEEDED(d2d1_factory_->CreateDxgiSurfaceRenderTarget(DXGISurface1.Get(), &props, d2d1_render_target_.GetAddressOf())));
+    assert(SUCCEEDED(d2d1_factory_->CreateDxgiSurfaceRenderTarget(surface, &props, d2d1_render_target_.GetAddressOf())));
 
     CreateResource();
 

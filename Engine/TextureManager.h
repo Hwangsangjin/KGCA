@@ -40,7 +40,7 @@ public:
 	std::shared_ptr<Texture> FindFile(std::wstring texture_file);
 
 	// 파일명 분할
-	T_STR GetSplitName(std::wstring full_path);
-	T_STR GetSplitName(std::string full_path);
+	T_STR GetSplitName(std::wstring texture_file);
+	T_STR GetSplitName(std::string texture_file);
 };
 
