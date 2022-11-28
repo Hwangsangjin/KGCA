@@ -66,8 +66,5 @@ public:
 
 	// 咆胶贸 积己
 	HRESULT CreateTexture();
-
-	// 基敲矾 积己
-	HRESULT CreateSampler();
 };
 
