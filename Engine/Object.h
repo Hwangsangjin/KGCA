@@ -1,9 +1,5 @@
 #pragma once
 
-#include "Shader.h"
-#include "Texture.h"
-#include "Collision.h"
-
 struct SimpleVertex
 {
 	DxVector3 position;
@@ -25,7 +21,7 @@ struct IndexWeightVertex
 	DxVector4 weight;
 };
 
-struct ConstantBuffer
+struct ConstantData
 {
 	DxMatrix world_matrix;
 	DxMatrix view_matrix;
@@ -52,14 +48,14 @@ public:
 	std::vector<DWORD> indices_;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertex_buffer_;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> index_buffer_;
-	ConstantBuffer constant_buffer_data;
+	ConstantData constant_data;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constant_buffer_;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> input_layout_;
 
 	std::wstring texture_name_;
 	std::wstring shader_name_;
-	std::shared_ptr<Texture> texture_;
-	std::shared_ptr<Shader> shader_;
+	std::shared_ptr<class Texture> texture_;
+	std::shared_ptr<class Shader> shader_;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertex_shader_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> pixel_shader_;
 	Microsoft::WRL::ComPtr<ID3DBlob> vertex_shader_code_;
@@ -88,11 +84,11 @@ public:
 	// 메모리 해제
 	virtual HRESULT Release();
 
-	// 공간 설정
-	virtual void SetMatrix(DxMatrix* world_matrix, DxMatrix* view_matrix, DxMatrix* projection_matrix);
-
 	// 디바이스 설정
 	virtual HRESULT SetDevice(ID3D11Device* device, ID3D11DeviceContext* device_context);
+
+	// 공간 설정
+	virtual void SetMatrix(DxMatrix* world_matrix, DxMatrix* view_matrix, DxMatrix* projection_matrix);
 
 	// 오브젝트 생성
 	virtual HRESULT CreateObject(ID3D11Device* device, ID3D11DeviceContext* device_context, std::wstring shader_file, std::wstring texture_file);
@@ -116,13 +112,10 @@ public:
 	// 텍스처 생성
 	virtual HRESULT CreateTexture(std::wstring texture_file);
 
-	// 정점 버퍼 설정 
+	// 정점 버퍼 업데이트
 	virtual void UpdateVertexBuffer();
-	// 상수 버퍼 설정
+	// 상수 버퍼 업데이트
 	virtual void UpdateConstantBuffer();
-
-	// 텍스처 로드
-	virtual HRESULT LoadTexture(W_STR texture_file);
 };
 
 namespace DX

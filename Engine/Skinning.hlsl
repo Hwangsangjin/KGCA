@@ -60,7 +60,7 @@ VS_OUTPUT VS(VS_INPUT input)
 	float3 vLight = timer.xyz;
 	output.vLight = vLight;
 	float fDot = max(0.3f, dot(anim_normal, -vLight));
-	output.lightColor = float4(fDot, fDot, fDot, 1.0f);
+	output.light_color = float4(fDot, fDot, fDot, 1.0f);
 	
 	return output;
 }

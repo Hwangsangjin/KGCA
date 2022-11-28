@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Object2D.h"
+#include "Texture.h"
 
 HRESULT Object2D::Frame()
 {

@@ -6,6 +6,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device_;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
+	std::shared_ptr<class Texture> texture_;
 	std::map<std::wstring, std::shared_ptr<class Texture>> textures_;
 
 	TextureManager() = default;

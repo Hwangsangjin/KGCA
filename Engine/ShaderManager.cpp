@@ -51,12 +51,9 @@ std::shared_ptr<Shader> ShaderManager::LoadFile(std::wstring shader_file)
 	FindFile(shader_file);
 
 	// ¼ÎÀÌ´õ »ı¼º
-	std::shared_ptr<Shader> new_shader = std::make_shared<Shader>();
-	if (new_shader)
-	{
-		assert(SUCCEEDED(new_shader->CreateShader(device_.Get(), device_context_.Get(), shader_file)));
-		shaders_.insert(std::make_pair(shader_file, new_shader));
-	}
+	shader_ = std::make_shared<Shader>();
+	shader_->CreateShader(device_.Get(), device_context_.Get(), shader_file);
+	shaders_.insert(std::make_pair(shader_file, shader_));
 
-	return new_shader;
+	return shader_;
 }

@@ -76,7 +76,7 @@ HRESULT Device::CreateDevice()
 // 팩토리 생성
 HRESULT Device::CreateFactory()
 {
-    assert(SUCCEEDED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory_)));
+    assert(SUCCEEDED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)factory_.GetAddressOf())));
 
     return TRUE;
 }
@@ -84,22 +84,22 @@ HRESULT Device::CreateFactory()
 // 스왑체인 생성
 HRESULT Device::CreateSwapChain()
 {
-    DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.BufferCount = 1;
-    sd.OutputWindow = g_handle;
-    sd.Windowed = true;
-    sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.BufferDesc.Width = g_client_rect.right;
-    sd.BufferDesc.Height = g_client_rect.bottom;
-    sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    sd.BufferDesc.RefreshRate.Numerator = 60;
-    sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.SampleDesc.Count = 1;
-    sd.SampleDesc.Quality = 0;
-    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+    DXGI_SWAP_CHAIN_DESC swap_chain_desc;
+    ZeroMemory(&swap_chain_desc, sizeof(swap_chain_desc));
+    swap_chain_desc.BufferCount = 1;
+    swap_chain_desc.OutputWindow = g_handle;
+    swap_chain_desc.Windowed = true;
+    swap_chain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    swap_chain_desc.BufferDesc.Width = g_client_rect.right;
+    swap_chain_desc.BufferDesc.Height = g_client_rect.bottom;
+    swap_chain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    swap_chain_desc.BufferDesc.RefreshRate.Numerator = 60;
+    swap_chain_desc.BufferDesc.RefreshRate.Denominator = 1;
+    swap_chain_desc.SampleDesc.Count = 1;
+    swap_chain_desc.SampleDesc.Quality = 0;
+    swap_chain_desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    assert(SUCCEEDED(factory_->CreateSwapChain(device_.Get(), &sd, swap_chain_.GetAddressOf())));
+    assert(SUCCEEDED(factory_->CreateSwapChain(device_.Get(), &swap_chain_desc, swap_chain_.GetAddressOf())));
 
     return TRUE;
 }
@@ -142,6 +142,62 @@ HRESULT Device::CleanupDevice()
     }
 
     return TRUE;
+}
+
+// 디바이스 컨텍스트 클리어
+void Device::ClearDeviceContext(ID3D11DeviceContext* device_context)
+{
+    // Unbind all objects from the immediate context
+    assert(device_context);
+
+    ID3D11ShaderResourceView* pSRVs[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    ID3D11RenderTargetView* pRTVs[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    ID3D11DepthStencilView* pDSV = nullptr;
+    ID3D11Buffer* pBuffers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    ID3D11SamplerState* pSamplers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    UINT StrideOffset[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+    // Shaders
+    //device_context->VSSetShader(NULL, NULL, 0);
+    //device_context->HSSetShader(NULL, NULL, 0);
+    //device_context->DSSetShader(NULL, NULL, 0);
+    //device_context->GSSetShader(NULL, NULL, 0);
+    //device_context->PSSetShader(NULL, NULL, 0);
+
+    // IA clear
+    //device_context->IASetVertexBuffers(0, 16, pBuffers, StrideOffset, StrideOffset);
+    //device_context->IASetIndexBuffer(NULL, DXGI_FORMAT_R16_UINT, 0);
+    //device_context->IASetInputLayout(NULL);
+
+    // Constant buffers
+    //device_context->VSSetConstantBuffers(0, 14, pBuffers);
+    //device_context->HSSetConstantBuffers(0, 14, pBuffers);
+    //device_context->DSSetConstantBuffers(0, 14, pBuffers);
+    //device_context->GSSetConstantBuffers(0, 14, pBuffers);
+    //device_context->PSSetConstantBuffers(0, 14, pBuffers);
+
+    // Resources
+    device_context->VSSetShaderResources(0, 16, pSRVs);
+    //device_context->HSSetShaderResources(0, 16, pSRVs);
+    //device_context->DSSetShaderResources(0, 16, pSRVs);
+    //device_context->GSSetShaderResources(0, 16, pSRVs);
+    device_context->PSSetShaderResources(0, 16, pSRVs);
+
+    // Samplers
+    //device_context->VSSetSamplers(0, 16, pSamplers);
+    //device_context->HSSetSamplers(0, 16, pSamplers);
+    //device_context->DSSetSamplers(0, 16, pSamplers);
+    //device_context->GSSetSamplers(0, 16, pSamplers);
+    //device_context->PSSetSamplers(0, 16, pSamplers);
+
+    // Render targets
+    //device_context->OMSetRenderTargets(8, pRTVs, pDSV);
+
+    // States
+    //FLOAT blend_factor[4] = { 0,0,0,0 };
+    //device_context->OMSetBlendState(nullptr, blend_factor, 0xFFFFFFFF);
+    //device_context->OMSetDepthStencilState(nullptr, 0);
+    //device_context->RSSetState(nullptr);
 }
 
 HRESULT Device::ResizeDevice(UINT width, UINT height)

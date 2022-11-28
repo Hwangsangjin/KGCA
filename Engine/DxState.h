@@ -18,7 +18,7 @@ public:
 	// 렌더
 	HRESULT Render();
 	// 메모리 해제
-	HRESULT Release();
+	static HRESULT Release();
 
 	// 상태 설정
 	static HRESULT SetState(ID3D11Device* device);

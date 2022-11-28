@@ -60,6 +60,12 @@
     <Filter Include="소스 파일\Core\DxMath">
       <UniqueIdentifier>{89350a5a-78ed-49bc-9238-fbeb006d74bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core\DxRenderTarget">
+      <UniqueIdentifier>{d6a78dd3-2c3e-4cf1-88d9-8d54f503208b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\FbxLoader">
+      <UniqueIdentifier>{24d96887-aaa3-4eb0-a980-a902a0ea48a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -131,6 +137,15 @@
     <ClInclude Include="Object3D.h">
       <Filter>소스 파일\Core\Object</Filter>
     </ClInclude>
+    <ClInclude Include="DxRenderTarget.h">
+      <Filter>소스 파일\Core\DxRenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxLoader.h">
+      <Filter>소스 파일\Core\FbxLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxObject3D.h">
+      <Filter>소스 파일\Core\FbxLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -190,9 +205,6 @@
     <ClCompile Include="DxMath.cpp">
       <Filter>소스 파일\Core\DxMath</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
-      <Filter>소스 파일\Core\Shape</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Core\Object</Filter>
     </ClCompile>
@@ -201,6 +213,18 @@
     </ClCompile>
     <ClCompile Include="Object3D.cpp">
       <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DxRenderTarget.cpp">
+      <Filter>소스 파일\Core\DxRenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>소스 파일\Core\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxLoader.cpp">
+      <Filter>소스 파일\Core\FbxLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxObject3D.cpp">
+      <Filter>소스 파일\Core\FbxLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

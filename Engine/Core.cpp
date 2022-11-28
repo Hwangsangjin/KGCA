@@ -3,6 +3,9 @@
 #include "Input.h"
 #include "Timer.h"
 #include "Text.h"
+#include "DxState.h"
+#include "ShaderManager.h"
+#include "TextureManager.h"
 
 // 초기화
 HRESULT Core::Init()
@@ -78,14 +81,15 @@ HRESULT Core::DeleteResource()
 HRESULT Core::CoreInit()
 {
 	assert(SUCCEEDED(Device::Init()));
-
+	assert(SUCCEEDED(DxState::SetState(device_.Get())));
 	assert(SUCCEEDED(Input::GetInstance()->Init()));
 	assert(SUCCEEDED(Timer::GetInstance()->Init()));
 	assert(SUCCEEDED(Text::GetInstance()->Init()));
 	Microsoft::WRL::ComPtr<IDXGISurface1> back_buffer;
 	assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(IDXGISurface1), (void**)back_buffer.GetAddressOf())));
 	assert(SUCCEEDED(Text::GetInstance()->SetSurface(back_buffer.Get())));
-
+	assert(SUCCEEDED(ShaderManager::GetInstance()->SetDevice(device_.Get(), device_context_.Get())));
+	assert(SUCCEEDED(TextureManager::GetInstance()->SetDevice(device_.Get(), device_context_.Get())));
 	assert(SUCCEEDED(Init()));
 
 	return TRUE;
@@ -99,13 +103,22 @@ HRESULT Core::CoreFrame()
 	Text::GetInstance()->SetText();
 	assert(SUCCEEDED(Text::GetInstance()->Frame()));
 
-	Frame();
+	assert(SUCCEEDED(Frame()));
 
 	return TRUE;
 }
 
 HRESULT Core::CorePreRender()
 {
+	// 그래픽스 파이프라인 바인딩
+	device_context_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	device_context_->RSSetViewports(1, &viewport_);
+	device_context_->RSSetState(DxState::default_solid_.Get());
+	device_context_->PSSetSamplers(0, 1, DxState::default_mirror_.GetAddressOf());
+	device_context_->OMSetBlendState(DxState::alpha_blend_.Get(), 0, -1);
+	device_context_->OMSetRenderTargets(1, render_target_view_.GetAddressOf(), nullptr);
+	device_context_->OMSetDepthStencilState(DxState::default_depth_stencil_.Get(), 0xff);
+
 	// 후면 버퍼 삭제
 	const float clear_color[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // Red, Green, Blue, Alpha
 	device_context_->ClearRenderTargetView(render_target_view_.Get(), clear_color);
@@ -136,9 +149,12 @@ HRESULT Core::CorePostRender()
 HRESULT Core::CoreRelease()
 {
 	assert(SUCCEEDED(Release()));
+	assert(SUCCEEDED(TextureManager::GetInstance()->Release()));
+	assert(SUCCEEDED(ShaderManager::GetInstance()->Release()));
 	assert(SUCCEEDED(Input::GetInstance()->Release()));
 	assert(SUCCEEDED(Timer::GetInstance()->Release()));
 	assert(SUCCEEDED(Text::GetInstance()->Release()));
+	assert(SUCCEEDED(DxState::Release()));
 	assert(SUCCEEDED(Device::Release()));
 
 	return TRUE;

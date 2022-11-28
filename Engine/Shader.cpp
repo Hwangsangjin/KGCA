@@ -34,7 +34,19 @@ HRESULT Shader::CreateShader(ID3D11Device* device, ID3D11DeviceContext* device_c
 
     // 정점 셰이더 컴파일
     Microsoft::WRL::ComPtr<ID3DBlob> error_code;
-    assert(SUCCEEDED(D3DCompileFromFile(shader_file.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf())));
+    HRESULT hr = D3DCompileFromFile(shader_file.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, vertex_shader_code_.GetAddressOf(), error_code.GetAddressOf());
+    
+    if (FAILED(hr))
+    {
+        if (error_code)
+        {
+            OutputDebugStringA((char*)error_code->GetBufferPointer());
+        }
+
+        assert(SUCCEEDED(hr));
+
+        return hr;
+    }
 
     // 정점 셰이더 생성
     assert(SUCCEEDED(device_->CreateVertexShader(vertex_shader_code_->GetBufferPointer(), vertex_shader_code_->GetBufferSize(), nullptr, vertex_shader_.GetAddressOf())));

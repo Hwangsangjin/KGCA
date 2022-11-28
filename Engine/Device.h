@@ -52,6 +52,9 @@ public:
 	// 디바이스 객체 정리
 	HRESULT CleanupDevice();
 
+	// 디바이스 컨텍스트 클리어
+	void ClearDeviceContext(ID3D11DeviceContext* device_context);
+
 	// 화면 크기 조정
 	HRESULT ResizeDevice(UINT width, UINT height);
 

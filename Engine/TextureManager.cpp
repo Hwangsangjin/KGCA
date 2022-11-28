@@ -38,18 +38,14 @@ std::shared_ptr<Texture> TextureManager::LoadFile(std::wstring texture_file)
 	FindFile(texture_file);
 
 	// 텍스처 생성
-	std::shared_ptr<Texture> new_texture = std::make_shared<Texture>();
-	if (new_texture)
+	texture_ = std::make_shared<Texture>();
+	if (SUCCEEDED(texture_->CreateTexture(device_.Get(), device_context_.Get(), texture_file)))
 	{
-		HRESULT hr = new_texture->CreateTexture(device_.Get(), device_context_.Get(), texture_file);
-		if (SUCCEEDED(hr))
-		{
-			textures_.insert(std::make_pair(texture_file, new_texture));
+		textures_.insert(std::make_pair(texture_file, texture_));
 
-			return new_texture;
-		}
+		return texture_;
 	}
-
+	
 	return nullptr;
 }
 

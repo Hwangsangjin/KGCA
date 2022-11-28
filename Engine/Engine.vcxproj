@@ -168,6 +168,9 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClInclude Include="DxMath.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="DxRenderTarget.h" />
+    <ClInclude Include="FbxLoader.h" />
+    <ClInclude Include="FbxObject3D.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object2D.h" />
     <ClInclude Include="Object3D.h" />
@@ -193,6 +196,9 @@ copy "*.hlsl" "../../Resource/Shader"</Command>
     <ClCompile Include="DxMath.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DxRenderTarget.cpp" />
+    <ClCompile Include="FbxLoader.cpp" />
+    <ClCompile Include="FbxObject3D.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object2D.cpp" />
     <ClCompile Include="Object3D.cpp" />

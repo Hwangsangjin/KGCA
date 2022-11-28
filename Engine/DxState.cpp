@@ -1,6 +1,14 @@
 #include "pch.h"
 #include "DxState.h"
 
+Microsoft::WRL::ComPtr<ID3D11BlendState> DxState::alpha_blend_;
+Microsoft::WRL::ComPtr<ID3D11SamplerState> DxState::default_wrap_;
+Microsoft::WRL::ComPtr<ID3D11SamplerState> DxState::default_mirror_;
+Microsoft::WRL::ComPtr<ID3D11RasterizerState> DxState::default_solid_;
+Microsoft::WRL::ComPtr<ID3D11RasterizerState> DxState::default_wire_frame_;
+Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DxState::default_depth_stencil_;
+Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DxState::greater_depth_stencil_;
+
 HRESULT DxState::Init()
 {
     return TRUE;
