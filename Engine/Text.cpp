@@ -15,7 +15,7 @@ HRESULT Text::Init()
     assert(SUCCEEDED(dwrite_factory_->CreateTextFormat(L"Consolas", nullptr, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 20, L"en-us", dwrite_text_format_.GetAddressOf())));
 
     // 텍스트 레이아웃 지정
-    assert(SUCCEEDED(dwrite_factory_->CreateTextLayout(default_text_.c_str(), default_text_.size(), dwrite_text_format_.Get(), static_cast<float>(g_client_rect.right), static_cast<float>(g_client_rect.bottom), dwrite_text_layout_.GetAddressOf())));
+    assert(SUCCEEDED(dwrite_factory_->CreateTextLayout(default_text_.c_str(), static_cast<UINT32>(default_text_.size()), dwrite_text_format_.Get(), static_cast<FLOAT>(g_client_rect.right), static_cast<FLOAT>(g_client_rect.bottom), dwrite_text_layout_.GetAddressOf())));
 
     return TRUE;
 }
@@ -134,7 +134,7 @@ HRESULT Text::Draw(float x, float y, std::wstring text, D2D1_COLOR_F color)
     text_color_->SetColor(color);
     text_color_->SetOpacity(1.0f);
 
-    d2d1_render_target_->DrawText(text.c_str(), text.size(), dwrite_text_format_.Get(), rect, text_color_.Get());
+    d2d1_render_target_->DrawText(text.c_str(), static_cast<UINT32>(text.size()), dwrite_text_format_.Get(), rect, text_color_.Get());
 
     assert(SUCCEEDED(d2d1_render_target_->EndDraw()));
 

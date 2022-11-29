@@ -111,8 +111,6 @@ HRESULT Device::SetRenderTargetView()
     assert(SUCCEEDED(swap_chain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)back_buffer.GetAddressOf())));
     assert(SUCCEEDED(device_->CreateRenderTargetView(back_buffer.Get(), nullptr, render_target_view_.GetAddressOf())));
 
-    device_context_->OMSetRenderTargets(1, render_target_view_.GetAddressOf(), nullptr);
-
     return TRUE;
 }
 
@@ -120,14 +118,12 @@ HRESULT Device::SetRenderTargetView()
 HRESULT Device::SetViewport()
 {
     // ºäÆ÷Æ® ¼³Á¤
-    viewport_.Width = static_cast<float>(g_client_rect.right);
-    viewport_.Height = static_cast<float>(g_client_rect.bottom);
+    viewport_.Width = static_cast<FLOAT>(g_client_rect.right);
+    viewport_.Height = static_cast<FLOAT>(g_client_rect.bottom);
     viewport_.TopLeftX = 0.0f;
     viewport_.TopLeftY = 0.0f;
     viewport_.MinDepth = 0.0f;
     viewport_.MaxDepth = 1.0f;
-
-    device_context_->RSSetViewports(1, &viewport_);
 
     return TRUE;
 }

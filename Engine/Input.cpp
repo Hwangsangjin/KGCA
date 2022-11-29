@@ -17,7 +17,7 @@ HRESULT Input::Frame()
 
 	for (size_t i = 0; i < 256; i++)
 	{
-		SHORT key = ::GetAsyncKeyState(i);  // 비동기 키 상태 
+		SHORT key = ::GetAsyncKeyState(static_cast<int>(i));  // 비동기 키 상태 
 		if (key & 0x8000) // 1000 0000 0000 0000
 		{
 			if (key_state_[i] == KEY_STATE::NONE || key_state_[i] == KEY_STATE::UP)
