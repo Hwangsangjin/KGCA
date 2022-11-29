@@ -7,7 +7,11 @@ class Object;
 class Sample : public Core
 {
 private:
+	// 오브젝트
 	std::unique_ptr<Object> object_;
+
+	// 뷰포트
+	D3D11_VIEWPORT viewport_[4];
 
 public:
 	// 생성자, 소멸자
