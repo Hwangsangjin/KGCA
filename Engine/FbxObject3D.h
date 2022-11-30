@@ -72,7 +72,7 @@ public:
 	std::vector<FbxObject3D*> _pFbxChilds;
 	std::vector<AnimTrack> _animTracks;
 	std::vector<Microsoft::WRL::ComPtr<ID3D11Buffer>> _pSubVertexBuffer;
-	std::vector<std::shared_ptr<class Texture>> _pSubTexture;
+	std::vector<std::shared_ptr<Texture>> _pSubTexture;
 	std::vector<std::vector<DefaultVertex>> _vbDataList;
 	std::vector<W_STR> _vbTextureList;
 

@@ -3,6 +3,8 @@
 #include "Object.h"
 #include "Collision.h"
 
+class Texture;
+
 class Object2D : public Object
 {
 public:
@@ -26,7 +28,7 @@ public:
 	DxVector2 camera_position_;
 	DxVector2 camera_view_size_;
 
-	std::shared_ptr<class Texture> mask_texture_;
+	std::shared_ptr<Texture> mask_texture_;
 
 	bool is_collision_ = false;
 

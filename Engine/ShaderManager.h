@@ -1,13 +1,15 @@
 #pragma once
 
+class Shader;
+
 class ShaderManager
 {
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device_;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device_context_;
 
-	std::shared_ptr<class Shader> shader_;
-	std::map<std::wstring, std::shared_ptr<class Shader>> shaders_;
+	std::shared_ptr<Shader> shader_;
+	std::map<std::wstring, std::shared_ptr<Shader>> shaders_;
 
 	ShaderManager() = default;
 	~ShaderManager() = default;

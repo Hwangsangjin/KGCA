@@ -37,6 +37,9 @@ struct BoneBuffer
 	DxMatrix bone_matrix[255];
 };
 
+class Texture;
+class Shader;
+
 class Object
 {
 public:
@@ -54,8 +57,8 @@ public:
 
 	std::wstring texture_name_;
 	std::wstring shader_name_;
-	std::shared_ptr<class Texture> texture_;
-	std::shared_ptr<class Shader> shader_;
+	std::shared_ptr<Texture> texture_;
+	std::shared_ptr<Shader> shader_;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertex_shader_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> pixel_shader_;
 	Microsoft::WRL::ComPtr<ID3DBlob> vertex_shader_code_;

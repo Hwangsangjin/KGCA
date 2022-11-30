@@ -1,5 +1,7 @@
 #pragma once
 
+class Sprite;
+
 class SpriteManager
 {
 private:
@@ -13,7 +15,7 @@ private:
     std::vector<W_STR> shader_names_;
     std::vector<std::vector<RECT>> sprite_rects_;
     std::vector<TCHAR_STRING_VECTOR> sprite_strings_;
-    std::map<std::wstring, std::shared_ptr<class Sprite>> sprites_;
+    std::map<std::wstring, std::shared_ptr<Sprite>> sprites_;
 
     SpriteManager() = default;
     ~SpriteManager() = default;

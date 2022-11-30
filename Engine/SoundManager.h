@@ -1,11 +1,13 @@
 #pragma once
 
+class Sound;
+
 class SoundManager
 {
 private:
     FMOD::System* system_ = nullptr;
     std::list<std::wstring> files_;
-    std::map<std::wstring, class Sound*> sounds_;
+    std::map<std::wstring, Sound*> sounds_;
 
     SoundManager() = default;
     ~SoundManager() = default;
