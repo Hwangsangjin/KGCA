@@ -43,11 +43,11 @@ bool Collision::RectToInRect(MyRect& a, MyRect& b)
 {
     if (a.x1 <= b.x1)
     {
-        if ((a.x1 + a.w) >= b.x1 + b.w)
+        if ((a.x1 + a.w) >= (b.x1 + b.w))
         {
             if (a.y1 <= b.y1)
             {
-                if ((a.y1 + a.h) >= b.y1 + b.h)
+                if ((a.y1 + a.h) >= (b.y1 + b.h))
                 {
                     return true;
                 }
@@ -123,10 +123,12 @@ COLLISION_TYPE Collision::BoxToBox(MyBox& a, MyBox& b)
                 {
                     return COLLISION_TYPE::RECT_IN;
                 }
+
                 return COLLISION_TYPE::RECT_OVERLAP;
             }
         }
     }
+
     return COLLISION_TYPE::RECT_OUT;
 }
 
